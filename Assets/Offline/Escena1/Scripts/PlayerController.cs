@@ -20,19 +20,28 @@ public class PlayerController : MonoBehaviour
     public bool leftPressed;
     public bool rightPressed;
     public bool jumpPressed;
+    public bool localPlayer;
 
 
     // Use this for initialization
     void Start()
     {
         rb2d = GetComponent<Rigidbody2D>();
+        rb2d.isKinematic = true;
         myAnim = GetComponent<Animator>();
         respawnPosition = transform.position;
         theLevelManager = FindObjectOfType<LevelManager>();
         leftPressed = false;
         rightPressed = false;
         jumpPressed = false;
+        localPlayer = false;
 }
+
+    public void Activate()
+    {
+        localPlayer = true;
+        rb2d.isKinematic = false;
+    }
 
     // Update is called once per frame
     void Update()
@@ -85,38 +94,40 @@ public class PlayerController : MonoBehaviour
      */
     private void FixedUpdate()
     {
-        
-        if (isGoingRight())
+        if (localPlayer)
         {
-            rb2d.velocity = new Vector3(moveSpeed, rb2d.velocity.y, 0f);
-            transform.localScale = new Vector3(1f, 1f, 1f);
-            EnviarAccion(transform.position.x, transform.position.y);
-        }
-        else if (isGoingLeft())
-        {
-            rb2d.velocity = new Vector3(-moveSpeed, rb2d.velocity.y, 0f);
-            transform.localScale = new Vector3(-1f, 1f, 1f);
-            EnviarAccion(transform.position.x, transform.position.y);
 
-        }
-        else // it's not moving
-        {
-            rb2d.velocity = new Vector3(0f, rb2d.velocity.y, 0f);
-        }
+            if (isGoingRight())
+            {
+                rb2d.velocity = new Vector3(moveSpeed, rb2d.velocity.y, 0f);
+                transform.localScale = new Vector3(1f, 1f, 1f);
+                EnviarAccion(transform.position.x, transform.position.y);
+            }
+            else if (isGoingLeft())
+            {
+                rb2d.velocity = new Vector3(-moveSpeed, rb2d.velocity.y, 0f);
+                transform.localScale = new Vector3(-1f, 1f, 1f);
+                EnviarAccion(transform.position.x, transform.position.y);
 
-        isGrounded = isItGrounded();
+            }
+            else // it's not moving
+            {
+                rb2d.velocity = new Vector3(0f, rb2d.velocity.y, 0f);
+            }
 
-        if (isJumping(isGrounded))
-        {
-            EnviarAccion(transform.position.x, transform.position.y);
-            //rb2d.velocity = new Vector3(rb2d.velocity.x, jumpSpeed, 0f);
-            rb2d.AddForce(new Vector2(0,jumpSpeed), ForceMode2D.Impulse);
-            jumpPressed = false;
-        }
+            isGrounded = isItGrounded();
 
-        myAnim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
-        myAnim.SetBool("Ground", isGrounded);
+            if (isJumping(isGrounded))
+            {
+                EnviarAccion(transform.position.x, transform.position.y);
+                //rb2d.velocity = new Vector3(rb2d.velocity.x, jumpSpeed, 0f);
+                rb2d.AddForce(new Vector2(0, jumpSpeed), ForceMode2D.Impulse);
+                jumpPressed = false;
+            }
 
+            myAnim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
+            myAnim.SetBool("Ground", isGrounded);
+        }      
     }
 
     private void OnTriggerEnter2D(Collider2D other)

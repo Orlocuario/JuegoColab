@@ -107,9 +107,10 @@ public class Client : MonoBehaviour {
     private void HandleSetCharId(string[] arreglo)
     {
         string charId = arreglo[1];
-        GameObject[] lista = UnityEngine.Object.FindObjectsOfType<GameObject>();
-        Text texto = GameObject.Find("ConnectText").GetComponent<Text>();
-        texto.text = "BASUUUUUUURA TESTING" + charId;
+        int charIdint = Convert.ToInt32(charId);
+        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+        scriptLevel.SetCharAsLocal(charIdint);
+        
     }
 
 }
