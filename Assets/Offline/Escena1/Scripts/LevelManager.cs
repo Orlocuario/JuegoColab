@@ -19,10 +19,19 @@ public class LevelManager : MonoBehaviour {
     public void SetCharAsLocal(int id)
     {
         PlayerController player = null;
+        GameObject[] players = new GameObject[3];
+        players[0] = GameObject.FindGameObjectsWithTag("Player1")[0];
+        players[1] = GameObject.FindGameObjectsWithTag("Player2")[0];
+        players[2] = GameObject.FindGameObjectsWithTag("Player3")[0];
+        foreach(GameObject jugador in players)
+        {
+            jugador.GetComponent<BoxCollider2D>().enabled = false;
+        }
+
         switch (id)
         {
             case 0:
-                player = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<PlayerController>();
+                player = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<PlayerController>();                
                 break;
             case 1:
                 player = GameObject.FindGameObjectsWithTag("Player2")[0].GetComponent<PlayerController>();
@@ -37,6 +46,7 @@ public class LevelManager : MonoBehaviour {
         thePlayer = player;
         GameObject touchObject = GameObject.Find("TouchController");
         touchObject.GetComponent<TouchScript>().script = player;
+        Camera.main.GetComponent<CameraController>().target = player.gameObject;
         
     }
 	

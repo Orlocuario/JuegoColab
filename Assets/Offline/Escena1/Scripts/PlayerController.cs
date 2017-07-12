@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     {
         localPlayer = true;
         rb2d.isKinematic = false;
+        GetComponent<BoxCollider2D>().enabled = true;
     }
 
     // Update is called once per frame
