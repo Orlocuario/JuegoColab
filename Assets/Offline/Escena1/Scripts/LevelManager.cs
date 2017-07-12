@@ -35,6 +35,8 @@ public class LevelManager : MonoBehaviour {
         }
         player.Activate();
         thePlayer = player;
+        GameObject touchObject = GameObject.Find("TouchController");
+        touchObject.GetComponent<TouchScript>().script = player;
         
     }
 	
