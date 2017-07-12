@@ -10,5 +10,6 @@ public class Prueba : MonoBehaviour {
         Client client = GameObject.Find("ClientObject").GetComponent<Client>();
         client.RequestCharIdToServer();
     }
-	
+
+	//dadadadadadada
 }
