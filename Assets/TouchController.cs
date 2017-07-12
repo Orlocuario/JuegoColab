@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+//Hola Esto es un comentario
+
 public class TouchController : MonoBehaviour {
 
     public void OnClick()
