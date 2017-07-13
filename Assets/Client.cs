@@ -38,11 +38,11 @@ public class Client : MonoBehaviour {
     {
         byte error;
         int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
-        byte[] buffer = new byte[bytes];
+        byte[] buffer = new byte[1024];
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, message);
-        int bufferSize = bytes;
+        int bufferSize = 1024;
         NetworkTransport.Send(socketId, connectionId, channelId, buffer, bufferSize, out error);
     }
 
