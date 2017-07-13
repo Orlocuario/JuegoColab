@@ -9,6 +9,7 @@ using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
+
 public class Client : MonoBehaviour {
 
     int port = 8888;
@@ -36,11 +37,12 @@ public class Client : MonoBehaviour {
     public void SendMessageToServer(string message)
     {
         byte error;
-        byte[] buffer = new byte[1024];
+        int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
+        byte[] buffer = new byte[bytes];
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, message);
-        int bufferSize = 1024;
+        int bufferSize = bytes;
         NetworkTransport.Send(socketId, connectionId, channelId, buffer, bufferSize, out error);
     }
 

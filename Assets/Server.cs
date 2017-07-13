@@ -68,11 +68,12 @@ public class Server : MonoBehaviour {
     public void SendMessageToClient(int clientId, string message)
     {
         byte error;
-        byte[] buffer = new byte[1024];
+        int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
+        byte[] buffer = new byte[bytes];
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, message);
-        int bufferSize = 1024;
+        int bufferSize = bytes;
         NetworkTransport.Send(socketId, clientId, channelId, buffer, bufferSize, out error);
     }
 
