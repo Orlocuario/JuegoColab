@@ -16,7 +16,7 @@ public class Server : MonoBehaviour {
     List<Room> rooms;
     MessageHandler messageHandler;
     public static Server instance;
-    int bufferSize = 15;
+    int bufferSize = 75;
 
     // Use this for initialization
     void Start ()
@@ -68,7 +68,7 @@ public class Server : MonoBehaviour {
     public void SendMessageToClient(int clientId, string message)
     {
         byte error;
-        int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
+        //int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
         byte[] buffer = new byte[bufferSize];
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();

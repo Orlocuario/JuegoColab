@@ -156,7 +156,7 @@ public class PlayerController : MonoBehaviour
             if (CheckIfSomethingChanged())
             {
                 updateFrames++;
-                if (updateFrames < 2)
+                if (updateFrames < 1)
                 {
                     return;
                 }

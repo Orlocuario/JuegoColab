@@ -17,7 +17,7 @@ public class Client : MonoBehaviour {
     int connectionId;
     int channelId;
     public static Client instance;
-    int bufferSize = 15;
+    int bufferSize = 75;
 
 	void Start () {
         DontDestroyOnLoad(this);
@@ -38,7 +38,7 @@ public class Client : MonoBehaviour {
     public void SendMessageToServer(string message)
     {
         byte error;
-        int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
+        //int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
         byte[] buffer = new byte[bufferSize];
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
@@ -120,7 +120,7 @@ public class Client : MonoBehaviour {
                 player = GameObject.FindGameObjectsWithTag("Player2")[0];
                 break;
             case 2:
-                player = GameObject.FindGameObjectsWithTag("Player1")[0];
+                player = GameObject.FindGameObjectsWithTag("Player3")[0];
                 break;
             default:
                 player = null;
