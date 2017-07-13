@@ -50,10 +50,6 @@ public class PlayerController : MonoBehaviour
         this.characterId = charId;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-    }
 
     /**
      * Checks whether the character is going right.   
@@ -132,7 +128,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void FixedUpdate()
+    private int updateFrames = 0;
+
+    private void Update()
     {
         SynchronizeNonLocalPlayer();
         if (localPlayer)
@@ -165,6 +163,12 @@ public class PlayerController : MonoBehaviour
             }
             if (CheckIfSomethingChanged())
             {
+                updateFrames++;
+                if (updateFrames < 2)
+                {
+                    return;
+                }
+                updateFrames = 0;
                 SendObjectDataToServer();
             }
             previous_transform = transform.position;

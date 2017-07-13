@@ -22,7 +22,7 @@ public class Client : MonoBehaviour {
         instance = this;
         NetworkTransport.Init();
         ConnectionConfig config = new ConnectionConfig();
-        channelId = config.AddChannel(QosType.Reliable);
+        channelId = config.AddChannel(QosType.Unreliable);
         HostTopology topology = new HostTopology(config, 10);
         socketId = NetworkTransport.AddHost(topology, port);
     }

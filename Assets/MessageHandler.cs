@@ -45,7 +45,7 @@ public class MessageHandler
         player.isGrounded = isGrounded;
         player.speed = speed;
         player.direction = direction;
-        room.SendMessageToAllPlayers(message);
+        room.SendMessageToAllPlayersExceptOne(message, connectionID);
     }
 
     private void SendCharId(int connectionId)
