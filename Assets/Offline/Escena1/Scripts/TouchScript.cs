@@ -5,8 +5,7 @@ using UnityEngine.EventSystems;
 
 public class TouchScript : MonoBehaviour {
 
-    public GameObject character;
-    private PlayerController script;
+    public PlayerController script;
     public GameObject botonSaltar;
     public GameObject botonIzquierda;
     public GameObject botonDerecha;
@@ -16,7 +15,6 @@ public class TouchScript : MonoBehaviour {
     enum Botones { Saltar,Izquierda,Derecha}
 	// Use this for initialization
 	void Start () {
-        script = character.GetComponent<PlayerController>();
 	}
 	
 	// Update is called once per frame
