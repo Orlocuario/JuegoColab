@@ -16,6 +16,7 @@ public class Server : MonoBehaviour {
     List<Room> rooms;
     MessageHandler messageHandler;
     public static Server instance;
+    int bufferSize = 15;
 
     // Use this for initialization
     void Start ()
@@ -36,8 +37,7 @@ public class Server : MonoBehaviour {
         int recSocketId;
         int recConnectionId; // Reconoce la ID del jugador
         int recChannelId;
-        byte[] recBuffer = new byte[1024];
-        int bufferSize = 1024;
+        byte[] recBuffer = new byte[bufferSize];
         int dataSize;
         byte error;
         NetworkEventType recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, bufferSize, out dataSize, out error);
@@ -69,11 +69,10 @@ public class Server : MonoBehaviour {
     {
         byte error;
         int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[bufferSize];
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, message);
-        int bufferSize = 1024;
         NetworkTransport.Send(socketId, clientId, channelId, buffer, bufferSize, out error);
     }
 
