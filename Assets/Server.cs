@@ -15,10 +15,12 @@ public class Server : MonoBehaviour {
     int channelId;
     List<Room> rooms;
     MessageHandler messageHandler;
-    
+    public static Server instance;
+
     // Use this for initialization
     void Start ()
     {
+        instance = this;
         NetworkTransport.Init();
         ConnectionConfig config = new ConnectionConfig();
         channelId = config.AddChannel(QosType.Reliable);
@@ -81,6 +83,7 @@ public class Server : MonoBehaviour {
         if (player != null)
         {
             player.connected = true;
+            SendMessageToClient(connectionId, "ChangeScene/Escena1");
             return;
         }
 

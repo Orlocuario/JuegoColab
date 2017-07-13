@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
 using UnityEngine;
@@ -93,11 +94,42 @@ public class Client : MonoBehaviour {
             case "SetCharId":
                 HandleSetCharId(arreglo);
                 break;
+            case "ChangePosition":
+                HandleChangePosition(arreglo);
+                break;
             default:
                 break;
         }
     }
 
+    private void HandleChangePosition(string[] data)
+    {
+        int charId = Int32.Parse(data[1]);
+        float positionX = float.Parse(data[2], CultureInfo.InvariantCulture);
+        float positionY = float.Parse(data[3], CultureInfo.InvariantCulture);
+        bool isGrounded = bool.Parse(data[4]);
+        float speed = float.Parse(data[5], CultureInfo.InvariantCulture);
+        int direction = Int32.Parse(data[6]);
+        GameObject player;
+        switch (charId)
+        {
+            case 0:
+                player = GameObject.FindGameObjectsWithTag("Player1")[0];
+                break;
+            case 1:
+                player = GameObject.FindGameObjectsWithTag("Player2")[0];
+                break;
+            case 2:
+                player = GameObject.FindGameObjectsWithTag("Player1")[0];
+                break;
+            default:
+                player = null;
+                break;
+        }
+        PlayerController script = player.GetComponent<PlayerController>();
+        script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction);
+
+    }
     private void HandleChangeScene(string[] arreglo)
     {
         string scene = arreglo[1];

@@ -42,7 +42,7 @@ public class LevelManager : MonoBehaviour {
             default:
                 break;
         }
-        player.Activate();
+        player.Activate(id);
         thePlayer = player;
         GameObject touchObject = GameObject.Find("TouchController");
         touchObject.GetComponent<TouchScript>().script = player;

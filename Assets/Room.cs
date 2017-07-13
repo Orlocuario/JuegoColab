@@ -11,16 +11,17 @@ public class Room
     public int id;
     Server server;
     MessageHandler sender;
-
+    public bool started;
     //Inicialización
     public Room(int id, Server server, MessageHandler sender)
     {
         numJugadores = 0;
         this.id = id;
-        this.maxJugadores = 1;
+        this.maxJugadores = 2;
         players = new List<Jugador>();
         this.server = server;
         this.sender = sender;
+        started = false;
     }
 
     //Retorna true si no cabe más gente.
@@ -47,6 +48,7 @@ public class Room
         if (IsFull())
         {
             sender.SendChangeScene("Escena1", this);
+            started = true;
         }
         return true;
     }
