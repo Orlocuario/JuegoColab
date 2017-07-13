@@ -56,11 +56,7 @@ public class PlayerController : MonoBehaviour
      */
     private bool isGoingRight()
     {
-       if(!leftPressed && rightPressed)
-        {
-            return true;
-        }
-        return false;
+        return CnInputManager.GetAxisRaw("Horizontal") > 0f;
     }
 
     /**
@@ -68,11 +64,7 @@ public class PlayerController : MonoBehaviour
      */
     private bool isGoingLeft()
     {
-        if(!rightPressed && leftPressed)
-        {
-            return true;
-        }
-        return false;
+        return CnInputManager.GetAxisRaw("Horizontal") < 0f;
     }
 
     /**
@@ -88,7 +80,7 @@ public class PlayerController : MonoBehaviour
      */
     private bool isJumping(bool isGrounded)
     {
-        return jumpPressed && isGrounded;
+        return CnInputManager.GetButtonDown("Jump Button") && isGrounded;
     }
 
     /**

@@ -68,7 +68,6 @@ public class Client : MonoBehaviour {
                 string message = formatter.Deserialize(stream) as string;
                 Debug.Log("incoming message event received: " + message);
                 HandleMessage(message);
-                GameObject.Find("ConnectText").GetComponent<Text>().text = message;
                 break;
             case NetworkEventType.DisconnectEvent:
                 Debug.Log("disconnected from server");
