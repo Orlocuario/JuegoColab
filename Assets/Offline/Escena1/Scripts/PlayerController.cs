@@ -194,6 +194,22 @@ public class PlayerController : MonoBehaviour
         
     }
 
+    private void OnCollisionEnter2D(Collision2D other)
+    {
+        if(other.gameObject.tag == "MovingPlatform")
+        {
+            transform.parent = other.transform;
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D other)
+    {
+        if(other.gameObject.tag == "MovingPlatform")
+        {
+            transform.parent = null;
+        }
+    }
+
     public void SetVariablesFromServer(float positionX, float positionY, bool isGrounded, float speed, int direction)
     {
         if (localPlayer)
