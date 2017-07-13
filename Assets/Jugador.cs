@@ -4,9 +4,14 @@ using System.Collections;
 public class Jugador
 {
     public int connectionId;
-    Room room;
+    public Room room;
     public bool connected;
     public int charId;
+    public float positionX;
+    public float positionY;
+    public bool isGrounded;
+    public float speed;
+    public int direction;
 
     public Jugador(int connectionId, int charId, Room room)
     {
@@ -14,5 +19,10 @@ public class Jugador
         this.room = room;
         this.charId = charId;
         connected = true;
+        positionX = 0;
+        positionY = 0;
+        isGrounded = false;
+        speed = 0;
+        direction = 1;
     }
 }

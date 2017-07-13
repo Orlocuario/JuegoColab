@@ -20,25 +20,36 @@ public class PlayerController : MonoBehaviour
     public bool leftPressed;
     public bool rightPressed;
     public bool jumpPressed;
-
-
+    public bool localPlayer;
+    private int direction;  //1 = derecha, -1 = izquierda
+    private Vector3 previous_transform;
+    private Transform transform;
+    public int characterId;
+    public float speed; //For animation nonlocal purposes
     // Use this for initialization
     void Start()
     {
+        transform = GetComponent<Transform>();
         rb2d = GetComponent<Rigidbody2D>();
+        rb2d.isKinematic = true;
         myAnim = GetComponent<Animator>();
         respawnPosition = transform.position;
         theLevelManager = FindObjectOfType<LevelManager>();
         leftPressed = false;
         rightPressed = false;
         jumpPressed = false;
+        localPlayer = false;
+        direction = 1;
 }
 
-    // Update is called once per frame
-    void Update()
+    public void Activate(int charId)
     {
-
+        localPlayer = true;
+        rb2d.isKinematic = false;
+        GetComponent<BoxCollider2D>().enabled = true;
+        this.characterId = charId;
     }
+
 
     /**
      * Checks whether the character is going right.   
@@ -83,40 +94,87 @@ public class PlayerController : MonoBehaviour
     /**
      * 
      */
-    private void FixedUpdate()
+    
+    private bool CheckIfSomethingChanged()
     {
-        
-        if (isGoingRight())
+        Vector3 newPosition = transform.position;
+        if(previous_transform.x != newPosition.x)
         {
-            rb2d.velocity = new Vector3(moveSpeed, rb2d.velocity.y, 0f);
-            transform.localScale = new Vector3(1f, 1f, 1f);
-            EnviarAccion(transform.position.x, transform.position.y);
+            return true;
         }
-        else if (isGoingLeft())
+        if(previous_transform.y != newPosition.y)
         {
-            rb2d.velocity = new Vector3(-moveSpeed, rb2d.velocity.y, 0f);
-            transform.localScale = new Vector3(-1f, 1f, 1f);
-            EnviarAccion(transform.position.x, transform.position.y);
-
+            return true;
         }
-        else // it's not moving
+        return false;
+    }
+
+
+    private void SynchronizeNonLocalPlayer()
+    {
+        if (!localPlayer)
         {
-            rb2d.velocity = new Vector3(0f, rb2d.velocity.y, 0f);
+            if(direction == 1)
+            {
+                transform.localScale = new Vector3(1f, 1f, 1f);
+            }
+            if(direction == -1)
+            {
+                transform.localScale = new Vector3(-1f, 1f, 1f);
+            }
+            myAnim.SetFloat("Speed", speed);
+            myAnim.SetBool("Ground", isGrounded);
+
         }
+    }
 
-        isGrounded = isItGrounded();
+    private int updateFrames = 0;
 
-        if (isJumping(isGrounded))
+    private void Update()
+    {
+        SynchronizeNonLocalPlayer();
+        if (localPlayer)
         {
-            EnviarAccion(transform.position.x, transform.position.y);
-            //rb2d.velocity = new Vector3(rb2d.velocity.x, jumpSpeed, 0f);
-            rb2d.AddForce(new Vector2(0,jumpSpeed), ForceMode2D.Impulse);
-            jumpPressed = false;
-        }
 
-        myAnim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
-        myAnim.SetBool("Ground", isGrounded);
+            if (isGoingRight())
+            {
+                rb2d.velocity = new Vector3(moveSpeed, rb2d.velocity.y, 0f);
+                transform.localScale = new Vector3(1f, 1f, 1f);
+                direction = 1;
+            }
+            else if (isGoingLeft())
+            {
+                rb2d.velocity = new Vector3(-moveSpeed, rb2d.velocity.y, 0f);
+                transform.localScale = new Vector3(-1f, 1f, 1f);
+                direction = -1;
+            }
+            else // it's not moving
+            {
+                rb2d.velocity = new Vector3(0f, rb2d.velocity.y, 0f);
+            }
 
+            isGrounded = isItGrounded();
+
+            if (isJumping(isGrounded))
+            {
+                //rb2d.velocity = new Vector3(rb2d.velocity.x, jumpSpeed, 0f);
+                rb2d.AddForce(new Vector2(0, jumpSpeed), ForceMode2D.Impulse);
+                jumpPressed = false;
+            }
+            if (CheckIfSomethingChanged())
+            {
+                updateFrames++;
+                if (updateFrames < 2)
+                {
+                    return;
+                }
+                updateFrames = 0;
+                SendObjectDataToServer();
+            }
+            previous_transform = transform.position;
+            myAnim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
+            myAnim.SetBool("Ground", isGrounded);
+        }      
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -136,20 +194,24 @@ public class PlayerController : MonoBehaviour
         
     }
 
-    public void EnviarAccion(float position_x, float position_y)
+    public void SetVariablesFromServer(float positionX, float positionY, bool isGrounded, float speed, int direction)
     {
-        if (isGoingRight())
+        if (localPlayer)
         {
-            Debug.Log("ChangePosition/1/" + position_x + "/" + position_y + "/Derecha");
+            return;
         }
-        else if (isGoingLeft())
-        {
-            Debug.Log("ChangePosition/1/" + position_x + "/" + position_y + "/Izquierda");
-        }
-        else if (isJumping(isItGrounded()))
-        {
-            Debug.Log("ChangePosition/1/" + position_x + "/" + position_y + "/Salto");
-        }
-
+        transform.position = new Vector3(positionX, positionY);
+        this.isGrounded = isGrounded;
+        this.speed = speed;
+        this.direction = direction;
+    }
+    public void SendObjectDataToServer()
+    {
+        float position_x = transform.position.x;
+        float position_y = transform.position.y;
+        bool grounded = isGrounded;
+        float speed = Mathf.Abs(rb2d.velocity.x);
+        string message = "ChangePosition/" + characterId + "/" + position_x + "/" + position_y + "/" + isGrounded + "/" + speed + "/" + direction;
+        Client.instance.SendMessageToServer(message);
     }
 }

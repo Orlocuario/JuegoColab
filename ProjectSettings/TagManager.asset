@@ -9,6 +9,10 @@ TagManager:
   - Ground
   - whatIsGround
   - JumpButton
+  - LevelManager
+  - Player1
+  - Player2
+  - Player3
   layers:
   - Default
   - TransparentFX
