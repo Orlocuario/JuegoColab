@@ -50,7 +50,6 @@ public class PlayerController : MonoBehaviour
         this.characterId = charId;
     }
 
-
     /**
      * Checks whether the character is going right.   
      */
@@ -100,7 +99,6 @@ public class PlayerController : MonoBehaviour
         }
         return false;
     }
-
 
     private void SynchronizeNonLocalPlayer()
     {

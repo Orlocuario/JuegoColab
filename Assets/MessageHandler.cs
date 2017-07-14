@@ -25,9 +25,19 @@ public class MessageHandler
             case "ChangePosition":
                 SendUpdatedPosition(message, connectionId, arreglo);
                 break;
+            case "NewChatMessage":
+                SendNewChatMessage(message, connectionId);
+                break;
             default:
                 break;
         }
+    }
+
+    private void SendNewChatMessage(string chatMessage, int connectionID)
+    {
+        Jugador player = server.GetPlayer(connectionID);
+        Room room = player.room;
+        room.SendMessageToAllPlayers(chatMessage);
     }
 
     private void SendUpdatedPosition(string message, int connectionID, string[] data)

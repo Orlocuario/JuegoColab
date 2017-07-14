@@ -17,7 +17,7 @@ public class Room
     {
         numJugadores = 0;
         this.id = id;
-        this.maxJugadores = 3;
+        this.maxJugadores = 1;
         players = new List<Jugador>();
         this.server = server;
         this.sender = sender;
