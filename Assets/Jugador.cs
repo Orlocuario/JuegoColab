@@ -12,7 +12,9 @@ public class Jugador
     public bool isGrounded;
     public float speed;
     public int direction;
-
+    public bool pressingJump;
+    public bool pressingRight;
+    public bool pressingLeft;
     public Jugador(int connectionId, int charId, Room room)
     {
         this.connectionId = connectionId;
@@ -24,5 +26,8 @@ public class Jugador
         isGrounded = false;
         speed = 0;
         direction = 1;
-    }
+        pressingJump = false;
+        pressingRight = false;
+        pressingLeft = false;
+}
 }

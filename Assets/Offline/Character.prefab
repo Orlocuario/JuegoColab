@@ -180,6 +180,11 @@ MonoBehaviour:
   rightPressed: 0
   jumpPressed: 0
   localPlayer: 0
+  characterId: 0
+  speed: 0
+  remoteRight: 0
+  remoteLeft: 0
+  remoteJumping: 0
 --- !u!198 &198975797153608490
 ParticleSystem:
   m_ObjectHideFlags: 1

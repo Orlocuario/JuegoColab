@@ -23,11 +23,6 @@ public class LevelManager : MonoBehaviour {
         players[0] = GameObject.FindGameObjectsWithTag("Player1")[0];
         players[1] = GameObject.FindGameObjectsWithTag("Player2")[0];
         players[2] = GameObject.FindGameObjectsWithTag("Player3")[0];
-        foreach(GameObject jugador in players)
-        {
-            jugador.GetComponent<BoxCollider2D>().enabled = false;
-        }
-
         switch (id)
         {
             case 0:
