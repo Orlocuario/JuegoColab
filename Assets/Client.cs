@@ -17,7 +17,7 @@ public class Client : MonoBehaviour {
     int connectionId;
     int channelId;
     public static Client instance;
-    int bufferSize = 75;
+    int bufferSize = 100;
 
 	void Start () {
         DontDestroyOnLoad(this);
@@ -110,6 +110,9 @@ public class Client : MonoBehaviour {
         bool isGrounded = bool.Parse(data[4]);
         float speed = float.Parse(data[5], CultureInfo.InvariantCulture);
         int direction = Int32.Parse(data[6]);
+        bool pressingJump = bool.Parse(data[7]);
+        bool pressingLeft = bool.Parse(data[8]);
+        bool pressingRight = bool.Parse(data[9]);
         GameObject player;
         switch (charId)
         {
@@ -127,7 +130,7 @@ public class Client : MonoBehaviour {
                 break;
         }
         PlayerController script = player.GetComponent<PlayerController>();
-        script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction);
+        script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction, pressingRight, pressingLeft, pressingJump);
 
     }
     private void HandleChangeScene(string[] arreglo)
@@ -141,8 +144,7 @@ public class Client : MonoBehaviour {
         string charId = arreglo[1];
         int charIdint = Convert.ToInt32(charId);
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.SetCharAsLocal(charIdint);
-        
+        scriptLevel.SetCharAsLocal(charIdint); 
     }
 
 }

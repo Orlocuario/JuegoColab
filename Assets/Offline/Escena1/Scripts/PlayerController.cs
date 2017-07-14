@@ -26,67 +26,102 @@ public class PlayerController : MonoBehaviour
     private Transform transform;
     public int characterId;
     public float speed; //For animation nonlocal purposes
+
+
+    public bool remoteRight; //Used to synchronize data from the server
+    public bool remoteLeft; 
+    public bool remoteJumping;
+
     // Use this for initialization
     void Start()
     {
+        remoteRight = false;
+        remoteLeft = false;
+        remoteJumping = false;
         transform = GetComponent<Transform>();
         rb2d = GetComponent<Rigidbody2D>();
-        rb2d.isKinematic = true;
         myAnim = GetComponent<Animator>();
         respawnPosition = transform.position;
         theLevelManager = FindObjectOfType<LevelManager>();
-        leftPressed = false;
-        rightPressed = false;
-        jumpPressed = false;
         localPlayer = false;
         direction = 1;
-}
+    }
 
     public void Activate(int charId)
     {
         localPlayer = true;
-        rb2d.isKinematic = false;
-        GetComponent<BoxCollider2D>().enabled = true;
         this.characterId = charId;
     }
 
-
-    /**
-     * Checks whether the character is going right.   
-     */
     private bool isGoingRight()
     {
-        return CnInputManager.GetAxisRaw("Horizontal") > 0f;
+        if (localPlayer)
+        {
+            float axis = CnInputManager.GetAxisRaw("Horizontal");
+            if (!remoteRight && axis>0)
+            {
+                remoteRight = true;
+                remoteLeft = false;
+                SendObjectDataToServer();
+            }
+            else if(remoteRight && axis<=0)
+            {
+                remoteRight = false;
+                SendObjectDataToServer();
+            }
+            return CnInputManager.GetAxisRaw("Horizontal") > 0f;
+        }
+            return remoteRight;
     }
 
-    /**
-     * Checks whether the character is going left.   
-     */
     private bool isGoingLeft()
     {
-        return CnInputManager.GetAxisRaw("Horizontal") < 0f;
+        if (localPlayer)
+        {
+            float axis = CnInputManager.GetAxisRaw("Horizontal");
+            if (!remoteLeft && axis < 0)
+            {
+                remoteLeft = true;
+                remoteRight = false;
+                SendObjectDataToServer();
+            }
+            else if(remoteLeft && axis >= 0)
+            {
+                remoteLeft = false;
+                SendObjectDataToServer();
+            }
+            return axis < 0f;
+        }
+        return remoteLeft;
     }
 
-    /**
-     * Checks whether the character is going left.   
-     */
     private bool isItGrounded()
     {
-        return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+        bool ground = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+        return ground;
     }
 
-    /**
-     * Checks whether the character is jumping.   
-     */
     private bool isJumping(bool isGrounded)
     {
-        return CnInputManager.GetButtonDown("Jump Button") && isGrounded;
+        if (localPlayer)
+        {
+            bool pressedJump = CnInputManager.GetButtonDown("Jump Button");
+            bool saltando = pressedJump && isGrounded;
+            if(saltando && !remoteJumping)
+            {
+                remoteJumping = true;
+                SendObjectDataToServer();
+            }
+            else if(!saltando && remoteJumping)
+            {
+                remoteJumping = false;
+                SendObjectDataToServer();
+            }
+            return saltando;
+        }
+        return remoteJumping;
     }
 
-    /**
-     * 
-     */
-    
     private bool CheckIfSomethingChanged()
     {
         Vector3 newPosition = transform.position;
@@ -100,7 +135,6 @@ public class PlayerController : MonoBehaviour
         }
         return false;
     }
-
 
     private void SynchronizeNonLocalPlayer()
     {
@@ -124,54 +158,34 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        SynchronizeNonLocalPlayer();
-        if (localPlayer)
+        if (isGoingRight())
         {
-
-            if (isGoingRight())
-            {
-                rb2d.velocity = new Vector3(moveSpeed, rb2d.velocity.y, 0f);
-                transform.localScale = new Vector3(1f, 1f, 1f);
-                direction = 1;
-            }
-            else if (isGoingLeft())
-            {
-                rb2d.velocity = new Vector3(-moveSpeed, rb2d.velocity.y, 0f);
-                transform.localScale = new Vector3(-1f, 1f, 1f);
-                direction = -1;
-            }
-            else // it's not moving
-            {
-                rb2d.velocity = new Vector3(0f, rb2d.velocity.y, 0f);
-            }
-
-            isGrounded = isItGrounded();
-
-            if (isJumping(isGrounded))
-            {
-                //rb2d.velocity = new Vector3(rb2d.velocity.x, jumpSpeed, 0f);
-                rb2d.AddForce(new Vector2(0, jumpSpeed), ForceMode2D.Impulse);
-                jumpPressed = false;
-            }
-            if (CheckIfSomethingChanged())
-            {
-                updateFrames++;
-                if (updateFrames < 1)
-                {
-                    return;
-                }
-                updateFrames = 0;
-                SendObjectDataToServer();
-            }
-            previous_transform = transform.position;
-            myAnim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
-            myAnim.SetBool("Ground", isGrounded);
-        }      
+            rb2d.velocity = new Vector3(moveSpeed, rb2d.velocity.y, 0f);
+            transform.localScale = new Vector3(1f, 1f, 1f);
+            direction = 1;
+        }
+        else if (isGoingLeft())
+        {
+            rb2d.velocity = new Vector3(-moveSpeed, rb2d.velocity.y, 0f);
+            transform.localScale = new Vector3(-1f, 1f, 1f);
+            direction = -1;
+        }
+        else // it's not moving
+        {
+            rb2d.velocity = new Vector3(0f, rb2d.velocity.y, 0f);
+        }
+        isGrounded = isItGrounded();
+        if (isJumping(isGrounded))
+        {
+            rb2d.AddForce(new Vector2(0, jumpSpeed), ForceMode2D.Impulse);
+        }
+        previous_transform = transform.position;
+        myAnim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
+        myAnim.SetBool("Ground", isGrounded);  
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-
         if(other.tag == "KillPlane")
         {
             //gameObject.SetActive(false); 
@@ -182,8 +196,7 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Checkpoint")
         {
             respawnPosition = other.transform.position;
-        }
-        
+        }        
     }
 
     private void OnCollisionEnter2D(Collision2D other)
@@ -202,7 +215,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SetVariablesFromServer(float positionX, float positionY, bool isGrounded, float speed, int direction)
+    public void SetVariablesFromServer(float positionX, float positionY, bool isGrounded, float speed, int direction, bool remoteRight, bool remoteLeft, bool remoteJumping)
     {
         if (localPlayer)
         {
@@ -212,14 +225,19 @@ public class PlayerController : MonoBehaviour
         this.isGrounded = isGrounded;
         this.speed = speed;
         this.direction = direction;
+        this.remoteRight = remoteRight;
+        this.remoteLeft = remoteLeft;
+        this.remoteJumping = remoteJumping;
+        SynchronizeNonLocalPlayer();
     }
+
     public void SendObjectDataToServer()
     {
         float position_x = transform.position.x;
         float position_y = transform.position.y;
         bool grounded = isGrounded;
         float speed = Mathf.Abs(rb2d.velocity.x);
-        string message = "ChangePosition/" + characterId + "/" + position_x + "/" + position_y + "/" + isGrounded + "/" + speed + "/" + direction;
+        string message = "ChangePosition/" + characterId + "/" + position_x + "/" + position_y + "/" + isGrounded + "/" + speed + "/" + direction + "/" + remoteJumping + "/" + remoteLeft + "/" + remoteRight;
         Client.instance.SendMessageToServer(message);
     }
 }
