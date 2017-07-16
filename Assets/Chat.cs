@@ -13,26 +13,23 @@ public class Chat : MonoBehaviour
     public Text myName = null; // Lo que se está escribiendo, se hace en "myName"
     public Text theirName = null;
 
-    DateTime date;
-
     string word;
     string entered;
     string historial;
-    string role;
 
     int wordIndex = 0;
     int NumeroPartidas = 0;
+    int timeMouseDown;
 
-    bool shift;
-    bool delete;
-    bool enter;
+    bool tab = false;
+    public static bool mouseDown;
 
     public void Start()
     {
         instance = this;
     }
 
-    public string SetJugador() //or array :D
+    public string SetJugador()
     {
         PlayerController player1 = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<PlayerController>();
         PlayerController player2 = GameObject.FindGameObjectsWithTag("Player2")[0].GetComponent<PlayerController>();
@@ -68,14 +65,164 @@ public class Chat : MonoBehaviour
             default:
                 return null;
         }
-        return role; //Reemplazar por mago, inventor o cazador
+        return role;
     }
 
+    public string[] Update(string alphabet)
+    {
+        timeMouseDown += (int)Time.deltaTime;
+        int largo1 = myName.text.Length;
+        int largo2 = word.Length;
+        largo1 = largo1 - 1 * timeMouseDown;
+        largo2 = largo2 - 1 * timeMouseDown;
+        if (largo1 < 0)
+        {
+            return null;
+        }
+        else
+        {
+            myName.text = myName.text.Substring(0, largo1);
+            word = word.Substring(0, largo2);
+            string[] myNameWord;
+            myNameWord = new string[2] {myName.text, word};
+            return myNameWord;
+        }
+    }
+    
     public void AlphabetFunction(string alphabet)
     {
-        delete = false;
-        enter = false;
-        shift = false;
+        bool delete = false;
+        bool enter = false;
+
+        if (alphabet == "tab")
+        {
+            alphabet = "";
+            tab = !tab;
+        }
+        else if (alphabet == "delete")
+        {
+            alphabet = "";
+            delete = true;
+        }
+        else if (alphabet == "enter" && word != "")
+        {
+            alphabet = "";
+            enter = true;
+        }
+        else if (alphabet == "enter" && word == "")
+        {
+            alphabet = "";
+            return;
+        }
+
+        if (tab)
+        {
+            string letra = TabFunction(alphabet);
+            alphabet = letra;
+        }
+        else
+        {
+            alphabet = alphabet.ToLower();
+        }
+
+        if (delete)
+        {
+            string[] myNameWord = Update(alphabet);
+            myName.text = myNameWord[0];
+            word = myNameWord[1];
+        }
+        else
+        {
+            wordIndex++;
+            word += alphabet;
+            myName.text = word;
+        }
+
+        if (enter)
+            {
+                entered = word;
+                word = "";
+                myName.text = "";
+                string texto = SetJugador() + ": " + entered;
+                Client.instance.SendNewChatMessageToServer(texto);
+                historial += "\r\n" + SetJugador() + ": " + entered + HoraMinuto();
+            }
+        else
+            {
+                return;
+            }
+    } // Lo que se escribe, manda y recibe
+
+    void OnPointerDown()
+    {
+        mouseDown = true;
+    }
+    void OnPointerUp()
+    {
+        mouseDown = false;
+        timeMouseDown = 0;
+    }
+
+    private string TabFunction(string alphabet)
+    {
+        alphabet = alphabet.ToUpper();
+        if (alphabet == "?")
+        {
+            alphabet = "/";
+        }
+        else if (alphabet == ",")
+        {
+            alphabet = "<";
+        }
+        else if (alphabet == ".")
+        {
+            alphabet = ">";
+        }
+        else if (alphabet == "1")
+        {
+            alphabet = "!";
+        }
+        else if (alphabet == "2")
+        {
+            alphabet = "'";
+        }
+        else if (alphabet == "3")
+        {
+            alphabet = "#";
+        }
+        else if (alphabet == "4")
+        {
+            alphabet = "$";
+        }
+        else if (alphabet == "5")
+        {
+            alphabet = "%";
+        }
+        else if (alphabet == "6")
+        {
+            alphabet = "&";
+        }
+        else if (alphabet == "7")
+        {
+            alphabet = "/";
+        }
+        else if (alphabet == "8")
+        {
+            alphabet = "(";
+        }
+        else if (alphabet == "9")
+        {
+            alphabet = ")";
+        }
+        else if (alphabet == "0")
+        {
+            alphabet = "=";
+        }
+        return alphabet;
+    }
+
+    public string HoraMinuto()
+    {
         string hora = DateTime.Now.Hour.ToString();
         string minutos = DateTime.Now.Minute.ToString();
 
@@ -84,125 +231,10 @@ public class Chat : MonoBehaviour
             minutos = "0" + minutos;
         }
 
-        if (alphabet == "shift" || alphabet == "SHIFT")
-        {
-            alphabet = "";
-            shift = true;
-        }
-        else if (alphabet == "delete" || alphabet == "DELETE")
-        {
-            alphabet = "";
-            delete = true;
-        }
-        else if ((alphabet == "enter" || alphabet == "ENTER") && word != "")
-        {
-            alphabet = "";
-            enter = true;
-        }
-        else if ((alphabet == "enter" || alphabet == "ENTER") && word == "")
-        {
-            alphabet = "";
-            return;
-        }
+        string tiempo = " (" + hora + ":" + minutos + ")";
 
-        if (shift)
-        {
-            alphabet = alphabet.ToUpper();
-            if (alphabet == "/")
-            {
-                alphabet = "?";
-            }
-            else if (alphabet == ",")
-            {
-                alphabet = "<";
-            }
-            else if (alphabet == ".")
-            {
-                alphabet = ">";
-            }
-            else if (alphabet == "1")
-            {
-                alphabet = "!";
-            }
-            else if (alphabet == "2")
-            {
-                alphabet = "@";
-            }
-            else if (alphabet == "3")
-            {
-                alphabet = "#";
-            }
-            else if (alphabet == "4")
-            {
-                alphabet = "$";
-            }
-            else if (alphabet == "5")
-            {
-                alphabet = "%";
-            }
-            else if (alphabet == "6")
-            {
-                alphabet = "^";
-            }
-            else if (alphabet == "7")
-            {
-                alphabet = "&";
-            }
-            else if (alphabet == "8")
-            {
-                alphabet = "*";
-            }
-            else if (alphabet == "9")
-            {
-                alphabet = "(";
-            }
-            else if (alphabet == "0")
-            {
-                alphabet = ")";
-            }
-        } // Condiciones de SHIFT
-        else
-        {
-            alphabet = alphabet.ToLower();
-        }
-
-        if (delete)
-        {
-            int largo1 = myName.text.Length;
-            int largo2 = word.Length;
-            largo1 = largo1 - 1;
-            largo2 = largo2 - 1;
-
-            if (largo1 < 0)
-            {
-                return;
-            }
-            else
-            {
-                myName.text = myName.text.Substring(0, largo1);
-                word = word.Substring(0, largo2);
-            }
-        }
-        else
-        {
-            wordIndex++;
-            word += alphabet;
-            myName.text = word;
-        }
-        if (enter)
-        {
-            entered = word;
-            word = "";
-            myName.text = "";
-            string texto = SetJugador() + ": " + entered;
-            Client.instance.SendNewChatMessageToServer(texto);
-            historial += "\r\n" + SetJugador() + ": " + entered + " (" + hora + ":" + minutos + ")";
-        }
-        else
-        {
-            return;
-        }
-    } // Lo que se escribe, manda y recibe
+        return tiempo;
+    } 
 
     public void UpdateChat(string message)
     {
