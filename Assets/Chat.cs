@@ -19,10 +19,8 @@ public class Chat : MonoBehaviour
 
     int wordIndex = 0;
     int NumeroPartidas = 0;
-    int timeMouseDown;
 
     bool tab = false;
-    public static bool mouseDown;
 
     public void Start()
     {
@@ -67,27 +65,6 @@ public class Chat : MonoBehaviour
         }
         return role;
     }
-
-    public string[] Update(string alphabet)
-    {
-        timeMouseDown += (int)Time.deltaTime;
-        int largo1 = myName.text.Length;
-        int largo2 = word.Length;
-        largo1 = largo1 - 1 * timeMouseDown;
-        largo2 = largo2 - 1 * timeMouseDown;
-        if (largo1 < 0)
-        {
-            return null;
-        }
-        else
-        {
-            myName.text = myName.text.Substring(0, largo1);
-            word = word.Substring(0, largo2);
-            string[] myNameWord;
-            myNameWord = new string[2] {myName.text, word};
-            return myNameWord;
-        }
-    }
     
     public void AlphabetFunction(string alphabet)
     {
@@ -127,7 +104,7 @@ public class Chat : MonoBehaviour
 
         if (delete)
         {
-            string[] myNameWord = Update(alphabet);
+            string[] myNameWord = ChatDelete(alphabet);
             myName.text = myNameWord[0];
             word = myNameWord[1];
         }
@@ -152,16 +129,6 @@ public class Chat : MonoBehaviour
                 return;
             }
     } // Lo que se escribe, manda y recibe
-
-    void OnPointerDown()
-    {
-        mouseDown = true;
-    }
-    void OnPointerUp()
-    {
-        mouseDown = false;
-        timeMouseDown = 0;
-    }
 
     private string TabFunction(string alphabet)
     {
@@ -219,6 +186,27 @@ public class Chat : MonoBehaviour
             alphabet = "=";
         }
         return alphabet;
+    }
+
+    public string[] ChatDelete(string alphabet)
+    {
+        int largo1 = myName.text.Length;
+        int largo2 = word.Length;
+        largo1 = largo1 - 1;
+        largo2 = largo2 - 1;
+
+        if (largo1 < 0)
+        {
+            return null;
+        }
+        else
+        {
+            myName.text = myName.text.Substring(0, largo1);
+            word = word.Substring(0, largo2);
+            string[] myNameWord;
+            myNameWord = new string[2] { myName.text, word };
+            return myNameWord;
+        }
     }
 
     public string HoraMinuto()
