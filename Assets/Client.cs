@@ -12,12 +12,12 @@ using UnityEngine.UI;
 
 public class Client : MonoBehaviour {
 
-    int port = 8888;
+    int port = 7777;
     int socketId; // Host ID
     int connectionId;
     int channelId;
     public static Client instance;
-    int bufferSize = 75;
+    int bufferSize = 100;
 
 	void Start () {
         DontDestroyOnLoad(this);
@@ -81,6 +81,11 @@ public class Client : MonoBehaviour {
         SendMessageToServer("RequestCharId");
     }
 
+    public void SendNewChatMessageToServer(string newChatMessage)
+    {
+        SendMessageToServer("NewChatMessage/" + newChatMessage);
+    }
+
     private void HandleMessage(string message)
     {
         char[] separator = new char[1];
@@ -97,39 +102,14 @@ public class Client : MonoBehaviour {
             case "ChangePosition":
                 HandleChangePosition(arreglo);
                 break;
+            case "NewChatMessage":
+                HandleNewChatMessage(arreglo);
+                break;
             default:
                 break;
         }
     }
 
-    private void HandleChangePosition(string[] data)
-    {
-        int charId = Int32.Parse(data[1]);
-        float positionX = float.Parse(data[2], CultureInfo.InvariantCulture);
-        float positionY = float.Parse(data[3], CultureInfo.InvariantCulture);
-        bool isGrounded = bool.Parse(data[4]);
-        float speed = float.Parse(data[5], CultureInfo.InvariantCulture);
-        int direction = Int32.Parse(data[6]);
-        GameObject player;
-        switch (charId)
-        {
-            case 0:
-                player = GameObject.FindGameObjectsWithTag("Player1")[0];
-                break;
-            case 1:
-                player = GameObject.FindGameObjectsWithTag("Player2")[0];
-                break;
-            case 2:
-                player = GameObject.FindGameObjectsWithTag("Player3")[0];
-                break;
-            default:
-                player = null;
-                break;
-        }
-        PlayerController script = player.GetComponent<PlayerController>();
-        script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction);
-
-    }
     private void HandleChangeScene(string[] arreglo)
     {
         string scene = arreglo[1];
@@ -141,8 +121,57 @@ public class Client : MonoBehaviour {
         string charId = arreglo[1];
         int charIdint = Convert.ToInt32(charId);
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.SetCharAsLocal(charIdint);
-        
+        scriptLevel.SetCharAsLocal(charIdint);  
     }
 
+    private void HandleChangePosition(string[] data)
+    {
+        int charId = Int32.Parse(data[1]);
+        float positionX = float.Parse(data[2], CultureInfo.InvariantCulture);
+        float positionY = float.Parse(data[3], CultureInfo.InvariantCulture);
+        bool isGrounded = bool.Parse(data[4]);
+        float speed = float.Parse(data[5], CultureInfo.InvariantCulture);
+        int direction = Int32.Parse(data[6]);
+        bool pressingJump = bool.Parse(data[7]);
+        bool pressingLeft = bool.Parse(data[8]);
+        bool pressingRight = bool.Parse(data[9]);
+        GameObject player;
+        PlayerController script;
+        switch (charId)
+        {
+            case 0:
+                player = GameObject.FindGameObjectsWithTag("Player1")[0];
+                script = player.GetComponent<MageController>();
+                break;
+            case 1:
+                player = GameObject.FindGameObjectsWithTag("Player2")[0];
+                script = player.GetComponent<WarriorController>();
+                break;
+            case 2:
+                player = GameObject.FindGameObjectsWithTag("Player3")[0];
+                script = player.GetComponent<EngineerController>();
+                break;
+            default:
+                player = null;
+                script = null;
+                break;
+        }
+        script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction, pressingRight, pressingLeft, pressingJump);
+
+    }
+    private void HandleChangeScene(string[] arreglo)
+    {
+        string scene = arreglo[1];
+        SceneManager.LoadScene(scene);
+    }
+
+    private void HandleNewChatMessage(string[] arreglo)
+    {
+        string chatMessage = arreglo[1];
+        Chat.instance.UpdateChat(chatMessage);
+        string charId = arreglo[1];
+        int charIdint = Convert.ToInt32(charId);
+        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+        scriptLevel.SetCharAsLocal(charIdint); 
+    }
 }

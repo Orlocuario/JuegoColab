@@ -9,14 +9,14 @@ using UnityEngine.UI;
 public class Server : MonoBehaviour {
 
     public int maxConnections;
-    int port = 8888;
+    int port = 7777;
     int socketId;
     int connectionId;
     int channelId;
     List<Room> rooms;
     MessageHandler messageHandler;
     public static Server instance;
-    int bufferSize = 75;
+    int bufferSize = 100;
 
     // Use this for initialization
     void Start ()
@@ -63,7 +63,6 @@ public class Server : MonoBehaviour {
                 break;
         }
     }
-
 
     public void SendMessageToClient(int clientId, string message)
     {
