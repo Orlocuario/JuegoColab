@@ -13,6 +13,7 @@ TagManager:
   - Player1
   - Player2
   - Player3
+  - ChatZone
   layers:
   - Default
   - TransparentFX
@@ -47,11 +48,11 @@ TagManager:
   - 
   - 
   m_SortingLayers:
-  - name: Default
-    uniqueID: 0
-    locked: 0
   - name: Background
     uniqueID: 2751096327
+    locked: 0
+  - name: Default
+    uniqueID: 0
     locked: 0
   - name: Suelo
     uniqueID: 3817540167
