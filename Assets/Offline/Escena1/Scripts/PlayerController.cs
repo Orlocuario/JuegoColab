@@ -7,13 +7,13 @@ public class PlayerController : MonoBehaviour
 {
 
     public float moveSpeed;
-    private Rigidbody2D rb2d;
+    protected Rigidbody2D rb2d;
     public float jumpSpeed;
     public Transform groundCheck;
     public float groundCheckRadius;
     public LayerMask whatIsGround;
     public bool isGrounded;
-    private Animator myAnim;
+    protected Animator myAnim;
     public Vector3 respawnPosition;
     public LevelManager theLevelManager;
 
@@ -21,9 +21,9 @@ public class PlayerController : MonoBehaviour
     public bool rightPressed;
     public bool jumpPressed;
     public bool localPlayer;
-    private int direction;  //1 = derecha, -1 = izquierda
-    private Vector3 previous_transform;
-    private Transform transform;
+    protected int direction;  //1 = derecha, -1 = izquierda
+    protected Vector3 previous_transform;
+    protected Transform transform;
     public int characterId;
     public float speed; //For animation nonlocal purposes
 
@@ -33,7 +33,7 @@ public class PlayerController : MonoBehaviour
     public bool remoteJumping;
 
     // Use this for initialization
-    void Start()
+    protected virtual void Start()
     {
         remoteRight = false;
         remoteLeft = false;
@@ -53,7 +53,7 @@ public class PlayerController : MonoBehaviour
         this.characterId = charId;
     }
 
-    private bool isGoingRight()
+    protected bool isGoingRight()
     {
         if (localPlayer)
         {
@@ -74,7 +74,7 @@ public class PlayerController : MonoBehaviour
             return remoteRight;
     }
 
-    private bool isGoingLeft()
+    protected bool isGoingLeft()
     {
         if (localPlayer)
         {
@@ -95,13 +95,13 @@ public class PlayerController : MonoBehaviour
         return remoteLeft;
     }
 
-    private bool isItGrounded()
+    protected bool isItGrounded()
     {
         bool ground = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
         return ground;
     }
 
-    private bool isJumping(bool isGrounded)
+    protected bool isJumping(bool isGrounded)
     {
         if (localPlayer)
         {
@@ -122,7 +122,7 @@ public class PlayerController : MonoBehaviour
         return remoteJumping;
     }
 
-    private bool CheckIfSomethingChanged()
+    protected bool CheckIfSomethingChanged()
     {
         Vector3 newPosition = transform.position;
         if(previous_transform.x != newPosition.x)
@@ -136,7 +136,7 @@ public class PlayerController : MonoBehaviour
         return false;
     }
 
-    private void SynchronizeNonLocalPlayer()
+    protected void SynchronizeNonLocalPlayer()
     {
         if (!localPlayer)
         {
@@ -154,9 +154,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private int updateFrames = 0;
+    protected int updateFrames = 0;
 
-    private void Update()
+    protected virtual void Update()
     {
         if (isGoingRight())
         {
@@ -184,7 +184,7 @@ public class PlayerController : MonoBehaviour
         myAnim.SetBool("Ground", isGrounded);  
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    protected void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "KillPlane")
         {
@@ -199,7 +199,7 @@ public class PlayerController : MonoBehaviour
         }        
     }
 
-    private void OnCollisionEnter2D(Collision2D other)
+    protected void OnCollisionEnter2D(Collision2D other)
     {
         if(other.gameObject.tag == "MovingPlatform")
         {
@@ -207,7 +207,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void OnCollisionExit2D(Collision2D other)
+    protected void OnCollisionExit2D(Collision2D other)
     {
         if(other.gameObject.tag == "MovingPlatform")
         {
@@ -231,7 +231,7 @@ public class PlayerController : MonoBehaviour
         SynchronizeNonLocalPlayer();
     }
 
-    public void SendObjectDataToServer()
+    protected void SendObjectDataToServer()
     {
         float position_x = transform.position.x;
         float position_y = transform.position.y;

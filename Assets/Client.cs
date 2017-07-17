@@ -114,22 +114,26 @@ public class Client : MonoBehaviour {
         bool pressingLeft = bool.Parse(data[8]);
         bool pressingRight = bool.Parse(data[9]);
         GameObject player;
+        PlayerController script;
         switch (charId)
         {
             case 0:
                 player = GameObject.FindGameObjectsWithTag("Player1")[0];
+                script = player.GetComponent<MageController>();
                 break;
             case 1:
                 player = GameObject.FindGameObjectsWithTag("Player2")[0];
+                script = player.GetComponent<WarriorController>();
                 break;
             case 2:
                 player = GameObject.FindGameObjectsWithTag("Player3")[0];
+                script = player.GetComponent<EngineerController>();
                 break;
             default:
                 player = null;
+                script = null;
                 break;
         }
-        PlayerController script = player.GetComponent<PlayerController>();
         script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction, pressingRight, pressingLeft, pressingJump);
 
     }
