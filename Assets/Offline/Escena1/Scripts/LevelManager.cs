@@ -11,7 +11,7 @@ public class LevelManager : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-        thePlayer = FindObjectOfType<PlayerController>();
+        thePlayer = null;
         client = GameObject.Find("ClientObject").GetComponent<Client>();
         client.RequestCharIdToServer();
 	}
@@ -23,21 +23,16 @@ public class LevelManager : MonoBehaviour {
         players[0] = GameObject.FindGameObjectsWithTag("Player1")[0];
         players[1] = GameObject.FindGameObjectsWithTag("Player2")[0];
         players[2] = GameObject.FindGameObjectsWithTag("Player3")[0];
-        foreach(GameObject jugador in players)
-        {
-            jugador.GetComponent<BoxCollider2D>().enabled = false;
-        }
-
         switch (id)
         {
             case 0:
-                player = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<PlayerController>();                
+                player = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<MageController>();                
                 break;
             case 1:
-                player = GameObject.FindGameObjectsWithTag("Player2")[0].GetComponent<PlayerController>();
+                player = GameObject.FindGameObjectsWithTag("Player2")[0].GetComponent<WarriorController>();
                 break;
             case 2:
-                player = GameObject.FindGameObjectsWithTag("Player3")[0].GetComponent<PlayerController>();
+                player = GameObject.FindGameObjectsWithTag("Player3")[0].GetComponent<EngineerController>();
                 break;
             default:
                 break;

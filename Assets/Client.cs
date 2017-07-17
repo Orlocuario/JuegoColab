@@ -17,7 +17,7 @@ public class Client : MonoBehaviour {
     int connectionId;
     int channelId;
     public static Client instance;
-    int bufferSize = 75;
+    int bufferSize = 100;
 
 	void Start () {
         DontDestroyOnLoad(this);
@@ -132,29 +132,46 @@ public class Client : MonoBehaviour {
         bool isGrounded = bool.Parse(data[4]);
         float speed = float.Parse(data[5], CultureInfo.InvariantCulture);
         int direction = Int32.Parse(data[6]);
+        bool pressingJump = bool.Parse(data[7]);
+        bool pressingLeft = bool.Parse(data[8]);
+        bool pressingRight = bool.Parse(data[9]);
         GameObject player;
+        PlayerController script;
         switch (charId)
         {
             case 0:
                 player = GameObject.FindGameObjectsWithTag("Player1")[0];
+                script = player.GetComponent<MageController>();
                 break;
             case 1:
                 player = GameObject.FindGameObjectsWithTag("Player2")[0];
+                script = player.GetComponent<WarriorController>();
                 break;
             case 2:
                 player = GameObject.FindGameObjectsWithTag("Player3")[0];
+                script = player.GetComponent<EngineerController>();
                 break;
             default:
                 player = null;
+                script = null;
                 break;
         }
-        PlayerController script = player.GetComponent<PlayerController>();
-        script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction);
+        script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction, pressingRight, pressingLeft, pressingJump);
+
+    }
+    private void HandleChangeScene(string[] arreglo)
+    {
+        string scene = arreglo[1];
+        SceneManager.LoadScene(scene);
     }
 
     private void HandleNewChatMessage(string[] arreglo)
     {
         string chatMessage = arreglo[1];
         Chat.instance.UpdateChat(chatMessage);
+        string charId = arreglo[1];
+        int charIdint = Convert.ToInt32(charId);
+        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+        scriptLevel.SetCharAsLocal(charIdint); 
     }
 }

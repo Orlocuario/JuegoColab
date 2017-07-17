@@ -16,7 +16,7 @@ public class Server : MonoBehaviour {
     List<Room> rooms;
     MessageHandler messageHandler;
     public static Server instance;
-    int bufferSize = 75;
+    int bufferSize = 100;
 
     // Use this for initialization
     void Start ()

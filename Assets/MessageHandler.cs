@@ -50,11 +50,17 @@ public class MessageHandler
         bool isGrounded = bool.Parse(data[4]);
         float speed = float.Parse(data[5], CultureInfo.InvariantCulture);
         int direction = Int32.Parse(data[6]);
+        bool pressingJump = bool.Parse(data[7]);
+        bool pressingLeft = bool.Parse(data[8]);
+        bool pressingRight = bool.Parse(data[9]);
         player.positionX = positionX;
         player.positionY = positionY;
         player.isGrounded = isGrounded;
         player.speed = speed;
         player.direction = direction;
+        player.pressingJump = pressingJump;
+        player.pressingLeft = pressingLeft;
+        player.pressingRight = pressingRight;
         room.SendMessageToAllPlayersExceptOne(message, connectionID);
     }
 
