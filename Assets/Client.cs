@@ -159,11 +159,6 @@ public class Client : MonoBehaviour {
         script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction, pressingRight, pressingLeft, pressingJump);
 
     }
-    private void HandleChangeScene(string[] arreglo)
-    {
-        string scene = arreglo[1];
-        SceneManager.LoadScene(scene);
-    }
 
     private void HandleNewChatMessage(string[] arreglo)
     {
