@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 public class Client : MonoBehaviour {
 
-    int port = 8888;
+    int port = 7777;
     int socketId; // Host ID
     int connectionId;
     int channelId;
@@ -81,6 +81,11 @@ public class Client : MonoBehaviour {
         SendMessageToServer("RequestCharId");
     }
 
+    public void SendNewChatMessageToServer(string newChatMessage)
+    {
+        SendMessageToServer("NewChatMessage/" + newChatMessage);
+    }
+
     private void HandleMessage(string message)
     {
         char[] separator = new char[1];
@@ -97,9 +102,26 @@ public class Client : MonoBehaviour {
             case "ChangePosition":
                 HandleChangePosition(arreglo);
                 break;
+            case "NewChatMessage":
+                HandleNewChatMessage(arreglo);
+                break;
             default:
                 break;
         }
+    }
+
+    private void HandleChangeScene(string[] arreglo)
+    {
+        string scene = arreglo[1];
+        SceneManager.LoadScene(scene);
+    }
+
+    private void HandleSetCharId(string[] arreglo)
+    {
+        string charId = arreglo[1];
+        int charIdint = Convert.ToInt32(charId);
+        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+        scriptLevel.SetCharAsLocal(charIdint);  
     }
 
     private void HandleChangePosition(string[] data)
@@ -143,12 +165,13 @@ public class Client : MonoBehaviour {
         SceneManager.LoadScene(scene);
     }
 
-    private void HandleSetCharId(string[] arreglo)
+    private void HandleNewChatMessage(string[] arreglo)
     {
+        string chatMessage = arreglo[1];
+        Chat.instance.UpdateChat(chatMessage);
         string charId = arreglo[1];
         int charIdint = Convert.ToInt32(charId);
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
         scriptLevel.SetCharAsLocal(charIdint); 
     }
-
 }
