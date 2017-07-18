@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 public class Client : MonoBehaviour {
 
-    int port = 4443;
+    int port = 6675;
     int socketId; // Host ID
     int connectionId;
     int channelId;

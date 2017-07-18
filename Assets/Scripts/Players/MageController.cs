@@ -17,6 +17,9 @@ public class MageController : PlayerController {
 
     protected override bool isAttacking()
     {
+        pressedAttack = CnInputManager.GetButtonDown("Attack Button");
+        return pressedAttack;
+        /*
         if (localPlayer)
         {
             pressedAttack = CnInputManager.GetButtonDown("Attack Button");
@@ -33,7 +36,7 @@ public class MageController : PlayerController {
             }
             return remoteAttacking;
         }
-        return remoteAttacking;
+        return remoteAttacking; */
     }
 
     private void CastFireball()
