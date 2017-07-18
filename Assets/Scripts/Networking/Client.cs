@@ -135,6 +135,7 @@ public class Client : MonoBehaviour {
         bool pressingJump = bool.Parse(data[7]);
         bool pressingLeft = bool.Parse(data[8]);
         bool pressingRight = bool.Parse(data[9]);
+        bool attacking = bool.Parse(data[10]);
         GameObject player;
         PlayerController script;
         switch (charId)
@@ -156,8 +157,7 @@ public class Client : MonoBehaviour {
                 script = null;
                 break;
         }
-        script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction, pressingRight, pressingLeft, pressingJump);
-
+        script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction, pressingRight, pressingLeft, pressingJump, attacking);
     }
 
     private void HandleNewChatMessage(string[] arreglo)
