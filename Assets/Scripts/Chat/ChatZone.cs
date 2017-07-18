@@ -7,12 +7,19 @@ public class ChatZone : MonoBehaviour {
 
     public GameObject chatButtonOn;
     public GameObject chatButtonOff;
-    Server server;
     LevelManager levelManager;
     Vector2 myPosition;
+    private bool lockValue;
+
+
     private void Start()
     {
+        lockValue = false;
+        chatButtonOn.SetActive(false);
+        chatButtonOff.SetActive(false);
+
         myPosition = gameObject.transform.position;
+        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
     }
 
     private void Update()
@@ -25,13 +32,16 @@ public class ChatZone : MonoBehaviour {
         {
             chatButtonOn.SetActive(true);
             chatButtonOff.SetActive(true);
+            lockValue = true;
         }
         else
         {
-            chatButtonOn.SetActive(false);
-            chatButtonOff.SetActive(false);
-            Chat.instance.ToggleChatOff();
+            if(lockValue)
+            {
+                chatButtonOn.SetActive(false);
+                chatButtonOff.SetActive(false);
+                lockValue = false;
+            }
         }
-
     }
 }
