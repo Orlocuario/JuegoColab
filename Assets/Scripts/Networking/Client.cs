@@ -164,9 +164,5 @@ public class Client : MonoBehaviour {
     {
         string chatMessage = arreglo[1];
         Chat.instance.UpdateChat(chatMessage);
-        string charId = arreglo[1];
-        int charIdint = Convert.ToInt32(charId);
-        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.SetCharAsLocal(charIdint); 
     }
 }

@@ -12,9 +12,7 @@ public class Chat : MonoBehaviour
     public static Chat instance;
     public Text myName = null; // Lo que se está escribiendo, se hace en "myName"
     public Text theirName = null;
-    public Color mageColor;
-    public Color warriorColor;
-    public Color engineerColor;
+    public Text textOriginalCanvas;
     public GameObject originalCanvas;
     public GameObject chatCanvas;
 
@@ -25,13 +23,17 @@ public class Chat : MonoBehaviour
     int wordIndex = 0;
     int NumeroPartidas = 0;
 
-    bool tab = false;
+    bool inicializador;
+    bool mayus = false;
 
     public void Start()
     {
         instance = this;
-        originalCanvas.SetActive(true);
-        chatCanvas.SetActive(false);
+        inicializador = true;
+        originalCanvas = GameObject.FindGameObjectWithTag("OriginalCanvas");
+        chatCanvas = GameObject.FindGameObjectWithTag("ChatCanvas");
+        textOriginalCanvas = GameObject.FindGameObjectWithTag("OriginalTextCanvas").GetComponent<Text>();
+        ToggleChatOff();
     }
 
     public string SetJugador()
@@ -72,16 +74,30 @@ public class Chat : MonoBehaviour
         }
         return role;
     }
-    
+
+    public string HoraMinuto()
+    {
+        string hora = DateTime.Now.Hour.ToString();
+        string minutos = DateTime.Now.Minute.ToString();
+
+        if (minutos.Length == 1)
+        {
+            minutos = "0" + minutos;
+        }
+
+        string tiempo = " (" + hora + ":" + minutos + ")";
+        return tiempo;
+    }
+
     public void AlphabetFunction(string alphabet)
     {
         bool delete = false;
         bool enter = false;
 
-        if (alphabet == "tab")
+        if (alphabet == "mayus")
         {
             alphabet = "";
-            tab = !tab;
+            mayus = !mayus;
         }
         else if (alphabet == "delete")
         {
@@ -99,9 +115,9 @@ public class Chat : MonoBehaviour
             return;
         }
 
-        if (tab)
+        if (mayus)
         {
-            string letra = TabFunction(alphabet);
+            string letra = MayusFunction(alphabet);
             alphabet = letra;
         }
         else
@@ -124,19 +140,17 @@ public class Chat : MonoBehaviour
 
         if (enter)
         {
-            if (SetJugador() == "Mage")
+            EnterFunction(false, "");
+        }
+        else
             {
-                theirName.color = mageColor;
+                return;
             }
-            else if (SetJugador() == "Warrior")
-            {
-                theirName.color = warriorColor;
-            }
-            else
-            {
-                theirName.color = engineerColor;
-            }
+    } // Lo que se escribe, manda y recibe
 
+    public void EnterFunction(bool connection, string message)  {
+        if (!connection)
+        {
             entered = word;
             word = "";
             myName.text = "";
@@ -145,12 +159,13 @@ public class Chat : MonoBehaviour
             historial += "\r\n" + SetJugador() + ": " + entered + HoraMinuto();
         }
         else
-            {
-                return;
-            }
-    } // Lo que se escribe, manda y recibe
+        {
+            Client.instance.SendNewChatMessageToServer(message);
+        }
+        
+    }
 
-    private string TabFunction(string alphabet)
+    private string MayusFunction(string alphabet)
     {
         alphabet = alphabet.ToUpper();
         if (alphabet == "?")
@@ -229,24 +244,66 @@ public class Chat : MonoBehaviour
         }
     }
 
-    public string HoraMinuto()
-    {
-        string hora = DateTime.Now.Hour.ToString();
-        string minutos = DateTime.Now.Minute.ToString();
-
-        if (minutos.Length == 1)
-        {
-            minutos = "0" + minutos;
-        }
-
-        string tiempo = " (" + hora + ":" + minutos + ")";
-
-        return tiempo;
-    } 
-
     public void UpdateChat(string message)
     {
-        theirName.text += "\r\n" + message;
+        char[] separator = new char[1];
+        separator[0] = ':';
+        string[] arreglo = message.Split(separator);
+        
+        if (!inicializador)
+        {
+            if (arreglo[0] == "Mage")
+            {
+                message = "<color=#64b78e>" + message + "</color>";
+            }
+            else if (arreglo[0] == "Warrior")
+            {
+                message = "<color=#e67f84>" + message + "</color>";
+            }
+            else if (arreglo[0] == "Engineer")
+            {
+                message = "<color=#f9ca45>" + message + "</color>";
+            }
+            theirName.text += "\r\n" + message;
+            textOriginalCanvas.text = theirName.text;
+        }
+        else
+        {
+            ChatInitializer(arreglo);
+        }     
+    }
+
+    private void ChatInitializer(string[] arreglo)
+    {
+        inicializador = false;
+        string messageInit = null;
+        if (arreglo[0] == "Mago")
+        {
+            messageInit = "<color=#64b78e>Mage Has Connected</color>";
+        }
+        else if (arreglo[0] == "Guerrero")
+        {
+            messageInit = "<color=#e67f84>Warrior Has Connected</color>";
+        }
+        else if (arreglo[0] == "Ingeniero")
+        {
+            messageInit = "<color=#f9ca45>Engineer Has Connected</color>";
+        }
+        textOriginalCanvas = GameObject.FindGameObjectWithTag("OriginalTextCanvas").GetComponent<Text>();
+        theirName.text += "\r\n" + messageInit;
+        textOriginalCanvas.text = theirName.text;
+    }
+
+    public void ToggleChatOff()
+    {
+        originalCanvas.SetActive(true);
+        chatCanvas.SetActive(false);
+    }
+
+    public void ToggleChatOn()
+    {
+        chatCanvas.SetActive(true);
+        originalCanvas.SetActive(false);
     }
 
     public void CreateTextChat(string exitGame) //proviene de cuando se corta el juego
@@ -281,15 +338,4 @@ public class Chat : MonoBehaviour
         }
     }
 
-    public void ToggleChatOff()
-    {
-        originalCanvas.SetActive(true);
-        chatCanvas.SetActive(false);
-    }
-
-    public void ToggleChatOn()
-    {
-        chatCanvas.SetActive(true);
-        originalCanvas.SetActive(false);
-    }
 }

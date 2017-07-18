@@ -52,7 +52,20 @@ public class PlayerController : MonoBehaviour
         localPlayer = true;
         this.characterId = charId;
 		sprite = GetComponent<SpriteRenderer>();
-		if (sprite) 
+        if (this.characterId == 0)
+        {
+            Chat.instance.EnterFunction(true, "Mago: Conectado");
+        }
+        if (this.characterId == 1)
+        {
+            Chat.instance.EnterFunction(true, "Guerrero: Conectado");
+        }
+        else if (this.characterId == 2)
+        {
+            Chat.instance.EnterFunction(true, "Ingeniero: Conectado");
+        }
+
+        if (sprite) 
 		{
 			sprite.sortingOrder = SortingOrder + 1;
 		}
