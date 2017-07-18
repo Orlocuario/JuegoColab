@@ -13,9 +13,9 @@ public class PlayerController : MonoBehaviour
     public float groundCheckRadius;
     public LayerMask whatIsGround;
     public bool isGrounded;
-    protected Animator myAnim;
+    public Animator myAnim;
     public Vector3 respawnPosition;
-    public LevelManager theLevelManager;
+    private LevelManager theLevelManager;
 
     public bool leftPressed;
     public bool rightPressed;
@@ -149,7 +149,7 @@ public class PlayerController : MonoBehaviour
                 transform.localScale = new Vector3(-1f, 1f, 1f);
             }
             myAnim.SetFloat("Speed", speed);
-            myAnim.SetBool("Ground", isGrounded);
+            myAnim.SetBool("IsGrounded", isGrounded);
 
         }
     }
@@ -181,7 +181,7 @@ public class PlayerController : MonoBehaviour
         }
         previous_transform = transform.position;
         myAnim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
-        myAnim.SetBool("Ground", isGrounded);  
+        myAnim.SetBool("IsGrounded", isGrounded);  
     }
 
     protected void OnTriggerEnter2D(Collider2D other)

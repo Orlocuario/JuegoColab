@@ -39,8 +39,7 @@ public class LevelManager : MonoBehaviour {
         }
         player.Activate(id);
         thePlayer = player;
-        Camera.main.GetComponent<CameraController>().target = player.gameObject;
-        
+        Camera.main.GetComponent<CameraController>().target = player.gameObject;        
     }
 	
 	// Update is called once per frame

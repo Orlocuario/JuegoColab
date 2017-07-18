@@ -114,7 +114,7 @@ Animator:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1883630760672116}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Avatar: {fileID: 0}
   m_Controller: {fileID: 9100000, guid: b8433c23d1b4056409d37fa19fdf82b4, type: 2}
   m_CullingMode: 0
@@ -143,8 +143,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   isGrounded: 0
+  myAnim: {fileID: 0}
   respawnPosition: {x: 0, y: 0, z: 0}
-  theLevelManager: {fileID: 0}
   leftPressed: 0
   rightPressed: 0
   jumpPressed: 0
