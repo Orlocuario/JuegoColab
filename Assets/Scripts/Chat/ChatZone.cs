@@ -6,6 +6,7 @@ using UnityEngine.UI;
 public class ChatZone : MonoBehaviour {
 
     public GameObject chatButtonOn;
+    public GameObject chatButtonOff;
     Server server;
     LevelManager levelManager;
     Vector2 myPosition;
@@ -23,10 +24,13 @@ public class ChatZone : MonoBehaviour {
         if (distance <= 3)
         {
             chatButtonOn.SetActive(true);
+            chatButtonOff.SetActive(true);
         }
         else
         {
             chatButtonOn.SetActive(false);
+            chatButtonOff.SetActive(false);
+            Chat.instance.ToggleChatOff();
         }
 
     }
