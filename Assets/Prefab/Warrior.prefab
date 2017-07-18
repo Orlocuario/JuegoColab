@@ -174,8 +174,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   isGrounded: 0
+  myAnim: {fileID: 0}
   respawnPosition: {x: 0, y: 0, z: 0}
-  theLevelManager: {fileID: 0}
   leftPressed: 0
   rightPressed: 0
   jumpPressed: 0
@@ -2903,7 +2903,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: -477427129
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300034, guid: 740b40ae1db274a57ae2a167878b3037, type: 3}
+  m_Sprite: {fileID: 21300036, guid: 57be59aba1adb7049a0c948e969b2279, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
