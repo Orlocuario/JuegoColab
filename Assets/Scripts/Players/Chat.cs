@@ -12,6 +12,11 @@ public class Chat : MonoBehaviour
     public static Chat instance;
     public Text myName = null; // Lo que se está escribiendo, se hace en "myName"
     public Text theirName = null;
+    public Color mageColor;
+    public Color warriorColor;
+    public Color engineerColor;
+    public GameObject originalCanvas;
+    public GameObject chatCanvas;
 
     string word;
     string entered;
@@ -25,6 +30,8 @@ public class Chat : MonoBehaviour
     public void Start()
     {
         instance = this;
+        originalCanvas.SetActive(true);
+        chatCanvas.SetActive(false);
     }
 
     public string SetJugador()
@@ -38,7 +45,7 @@ public class Chat : MonoBehaviour
 
         if (player1.localPlayer)
         {
-            charId = player1.characterId.ToString();           
+            charId = player1.characterId.ToString();
         }
         else if (player2.localPlayer)
         {
@@ -52,13 +59,13 @@ public class Chat : MonoBehaviour
         switch (charId)
         {
             case "0":
-                role = "Mago";
+                role = "Mage";
                 break;
             case "1":
-                role = "Guerrero";
+                role = "Warrior";
                 break;
             case "2":
-                role = "";
+                role = "Engineer";
                 break;
             default:
                 return null;
@@ -116,14 +123,27 @@ public class Chat : MonoBehaviour
         }
 
         if (enter)
+        {
+            if (SetJugador() == "Mage")
             {
-                entered = word;
-                word = "";
-                myName.text = "";
-                string texto = SetJugador() + ": " + entered;
-                Client.instance.SendNewChatMessageToServer(texto);
-                historial += "\r\n" + SetJugador() + ": " + entered + HoraMinuto();
+                theirName.color = mageColor;
             }
+            else if (SetJugador() == "Warrior")
+            {
+                theirName.color = warriorColor;
+            }
+            else
+            {
+                theirName.color = engineerColor;
+            }
+
+            entered = word;
+            word = "";
+            myName.text = "";
+            string texto = SetJugador() + ": " + entered;
+            Client.instance.SendNewChatMessageToServer(texto);
+            historial += "\r\n" + SetJugador() + ": " + entered + HoraMinuto();
+        }
         else
             {
                 return;
@@ -226,7 +246,7 @@ public class Chat : MonoBehaviour
 
     public void UpdateChat(string message)
     {
-        theirName.text += message;
+        theirName.text += "\r\n" + message;
     }
 
     public void CreateTextChat(string exitGame) //proviene de cuando se corta el juego
@@ -259,5 +279,17 @@ public class Chat : MonoBehaviour
                 }
             }
         }
+    }
+
+    public void ToggleChatOff()
+    {
+        originalCanvas.SetActive(true);
+        chatCanvas.SetActive(false);
+    }
+
+    public void ToggleChatOn()
+    {
+        chatCanvas.SetActive(true);
+        originalCanvas.SetActive(false);
     }
 }

@@ -26,8 +26,8 @@ public class PlayerController : MonoBehaviour
     protected Transform transform;
     public int characterId;
     public float speed; //For animation nonlocal purposes
-
-
+	public int SortingOrder = 0;
+	private SpriteRenderer sprite; 
     public bool remoteRight; //Used to synchronize data from the server
     public bool remoteLeft; 
     public bool remoteJumping;
@@ -51,6 +51,11 @@ public class PlayerController : MonoBehaviour
     {
         localPlayer = true;
         this.characterId = charId;
+		sprite = GetComponent<SpriteRenderer>();
+		if (sprite) 
+		{
+			sprite.sortingOrder = SortingOrder + 1;
+		}
     }
 
     protected bool isGoingRight()
@@ -152,6 +157,7 @@ public class PlayerController : MonoBehaviour
             myAnim.SetBool("Ground", isGrounded);
 
         }
+			
     }
 
     protected int updateFrames = 0;
