@@ -5323,7 +5323,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1364231206253246, guid: 6b39e9c3864d7c94a9d318ccbe368fe7, type: 2}
       propertyPath: m_Name
-      value: Canvas (1)
+      value: Canvas
       objectReference: {fileID: 0}
     - target: {fileID: 224490006759054034, guid: 6b39e9c3864d7c94a9d318ccbe368fe7,
         type: 2}
