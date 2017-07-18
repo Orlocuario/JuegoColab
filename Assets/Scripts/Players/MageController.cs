@@ -7,7 +7,7 @@ public class MageController : PlayerController {
 
     private int bolas;
     private int maxBolas;
-
+    public bool pressedAttack;
     protected override void Start()
     {
         base.Start();
@@ -19,7 +19,7 @@ public class MageController : PlayerController {
     {
         if (localPlayer)
         {
-            bool pressedAttack = CnInputManager.GetButtonDown("Attack Button");
+            pressedAttack = CnInputManager.GetButtonDown("Attack Button");
             if (pressedAttack && !remoteAttacking)
             {
                 remoteAttacking = true;
