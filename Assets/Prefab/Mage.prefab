@@ -143,8 +143,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   isGrounded: 0
+  myAnim: {fileID: 0}
   respawnPosition: {x: 0, y: 0, z: 0}
-  theLevelManager: {fileID: 0}
   leftPressed: 0
   rightPressed: 0
   jumpPressed: 0
