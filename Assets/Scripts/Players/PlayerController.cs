@@ -31,6 +31,7 @@ public class PlayerController : MonoBehaviour
     public bool remoteRight; //Used to synchronize data from the server
     public bool remoteLeft; 
     public bool remoteJumping;
+    public bool remoteAttacking;
 
     // Use this for initialization
     protected virtual void Start()
@@ -122,6 +123,11 @@ public class PlayerController : MonoBehaviour
         return remoteJumping;
     }
 
+    protected virtual bool isAttacking()
+    {
+        return false;
+    }
+
     protected bool CheckIfSomethingChanged()
     {
         Vector3 newPosition = transform.position;
@@ -150,7 +156,7 @@ public class PlayerController : MonoBehaviour
             }
             myAnim.SetFloat("Speed", speed);
             myAnim.SetBool("IsGrounded", isGrounded);
-
+            myAnim.SetBool("IsAttacking", isAttacking());
         }
     }
 
@@ -181,7 +187,8 @@ public class PlayerController : MonoBehaviour
         }
         previous_transform = transform.position;
         myAnim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
-        myAnim.SetBool("IsGrounded", isGrounded);  
+        myAnim.SetBool("IsGrounded", isGrounded);
+        myAnim.SetBool("IsAttacking", isAttacking());
     }
 
     protected void OnTriggerEnter2D(Collider2D other)
@@ -215,7 +222,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SetVariablesFromServer(float positionX, float positionY, bool isGrounded, float speed, int direction, bool remoteRight, bool remoteLeft, bool remoteJumping)
+    public void SetVariablesFromServer(float positionX, float positionY, bool isGrounded, float speed, int direction, bool remoteRight, bool remoteLeft, bool remoteJumping, bool remoteAttacking)
     {
         if (localPlayer)
         {
@@ -228,6 +235,7 @@ public class PlayerController : MonoBehaviour
         this.remoteRight = remoteRight;
         this.remoteLeft = remoteLeft;
         this.remoteJumping = remoteJumping;
+        this.remoteAttacking = remoteAttacking;
         SynchronizeNonLocalPlayer();
     }
 
@@ -237,7 +245,7 @@ public class PlayerController : MonoBehaviour
         float position_y = transform.position.y;
         bool grounded = isGrounded;
         float speed = Mathf.Abs(rb2d.velocity.x);
-        string message = "ChangePosition/" + characterId + "/" + position_x + "/" + position_y + "/" + isGrounded + "/" + speed + "/" + direction + "/" + remoteJumping + "/" + remoteLeft + "/" + remoteRight;
+        string message = "ChangePosition/" + characterId + "/" + position_x + "/" + position_y + "/" + isGrounded + "/" + speed + "/" + direction + "/" + remoteJumping + "/" + remoteLeft + "/" + remoteRight + "/" + remoteAttacking;
         Client.instance.SendMessageToServer(message);
     }
 }
