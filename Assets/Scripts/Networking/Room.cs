@@ -49,6 +49,9 @@ public class Room
         {
             sender.SendChangeScene("Escena1", this);
             started = true;
+            SendMessageToAllPlayers("Mage: Has Connected");
+            SendMessageToAllPlayers("Warrior: Has Connected");
+            SendMessageToAllPlayers("Engineer: Has Connected");
         }
         return true;
     }

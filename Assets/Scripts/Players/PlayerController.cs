@@ -26,8 +26,8 @@ public class PlayerController : MonoBehaviour
     protected Transform transform;
     public int characterId;
     public float speed; //For animation nonlocal purposes
-
-
+	public int SortingOrder = 0;
+	private SpriteRenderer sprite; 
     public bool remoteRight; //Used to synchronize data from the server
     public bool remoteLeft; 
     public bool remoteJumping;
@@ -52,6 +52,24 @@ public class PlayerController : MonoBehaviour
     {
         localPlayer = true;
         this.characterId = charId;
+		sprite = GetComponent<SpriteRenderer>();
+        if (this.characterId == 0)
+        {
+            Chat.instance.EnterFunction(true, "Mago: Conectado");
+        }
+        if (this.characterId == 1)
+        {
+            Chat.instance.EnterFunction(true, "Guerrero: Conectado");
+        }
+        else if (this.characterId == 2)
+        {
+            Chat.instance.EnterFunction(true, "Ingeniero: Conectado");
+        }
+
+        if (sprite) 
+		{
+			sprite.sortingOrder = SortingOrder + 1;
+		}
     }
 
     protected bool isGoingRight()
@@ -158,6 +176,7 @@ public class PlayerController : MonoBehaviour
             myAnim.SetBool("IsGrounded", isGrounded);
             myAnim.SetBool("IsAttacking", isAttacking());
         }
+			
     }
 
     protected int updateFrames = 0;
