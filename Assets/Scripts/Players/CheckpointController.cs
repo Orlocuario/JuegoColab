@@ -24,7 +24,8 @@ public class CheckpointController : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Player")
+        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+        if (other.tag == scriptLevel.thePlayer.tag)
         {
             theSpriteRenderer.sprite = flagOpen;
             checkpointActive = true;

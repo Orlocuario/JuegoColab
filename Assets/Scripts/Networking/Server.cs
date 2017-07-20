@@ -5,6 +5,7 @@ using UnityEngine.Networking;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEngine.UI;
+using System;
 
 public class Server : MonoBehaviour {
 
@@ -13,15 +14,17 @@ public class Server : MonoBehaviour {
     int socketId;
     int connectionId;
     int channelId;
+    int timesScene1IsLoaded;
     List<Room> rooms;
     MessageHandler messageHandler;
     public static Server instance;
     int bufferSize = 100;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
         instance = this;
+        timesScene1IsLoaded = 0;
         NetworkTransport.Init();
         ConnectionConfig config = new ConnectionConfig();
         channelId = config.AddChannel(QosType.Unreliable);
@@ -83,6 +86,7 @@ public class Server : MonoBehaviour {
         {
             player.connected = true;
             SendMessageToClient(connectionId, "ChangeScene/Escena1");
+            timesScene1IsLoaded += 1; //Suponiendo que esta funcion solo ejecuta la Escena1, sino habrá que cambiar esta variable
             return;
         }
 
@@ -94,6 +98,12 @@ public class Server : MonoBehaviour {
             rooms.Add(room);
         }
         room.AddPlayer(connectionId);
+    }
+
+    public int NumberOfScenes1()
+    {
+        var result = timesScene1IsLoaded / 3;
+        return result;
     }
 
     private void DeleteConnection(int connectionId)

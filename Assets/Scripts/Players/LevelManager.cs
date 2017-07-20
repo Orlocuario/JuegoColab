@@ -55,11 +55,14 @@ public class LevelManager : MonoBehaviour {
     public IEnumerator RespawnCo()
     {
         thePlayer.gameObject.SetActive(false);
-
         yield return new WaitForSeconds(waitToRespawn); 
-
         thePlayer.transform.position = thePlayer.respawnPosition;
         thePlayer.gameObject.SetActive(true);
+    }
+
+    public void ReloadLevel(string[] message)
+    {
+        Debug.Log("THEY ARE DEAD MUAJAJAJA");
     }
 
 }
