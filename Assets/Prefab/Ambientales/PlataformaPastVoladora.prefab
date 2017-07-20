@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4812617717262658}
   - component: {fileID: 212673208312808634}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: tileset_24 (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -36,7 +36,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4160053464921566}
   - component: {fileID: 212198123773794040}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: tileset_23
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52,7 +52,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4103660737102598}
   - component: {fileID: 212321408715653182}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: tileset_24
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -68,7 +68,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4142365336304422}
   - component: {fileID: 212487346846091236}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: tileset_25
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -85,9 +85,9 @@ GameObject:
   - component: {fileID: 4044712012198332}
   - component: {fileID: 60431991835273808}
   - component: {fileID: 251749565120026952}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: PlataformaPastVoladora
-  m_TagString: Untagged
+  m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

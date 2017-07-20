@@ -21,9 +21,22 @@ public class HurtPlayer : MonoBehaviour {
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.tag == "Player")
-        {
-            theLevelManager.Respawn();
-        }
+		if (other.tag == "Player1") 
+		{
+			theLevelManager.Respawn ();
+		} 
+
+		else if (other.tag == "Player2") 
+		
+		{
+			theLevelManager.Respawn ();
+		}
+
+		else if (other.tag == "Player2") 
+
+		{
+			theLevelManager.Respawn ();
+		}
+			
     }
 }

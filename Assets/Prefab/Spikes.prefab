@@ -9,75 +9,70 @@ Prefab:
     m_Modifications: []
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 0}
-  m_RootGameObject: {fileID: 1835914925010142}
+  m_RootGameObject: {fileID: 1930659124157646}
   m_IsPrefabParent: 1
---- !u!1 &1835914925010142
+--- !u!1 &1930659124157646
 GameObject:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   serializedVersion: 5
   m_Component:
-  - component: {fileID: 4668807220914626}
-  - component: {fileID: 114141587208771452}
-  - component: {fileID: 95626143404606218}
-  - component: {fileID: 212308026292622002}
+  - component: {fileID: 4367003542293488}
+  - component: {fileID: 212149458832725984}
+  - component: {fileID: 114143583481001148}
+  - component: {fileID: 61326637198023496}
   m_Layer: 0
-  m_Name: ChatZone
-  m_TagString: ChatZone
+  m_Name: Spikes
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4668807220914626
+--- !u!4 &4367003542293488
 Transform:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1835914925010142}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 10.974, y: 0.144, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: -1}
+  m_GameObject: {fileID: 1930659124157646}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.20999908, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!95 &95626143404606218
-Animator:
-  serializedVersion: 3
+--- !u!61 &61326637198023496
+BoxCollider2D:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1835914925010142}
+  m_GameObject: {fileID: 1930659124157646}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: d913b5619b50f4908a470d5449d2ebc9, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
---- !u!114 &114141587208771452
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: -0.0060920715, y: 0.010152996}
+  serializedVersion: 2
+  m_Size: {x: 0.15720508, y: 0.08157182}
+--- !u!114 &114143583481001148
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1835914925010142}
+  m_GameObject: {fileID: 1930659124157646}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac2514c8e44fd7e48bd0392a8b6b7eca, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b8246370886ff949bd3c36553bfd3e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chatButtonOn: {fileID: 0}
-  chatButtonOff: {fileID: 0}
---- !u!212 &212308026292622002
+--- !u!212 &212149458832725984
 SpriteRenderer:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1835914925010142}
+  m_GameObject: {fileID: 1930659124157646}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -102,8 +97,8 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
-  m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: a061c73fcafe84825b8597fc8a4e0022, type: 3}
+  m_SortingOrder: -1
+  m_Sprite: {fileID: 21301056, guid: 740b40ae1db274a57ae2a167878b3037, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
