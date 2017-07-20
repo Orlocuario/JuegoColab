@@ -9,7 +9,7 @@ using UnityEngine.UI;
 public class Server : MonoBehaviour {
 
     public int maxConnections;
-    int port = 7777;
+    int port = 6675;
     int socketId;
     int connectionId;
     int channelId;
