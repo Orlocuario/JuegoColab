@@ -14,6 +14,10 @@ TagManager:
   - Player2
   - Player3
   - ChatZone
+  - OriginalCanvas
+  - ChatCanvas
+  - OriginalTextCanvas
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX
