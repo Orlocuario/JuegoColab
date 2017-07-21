@@ -40,7 +40,7 @@ public class MessageHandler
     {
         Jugador player = server.GetPlayer(connectionId);
         Room room = player.room;
-        room.RecieveHUD(arreglo);
+        room.RecieveHUD(arreglo[1]);
     }
 
     private void SendNewChatMessage(string chatMessage, int connectionID)

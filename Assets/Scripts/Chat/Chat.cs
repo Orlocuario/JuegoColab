@@ -22,7 +22,7 @@ public class Chat : MonoBehaviour
     string numeroPartidas;
 
     int wordIndex = 0;
-    int numMaxPlayers = 2;
+    int numMaxPlayers = 1;
 
     bool inicializador;
     bool mayus = false;

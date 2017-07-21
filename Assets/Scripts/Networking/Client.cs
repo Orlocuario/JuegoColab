@@ -108,9 +108,19 @@ public class Client : MonoBehaviour {
             case "PlayersAreDead":
                 HandlePlayersAreDead(arreglo);
                 break;
+            case "RecoveryHUD":
+                HandleHUDToRoom(arreglo, connectionId);
+                break;
             default:
                 break;
         }
+    }
+
+    private void HandleHUDToRoom(string[] arreglo, int connectionId)
+    {
+        Jugador player = Server.instance.GetPlayer(connectionId);
+        Room room = player.room;
+        room.RecieveHUD(arreglo[1]);
     }
 
     private void HandlePlayersAreDead(string[] arreglo)

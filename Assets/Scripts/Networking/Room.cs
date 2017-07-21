@@ -11,8 +11,8 @@ public class Room
     public int id;
     public float maxHP = 250;
     public float maxMP = 250;
-    public float currentHP;
-    public float currentMP;
+    public float currentHP = 1;
+    public float currentMP = 1;
     Server server;
     MessageHandler sender;
     public bool started;
@@ -26,8 +26,8 @@ public class Room
         this.server = server;
         this.sender = sender;
         started = false;
-        maxHP = currentHP;
-        maxMP = currentMP;
+        //currentHP = maxHP;
+        //currentMP = maxMP;
     }
 
     //Retorna true si no cabe más gente.
@@ -101,10 +101,10 @@ public class Room
         }
     }
 
-    public void RecieveHUD(string[] arreglo)
+    public void RecieveHUD(string recoveryRate)
     {
-        ChangeHP(arreglo[1]);
-        ChangeMP(arreglo[2]);
+        ChangeMP(recoveryRate);
+        ChangeHP(recoveryRate);
     }
 
     public void ChangeHP(string deltaHP)

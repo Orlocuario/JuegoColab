@@ -11,9 +11,7 @@ public class ChatZone : MonoBehaviour {
     LevelManager levelManager;
     Vector2 myPosition;
     private bool lockValue;
-    public string increaseHPRate;
-    public string increaseMPRate;
-
+    public string HUDRate = "5";
 
     private void Start()
     {
@@ -35,7 +33,7 @@ public class ChatZone : MonoBehaviour {
         {
             chatButtonOn.SetActive(true);
             chatButtonOff.SetActive(true);
-            Client.instance.SendMessageToServer("RecoveryHUD/" + increaseHPRate + "/" + increaseMPRate);
+            Client.instance.SendMessageToServer("RecoveryHUD/" + HUDRate);
             lockValue = true;
         }
         else
