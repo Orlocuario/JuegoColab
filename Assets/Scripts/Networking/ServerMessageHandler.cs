@@ -3,11 +3,11 @@ using System.Collections;
 using System;
 using System.Globalization;
 
-public class MessageHandler
+public class ServerMessageHandler
 {
     Server server;
     
-    public MessageHandler(Server server)
+    public ServerMessageHandler(Server server)
     {
         this.server = server;
     }

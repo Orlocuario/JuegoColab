@@ -14,14 +14,14 @@ public class Room
     public float currentHP = 1;
     public float currentMP = 1;
     Server server;
-    MessageHandler sender;
+    ServerMessageHandler sender;
     public bool started;
     //Inicialización
-    public Room(int id, Server server, MessageHandler sender)
+    public Room(int id, Server server, ServerMessageHandler sender)
     {
         numJugadores = 0;
         this.id = id;
-        this.maxJugadores = 2;
+        this.maxJugadores = 3;
         players = new List<Jugador>();
         this.server = server;
         this.sender = sender;

@@ -16,7 +16,7 @@ public class Server : MonoBehaviour {
     int channelId;
     int timesScene1IsLoaded;
     List<Room> rooms;
-    MessageHandler messageHandler;
+    ServerMessageHandler messageHandler;
     public static Server instance;
     int bufferSize = 100;
 
@@ -31,7 +31,7 @@ public class Server : MonoBehaviour {
         HostTopology topology = new HostTopology(config, maxConnections);
         socketId = NetworkTransport.AddHost(topology, port);
         rooms = new List<Room>();
-        messageHandler = new MessageHandler(this);
+        messageHandler = new ServerMessageHandler(this);
     }
 
     // Update is called once per frame

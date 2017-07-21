@@ -63,7 +63,7 @@ public class LevelManager : MonoBehaviour {
 
         yield return new WaitForSeconds(waitToRespawn); 
 
-        thePlayer.transform.position = thePlayer.respawnPosition;
+        thePlayer.transform.position = thePlayer.respawnPosition + Vector3.up*0.1f;
         thePlayer.gameObject.SetActive(true);
         thePlayer.SendObjectDataToServer();
     }
