@@ -31,19 +31,26 @@ public class MageController : PlayerController {
         return remoteAttacking;
     }
 
-    public void CastFireball(int direction, float speed)
+
+    private void CastFireball(int direction, float speed)
+    {
+        Vector3 myPosition = transform.position;
+        CastLocalFireball(direction, speed,myPosition.x, myPosition.y,this);
+        SendFireballSignalToServer(direction, speed);
+    }
+
+    public void CastLocalFireball(int direction, float speed, float x, float y, MageController caster)
     {
         GameObject fireball = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/BolaM1"));
         FireballController controller = fireball.GetComponent<FireballController>();
-        Vector2 myPosition = transform.position;
-        controller.SetMovement(direction, speed, myPosition.x, myPosition.y);
+        controller.SetMovement(direction, speed, x, y, this);
     }
 
-    private void SendFireballSignalToServer()
-    {
+    private void SendFireballSignalToServer(int direction, float speed)
+    { 
         string x = transform.position.x.ToString();
-        string y = transform.position.y.ToString();
-        Client.instance.SendMessageToServer("CastFireball/" + x + "/" +y);
+        string y = transform.position.y.ToString(); 
+        Client.instance.SendMessageToServer("CastFireball/" + direction + "/" + speed + "/" + x + "/" +y);
     }
 
     protected override void Update()

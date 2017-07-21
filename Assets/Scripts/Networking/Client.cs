@@ -108,9 +108,22 @@ public class Client : MonoBehaviour {
             case "Attack":
                 HandleUpdatedAttackState(arreglo);
                 break;
+            case "CastFireball":
+                HandleCastFireball(arreglo);
+                break;
             default:
                 break;
         }
+    }
+
+    private void HandleCastFireball(string[] data)
+    {
+        int direction = Int32.Parse(data[1]);
+        float speed = float.Parse(data[2], CultureInfo.InvariantCulture);
+        float positionX = float.Parse(data[3], CultureInfo.InvariantCulture);
+        float positionY = float.Parse(data[4], CultureInfo.InvariantCulture);
+        MageController script = GetMage();
+        script.CastLocalFireball(direction, speed, positionX, positionY, script);
     }
 
     private void HandleUpdatedAttackState(string[] arreglo)
@@ -120,6 +133,7 @@ public class Client : MonoBehaviour {
         PlayerController script = GetPlayerController(charId);
         script.remoteAttacking = state;
     }
+
     private void HandleChangeScene(string[] arreglo)
     {
         string scene = arreglo[1];
@@ -155,7 +169,7 @@ public class Client : MonoBehaviour {
         Chat.instance.UpdateChat(chatMessage);
     }
 
-    private PlayerController GetPlayerController(int charId)
+    public PlayerController GetPlayerController(int charId)
     {
         GameObject player;
         PlayerController script;
@@ -178,6 +192,13 @@ public class Client : MonoBehaviour {
                 script = null;
                 break;
         }
+        return script;
+    }
+
+    public MageController GetMage()
+    {
+        GameObject player = GameObject.FindGameObjectsWithTag("Player1")[0];
+        MageController script = player.GetComponent<MageController>();
         return script;
     }
 }

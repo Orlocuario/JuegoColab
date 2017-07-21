@@ -31,11 +31,20 @@ public class MessageHandler
             case "Attack":
                 SendAttackState(message, connectionId,arreglo);
                 break;
+            case "CastFireball":
+                SendNewFireball(message, connectionId, arreglo);
+                break;
             default:
                 break;
         }
     }
 
+    private void SendNewFireball(string message, int connectionId, string[] data)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.SendMessageToAllPlayersExceptOne(message, connectionId);
+    }
     private void SendNewChatMessage(string chatMessage, int connectionID)
     {
         Jugador player = server.GetPlayer(connectionID);
