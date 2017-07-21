@@ -111,6 +111,12 @@ public class Client : MonoBehaviour {
             case "RecoveryHUD":
                 HandleHUDToRoom(arreglo, connectionId);
                 break;
+            case "Attack":
+                HandleUpdatedAttackState(arreglo);
+                break;
+            case "CastFireball":
+                HandleCastFireball(arreglo);
+                break;
             default:
                 break;
         }
@@ -127,6 +133,23 @@ public class Client : MonoBehaviour {
     {
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
         scriptLevel.ReloadLevel(arreglo);
+
+    private void HandleCastFireball(string[] data)
+    {
+        int direction = Int32.Parse(data[1]);
+        float speed = float.Parse(data[2], CultureInfo.InvariantCulture);
+        float positionX = float.Parse(data[3], CultureInfo.InvariantCulture);
+        float positionY = float.Parse(data[4], CultureInfo.InvariantCulture);
+        MageController script = GetMage();
+        script.CastLocalFireball(direction, speed, positionX, positionY, script);
+    }
+
+    private void HandleUpdatedAttackState(string[] arreglo)
+    {
+        int charId = Int32.Parse(arreglo[1]);
+        bool state = bool.Parse(arreglo[2]);
+        PlayerController script = GetPlayerController(charId);
+        script.remoteAttacking = state;
     }
 
     private void HandleChangeScene(string[] arreglo)
@@ -154,7 +177,18 @@ public class Client : MonoBehaviour {
         bool pressingJump = bool.Parse(data[7]);
         bool pressingLeft = bool.Parse(data[8]);
         bool pressingRight = bool.Parse(data[9]);
-        bool attacking = bool.Parse(data[10]);
+        PlayerController script = GetPlayerController(charId);
+        script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction, pressingRight, pressingLeft, pressingJump);
+    }
+
+    private void HandleNewChatMessage(string[] arreglo)
+    {
+        string chatMessage = arreglo[1];
+        Chat.instance.UpdateChat(chatMessage);
+    }
+
+    public PlayerController GetPlayerController(int charId)
+    {
         GameObject player;
         PlayerController script;
         switch (charId)
@@ -176,12 +210,13 @@ public class Client : MonoBehaviour {
                 script = null;
                 break;
         }
-        script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction, pressingRight, pressingLeft, pressingJump, attacking);
+        return script;
     }
 
-    private void HandleNewChatMessage(string[] arreglo)
+    public MageController GetMage()
     {
-        string chatMessage = arreglo[1];
-        Chat.instance.UpdateChat(chatMessage);
+        GameObject player = GameObject.FindGameObjectsWithTag("Player1")[0];
+        MageController script = player.GetComponent<MageController>();
+        return script;
     }
 }

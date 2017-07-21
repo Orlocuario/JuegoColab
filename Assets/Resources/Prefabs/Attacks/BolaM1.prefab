@@ -21,7 +21,8 @@ GameObject:
   - component: {fileID: 4339632207992214}
   - component: {fileID: 212717431903042324}
   - component: {fileID: 95566057749944130}
-  m_Layer: 0
+  - component: {fileID: 114650161279034298}
+  m_Layer: 11
   m_Name: BolaM1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -58,6 +59,17 @@ Animator:
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
+--- !u!114 &114650161279034298
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1621529500680332}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f9be0d30e3231ac4897382a53e5e1097, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!212 &212717431903042324
 SpriteRenderer:
   m_ObjectHideFlags: 1

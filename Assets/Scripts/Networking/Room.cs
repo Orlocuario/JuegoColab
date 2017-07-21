@@ -21,7 +21,7 @@ public class Room
     {
         numJugadores = 0;
         this.id = id;
-        this.maxJugadores = 1;
+        this.maxJugadores = 2;
         players = new List<Jugador>();
         this.server = server;
         this.sender = sender;
@@ -55,9 +55,9 @@ public class Room
         {
             sender.SendChangeScene("Escena1", this);
             started = true;
-            SendMessageToAllPlayers("Mage: Has Connected");
-            SendMessageToAllPlayers("Warrior: Has Connected");
-            SendMessageToAllPlayers("Engineer: Has Connected");
+            SendMessageToAllPlayers("Mago: Conectado");
+            SendMessageToAllPlayers("Guerrero: Conectado");
+            SendMessageToAllPlayers("Ingeniero: Conectado");
         }
         return true;
     }
