@@ -33,7 +33,7 @@ public class ChatZone : MonoBehaviour {
         {
             chatButtonOn.SetActive(true);
             chatButtonOff.SetActive(true);
-            Client.instance.SendMessageToServer("RecoveryHUD/" + HUDRate);
+            //Client.instance.SendMessageToServer("RecoveryHUD/" + HUDRate);
             lockValue = true;
         }
         else

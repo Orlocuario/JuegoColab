@@ -65,6 +65,7 @@ public class LevelManager : MonoBehaviour {
 
         thePlayer.transform.position = thePlayer.respawnPosition;
         thePlayer.gameObject.SetActive(true);
+        thePlayer.SendObjectDataToServer();
     }
 
 }

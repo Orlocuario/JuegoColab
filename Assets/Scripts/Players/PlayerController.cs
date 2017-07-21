@@ -218,9 +218,10 @@ public class PlayerController : MonoBehaviour
     {
         if(other.tag == "KillPlane")
         {
-            //gameObject.SetActive(false); 
-            //transform.position = respawnPosition;
-            theLevelManager.Respawn();
+            if (localPlayer)
+            {
+                theLevelManager.Respawn();
+            }
         }
 
         if (other.tag == "Checkpoint")
@@ -234,6 +235,11 @@ public class PlayerController : MonoBehaviour
         if(other.gameObject.tag == "MovingPlatform")
         {
             transform.parent = other.transform;
+        }
+
+        if(other.gameObject.tag == "Player1" || other.gameObject.tag == "Player2" || other.gameObject.tag == "Player3")
+        {
+            Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), other.gameObject.GetComponent<Collider2D>());
         }
     }
 
@@ -261,7 +267,7 @@ public class PlayerController : MonoBehaviour
         SynchronizeNonLocalPlayer();
     }
 
-    protected void SendObjectDataToServer()
+    public void SendObjectDataToServer()
     {
         float position_x = transform.position.x;
         float position_y = transform.position.y;
