@@ -15,6 +15,9 @@ public class Jugador
     public bool pressingJump;
     public bool pressingRight;
     public bool pressingLeft;
+    public bool attacking;
+
+
     public Jugador(int connectionId, int charId, Room room)
     {
         this.connectionId = connectionId;
@@ -29,5 +32,6 @@ public class Jugador
         pressingJump = false;
         pressingRight = false;
         pressingLeft = false;
+        attacking = false;
 }
 }

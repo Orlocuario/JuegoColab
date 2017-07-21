@@ -28,6 +28,9 @@ public class MessageHandler
             case "NewChatMessage":
                 SendNewChatMessage(message, connectionId);
                 break;
+            case "Attack":
+                SendAttackState(message, connectionId,arreglo);
+                break;
             default:
                 break;
         }
@@ -76,5 +79,13 @@ public class MessageHandler
     {
         string command = "ChangeScene/" + sceneName;
         room.SendMessageToAllPlayers(command);
+    }
+
+    public void SendAttackState(string message, int connectionId, string[] data)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        player.attacking = bool.Parse(data[2]);
+        room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 }

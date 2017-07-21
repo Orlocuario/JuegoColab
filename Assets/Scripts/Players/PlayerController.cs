@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
         remoteRight = false;
         remoteLeft = false;
         remoteJumping = false;
+        remoteAttacking = false;
         transform = GetComponent<Transform>();
         rb2d = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
@@ -241,7 +242,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SetVariablesFromServer(float positionX, float positionY, bool isGrounded, float speed, int direction, bool remoteRight, bool remoteLeft, bool remoteJumping, bool remoteAttacking)
+    public void SetVariablesFromServer(float positionX, float positionY, bool isGrounded, float speed, int direction, bool remoteRight, bool remoteLeft, bool remoteJumping)
     {
         if (localPlayer)
         {
@@ -254,7 +255,6 @@ public class PlayerController : MonoBehaviour
         this.remoteRight = remoteRight;
         this.remoteLeft = remoteLeft;
         this.remoteJumping = remoteJumping;
-        this.remoteAttacking = remoteAttacking;
         SynchronizeNonLocalPlayer();
     }
 
@@ -264,7 +264,13 @@ public class PlayerController : MonoBehaviour
         float position_y = transform.position.y;
         bool grounded = isGrounded;
         float speed = Mathf.Abs(rb2d.velocity.x);
-        string message = "ChangePosition/" + characterId + "/" + position_x + "/" + position_y + "/" + isGrounded + "/" + speed + "/" + direction + "/" + remoteJumping + "/" + remoteLeft + "/" + remoteRight + "/" + remoteAttacking;
+        string message = "ChangePosition/" + characterId + "/" + position_x + "/" + position_y + "/" + isGrounded + "/" + speed + "/" + direction + "/" + remoteJumping + "/" + remoteLeft + "/" + remoteRight;
+        Client.instance.SendMessageToServer(message);
+    }
+
+    protected void SendAttackDataToServer()
+    {
+        string message = "Attack/" + characterId + "/" + remoteAttacking;
         Client.instance.SendMessageToServer(message);
     }
 }

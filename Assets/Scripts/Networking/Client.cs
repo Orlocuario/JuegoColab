@@ -105,11 +105,21 @@ public class Client : MonoBehaviour {
             case "NewChatMessage":
                 HandleNewChatMessage(arreglo);
                 break;
+            case "Attack":
+                HandleUpdatedAttackState(arreglo);
+                break;
             default:
                 break;
         }
     }
 
+    private void HandleUpdatedAttackState(string[] arreglo)
+    {
+        int charId = Int32.Parse(arreglo[1]);
+        bool state = bool.Parse(arreglo[2]);
+        PlayerController script = GetPlayerController(charId);
+        script.remoteAttacking = state;
+    }
     private void HandleChangeScene(string[] arreglo)
     {
         string scene = arreglo[1];
@@ -135,7 +145,18 @@ public class Client : MonoBehaviour {
         bool pressingJump = bool.Parse(data[7]);
         bool pressingLeft = bool.Parse(data[8]);
         bool pressingRight = bool.Parse(data[9]);
-        bool attacking = bool.Parse(data[10]);
+        PlayerController script = GetPlayerController(charId);
+        script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction, pressingRight, pressingLeft, pressingJump);
+    }
+
+    private void HandleNewChatMessage(string[] arreglo)
+    {
+        string chatMessage = arreglo[1];
+        Chat.instance.UpdateChat(chatMessage);
+    }
+
+    private PlayerController GetPlayerController(int charId)
+    {
         GameObject player;
         PlayerController script;
         switch (charId)
@@ -157,12 +178,6 @@ public class Client : MonoBehaviour {
                 script = null;
                 break;
         }
-        script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction, pressingRight, pressingLeft, pressingJump, attacking);
-    }
-
-    private void HandleNewChatMessage(string[] arreglo)
-    {
-        string chatMessage = arreglo[1];
-        Chat.instance.UpdateChat(chatMessage);
+        return script;
     }
 }

@@ -7,7 +7,7 @@ public class MageController : PlayerController {
 
     private int bolas;
     private int maxBolas;
-    public bool pressedAttack;
+
     protected override void Start()
     {
         base.Start();
@@ -17,31 +17,27 @@ public class MageController : PlayerController {
 
     protected override bool isAttacking()
     {
-        pressedAttack = CnInputManager.GetButtonDown("Attack Button");
-        return pressedAttack;
-        /*
         if (localPlayer)
         {
-            pressedAttack = CnInputManager.GetButtonDown("Attack Button");
-            if (pressedAttack && !remoteAttacking)
+            bool buttonState = CnInputManager.GetButtonDown("Attack Button");
+            if(buttonState && !remoteAttacking)
             {
                 remoteAttacking = true;
-                SendObjectDataToServer();
+                SendAttackDataToServer();
                 CastFireball();
             }
-            else if(!pressedAttack && remoteAttacking)
+            else if(!buttonState && remoteAttacking)
             {
                 remoteAttacking = false;
-                SendObjectDataToServer();
+                SendAttackDataToServer();
             }
-            return remoteAttacking;
         }
-        return remoteAttacking; */
+        return remoteAttacking;
     }
 
     private void CastFireball()
     {
-
+        Client.instance.SendMessageToServer("FIREBALL");
     }
 
     protected override void Update()
