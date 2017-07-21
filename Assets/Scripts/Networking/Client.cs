@@ -133,6 +133,7 @@ public class Client : MonoBehaviour {
     {
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
         scriptLevel.ReloadLevel(arreglo);
+    }
 
     private void HandleCastFireball(string[] data)
     {
