@@ -9,10 +9,6 @@ public class Room
     public int numJugadores;
     public int maxJugadores;
     public int id;
-    public float maxHP = 250;
-    public float maxMP = 250;
-    public float currentHP;
-    public float currentMP;
     Server server;
     MessageHandler sender;
     public bool started;
@@ -21,13 +17,11 @@ public class Room
     {
         numJugadores = 0;
         this.id = id;
-        this.maxJugadores = 2;
+        this.maxJugadores = 1;
         players = new List<Jugador>();
         this.server = server;
         this.sender = sender;
         started = false;
-        maxHP = currentHP;
-        maxMP = currentMP;
     }
 
     //Retorna true si no cabe más gente.
@@ -101,61 +95,4 @@ public class Room
         }
     }
 
-    public void ChangeHP(string deltaHP)
-    {
-        float valueDeltaHP = float.Parse(deltaHP);
-        if (valueDeltaHP <= 0) //Loose HP
-        {
-            currentHP -= valueDeltaHP;
-            if (currentHP <= 0)
-            {
-                currentHP = 0;
-                SendMessageToAllPlayers("PlayersAreDead/ReloadScene");
-                //die
-            }
-        }
-        else // Gain HP
-        {
-            currentHP += valueDeltaHP;
-            if (currentHP >= maxHP)
-            {
-                currentHP = maxHP;
-            }
-        }
-    }
-
-    public void ChangeMaxHP(string deltaMaxHP)
-    {
-        float valueMaxHP = float.Parse(deltaMaxHP);
-        maxHP = valueMaxHP;
-        ChangeHP(deltaMaxHP);
-    }
-
-    public void ChangeMP(string deltaMP)
-    {
-        float valueDeltaMP = float.Parse(deltaMP);
-        if (valueDeltaMP <= 0)//Loose MP
-        {
-            currentMP -= valueDeltaMP;
-            if (currentMP <= 0)
-            {
-                currentMP = 0;
-            }
-        }
-        else //Gain MP
-        {
-            currentMP += valueDeltaMP;
-            if (currentMP >= maxMP)
-            {
-                currentMP = maxMP;
-            }
-        }
-    }
-
-    public void ChangeMaxMP(string deltaMaxMP)
-    {
-        float valueMaxMP = float.Parse(deltaMaxMP);
-        maxMP = valueMaxMP;
-        ChangeMP(deltaMaxMP);
-    }
 }

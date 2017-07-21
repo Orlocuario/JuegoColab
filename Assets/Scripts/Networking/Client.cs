@@ -13,7 +13,6 @@ using UnityEngine.UI;
 public class Client : MonoBehaviour {
 
     int port = 6675;
-    int numberOfScene = 0;
     int socketId; // Host ID
     int connectionId;
     int channelId;
@@ -106,25 +105,15 @@ public class Client : MonoBehaviour {
             case "NewChatMessage":
                 HandleNewChatMessage(arreglo);
                 break;
-            case "PlayersAreDead":
-                HandlePlayersAreDead(arreglo);
-                break;
             default:
                 break;
         }
-    }
-
-    private void HandlePlayersAreDead(string[] arreglo)
-    {
-        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.ReloadLevel(arreglo);
     }
 
     private void HandleChangeScene(string[] arreglo)
     {
         string scene = arreglo[1];
         SceneManager.LoadScene(scene);
-        numberOfScene += 1;
     }
 
     private void HandleSetCharId(string[] arreglo)

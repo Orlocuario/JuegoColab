@@ -19,10 +19,9 @@ public class Chat : MonoBehaviour
     string word;
     string entered;
     string historial;
-    string numeroPartidas;
 
     int wordIndex = 0;
-    int numMaxJugadores = 2;
+    int NumeroPartidas = 0;
 
     bool inicializador;
     bool mayus = false;
@@ -276,12 +275,7 @@ public class Chat : MonoBehaviour
 
     private void ChatInitializer(string[] arreglo)
     {
-        numMaxJugadores -= 1;
-        if (numMaxJugadores == 0)
-        {
-            inicializador = false;
-        }
-
+        inicializador = false;
         string messageInit = null;
         if (arreglo[0] == "Mago")
         {
@@ -312,36 +306,36 @@ public class Chat : MonoBehaviour
         originalCanvas.SetActive(false);
     }
 
-    public int GetNumberOfGamesPlayed()
+    public void CreateTextChat(string exitGame) //proviene de cuando se corta el juego
     {
-        int numberOfGamesPlayed = Server.instance.NumberOfScenes1();
-        return numberOfGamesPlayed;
-    }
-
-    public void CreateTextChat() //proviene de cuando se corta el juego
-    {
-        numeroPartidas = GetNumberOfGamesPlayed().ToString();
-        string path = Directory.GetCurrentDirectory() + "/HistoricalChat.txt";
-
-        if (!File.Exists(path))
+        if (exitGame == "true")
         {
-            using (var tw = new StreamWriter(File.Create(path)))
+            exitGame = "false";
+            NumeroPartidas += 1;
+            string path;
+            path = Directory.GetCurrentDirectory() + "/HistoricalChat.txt";
+
+            if (!File.Exists(path))
             {
-                tw.WriteLine("Partida N°: " + numeroPartidas);
-                tw.WriteLine(historial);
-                tw.Close();
+                using (var tw = new StreamWriter(File.Create(path)))
+                {
+                    tw.WriteLine("Primera Partida");
+                    tw.WriteLine(historial);
+                    tw.Close();
+                }
+            }
+            else if (File.Exists(path))
+            {
+                using (var tw = new StreamWriter(path, true))
+                {
+                    tw.WriteLine("\r\n" + "____________________________________");
+                    tw.WriteLine("\r\n" + "Se ha ejecutado una nueva partida...");
+                    tw.WriteLine("\r\n" + "Partida N°: " + NumeroPartidas);
+                    tw.WriteLine(historial);
+                    tw.Close();
+                }
             }
         }
-       else if (File.Exists(path))
-       {
-           using (var tw = new StreamWriter(path, true))
-           {
-               tw.WriteLine("\r\n" + "____________________________________");
-               tw.WriteLine("Generando Nuevo Historial...");
-               tw.WriteLine("Partida N°: " + numeroPartidas);
-               tw.WriteLine(historial);
-               tw.Close();
-           }
-       }
     }
+
 }

@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
 		}
     }
 
-    protected bool IsGoingRight()
+    protected bool isGoingRight()
     {
         if (localPlayer)
         {
@@ -93,7 +93,7 @@ public class PlayerController : MonoBehaviour
             return remoteRight;
     }
 
-    protected bool IsGoingLeft()
+    protected bool isGoingLeft()
     {
         if (localPlayer)
         {
@@ -114,13 +114,13 @@ public class PlayerController : MonoBehaviour
         return remoteLeft;
     }
 
-    protected bool IsItGrounded()
+    protected bool isItGrounded()
     {
         bool ground = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
         return ground;
     }
 
-    protected bool IsJumping(bool isGrounded)
+    protected bool isJumping(bool isGrounded)
     {
         if (localPlayer)
         {
@@ -141,7 +141,7 @@ public class PlayerController : MonoBehaviour
         return remoteJumping;
     }
 
-    protected virtual bool IsAttacking()
+    protected virtual bool isAttacking()
     {
         return false;
     }
@@ -174,7 +174,7 @@ public class PlayerController : MonoBehaviour
             }
             myAnim.SetFloat("Speed", speed);
             myAnim.SetBool("IsGrounded", isGrounded);
-            myAnim.SetBool("IsAttacking", IsAttacking());
+            myAnim.SetBool("IsAttacking", isAttacking());
         }
 			
     }
@@ -183,13 +183,13 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (IsGoingRight())
+        if (isGoingRight())
         {
             rb2d.velocity = new Vector3(moveSpeed, rb2d.velocity.y, 0f);
             transform.localScale = new Vector3(1f, 1f, 1f);
             direction = 1;
         }
-        else if (IsGoingLeft())
+        else if (isGoingLeft())
         {
             rb2d.velocity = new Vector3(-moveSpeed, rb2d.velocity.y, 0f);
             transform.localScale = new Vector3(-1f, 1f, 1f);
@@ -199,15 +199,15 @@ public class PlayerController : MonoBehaviour
         {
             rb2d.velocity = new Vector3(0f, rb2d.velocity.y, 0f);
         }
-        isGrounded = IsItGrounded();
-        if (IsJumping(isGrounded))
+        isGrounded = isItGrounded();
+        if (isJumping(isGrounded))
         {
             rb2d.AddForce(new Vector2(0, jumpSpeed), ForceMode2D.Impulse);
         }
         previous_transform = transform.position;
         myAnim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
         myAnim.SetBool("IsGrounded", isGrounded);
-        myAnim.SetBool("IsAttacking", IsAttacking());
+        myAnim.SetBool("IsAttacking", isAttacking());
     }
 
     protected void OnTriggerEnter2D(Collider2D other)
