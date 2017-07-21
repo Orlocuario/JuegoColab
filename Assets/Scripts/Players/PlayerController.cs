@@ -272,5 +272,4 @@ public class PlayerController : MonoBehaviour
     {
         string message = "Attack/" + characterId + "/" + remoteAttacking;
         Client.instance.SendMessageToServer(message);
-    }
-}
+    }}

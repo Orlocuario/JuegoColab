@@ -5,14 +5,10 @@ using UnityEngine;
 
 public class MageController : PlayerController {
 
-    private int bolas;
-    private int maxBolas;
 
     protected override void Start()
     {
         base.Start();
-        bolas = 0;
-        maxBolas = 2;
     }
 
     protected override bool isAttacking()
@@ -24,7 +20,7 @@ public class MageController : PlayerController {
             {
                 remoteAttacking = true;
                 SendAttackDataToServer();
-                CastFireball();
+                CastFireball(this.direction, 4);
             }
             else if(!buttonState && remoteAttacking)
             {
@@ -35,9 +31,19 @@ public class MageController : PlayerController {
         return remoteAttacking;
     }
 
-    private void CastFireball()
+    public void CastFireball(int direction, float speed)
     {
-        Client.instance.SendMessageToServer("FIREBALL");
+        GameObject fireball = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/BolaM1"));
+        FireballController controller = fireball.GetComponent<FireballController>();
+        Vector2 myPosition = transform.position;
+        controller.SetMovement(direction, speed, myPosition.x, myPosition.y);
+    }
+
+    private void SendFireballSignalToServer()
+    {
+        string x = transform.position.x.ToString();
+        string y = transform.position.y.ToString();
+        Client.instance.SendMessageToServer("CastFireball/" + x + "/" +y);
     }
 
     protected override void Update()
