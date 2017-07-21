@@ -15,7 +15,7 @@ public class MageController : PlayerController {
         maxBolas = 2;
     }
 
-    protected override bool isAttacking()
+    protected override bool IsAttacking()
     {
         pressedAttack = CnInputManager.GetButtonDown("Attack Button");
         return pressedAttack;

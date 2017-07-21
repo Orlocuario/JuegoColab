@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,6 +11,8 @@ public class ChatZone : MonoBehaviour {
     LevelManager levelManager;
     Vector2 myPosition;
     private bool lockValue;
+    public string increaseHPRate;
+    public string increaseMPRate;
 
 
     private void Start()
@@ -32,6 +35,7 @@ public class ChatZone : MonoBehaviour {
         {
             chatButtonOn.SetActive(true);
             chatButtonOff.SetActive(true);
+            Client.instance.SendMessageToServer("RecoveryHUD/" + increaseHPRate + "/" + increaseMPRate);
             lockValue = true;
         }
         else

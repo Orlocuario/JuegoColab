@@ -28,9 +28,19 @@ public class MessageHandler
             case "NewChatMessage":
                 SendNewChatMessage(message, connectionId);
                 break;
+            case "RecoveryHUD":
+                SendHUDToRoom(arreglo, connectionId);
+                break;
             default:
                 break;
         }
+    }
+
+    private void SendHUDToRoom(string[] arreglo, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.RecieveHUD(arreglo);
     }
 
     private void SendNewChatMessage(string chatMessage, int connectionID)

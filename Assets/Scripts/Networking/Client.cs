@@ -105,9 +105,18 @@ public class Client : MonoBehaviour {
             case "NewChatMessage":
                 HandleNewChatMessage(arreglo);
                 break;
+            case "PlayersAreDead":
+                HandlePlayersAreDead(arreglo);
+                break;
             default:
                 break;
         }
+    }
+
+    private void HandlePlayersAreDead(string[] arreglo)
+    {
+        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+        scriptLevel.ReloadLevel(arreglo);
     }
 
     private void HandleChangeScene(string[] arreglo)
