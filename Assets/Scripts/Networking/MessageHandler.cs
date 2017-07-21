@@ -3,11 +3,11 @@ using System.Collections;
 using System;
 using System.Globalization;
 
-public class ServerMessageHandler
+public class MessageHandler
 {
     Server server;
     
-    public ServerMessageHandler(Server server)
+    public MessageHandler(Server server)
     {
         this.server = server;
     }
@@ -28,35 +28,12 @@ public class ServerMessageHandler
             case "NewChatMessage":
                 SendNewChatMessage(message, connectionId);
                 break;
-            case "ChangeHpAndManaHUD":
-                SendHUDToRoom(arreglo, connectionId);
-                break;
-            case "Attack":
-                SendAttackState(message, connectionId,arreglo);
-                break;
-            case "CastFireball":
-                SendNewFireball(message, connectionId, arreglo);
-                break;
             default:
                 break;
         }
     }
 
-    private void SendHUDToRoom(string[] arreglo, int connectionId)
-    {
-        Jugador player = server.GetPlayer(connectionId);
-        Room room = player.room;
-        room.hpManaGer.RecieveHUD(arreglo[1]);
-    }
-
-    private void SendNewFireball(string message, int connectionId, string[] data)
-    {
-        Jugador player = server.GetPlayer(connectionId);
-        Room room = player.room;
-        room.SendMessageToAllPlayersExceptOne(message, connectionId);
-    }
-
-   private void SendNewChatMessage(string chatMessage, int connectionID)
+    private void SendNewChatMessage(string chatMessage, int connectionID)
     {
         Jugador player = server.GetPlayer(connectionID);
         Room room = player.room;
@@ -99,13 +76,5 @@ public class ServerMessageHandler
     {
         string command = "ChangeScene/" + sceneName;
         room.SendMessageToAllPlayers(command);
-    }
-
-    public void SendAttackState(string message, int connectionId, string[] data)
-    {
-        Jugador player = server.GetPlayer(connectionId);
-        Room room = player.room;
-        player.attacking = bool.Parse(data[2]);
-        room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 }

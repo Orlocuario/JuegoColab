@@ -12,7 +12,6 @@ public class Server : MonoBehaviour {
     public int maxConnections;
     int port = 6675;
     int socketId;
-    int connectionId;
     int channelId;
     int timesScene1IsLoaded;
     public List<Room> rooms;
@@ -110,6 +109,21 @@ public class Server : MonoBehaviour {
             if (player != null)
             {
                 player.connected = false;
+                int charId = player.charId;
+                string role;
+                if (charId == 0)
+                {
+                    role = "Mage: Has Disconnected";
+                }
+                else if (charId == 1)
+                {
+                    role = "Warrior: Has Disconnected";
+                }
+                else
+                {
+                    role = "Engineer: Has Disconnected";
+                }
+                room.SendMessageToAllPlayers("NewChatMessage/" + role);
             }
         }
     }

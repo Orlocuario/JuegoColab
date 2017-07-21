@@ -47,7 +47,7 @@ public class LevelManager : MonoBehaviour {
 		
 	}
 
-    public void ReloadLevel(string[] message)
+    public void ReloadLevel()
     {
         Debug.Log("PLAYERS ARE DEAD MUAJAJAJA");
     }

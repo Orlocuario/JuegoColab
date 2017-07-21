@@ -47,7 +47,19 @@ public class PlayerController : MonoBehaviour
         theLevelManager = FindObjectOfType<LevelManager>();
         localPlayer = false;
         direction = 1;
+        IgnoreColisionStar2puntoCero();
     }
+
+    private void IgnoreColisionStar2puntoCero()
+    {
+        GameObject player1 = Client.instance.GetPlayerController(0).gameObject;
+        GameObject player2 = Client.instance.GetPlayerController(1).gameObject;
+        GameObject player3 = Client.instance.GetPlayerController(2).gameObject;
+        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), player1.GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), player2.GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), player3.GetComponent<Collider2D>());
+    }
+
 
     public void Activate(int charId)
     {
@@ -56,15 +68,15 @@ public class PlayerController : MonoBehaviour
 		sprite = GetComponent<SpriteRenderer>();
         if (this.characterId == 0)
         {
-            Chat.instance.EnterFunction(true, "Mago: Conectado");
+            Chat.instance.EnterFunction("Mage: Has Connected");
         }
         if (this.characterId == 1)
         {
-            Chat.instance.EnterFunction(true, "Guerrero: Conectado");
+            Chat.instance.EnterFunction("Warrior: Has Connected");
         }
         else if (this.characterId == 2)
         {
-            Chat.instance.EnterFunction(true, "Ingeniero: Conectado");
+            Chat.instance.EnterFunction("Engineer: Has Connected");
         }
 
         if (sprite) 
@@ -235,11 +247,6 @@ public class PlayerController : MonoBehaviour
         if(other.gameObject.tag == "MovingPlatform")
         {
             transform.parent = other.transform;
-        }
-
-        if(other.gameObject.tag == "Player1" || other.gameObject.tag == "Player2" || other.gameObject.tag == "Player3")
-        {
-            Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), other.gameObject.GetComponent<Collider2D>());
         }
     }
 

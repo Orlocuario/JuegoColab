@@ -33,10 +33,10 @@ public class ClientMessageHandler {
                 HandleNewChatMessage(arreglo);
                 break;
             case "PlayersAreDead":
-                HandlePlayersAreDead(arreglo);
+                HandlePlayersAreDead();
                 break;
-            case "RecoveryHUD":
-                //HandleHUDToRoom(arreglo, connectionId);
+            case "ChangeHpAndManaHUD":
+                //HandleHUDToRoom(arreglo);
                 break;
             case "Attack":
                 HandleUpdatedAttackState(arreglo);
@@ -49,22 +49,15 @@ public class ClientMessageHandler {
         }
     }
 
-
-
-
-
-
-    /*private void HandleHUDToRoom(string[] arreglo, int connectionId)
+    /*private void HandleHUDToRoom(string[] arreglo)
     {
-        Jugador player = Server.instance.GetPlayer(connectionId);
-        Room room = player.room;
-        room.RecieveHUD(arreglo[1]);
+        
     }*/
 
-    private void HandlePlayersAreDead(string[] arreglo)
+    private void HandlePlayersAreDead()
     {
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.ReloadLevel(arreglo);
+        scriptLevel.ReloadLevel();
     }
 
     private void HandleCastFireball(string[] data)
