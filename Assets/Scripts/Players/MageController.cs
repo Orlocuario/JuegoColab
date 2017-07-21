@@ -11,7 +11,7 @@ public class MageController : PlayerController {
         base.Start();
     }
 
-    protected override bool isAttacking()
+    protected override bool IsAttacking()
     {
         if (localPlayer)
         {

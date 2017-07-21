@@ -28,6 +28,9 @@ public class MessageHandler
             case "NewChatMessage":
                 SendNewChatMessage(message, connectionId);
                 break;
+            case "RecoveryHUD":
+                SendHUDToRoom(arreglo, connectionId);
+                break;
             case "Attack":
                 SendAttackState(message, connectionId,arreglo);
                 break;
@@ -39,13 +42,21 @@ public class MessageHandler
         }
     }
 
+    private void SendHUDToRoom(string[] arreglo, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.RecieveHUD(arreglo[1]);
+    }
+
     private void SendNewFireball(string message, int connectionId, string[] data)
     {
         Jugador player = server.GetPlayer(connectionId);
         Room room = player.room;
         room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
-    private void SendNewChatMessage(string chatMessage, int connectionID)
+
+   private void SendNewChatMessage(string chatMessage, int connectionID)
     {
         Jugador player = server.GetPlayer(connectionID);
         Room room = player.room;

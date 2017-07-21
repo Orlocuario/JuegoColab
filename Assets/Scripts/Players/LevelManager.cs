@@ -47,6 +47,11 @@ public class LevelManager : MonoBehaviour {
 		
 	}
 
+    public void ReloadLevel(string[] message)
+    {
+        Debug.Log("PLAYERS ARE DEAD MUAJAJAJA");
+    }
+
     public void Respawn()
     {
         StartCoroutine("RespawnCo");

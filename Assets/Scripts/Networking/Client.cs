@@ -105,6 +105,12 @@ public class Client : MonoBehaviour {
             case "NewChatMessage":
                 HandleNewChatMessage(arreglo);
                 break;
+            case "PlayersAreDead":
+                HandlePlayersAreDead(arreglo);
+                break;
+            case "RecoveryHUD":
+                HandleHUDToRoom(arreglo, connectionId);
+                break;
             case "Attack":
                 HandleUpdatedAttackState(arreglo);
                 break;
@@ -115,6 +121,18 @@ public class Client : MonoBehaviour {
                 break;
         }
     }
+
+    private void HandleHUDToRoom(string[] arreglo, int connectionId)
+    {
+        Jugador player = Server.instance.GetPlayer(connectionId);
+        Room room = player.room;
+        room.RecieveHUD(arreglo[1]);
+    }
+
+    private void HandlePlayersAreDead(string[] arreglo)
+    {
+        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+        scriptLevel.ReloadLevel(arreglo);
 
     private void HandleCastFireball(string[] data)
     {
