@@ -2,32 +2,51 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.IO;
 
 public class Room
 {
     List<Jugador> players;
+    Server server;
+    ServerMessageHandler sender;
     public int numJugadores;
     public int maxJugadores;
     public int id;
     public float maxHP = 250;
     public float maxMP = 250;
-    public float currentHP = 1;
-    public float currentMP = 1;
-    Server server;
-    ServerMessageHandler sender;
+    public float currentHP;
+    public float currentMP;
     public bool started;
+    string numeroPartidas;
+    string historial;
+
     //Inicialización
-    public Room(int id, Server server, ServerMessageHandler sender)
+    public Room(int id, Server server, ServerMessageHandler sender, int maxJugadores)
     {
         numJugadores = 0;
         this.id = id;
-        this.maxJugadores = 3;
+        this.maxJugadores = maxJugadores;
         players = new List<Jugador>();
         this.server = server;
         this.sender = sender;
         started = false;
-        //currentHP = maxHP;
-        //currentMP = maxMP;
+        currentHP = maxHP;
+        currentMP = maxMP;
+        historial = "";
+    }
+
+    public string HoraMinuto()
+    {
+        string hora = DateTime.Now.Hour.ToString();
+        string minutos = DateTime.Now.Minute.ToString();
+
+        if (minutos.Length == 1)
+        {
+            minutos = "0" + minutos;
+        }
+
+        string tiempo = " (" + hora + ":" + minutos + ")";
+        return tiempo;
     }
 
     //Retorna true si no cabe más gente.
@@ -82,7 +101,15 @@ public class Room
 
     public void SendMessageToAllPlayers(string message)
     {
-        foreach(Jugador player in players)
+        char[] separator = new char[1];
+        separator[0] = '/';
+        string[] arreglo = message.Split(separator);
+        if (arreglo[0] == "NewChatMessage")
+        {
+            historial += "\r\n" + arreglo[1] + HoraMinuto();
+        }
+
+        foreach (Jugador player in players)
         {
             if (player.connected)
             {
@@ -102,10 +129,10 @@ public class Room
         }
     }
 
-    public void RecieveHUD(string recoveryRate)
+    public void RecieveHUD(string changeRate)
     {
-        ChangeMP(recoveryRate);
-        ChangeHP(recoveryRate);
+        ChangeMP(changeRate);
+        ChangeHP(changeRate);
     }
 
     public void ChangeHP(string deltaHP)
@@ -163,5 +190,32 @@ public class Room
         float valueMaxMP = float.Parse(deltaMaxMP);
         maxMP = valueMaxMP;
         ChangeMP(deltaMaxMP);
+    }
+
+    public void CreateTextChat()
+    {
+        numeroPartidas = "Por Resolver";
+        string path = Directory.GetCurrentDirectory() + "/HistoricalChatRoom" + id + ".txt";
+
+        if (!File.Exists(path))
+        {
+            using (var tw = new StreamWriter(File.Create(path)))
+            {
+                tw.WriteLine("Partida N°: " + numeroPartidas);
+                tw.WriteLine(historial);
+                tw.Close();
+            }
+        }
+        else if (File.Exists(path))
+        {
+            using (var tw = new StreamWriter(path, true))
+            {
+                tw.WriteLine("\r\n" + "____________________________________");
+                tw.WriteLine("Generando Nuevo Historial...");
+                tw.WriteLine("Partida N°: " + numeroPartidas);
+                tw.WriteLine(historial);
+                tw.Close();
+            }
+        }
     }
 }

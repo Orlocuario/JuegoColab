@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System;
 using System.Net;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class Chat : MonoBehaviour
 {
@@ -18,11 +19,9 @@ public class Chat : MonoBehaviour
 
     string word;
     string entered;
-    string historial;
-    string numeroPartidas;
 
     int wordIndex = 0;
-    int numMaxPlayers = 1;
+    int numMaxPlayers = 2;
 
     bool inicializador;
     bool mayus = false;
@@ -33,8 +32,12 @@ public class Chat : MonoBehaviour
         inicializador = true;
         originalCanvas = GameObject.FindGameObjectWithTag("OriginalCanvas");
         chatCanvas = GameObject.FindGameObjectWithTag("ChatCanvas");
-        textOriginalCanvas = GameObject.FindGameObjectWithTag("OriginalTextCanvas").GetComponent<Text>();
-        ToggleChatOff();
+        if (SceneManager.GetActiveScene().name != "ServerScene")
+        {
+            textOriginalCanvas = GameObject.FindGameObjectWithTag("OriginalTextCanvas").GetComponent<Text>();
+            ToggleChatOff();
+        }
+
     }
 
     public string SetJugador()
@@ -74,20 +77,6 @@ public class Chat : MonoBehaviour
                 return null;
         }
         return role;
-    }
-
-    public string HoraMinuto()
-    {
-        string hora = DateTime.Now.Hour.ToString();
-        string minutos = DateTime.Now.Minute.ToString();
-
-        if (minutos.Length == 1)
-        {
-            minutos = "0" + minutos;
-        }
-
-        string tiempo = " (" + hora + ":" + minutos + ")";
-        return tiempo;
     }
 
     public void AlphabetFunction(string alphabet)
@@ -144,9 +133,9 @@ public class Chat : MonoBehaviour
             EnterFunction(false, "");
         }
         else
-            {
-                return;
-            }
+        {
+            return;
+        }
     } // Lo que se escribe, manda y recibe
 
     public void EnterFunction(bool connection, string message)  {
@@ -157,13 +146,11 @@ public class Chat : MonoBehaviour
             myName.text = "";
             string texto = SetJugador() + ": " + entered;
             Client.instance.SendNewChatMessageToServer(texto);
-            historial += "\r\n" + SetJugador() + ": " + entered + HoraMinuto();
         }
         else
         {
             Client.instance.SendNewChatMessageToServer(message);
-        }
-        
+        }      
     }
 
     private string MayusFunction(string alphabet)
@@ -309,38 +296,5 @@ public class Chat : MonoBehaviour
     {
         chatCanvas.SetActive(true);
         originalCanvas.SetActive(false);
-    }
-
-    public int GetNumberOfGamesPlayed()
-    {
-        int numberOfGamesPlayed = Server.instance.NumberOfScenes1();
-        return numberOfGamesPlayed;
-    }
-
-    public void CreateTextChat()
-    {
-        numeroPartidas = GetNumberOfGamesPlayed().ToString();
-        string path = Directory.GetCurrentDirectory() + "/HistoricalChat.txt";
-
-        if (!File.Exists(path))
-        {
-            using (var tw = new StreamWriter(File.Create(path)))
-            {
-                tw.WriteLine("Partida N°: " + numeroPartidas);
-                tw.WriteLine(historial);
-                tw.Close();
-            }
-        }
-       else if (File.Exists(path))
-       {
-           using (var tw = new StreamWriter(path, true))
-           {
-               tw.WriteLine("\r\n" + "____________________________________");
-               tw.WriteLine("Generando Nuevo Historial...");
-               tw.WriteLine("Partida N°: " + numeroPartidas);
-               tw.WriteLine(historial);
-               tw.Close();
-           }
-       }
     }
 }

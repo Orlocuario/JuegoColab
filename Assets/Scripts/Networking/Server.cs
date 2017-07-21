@@ -15,14 +15,16 @@ public class Server : MonoBehaviour {
     int connectionId;
     int channelId;
     int timesScene1IsLoaded;
-    List<Room> rooms;
+    public List<Room> rooms;
     ServerMessageHandler messageHandler;
     public static Server instance;
     int bufferSize = 100;
+    public int maxJugadores;
 
     // Use this for initialization
     void Start()
     {
+        maxJugadores = 1;
         instance = this;
         timesScene1IsLoaded = 0;
         NetworkTransport.Init();
@@ -94,16 +96,10 @@ public class Server : MonoBehaviour {
         Room room = SearchRoom();
         if(room == null)
         {
-            room = new Room(rooms.Count, this, messageHandler);
+            room = new Room(rooms.Count, this, messageHandler, maxJugadores);
             rooms.Add(room);
         }
         room.AddPlayer(connectionId);
-    }
-
-    public int NumberOfScenes1()
-    {
-        var result = timesScene1IsLoaded / 3;
-        return result;
     }
 
     private void DeleteConnection(int connectionId)
