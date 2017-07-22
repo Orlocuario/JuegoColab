@@ -28,8 +28,14 @@ public class ServerMessageHandler
             case "NewChatMessage":
                 SendNewChatMessage(message, connectionId);
                 break;
-            case "ChangeHpAndManaHUD":
-                SendHUDToRoom(arreglo, connectionId);
+            case "ChangeHpHUD":
+                SendHpHUDToRoom(arreglo, connectionId);
+                break;
+            case "ChangeMpHUD":
+                SendMpHUDToRoom(arreglo, connectionId);
+                break;
+            case "ChangeHpAndManaHUD": //Necessary coz' ChatZone changes both at the same rate
+                SendHpHAndMpHUDToRoom(arreglo, connectionId);
                 break;
             case "Attack":
                 SendAttackState(message, connectionId,arreglo);
@@ -42,12 +48,27 @@ public class ServerMessageHandler
         }
     }
 
-    private void SendHUDToRoom(string[] arreglo, int connectionId)
+    private void SendHpHUDToRoom(string[] arreglo, int connectionId)
     {
         Jugador player = server.GetPlayer(connectionId);
         Room room = player.room;
-        room.hpManaGer.RecieveHUD(arreglo[1]);
+        room.hpManaGer.RecieveHpHUD(arreglo[1]);
     }
+
+    private void SendMpHUDToRoom(string[] arreglo, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.hpManaGer.RecieveMpHUD(arreglo[1]);
+    }
+
+    private void SendHpHAndMpHUDToRoom(string[] arreglo, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.hpManaGer.RecieveHpAndMpHUD(arreglo[1]);
+    }
+
 
     private void SendNewFireball(string message, int connectionId, string[] data)
     {

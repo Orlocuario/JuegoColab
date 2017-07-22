@@ -35,8 +35,11 @@ public class ClientMessageHandler {
             case "PlayersAreDead":
                 HandlePlayersAreDead();
                 break;
-            case "ChangeHpAndManaHUD":
-                //HandleHUDToRoom(arreglo);
+            case "DisplayChangeHP":
+                HandleChangeHpHUD(arreglo);
+                break;
+            case "DisplayChangeMP":
+                HandleChangeMpHUD(arreglo);
                 break;
             case "Attack":
                 HandleUpdatedAttackState(arreglo);
@@ -49,10 +52,15 @@ public class ClientMessageHandler {
         }
     }
 
-    /*private void HandleHUDToRoom(string[] arreglo)
+    private void HandleChangeHpHUD(string[] arreglo)
     {
-        
-    }*/
+        DisplayHUD.instance.CurrentHP(arreglo[1]);
+    }
+
+    private void HandleChangeMpHUD(string[] arreglo)
+    {
+        DisplayHUD.instance.CurrentMP(arreglo[1]);
+    }
 
     private void HandlePlayersAreDead()
     {

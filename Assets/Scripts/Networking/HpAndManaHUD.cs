@@ -8,19 +8,33 @@ public class HpAndManaHUD {
     public float maxMP = 250;
     public float currentHP;
     public float currentMP;
+    public float percentageHP;
+    public float percentageMP;
     Room room;
 
     public HpAndManaHUD(Room room)
     {
-        currentHP = 1; //max
-        currentMP = 1; //max
+        currentHP = maxHP;
+        currentMP = maxMP;
+        percentageHP = 1;
+        percentageMP = 1;
         this.room = room;
     }
 
-    public void RecieveHUD(string changeRate)
+    public void RecieveHpHUD(string changeRate)
+    {
+        ChangeHP(changeRate);
+    }
+
+    public void RecieveMpHUD(string changeRate)
     {
         ChangeMP(changeRate);
+    }
+
+    public void RecieveHpAndMpHUD(string changeRate)
+    {
         ChangeHP(changeRate);
+        ChangeMP(changeRate);
     }
 
     public void ChangeHP(string deltaHP)
@@ -44,13 +58,15 @@ public class HpAndManaHUD {
             }
             Debug.Log(currentHP);
         }
+        percentageHP = currentHP / maxHP;
+        room.SendMessageToAllPlayers("DisplayChangeHP/" + percentageHP);
     }
 
-    public void ChangeMaxHP(string deltaMaxHP)
+    public void ChangeMaxHP(string NewMaxHP)
     {
-        float valueMaxHP = float.Parse(deltaMaxHP);
+        float valueMaxHP = float.Parse(NewMaxHP);
         maxHP = valueMaxHP;
-        ChangeHP(deltaMaxHP);
+        ChangeHP(NewMaxHP);
     }
 
     public void ChangeMP(string deltaMP)
@@ -73,13 +89,15 @@ public class HpAndManaHUD {
             }
             Debug.Log(currentMP);
         }
+        percentageMP = currentMP / maxMP;
+        room.SendMessageToAllPlayers("DisplayChangeMP/" + percentageMP);
     }
 
-    public void ChangeMaxMP(string deltaMaxMP)
+    public void ChangeMaxMP(string NewMaxMP)
     {
-        float valueMaxMP = float.Parse(deltaMaxMP);
+        float valueMaxMP = float.Parse(NewMaxMP);
         maxMP = valueMaxMP;
-        ChangeMP(deltaMaxMP);
+        ChangeMP(NewMaxMP);
     }
 
 }
