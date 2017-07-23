@@ -129,7 +129,7 @@ public class Room
     public void CreateTextChat()
     {
         numeroPartidas = "Por Resolver";
-        string path = Directory.GetCurrentDirectory() + "/HistoricalChatRoom" + id + ".txt";
+        string path = Directory.GetCurrentDirectory() + "/ChatLogFromRoomN°" + id + ".txt";
 
         if (!File.Exists(path))
         {

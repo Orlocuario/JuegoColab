@@ -33,5 +33,5 @@ public class Jugador
         pressingRight = false;
         pressingLeft = false;
         attacking = false;
-}
+    }
 }

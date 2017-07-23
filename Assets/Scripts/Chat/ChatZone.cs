@@ -19,7 +19,7 @@ public class ChatZone : MonoBehaviour {
     {
         lockValue = false;
         HUDRate = "25";
-        rate = 500;
+        rate = 300;
         countTillRate = 0;
         chatButtonOn.SetActive(false);
         chatButtonOff.SetActive(false);
