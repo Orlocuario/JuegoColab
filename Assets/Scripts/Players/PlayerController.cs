@@ -47,10 +47,10 @@ public class PlayerController : MonoBehaviour
         theLevelManager = FindObjectOfType<LevelManager>();
         localPlayer = false;
         direction = 1;
-        IgnoreColisionStar2puntoCero();
+        IgnoreCollisionStar2puntoCero();
     }
 
-    private void IgnoreColisionStar2puntoCero()
+    public void IgnoreCollisionStar2puntoCero()
     {
         GameObject player1 = Client.instance.GetPlayerController(0).gameObject;
         GameObject player2 = Client.instance.GetPlayerController(1).gameObject;
@@ -232,6 +232,7 @@ public class PlayerController : MonoBehaviour
         {
             if (localPlayer)
             {
+                Client.instance.SendMessageToServer("ChangeHpHUDToRoom/-25");
                 theLevelManager.Respawn();
             }
         }

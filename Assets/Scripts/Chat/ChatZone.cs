@@ -19,7 +19,7 @@ public class ChatZone : MonoBehaviour {
     {
         lockValue = false;
         HUDRate = "25";
-        rate = 100;
+        rate = 500;
         countTillRate = 0;
         chatButtonOn.SetActive(false);
         chatButtonOff.SetActive(false);
@@ -43,7 +43,7 @@ public class ChatZone : MonoBehaviour {
             if (countTillRate == rate)
             {
                 countTillRate = 0;
-                Client.instance.SendMessageToServer("ChangeHpAndManaHUD/" + HUDRate);
+                Client.instance.SendMessageToServer("ChangeHpAndManaHUDToRoom/" + HUDRate);
             }
         }
         else

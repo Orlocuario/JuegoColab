@@ -28,13 +28,13 @@ public class ServerMessageHandler
             case "NewChatMessage":
                 SendNewChatMessage(message, connectionId);
                 break;
-            case "ChangeHpHUD":
+            case "ChangeHpHUDToRoom":
                 SendHpHUDToRoom(arreglo, connectionId);
                 break;
-            case "ChangeMpHUD":
+            case "ChangeMpHUDToRoom":
                 SendMpHUDToRoom(arreglo, connectionId);
                 break;
-            case "ChangeHpAndManaHUD": //Necessary coz' ChatZone changes both at the same rate
+            case "ChangeHpAndManaHUDToRoom": //Necessary coz' ChatZone changes both at the same rate
                 SendHpHAndMpHUDToRoom(arreglo, connectionId);
                 break;
             case "Attack":
@@ -52,14 +52,14 @@ public class ServerMessageHandler
     {
         Jugador player = server.GetPlayer(connectionId);
         Room room = player.room;
-        room.hpManaGer.RecieveHpHUD(arreglo[1]);
+        room.hpManaGer.ChangeHP(arreglo[1]);
     }
 
     private void SendMpHUDToRoom(string[] arreglo, int connectionId)
     {
         Jugador player = server.GetPlayer(connectionId);
         Room room = player.room;
-        room.hpManaGer.RecieveMpHUD(arreglo[1]);
+        room.hpManaGer.ChangeMP(arreglo[1]);
     }
 
     private void SendHpHAndMpHUDToRoom(string[] arreglo, int connectionId)

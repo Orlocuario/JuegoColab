@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class HpAndManaHUD {
 
-    public float maxHP = 250;
-    public float maxMP = 250;
+    public float maxHP;
+    public float maxMP;
     public float currentHP;
     public float currentMP;
     public float percentageHP;
@@ -14,21 +14,13 @@ public class HpAndManaHUD {
 
     public HpAndManaHUD(Room room)
     {
+        maxHP = 250;
+        maxMP = 250;
         currentHP = maxHP;
         currentMP = maxMP;
         percentageHP = 1;
         percentageMP = 1;
         this.room = room;
-    }
-
-    public void RecieveHpHUD(string changeRate)
-    {
-        ChangeHP(changeRate);
-    }
-
-    public void RecieveMpHUD(string changeRate)
-    {
-        ChangeMP(changeRate);
     }
 
     public void RecieveHpAndMpHUD(string changeRate)
@@ -40,26 +32,20 @@ public class HpAndManaHUD {
     public void ChangeHP(string deltaHP)
     {
         float valueDeltaHP = float.Parse(deltaHP);
-        if (valueDeltaHP <= 0) //Loose HP
+        currentHP += valueDeltaHP;
+
+        if (currentHP >= maxHP)
         {
-            currentHP -= valueDeltaHP;
-            if (currentHP <= 0)
-            {
-                currentHP = 0;
-                room.SendMessageToAllPlayers("PlayersAreDead");
-            }
+            currentHP = maxHP;
         }
-        else // Gain HP
+        else if (currentHP <= 0)
         {
-            currentHP += valueDeltaHP;
-            if (currentHP >= maxHP)
-            {
-                currentHP = maxHP;
-            }
-            Debug.Log(currentHP);
+            currentHP = 0;
+            room.SendMessageToAllPlayers("PlayersAreDead");
         }
+
         percentageHP = currentHP / maxHP;
-        room.SendMessageToAllPlayers("DisplayChangeHP/" + percentageHP);
+        room.SendMessageToAllPlayers("DisplayChangeHPToClient/" + percentageHP);
     }
 
     public void ChangeMaxHP(string NewMaxHP)
@@ -72,25 +58,19 @@ public class HpAndManaHUD {
     public void ChangeMP(string deltaMP)
     {
         float valueDeltaMP = float.Parse(deltaMP);
-        if (valueDeltaMP <= 0)//Loose MP
+        currentMP += valueDeltaMP;
+
+        if (currentMP >= maxMP)
         {
-            currentMP -= valueDeltaMP;
-            if (currentMP <= 0)
-            {
-                currentMP = 0;
-            }
+            currentMP = maxMP;
         }
-        else //Gain MP
+        else if (currentMP <= 0)
         {
-            currentMP += valueDeltaMP;
-            if (currentMP >= maxMP)
-            {
-                currentMP = maxMP;
-            }
-            Debug.Log(currentMP);
+            currentMP = 0;
         }
+
         percentageMP = currentMP / maxMP;
-        room.SendMessageToAllPlayers("DisplayChangeMP/" + percentageMP);
+        room.SendMessageToAllPlayers("DisplayChangeMPToClient/" + percentageMP);
     }
 
     public void ChangeMaxMP(string NewMaxMP)

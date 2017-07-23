@@ -16,8 +16,7 @@ public class DisplayHUD: MonoBehaviour{
     {
         Text percentageText = GameObject.Find("HealthPercentage").GetComponent<Text>();
         percentageText.text = (float.Parse(hpCurrentPercentage)*100).ToString()+"%";
-
-        Vector2 currentHealth = GameObject.Find("CurrentHealth").GetComponent<RectTransform>().sizeDelta;
+        
         Vector2 limitHealth = GameObject.Find("HealthMask").GetComponent<RectTransform>().sizeDelta;
         float maxLimitWidth = limitHealth.x;
         float currentX = float.Parse(hpCurrentPercentage) * maxLimitWidth;
@@ -29,8 +28,7 @@ public class DisplayHUD: MonoBehaviour{
     {
         Text percentageText = GameObject.Find("ManaPercentage").GetComponent<Text>();
         percentageText.text = (float.Parse(mpCurrentPercentage) * 100).ToString() + "%";
-
-        Vector2 currentMana = GameObject.Find("CurrentMana").GetComponent<RectTransform>().sizeDelta;
+        
         Vector2 limitMana = GameObject.Find("ManaMask").GetComponent<RectTransform>().sizeDelta;
         float maxLimitWidth = limitMana.x;
         float currentX = float.Parse(mpCurrentPercentage) * maxLimitWidth;
