@@ -38,7 +38,10 @@ public class ServerMessageHandler
                 SendHpHAndMpHUDToRoom(arreglo, connectionId);
                 break;
             case "Attack":
-                SendAttackState(message, connectionId,arreglo);
+                SendAttackState(message, connectionId, arreglo);
+                break;
+            case "AttackWarrior":
+                SendAttackState(message, connectionId, arreglo);
                 break;
             case "CastFireball":
                 SendNewFireball(message, connectionId, arreglo);

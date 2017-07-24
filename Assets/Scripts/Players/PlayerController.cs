@@ -288,7 +288,7 @@ public class PlayerController : MonoBehaviour
         Client.instance.SendMessageToServer(message);
     }
 
-    protected void SendAttackDataToServer()
+    protected virtual void SendAttackDataToServer()
     {
         string message = "Attack/" + characterId + "/" + remoteAttacking;
         Client.instance.SendMessageToServer(message);

@@ -44,12 +44,25 @@ public class ClientMessageHandler {
             case "Attack":
                 HandleUpdatedAttackState(arreglo);
                 break;
+            case "AttackWarrior":
+                HandleUpdatedAttackStateWarrior(arreglo);
+                break;
             case "CastFireball":
                 HandleCastFireball(arreglo);
                 break;
             default:
                 break;
         }
+    }
+
+    private void HandleUpdatedAttackStateWarrior(string[] arreglo)
+    {
+        int charId = Int32.Parse(arreglo[1]);
+        bool state = bool.Parse(arreglo[2]);
+        int numHits = Int32.Parse(arreglo[3]);
+        WarriorController script = client.GetWarrior();
+        script.remoteAttacking = state;
+        script.numHits = numHits;
     }
 
     private void HandleChangeHpHUDToClient(string[] arreglo)

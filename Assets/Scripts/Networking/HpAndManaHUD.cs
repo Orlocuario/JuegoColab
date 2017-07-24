@@ -21,8 +21,6 @@ public class HpAndManaHUD {
         currentMP = maxMP;
         percentageHP = 1;
         percentageMP = 1;
-        ChangeHP(currentHP.ToString());
-        ChangeMP(currentMP.ToString());
     }
 
     public void RecieveHpAndMpHUD(string changeRate)
