@@ -20,6 +20,8 @@ GameObject:
   m_Component:
   - component: {fileID: 4313709342850092}
   - component: {fileID: 212887039386170136}
+  - component: {fileID: 251473467489157730}
+  - component: {fileID: 61479879797948778}
   m_Layer: 9
   m_Name: PlatPast
   m_TagString: Ground
@@ -34,12 +36,26 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1797376620412920}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.9819536, y: 0.5080125, z: 1}
+  m_LocalPosition: {x: 24.96, y: 0.609, z: 0}
+  m_LocalScale: {x: 0.5915689, y: 0.23508643, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &61479879797948778
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1797376620412920}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 1
+  m_Offset: {x: 0, y: 0.23746684}
+  serializedVersion: 2
+  m_Size: {x: 1.3699999, y: 0.2350663}
 --- !u!212 &212887039386170136
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -75,3 +91,21 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!251 &251473467489157730
+PlatformEffector2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1797376620412920}
+  m_Enabled: 1
+  m_UseColliderMask: 1
+  m_ColliderMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RotationalOffset: 0
+  m_UseOneWay: 1
+  m_UseOneWayGrouping: 0
+  m_SurfaceArc: 180
+  m_UseSideFriction: 0
+  m_UseSideBounce: 0
+  m_SideArc: 1

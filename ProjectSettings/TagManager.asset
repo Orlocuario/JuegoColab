@@ -17,6 +17,7 @@ TagManager:
   - OriginalCanvas
   - ChatCanvas
   - OriginalTextCanvas
+  - MovingPlatform
   layers:
   - Default
   - TransparentFX
@@ -29,7 +30,7 @@ TagManager:
   - Background
   - Ground
   - Player
-  - Poderes
+  - 
   - 
   - 
   - 
@@ -62,7 +63,4 @@ TagManager:
     locked: 0
   - name: Player
     uniqueID: 2397370425
-    locked: 0
-  - name: Poderes
-    uniqueID: 2040001603
     locked: 0
