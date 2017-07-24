@@ -6,6 +6,7 @@ using System.Net.Sockets;
 using System;
 using System.Net;
 using System.IO;
+using UnityEngine.SceneManagement;
 
 public class Chat : MonoBehaviour
 {
@@ -18,22 +19,23 @@ public class Chat : MonoBehaviour
 
     string word;
     string entered;
-    string historial;
 
     int wordIndex = 0;
-    int NumeroPartidas = 0;
+    public int numMaxPlayers = 1;
 
-    bool inicializador;
     bool mayus = false;
 
     public void Start()
     {
         instance = this;
-        inicializador = true;
         originalCanvas = GameObject.FindGameObjectWithTag("OriginalCanvas");
         chatCanvas = GameObject.FindGameObjectWithTag("ChatCanvas");
-        textOriginalCanvas = GameObject.FindGameObjectWithTag("OriginalTextCanvas").GetComponent<Text>();
-        ToggleChatOff();
+        if (SceneManager.GetActiveScene().name != "ServerScene")
+        {
+            textOriginalCanvas = GameObject.FindGameObjectWithTag("OriginalTextCanvas").GetComponent<Text>();
+            ToggleChatOff();
+        }
+
     }
 
     public string SetJugador()
@@ -73,20 +75,6 @@ public class Chat : MonoBehaviour
                 return null;
         }
         return role;
-    }
-
-    public string HoraMinuto()
-    {
-        string hora = DateTime.Now.Hour.ToString();
-        string minutos = DateTime.Now.Minute.ToString();
-
-        if (minutos.Length == 1)
-        {
-            minutos = "0" + minutos;
-        }
-
-        string tiempo = " (" + hora + ":" + minutos + ")";
-        return tiempo;
     }
 
     public void AlphabetFunction(string alphabet)
@@ -140,30 +128,13 @@ public class Chat : MonoBehaviour
 
         if (enter)
         {
-            EnterFunction(false, "");
+            EnterFunction("");
         }
         else
-            {
-                return;
-            }
+        {
+            return;
+        }
     } // Lo que se escribe, manda y recibe
-
-    public void EnterFunction(bool connection, string message)  {
-        if (!connection)
-        {
-            entered = word;
-            word = "";
-            myName.text = "";
-            string texto = SetJugador() + ": " + entered;
-            Client.instance.SendNewChatMessageToServer(texto);
-            historial += "\r\n" + SetJugador() + ": " + entered + HoraMinuto();
-        }
-        else
-        {
-            Client.instance.SendNewChatMessageToServer(message);
-        }
-        
-    }
 
     private string MayusFunction(string alphabet)
     {
@@ -244,53 +215,41 @@ public class Chat : MonoBehaviour
         }
     }
 
+    public void EnterFunction(string message)
+    {
+        if (message == "")
+        {
+            entered = word;
+            word = "";
+            myName.text = "";
+            string texto = SetJugador() + ": " + entered;
+            Client.instance.SendNewChatMessageToServer(texto);
+        }
+        else
+        {
+            Client.instance.SendNewChatMessageToServer(message);
+        }
+    }
+
     public void UpdateChat(string message)
     {
         char[] separator = new char[1];
         separator[0] = ':';
         string[] arreglo = message.Split(separator);
-        
-        if (!inicializador)
-        {
-            if (arreglo[0] == "Mage")
-            {
-                message = "<color=#64b78e>" + message + "</color>";
-            }
-            else if (arreglo[0] == "Warrior")
-            {
-                message = "<color=#e67f84>" + message + "</color>";
-            }
-            else if (arreglo[0] == "Engineer")
-            {
-                message = "<color=#f9ca45>" + message + "</color>";
-            }
-            theirName.text += "\r\n" + message;
-            textOriginalCanvas.text = theirName.text;
-        }
-        else
-        {
-            ChatInitializer(arreglo);
-        }     
-    }
 
-    private void ChatInitializer(string[] arreglo)
-    {
-        inicializador = false;
-        string messageInit = null;
-        if (arreglo[0] == "Mago")
+        if (arreglo[0] == "Mage")
         {
-            messageInit = "<color=#64b78e>Mage Has Connected</color>";
+            message = "<color=#64b78e>" + message + "</color>";
         }
-        else if (arreglo[0] == "Guerrero")
+        else if (arreglo[0] == "Warrior")
         {
-            messageInit = "<color=#e67f84>Warrior Has Connected</color>";
+            message = "<color=#e67f84>" + message + "</color>";
         }
-        else if (arreglo[0] == "Ingeniero")
+        else if (arreglo[0] == "Engineer")
         {
-            messageInit = "<color=#f9ca45>Engineer Has Connected</color>";
+            message = "<color=#f9ca45>" + message + "</color>";
         }
-        textOriginalCanvas = GameObject.FindGameObjectWithTag("OriginalTextCanvas").GetComponent<Text>();
-        theirName.text += "\r\n" + messageInit;
+        theirName.text += "\r\n" + message;
         textOriginalCanvas.text = theirName.text;
     }
 
@@ -305,37 +264,4 @@ public class Chat : MonoBehaviour
         chatCanvas.SetActive(true);
         originalCanvas.SetActive(false);
     }
-
-    public void CreateTextChat(string exitGame) //proviene de cuando se corta el juego
-    {
-        if (exitGame == "true")
-        {
-            exitGame = "false";
-            NumeroPartidas += 1;
-            string path;
-            path = Directory.GetCurrentDirectory() + "/HistoricalChat.txt";
-
-            if (!File.Exists(path))
-            {
-                using (var tw = new StreamWriter(File.Create(path)))
-                {
-                    tw.WriteLine("Primera Partida");
-                    tw.WriteLine(historial);
-                    tw.Close();
-                }
-            }
-            else if (File.Exists(path))
-            {
-                using (var tw = new StreamWriter(path, true))
-                {
-                    tw.WriteLine("\r\n" + "____________________________________");
-                    tw.WriteLine("\r\n" + "Se ha ejecutado una nueva partida...");
-                    tw.WriteLine("\r\n" + "Partida N°: " + NumeroPartidas);
-                    tw.WriteLine(historial);
-                    tw.Close();
-                }
-            }
-        }
-    }
-
 }

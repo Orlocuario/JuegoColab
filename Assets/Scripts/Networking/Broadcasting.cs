@@ -6,9 +6,7 @@ using UnityEngine.Networking;
 public class Broadcasting : NetworkDiscovery
 {
 
-    // Use this for initialization
-    // asjkdhakjdhsakjhdk
-    void Start()
+    public void ServerInitialize()
     {
         Initialize();
         InitializeBroadcast();

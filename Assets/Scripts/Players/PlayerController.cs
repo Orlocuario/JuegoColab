@@ -39,6 +39,7 @@ public class PlayerController : MonoBehaviour
         remoteRight = false;
         remoteLeft = false;
         remoteJumping = false;
+        remoteAttacking = false;
         transform = GetComponent<Transform>();
         rb2d = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
@@ -46,7 +47,19 @@ public class PlayerController : MonoBehaviour
         theLevelManager = FindObjectOfType<LevelManager>();
         localPlayer = false;
         direction = 1;
+        IgnoreCollisionStar2puntoCero();
     }
+
+    public void IgnoreCollisionStar2puntoCero()
+    {
+        GameObject player1 = Client.instance.GetPlayerController(0).gameObject;
+        GameObject player2 = Client.instance.GetPlayerController(1).gameObject;
+        GameObject player3 = Client.instance.GetPlayerController(2).gameObject;
+        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), player1.GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), player2.GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), player3.GetComponent<Collider2D>());
+    }
+
 
     public void Activate(int charId)
     {
@@ -55,15 +68,15 @@ public class PlayerController : MonoBehaviour
 		sprite = GetComponent<SpriteRenderer>();
         if (this.characterId == 0)
         {
-            Chat.instance.EnterFunction(true, "Mago: Conectado");
+            Chat.instance.EnterFunction("Mage: Has Connected");
         }
         if (this.characterId == 1)
         {
-            Chat.instance.EnterFunction(true, "Guerrero: Conectado");
+            Chat.instance.EnterFunction("Warrior: Has Connected");
         }
         else if (this.characterId == 2)
         {
-            Chat.instance.EnterFunction(true, "Ingeniero: Conectado");
+            Chat.instance.EnterFunction("Engineer: Has Connected");
         }
 
         if (sprite) 
@@ -72,7 +85,7 @@ public class PlayerController : MonoBehaviour
 		}
     }
 
-    protected bool isGoingRight()
+    protected bool IsGoingRight()
     {
         if (localPlayer)
         {
@@ -93,7 +106,7 @@ public class PlayerController : MonoBehaviour
             return remoteRight;
     }
 
-    protected bool isGoingLeft()
+    protected bool IsGoingLeft()
     {
         if (localPlayer)
         {
@@ -114,13 +127,16 @@ public class PlayerController : MonoBehaviour
         return remoteLeft;
     }
 
-    protected bool isItGrounded()
+    protected bool IsItGrounded()
     {
-        bool ground = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
-        return ground;
+
+        //bool ground = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+        //return ground;
+        float verticalSpeed = rb2d.velocity.y;
+        return verticalSpeed == 0;
     }
 
-    protected bool isJumping(bool isGrounded)
+    protected bool IsJumping(bool isGrounded)
     {
         if (localPlayer)
         {
@@ -141,7 +157,7 @@ public class PlayerController : MonoBehaviour
         return remoteJumping;
     }
 
-    protected virtual bool isAttacking()
+    protected virtual bool IsAttacking()
     {
         return false;
     }
@@ -174,7 +190,7 @@ public class PlayerController : MonoBehaviour
             }
             myAnim.SetFloat("Speed", speed);
             myAnim.SetBool("IsGrounded", isGrounded);
-            myAnim.SetBool("IsAttacking", isAttacking());
+            myAnim.SetBool("IsAttacking", IsAttacking());
         }
 			
     }
@@ -183,13 +199,13 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (isGoingRight())
+        if (IsGoingRight())
         {
             rb2d.velocity = new Vector3(moveSpeed, rb2d.velocity.y, 0f);
             transform.localScale = new Vector3(1f, 1f, 1f);
             direction = 1;
         }
-        else if (isGoingLeft())
+        else if (IsGoingLeft())
         {
             rb2d.velocity = new Vector3(-moveSpeed, rb2d.velocity.y, 0f);
             transform.localScale = new Vector3(-1f, 1f, 1f);
@@ -199,24 +215,26 @@ public class PlayerController : MonoBehaviour
         {
             rb2d.velocity = new Vector3(0f, rb2d.velocity.y, 0f);
         }
-        isGrounded = isItGrounded();
-        if (isJumping(isGrounded))
+        isGrounded = IsItGrounded();
+        if (IsJumping(isGrounded))
         {
             rb2d.AddForce(new Vector2(0, jumpSpeed), ForceMode2D.Impulse);
         }
         previous_transform = transform.position;
         myAnim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
         myAnim.SetBool("IsGrounded", isGrounded);
-        myAnim.SetBool("IsAttacking", isAttacking());
+        myAnim.SetBool("IsAttacking", IsAttacking());
     }
 
     protected void OnTriggerEnter2D(Collider2D other)
     {
         if(other.tag == "KillPlane")
         {
-            //gameObject.SetActive(false); 
-            //transform.position = respawnPosition;
-            theLevelManager.Respawn();
+            if (localPlayer)
+            {
+                Client.instance.SendMessageToServer("ChangeHpHUDToRoom/-25");
+                theLevelManager.Respawn();
+            }
         }
 
         if (other.tag == "Checkpoint")
@@ -241,7 +259,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SetVariablesFromServer(float positionX, float positionY, bool isGrounded, float speed, int direction, bool remoteRight, bool remoteLeft, bool remoteJumping, bool remoteAttacking)
+    public void SetVariablesFromServer(float positionX, float positionY, bool isGrounded, float speed, int direction, bool remoteRight, bool remoteLeft, bool remoteJumping)
     {
         if (localPlayer)
         {
@@ -254,17 +272,22 @@ public class PlayerController : MonoBehaviour
         this.remoteRight = remoteRight;
         this.remoteLeft = remoteLeft;
         this.remoteJumping = remoteJumping;
-        this.remoteAttacking = remoteAttacking;
         SynchronizeNonLocalPlayer();
     }
 
-    protected void SendObjectDataToServer()
+    public void SendObjectDataToServer()
     {
         float position_x = transform.position.x;
         float position_y = transform.position.y;
         bool grounded = isGrounded;
         float speed = Mathf.Abs(rb2d.velocity.x);
-        string message = "ChangePosition/" + characterId + "/" + position_x + "/" + position_y + "/" + isGrounded + "/" + speed + "/" + direction + "/" + remoteJumping + "/" + remoteLeft + "/" + remoteRight + "/" + remoteAttacking;
+        string message = "ChangePosition/" + characterId + "/" + position_x + "/" + position_y + "/" + isGrounded + "/" + speed + "/" + direction + "/" + remoteJumping + "/" + remoteLeft + "/" + remoteRight;
+        Client.instance.SendMessageToServer(message);
+    }
+
+    protected void SendAttackDataToServer()
+    {
+        string message = "Attack/" + characterId + "/" + remoteAttacking;
         Client.instance.SendMessageToServer(message);
     }
 }

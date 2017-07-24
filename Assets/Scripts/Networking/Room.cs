@@ -2,26 +2,48 @@
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.IO;
 
 public class Room
 {
     List<Jugador> players;
+    Server server;
+    ServerMessageHandler sender;
+    public HpAndManaHUD hpManaGer;
     public int numJugadores;
     public int maxJugadores;
     public int id;
-    Server server;
-    MessageHandler sender;
+
     public bool started;
+    string numeroPartidas;
+    string historial;
+
     //Inicialización
-    public Room(int id, Server server, MessageHandler sender)
+    public Room(int id, Server server, ServerMessageHandler sender, int maxJugadores)
     {
         numJugadores = 0;
         this.id = id;
-        this.maxJugadores = 2;
+        this.maxJugadores = maxJugadores;
         players = new List<Jugador>();
         this.server = server;
         this.sender = sender;
         started = false;
+        historial = "";
+        hpManaGer = new HpAndManaHUD(this);
+    }
+
+    public string HoraMinuto()
+    {
+        string hora = DateTime.Now.Hour.ToString();
+        string minutos = DateTime.Now.Minute.ToString();
+
+        if (minutos.Length == 1)
+        {
+            minutos = "0" + minutos;
+        }
+
+        string tiempo = " (" + hora + ":" + minutos + ")";
+        return tiempo;
     }
 
     //Retorna true si no cabe más gente.
@@ -47,11 +69,12 @@ public class Room
         
         if (IsFull())
         {
+            Debug.Log("Full room");
             sender.SendChangeScene("Escena1", this);
             started = true;
-            SendMessageToAllPlayers("Mage: Has Connected");
-            SendMessageToAllPlayers("Warrior: Has Connected");
-            SendMessageToAllPlayers("Engineer: Has Connected");
+            SendMessageToAllPlayers("Mago: Conectado");
+            SendMessageToAllPlayers("Guerrero: Conectado");
+            SendMessageToAllPlayers("Ingeniero: Conectado");
         }
         return true;
     }
@@ -75,7 +98,15 @@ public class Room
 
     public void SendMessageToAllPlayers(string message)
     {
-        foreach(Jugador player in players)
+        char[] separator = new char[1];
+        separator[0] = '/';
+        string[] arreglo = message.Split(separator);
+        if (arreglo[0] == "NewChatMessage")
+        {
+            historial += "\r\n" + arreglo[1] + HoraMinuto();
+        }
+
+        foreach (Jugador player in players)
         {
             if (player.connected)
             {
@@ -95,4 +126,30 @@ public class Room
         }
     }
 
+    public void CreateTextChat()
+    {
+        numeroPartidas = "Por Resolver";
+        string path = Directory.GetCurrentDirectory() + "/ChatLogFromRoomN°" + id + ".txt";
+
+        if (!File.Exists(path))
+        {
+            using (var tw = new StreamWriter(File.Create(path)))
+            {
+                tw.WriteLine("Partida N°: " + numeroPartidas);
+                tw.WriteLine(historial);
+                tw.Close();
+            }
+        }
+        else if (File.Exists(path))
+        {
+            using (var tw = new StreamWriter(path, true))
+            {
+                tw.WriteLine("\r\n" + "____________________________________");
+                tw.WriteLine("Generando Nuevo Historial...");
+                tw.WriteLine("Partida N°: " + numeroPartidas);
+                tw.WriteLine(historial);
+                tw.Close();
+            }
+        }
+    }
 }

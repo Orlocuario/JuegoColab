@@ -5,30 +5,34 @@ using UnityEngine.Networking;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEngine.UI;
+using System;
 
 public class Server : MonoBehaviour {
 
     public int maxConnections;
     int port = 6675;
     int socketId;
-    int connectionId;
     int channelId;
-    List<Room> rooms;
-    MessageHandler messageHandler;
+    int timesScene1IsLoaded;
+    public List<Room> rooms;
+    public ServerMessageHandler messageHandler;
     public static Server instance;
     int bufferSize = 100;
+    public int maxJugadores;
 
     // Use this for initialization
-    void Start ()
+    void Start()
     {
+        maxJugadores = 1;
         instance = this;
+        timesScene1IsLoaded = 0;
         NetworkTransport.Init();
         ConnectionConfig config = new ConnectionConfig();
         channelId = config.AddChannel(QosType.Unreliable);
         HostTopology topology = new HostTopology(config, maxConnections);
         socketId = NetworkTransport.AddHost(topology, port);
         rooms = new List<Room>();
-        messageHandler = new MessageHandler(this);
+        messageHandler = new ServerMessageHandler(this);
     }
 
     // Update is called once per frame
@@ -83,6 +87,7 @@ public class Server : MonoBehaviour {
         {
             player.connected = true;
             SendMessageToClient(connectionId, "ChangeScene/Escena1");
+            timesScene1IsLoaded += 1;
             return;
         }
 
@@ -90,7 +95,7 @@ public class Server : MonoBehaviour {
         Room room = SearchRoom();
         if(room == null)
         {
-            room = new Room(rooms.Count, this, messageHandler);
+            room = new Room(rooms.Count, this, messageHandler, maxJugadores);
             rooms.Add(room);
         }
         room.AddPlayer(connectionId);
@@ -98,13 +103,25 @@ public class Server : MonoBehaviour {
 
     private void DeleteConnection(int connectionId)
     {
-        foreach(Room room in rooms)
+        Jugador player = GetPlayer(connectionId);
+        if (player != null)
         {
-            Jugador player = GetPlayer(connectionId);
-            if (player != null)
+            player.connected = false;
+            int charId = player.charId;
+            string role;
+            if (charId == 0)
             {
-                player.connected = false;
+                role = "Mage: Has Disconnected";
             }
+            else if (charId == 1)
+            {
+                role = "Warrior: Has Disconnected";
+            }
+            else
+            {
+                role = "Engineer: Has Disconnected";
+            }
+            player.room.SendMessageToAllPlayers("NewChatMessage/" + role);
         }
     }
 

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -10,11 +11,16 @@ public class ChatZone : MonoBehaviour {
     LevelManager levelManager;
     Vector2 myPosition;
     private bool lockValue;
-
+    public string HUDRate;
+    int rate;
+    int countTillRate;
 
     private void Start()
     {
         lockValue = false;
+        HUDRate = "25";
+        rate = 300;
+        countTillRate = 0;
         chatButtonOn.SetActive(false);
         chatButtonOff.SetActive(false);
 
@@ -30,12 +36,19 @@ public class ChatZone : MonoBehaviour {
 
         if (distance <= 3)
         {
+            lockValue = true;
             chatButtonOn.SetActive(true);
             chatButtonOff.SetActive(true);
-            lockValue = true;
+            countTillRate ++;
+            if (countTillRate == rate)
+            {
+                countTillRate = 0;
+                Client.instance.SendMessageToServer("ChangeHpAndManaHUDToRoom/" + HUDRate);
+            }
         }
         else
         {
+            countTillRate = 0;
             if(lockValue)
             {
                 chatButtonOn.SetActive(false);

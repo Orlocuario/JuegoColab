@@ -47,6 +47,11 @@ public class LevelManager : MonoBehaviour {
 		
 	}
 
+    public void ReloadLevel()
+    {
+        Debug.Log("PLAYERS ARE DEAD MUAJAJAJA");
+    }
+
     public void Respawn()
     {
         StartCoroutine("RespawnCo");
@@ -58,8 +63,10 @@ public class LevelManager : MonoBehaviour {
 
         yield return new WaitForSeconds(waitToRespawn); 
 
-        thePlayer.transform.position = thePlayer.respawnPosition;
+        thePlayer.transform.position = thePlayer.respawnPosition + Vector3.up*0.1f;
         thePlayer.gameObject.SetActive(true);
+        thePlayer.IgnoreCollisionStar2puntoCero();
+        thePlayer.SendObjectDataToServer();
     }
 
 }

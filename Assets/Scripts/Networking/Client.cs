@@ -18,6 +18,7 @@ public class Client : MonoBehaviour {
     int channelId;
     public static Client instance;
     int bufferSize = 100;
+    ClientMessageHandler handler;
 
 	void Start () {
         DontDestroyOnLoad(this);
@@ -27,6 +28,7 @@ public class Client : MonoBehaviour {
         channelId = config.AddChannel(QosType.Unreliable);
         HostTopology topology = new HostTopology(config, 10);
         socketId = NetworkTransport.AddHost(topology, port);
+        handler = new ClientMessageHandler();
     }
 
     public void Connect(string ip)
@@ -68,7 +70,7 @@ public class Client : MonoBehaviour {
                 BinaryFormatter formatter = new BinaryFormatter();
                 string message = formatter.Deserialize(stream) as string;
                 Debug.Log("incoming message event received: " + message);
-                HandleMessage(message);
+                handler.HandleMessage(message);
                 break;
             case NetworkEventType.DisconnectEvent:
                 Debug.Log("disconnected from server");
@@ -76,66 +78,8 @@ public class Client : MonoBehaviour {
         }
     }
 
-    public void RequestCharIdToServer()
+    public PlayerController GetPlayerController(int charId)
     {
-        SendMessageToServer("RequestCharId");
-    }
-
-    public void SendNewChatMessageToServer(string newChatMessage)
-    {
-        SendMessageToServer("NewChatMessage/" + newChatMessage);
-    }
-
-    private void HandleMessage(string message)
-    {
-        char[] separator = new char[1];
-        separator[0] = '/';
-        string[] arreglo = message.Split(separator);
-        switch (arreglo[0])
-        {
-            case "ChangeScene":
-                HandleChangeScene(arreglo);
-                break;
-            case "SetCharId":
-                HandleSetCharId(arreglo);
-                break;
-            case "ChangePosition":
-                HandleChangePosition(arreglo);
-                break;
-            case "NewChatMessage":
-                HandleNewChatMessage(arreglo);
-                break;
-            default:
-                break;
-        }
-    }
-
-    private void HandleChangeScene(string[] arreglo)
-    {
-        string scene = arreglo[1];
-        SceneManager.LoadScene(scene);
-    }
-
-    private void HandleSetCharId(string[] arreglo)
-    {
-        string charId = arreglo[1];
-        int charIdint = Convert.ToInt32(charId);
-        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.SetCharAsLocal(charIdint);  
-    }
-
-    private void HandleChangePosition(string[] data)
-    {
-        int charId = Int32.Parse(data[1]);
-        float positionX = float.Parse(data[2], CultureInfo.InvariantCulture);
-        float positionY = float.Parse(data[3], CultureInfo.InvariantCulture);
-        bool isGrounded = bool.Parse(data[4]);
-        float speed = float.Parse(data[5], CultureInfo.InvariantCulture);
-        int direction = Int32.Parse(data[6]);
-        bool pressingJump = bool.Parse(data[7]);
-        bool pressingLeft = bool.Parse(data[8]);
-        bool pressingRight = bool.Parse(data[9]);
-        bool attacking = bool.Parse(data[10]);
         GameObject player;
         PlayerController script;
         switch (charId)
@@ -157,12 +101,23 @@ public class Client : MonoBehaviour {
                 script = null;
                 break;
         }
-        script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction, pressingRight, pressingLeft, pressingJump, attacking);
+        return script;
     }
 
-    private void HandleNewChatMessage(string[] arreglo)
+    public MageController GetMage()
     {
-        string chatMessage = arreglo[1];
-        Chat.instance.UpdateChat(chatMessage);
+        GameObject player = GameObject.FindGameObjectsWithTag("Player1")[0];
+        MageController script = player.GetComponent<MageController>();
+        return script;
+    }
+
+    public void SendNewChatMessageToServer(string newChatMessage)
+    {
+        SendMessageToServer("NewChatMessage/" + newChatMessage);
+    }
+
+    public void RequestCharIdToServer()
+    {
+        SendMessageToServer("RequestCharId");
     }
 }
