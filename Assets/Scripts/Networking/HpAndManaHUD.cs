@@ -14,13 +14,15 @@ public class HpAndManaHUD {
 
     public HpAndManaHUD(Room room)
     {
+        this.room = room;
         maxHP = 250;
         maxMP = 250;
         currentHP = maxHP;
         currentMP = maxMP;
         percentageHP = 1;
         percentageMP = 1;
-        this.room = room;
+        ChangeHP(currentHP.ToString());
+        ChangeMP(currentMP.ToString());
     }
 
     public void RecieveHpAndMpHUD(string changeRate)
