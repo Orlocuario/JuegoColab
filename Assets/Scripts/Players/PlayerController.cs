@@ -188,9 +188,7 @@ public class PlayerController : MonoBehaviour
             {
                 transform.localScale = new Vector3(-1f, 1f, 1f);
             }
-            myAnim.SetFloat("Speed", speed);
-            myAnim.SetBool("IsGrounded", isGrounded);
-            myAnim.SetBool("IsAttacking", IsAttacking());
+            SetAnimVariables();
         }
 			
     }
@@ -221,6 +219,11 @@ public class PlayerController : MonoBehaviour
             rb2d.AddForce(new Vector2(0, jumpSpeed), ForceMode2D.Impulse);
         }
         previous_transform = transform.position;
+        SetAnimVariables();
+    }
+
+    protected virtual void SetAnimVariables()
+    {
         myAnim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
         myAnim.SetBool("IsGrounded", isGrounded);
         myAnim.SetBool("IsAttacking", IsAttacking());

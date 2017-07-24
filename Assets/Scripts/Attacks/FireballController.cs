@@ -41,14 +41,14 @@ public class FireballController : MonoBehaviour {
 
     //Hacer que reciba un enemigo
     public void DealDamage(){
-        if (isCasterLocal())
+        if (IsCasterLocal())
         {
             //Hace daño o algo
         }
         Destroy(gameObject);
     }
 
-    private bool isCasterLocal()
+    private bool IsCasterLocal()
     {
         return caster.localPlayer;
     }

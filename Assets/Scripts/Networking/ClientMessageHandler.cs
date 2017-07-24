@@ -90,6 +90,7 @@ public class ClientMessageHandler {
     {
         string scene = arreglo[1];
         SceneManager.LoadScene(scene);
+        //Send HP AND MANA
     }
 
     private void HandleSetCharId(string[] arreglo)

@@ -31,7 +31,6 @@ public class MageController : PlayerController {
         return remoteAttacking;
     }
 
-
     private void CastFireball(int direction, float speed)
     {
         Vector3 myPosition = transform.position;
