@@ -2,20 +2,21 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireballController : MonoBehaviour {
+public class ProyectileController : MonoBehaviour {
 
     private int direction;
     private float speed;
     float maxDistance;
     float currentDistance;
-    MageController caster;
+    EngineerController caster;
     // Use this for initialization
-    void Start() {
-        maxDistance = 2;
+    void Start()
+    {
+        maxDistance = 3; //Get From Bag
         currentDistance = 0;
     }
 
-    public void SetMovement(int direction, float speed, float x, float y, MageController caster)
+    public void SetMovement(int direction, float speed, float x, float y, EngineerController caster)
     {
         this.caster = caster;
         this.direction = direction;
@@ -28,7 +29,8 @@ public class FireballController : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
         float distance = speed * direction * Time.deltaTime;
         transform.position = transform.position + Vector3.right * distance;
         currentDistance += System.Math.Abs(distance);
@@ -39,7 +41,8 @@ public class FireballController : MonoBehaviour {
     }
 
     //Hacer que reciba un enemigo
-    public void DealDamage(){
+    public void DealDamage()
+    {
         if (IsCasterLocal())
         {
             //Hace daño o algo

@@ -14,25 +14,6 @@ public class DisplayHUD: MonoBehaviour{
     public void Start()
     {
         instance = this;
-        /*if (currentHP != null && maxHP != null)
-        {
-            string percentageHP = (float.Parse(currentHP) / float.Parse(maxHP)).ToString();
-            CurrentHP(percentageHP);
-        }
-        else
-        {
-            CurrentHP("1");
-        }
-
-        if (currentMP != null && maxMP != null)
-        {
-            string percentageMP = (float.Parse(currentMP) / float.Parse(maxMP)).ToString();
-            CurrentHP(percentageMP);
-        }
-        else
-        {
-            CurrentMP("1");
-        }*/ 
     }
 
     public void CurrentHP(string message)

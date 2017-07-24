@@ -118,6 +118,13 @@ public class Client : MonoBehaviour {
         return script;
     }
 
+    public EngineerController GetEngineer()
+    {
+        GameObject player = GameObject.FindGameObjectsWithTag("Player2")[0];
+        EngineerController script = player.GetComponent<EngineerController>();
+        return script;
+    }
+
     public void SendNewChatMessageToServer(string newChatMessage)
     {
         SendMessageToServer("NewChatMessage/" + newChatMessage);
