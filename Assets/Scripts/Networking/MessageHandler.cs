@@ -3,11 +3,11 @@ using System.Collections;
 using System;
 using System.Globalization;
 
-public class ServerMessageHandler
+public class MessageHandler
 {
     Server server;
     
-    public ServerMessageHandler(Server server)
+    public MessageHandler(Server server)
     {
         this.server = server;
     }
@@ -28,56 +28,12 @@ public class ServerMessageHandler
             case "NewChatMessage":
                 SendNewChatMessage(message, connectionId);
                 break;
-            case "ChangeHpHUDToRoom":
-                SendHpHUDToRoom(arreglo, connectionId);
-                break;
-            case "ChangeMpHUDToRoom":
-                SendMpHUDToRoom(arreglo, connectionId);
-                break;
-            case "ChangeHpAndManaHUDToRoom": //Necessary coz' ChatZone changes both at the same rate
-                SendHpHAndMpHUDToRoom(arreglo, connectionId);
-                break;
-            case "Attack":
-                SendAttackState(message, connectionId,arreglo);
-                break;
-            case "CastFireball":
-                SendNewFireball(message, connectionId, arreglo);
-                break;
             default:
                 break;
         }
     }
 
-    private void SendHpHUDToRoom(string[] arreglo, int connectionId)
-    {
-        Jugador player = server.GetPlayer(connectionId);
-        Room room = player.room;
-        room.hpManaGer.ChangeHP(arreglo[1]);
-    }
-
-    private void SendMpHUDToRoom(string[] arreglo, int connectionId)
-    {
-        Jugador player = server.GetPlayer(connectionId);
-        Room room = player.room;
-        room.hpManaGer.ChangeMP(arreglo[1]);
-    }
-
-    private void SendHpHAndMpHUDToRoom(string[] arreglo, int connectionId)
-    {
-        Jugador player = server.GetPlayer(connectionId);
-        Room room = player.room;
-        room.hpManaGer.RecieveHpAndMpHUD(arreglo[1]);
-    }
-
-
-    private void SendNewFireball(string message, int connectionId, string[] data)
-    {
-        Jugador player = server.GetPlayer(connectionId);
-        Room room = player.room;
-        room.SendMessageToAllPlayersExceptOne(message, connectionId);
-    }
-
-   private void SendNewChatMessage(string chatMessage, int connectionID)
+    private void SendNewChatMessage(string chatMessage, int connectionID)
     {
         Jugador player = server.GetPlayer(connectionID);
         Room room = player.room;
@@ -120,13 +76,5 @@ public class ServerMessageHandler
     {
         string command = "ChangeScene/" + sceneName;
         room.SendMessageToAllPlayers(command);
-    }
-
-    public void SendAttackState(string message, int connectionId, string[] data)
-    {
-        Jugador player = server.GetPlayer(connectionId);
-        Room room = player.room;
-        player.attacking = bool.Parse(data[2]);
-        room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 }

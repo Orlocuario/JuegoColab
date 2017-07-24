@@ -9,13 +9,11 @@ public class Room
     List<Jugador> players;
     Server server;
     ServerMessageHandler sender;
+    public HpAndManaHUD hpManaGer;
     public int numJugadores;
     public int maxJugadores;
     public int id;
-    public float maxHP = 250;
-    public float maxMP = 250;
-    public float currentHP;
-    public float currentMP;
+
     public bool started;
     string numeroPartidas;
     string historial;
@@ -30,9 +28,8 @@ public class Room
         this.server = server;
         this.sender = sender;
         started = false;
-        currentHP = maxHP;
-        currentMP = maxMP;
         historial = "";
+        hpManaGer = new HpAndManaHUD(this);
     }
 
     public string HoraMinuto()
@@ -129,73 +126,10 @@ public class Room
         }
     }
 
-    public void RecieveHUD(string changeRate)
-    {
-        ChangeMP(changeRate);
-        ChangeHP(changeRate);
-    }
-
-    public void ChangeHP(string deltaHP)
-    {
-        float valueDeltaHP = float.Parse(deltaHP);
-        if (valueDeltaHP <= 0) //Loose HP
-        {
-            currentHP -= valueDeltaHP;
-            if (currentHP <= 0)
-            {
-                currentHP = 0;
-                SendMessageToAllPlayers("PlayersAreDead/ReloadLevel");
-            }
-        }
-        else // Gain HP
-        {
-            currentHP += valueDeltaHP;
-            if (currentHP >= maxHP)
-            {
-                currentHP = maxHP;
-            }
-        }
-    }
-
-    public void ChangeMaxHP(string deltaMaxHP)
-    {
-        float valueMaxHP = float.Parse(deltaMaxHP);
-        maxHP = valueMaxHP;
-        ChangeHP(deltaMaxHP);
-    }
-
-    public void ChangeMP(string deltaMP)
-    {
-        float valueDeltaMP = float.Parse(deltaMP);
-        if (valueDeltaMP <= 0)//Loose MP
-        {
-            currentMP -= valueDeltaMP;
-            if (currentMP <= 0)
-            {
-                currentMP = 0;
-            }
-        }
-        else //Gain MP
-        {
-            currentMP += valueDeltaMP;
-            if (currentMP >= maxMP)
-            {
-                currentMP = maxMP;
-            }
-        }
-    }
-
-    public void ChangeMaxMP(string deltaMaxMP)
-    {
-        float valueMaxMP = float.Parse(deltaMaxMP);
-        maxMP = valueMaxMP;
-        ChangeMP(deltaMaxMP);
-    }
-
     public void CreateTextChat()
     {
         numeroPartidas = "Por Resolver";
-        string path = Directory.GetCurrentDirectory() + "/HistoricalChatRoom" + id + ".txt";
+        string path = Directory.GetCurrentDirectory() + "/ChatLogFromRoomN°" + id + ".txt";
 
         if (!File.Exists(path))
         {

@@ -12,11 +12,10 @@ public class Server : MonoBehaviour {
     public int maxConnections;
     int port = 6675;
     int socketId;
-    int connectionId;
     int channelId;
     int timesScene1IsLoaded;
     public List<Room> rooms;
-    ServerMessageHandler messageHandler;
+    public ServerMessageHandler messageHandler;
     public static Server instance;
     int bufferSize = 100;
     public int maxJugadores;
@@ -104,13 +103,25 @@ public class Server : MonoBehaviour {
 
     private void DeleteConnection(int connectionId)
     {
-        foreach(Room room in rooms)
+        Jugador player = GetPlayer(connectionId);
+        if (player != null)
         {
-            Jugador player = GetPlayer(connectionId);
-            if (player != null)
+            player.connected = false;
+            int charId = player.charId;
+            string role;
+            if (charId == 0)
             {
-                player.connected = false;
+                role = "Mage: Has Disconnected";
             }
+            else if (charId == 1)
+            {
+                role = "Warrior: Has Disconnected";
+            }
+            else
+            {
+                role = "Engineer: Has Disconnected";
+            }
+            player.room.SendMessageToAllPlayers("NewChatMessage/" + role);
         }
     }
 

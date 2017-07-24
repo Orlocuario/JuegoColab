@@ -47,7 +47,7 @@ public class LevelManager : MonoBehaviour {
 		
 	}
 
-    public void ReloadLevel(string[] message)
+    public void ReloadLevel()
     {
         Debug.Log("PLAYERS ARE DEAD MUAJAJAJA");
     }
@@ -65,6 +65,7 @@ public class LevelManager : MonoBehaviour {
 
         thePlayer.transform.position = thePlayer.respawnPosition + Vector3.up*0.1f;
         thePlayer.gameObject.SetActive(true);
+        thePlayer.IgnoreCollisionStar2puntoCero();
         thePlayer.SendObjectDataToServer();
     }
 

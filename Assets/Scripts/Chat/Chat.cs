@@ -21,15 +21,13 @@ public class Chat : MonoBehaviour
     string entered;
 
     int wordIndex = 0;
-    int numMaxPlayers = 2;
+    public int numMaxPlayers = 1;
 
-    bool inicializador;
     bool mayus = false;
 
     public void Start()
     {
         instance = this;
-        inicializador = true;
         originalCanvas = GameObject.FindGameObjectWithTag("OriginalCanvas");
         chatCanvas = GameObject.FindGameObjectWithTag("ChatCanvas");
         if (SceneManager.GetActiveScene().name != "ServerScene")
@@ -130,28 +128,13 @@ public class Chat : MonoBehaviour
 
         if (enter)
         {
-            EnterFunction(false, "");
+            EnterFunction("");
         }
         else
         {
             return;
         }
     } // Lo que se escribe, manda y recibe
-
-    public void EnterFunction(bool connection, string message)  {
-        if (!connection)
-        {
-            entered = word;
-            word = "";
-            myName.text = "";
-            string texto = SetJugador() + ": " + entered;
-            Client.instance.SendNewChatMessageToServer(texto);
-        }
-        else
-        {
-            Client.instance.SendNewChatMessageToServer(message);
-        }      
-    }
 
     private string MayusFunction(string alphabet)
     {
@@ -232,57 +215,41 @@ public class Chat : MonoBehaviour
         }
     }
 
+    public void EnterFunction(string message)
+    {
+        if (message == "")
+        {
+            entered = word;
+            word = "";
+            myName.text = "";
+            string texto = SetJugador() + ": " + entered;
+            Client.instance.SendNewChatMessageToServer(texto);
+        }
+        else
+        {
+            Client.instance.SendNewChatMessageToServer(message);
+        }
+    }
+
     public void UpdateChat(string message)
     {
         char[] separator = new char[1];
         separator[0] = ':';
         string[] arreglo = message.Split(separator);
-        
-        if (!inicializador)
-        {
-            if (arreglo[0] == "Mage")
-            {
-                message = "<color=#64b78e>" + message + "</color>";
-            }
-            else if (arreglo[0] == "Warrior")
-            {
-                message = "<color=#e67f84>" + message + "</color>";
-            }
-            else if (arreglo[0] == "Engineer")
-            {
-                message = "<color=#f9ca45>" + message + "</color>";
-            }
-            theirName.text += "\r\n" + message;
-            textOriginalCanvas.text = theirName.text;
-        }
-        else
-        {
-            ChatInitializer(arreglo);
-        }     
-    }
 
-    private void ChatInitializer(string[] arreglo)
-    {
-        numMaxPlayers -= 1;
-        if (numMaxPlayers == 0)
+        if (arreglo[0] == "Mage")
         {
-            inicializador = false;
+            message = "<color=#64b78e>" + message + "</color>";
         }
-        string messageInit = null;
-        if (arreglo[0] == "Mago")
+        else if (arreglo[0] == "Warrior")
         {
-            messageInit = "<color=#64b78e>Mage Has Connected</color>";
+            message = "<color=#e67f84>" + message + "</color>";
         }
-        else if (arreglo[0] == "Guerrero")
+        else if (arreglo[0] == "Engineer")
         {
-            messageInit = "<color=#e67f84>Warrior Has Connected</color>";
+            message = "<color=#f9ca45>" + message + "</color>";
         }
-        else if (arreglo[0] == "Ingeniero")
-        {
-            messageInit = "<color=#f9ca45>Engineer Has Connected</color>";
-        }
-        textOriginalCanvas = GameObject.FindGameObjectWithTag("OriginalTextCanvas").GetComponent<Text>();
-        theirName.text += "\r\n" + messageInit;
+        theirName.text += "\r\n" + message;
         textOriginalCanvas.text = theirName.text;
     }
 
