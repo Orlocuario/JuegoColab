@@ -58,6 +58,9 @@ TagManager:
   - name: Default
     uniqueID: 0
     locked: 0
+  - name: Paredes
+    uniqueID: 2928461413
+    locked: 0
   - name: Suelo
     uniqueID: 3817540167
     locked: 0
