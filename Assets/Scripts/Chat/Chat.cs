@@ -16,6 +16,8 @@ public class Chat : MonoBehaviour
     public Text textOriginalCanvas;
     public GameObject originalCanvas;
     public GameObject chatCanvas;
+    public GameObject inventory;
+    public GameObject displayPanel;
 
     string word;
     string entered;
@@ -35,7 +37,7 @@ public class Chat : MonoBehaviour
             textOriginalCanvas = GameObject.FindGameObjectWithTag("OriginalTextCanvas").GetComponent<Text>();
             ToggleChatOff();
         }
-
+        Inventory.instance.displayPanel.SetActive(false);
     }
 
     public string SetJugador()
@@ -263,5 +265,7 @@ public class Chat : MonoBehaviour
     {
         chatCanvas.SetActive(true);
         originalCanvas.SetActive(false);
+        displayPanel.SetActive(false);
+        inventory.SetActive(false);
     }
 }

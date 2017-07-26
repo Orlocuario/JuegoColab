@@ -9,12 +9,13 @@ public class Inventory : MonoBehaviour
     public const int numSlots = 8;
     public Image[] items = new Image[numSlots];
     public GameObject displayPanel;
+    public GameObject actualItem;
     public Text displayItemInfo;
 
     public void Start()
     {
+        new Items();
         instance = this;
-        displayPanel.SetActive(false);
     }
 
     public void AddItemToInventory(GameObject itemToAdd)
@@ -26,13 +27,17 @@ public class Inventory : MonoBehaviour
                 items[i] = itemToAdd.GetComponent<Image>();
                 items[i].sprite = itemToAdd.GetComponent<Sprite>();
                 items[i].enabled = true;
-                //make server distroy item when player collides with object in server
+                //make server distroy item when player collides with object in room & make it save in record
+                return;
+            }
+            else
+            {
                 return;
             }
         }
     }
 
-    public void RemoveItemOfInventory(GameObject itemToRemove)
+    public void RemoveItemFromInventory(GameObject itemToRemove)
     {
         for (int i = 0; i < items.Length; i++)
         {
@@ -41,7 +46,7 @@ public class Inventory : MonoBehaviour
                 items[i] = null;
                 items[i].sprite = null;
                 items[i].enabled = false;
-                //make server, drop or distroy or trade item (best is to drop and countdown to destroy)
+                //make server, drop or distroy or trade item (best is to drop and countdown to destroy) & make it gone in record
                 return;
             }
         }
@@ -49,11 +54,11 @@ public class Inventory : MonoBehaviour
 
     public void GetItemName(string slot)
     {
-        Sprite itemSprite = GameObject.Find("Slot" + slot).GetComponentInChildren<Image>().sprite;
+        Image itemImage = GameObject.Find("ItemImage" + slot).GetComponent<Image>();
 
-        if (itemSprite != null)
+        if (itemImage.sprite != null)
         {
-            Items.instance.ItemsInGame(itemSprite.name);
+            Items.instance.ItemsInGame(itemImage);
         }
         else
         {
@@ -64,5 +69,17 @@ public class Inventory : MonoBehaviour
     public void ToggleDisplayPanelOff()
     {
         displayPanel.SetActive(false);
+    }
+
+    public bool IsFull()
+    {
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i] == null)
+            {
+                return false;
+            }
+        }
+        return true;
     }
 }
