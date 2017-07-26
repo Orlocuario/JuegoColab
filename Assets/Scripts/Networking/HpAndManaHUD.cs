@@ -45,7 +45,7 @@ public class HpAndManaHUD {
         }
 
         percentageHP = currentHP / maxHP;
-        room.SendMessageToAllPlayers("DisplayChangeHPToClient/" + percentageHP + ":" + currentHP + ":" + maxHP);
+        room.SendMessageToAllPlayers("DisplayChangeHPToClient/" + percentageHP);
     }
 
     public void ChangeMaxHP(string NewMaxHP)
@@ -70,7 +70,7 @@ public class HpAndManaHUD {
         }
 
         percentageMP = currentMP / maxMP;
-        room.SendMessageToAllPlayers("DisplayChangeMPToClient/" + percentageMP + ":" + currentMP + ":" + maxMP);
+        room.SendMessageToAllPlayers("DisplayChangeMPToClient/" + percentageMP);
     }
 
     public void ChangeMaxMP(string NewMaxMP)

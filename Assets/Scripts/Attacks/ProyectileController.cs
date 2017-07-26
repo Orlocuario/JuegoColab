@@ -5,7 +5,7 @@ using UnityEngine;
 public class ProyectileController : MonoBehaviour {
 
     private int direction;
-    private float speed;
+    private float skillSpeed;
     float maxDistance;
     float currentDistance;
     EngineerController caster;
@@ -16,11 +16,11 @@ public class ProyectileController : MonoBehaviour {
         currentDistance = 0;
     }
 
-    public void SetMovement(int direction, float speed, float x, float y, EngineerController caster)
+    public void SetMovement(int direction, float skillSpeed, float x, float y, EngineerController caster)
     {
         this.caster = caster;
         this.direction = direction;
-        this.speed = speed;
+        this.skillSpeed = skillSpeed;
         transform.position = new Vector2(x, y - 0.02f);
         if (direction == -1)
         {
@@ -31,7 +31,7 @@ public class ProyectileController : MonoBehaviour {
     // Update is called once per frame
     void Update()
     {
-        float distance = speed * direction * Time.deltaTime;
+        float distance = skillSpeed * direction * Time.deltaTime;
         transform.position = transform.position + Vector3.right * distance;
         currentDistance += System.Math.Abs(distance);
         if (maxDistance <= currentDistance)

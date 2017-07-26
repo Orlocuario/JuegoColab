@@ -18,25 +18,16 @@ public class DisplayHUD: MonoBehaviour{
 
     public void CurrentHP(string message)
     {
-        char[] separator = new char[1];
-        separator[0] = ':';
-        string[] arreglo = message.Split(separator);
-
-        string hpCurrentPercentage = arreglo[0];
-        if (arreglo.Length != 1)
-        {
-            currentHP = arreglo[1];
-            maxHP = arreglo[2];
-        }
+        string hpCurrentPercentage = message;
 
         Text percentageText = GameObject.Find("HealthPercentage").GetComponent<Text>();
-        if (float.Parse(hpCurrentPercentage) <= float.Parse("0.2"))
+        if (float.Parse(hpCurrentPercentage) <= 0.2f)
         {
             percentageText.text = "<color=#e67f84ff>" + (float.Parse(hpCurrentPercentage) * 100).ToString("0") + "%" + "</color>";
             GameObject.Find("CurrentHealth").GetComponent<Image>().color = new Color32(174, 0, 0, 255);
             GameObject.Find("HealthMask").GetComponent<Image>().color = new Color32(77, 0, 0, 255);
         }
-        else if (float.Parse(hpCurrentPercentage) <= float.Parse("0.5"))
+        else if (float.Parse(hpCurrentPercentage) <= 0.5f)
         {
             percentageText.text = "<color=#f9ca45ff>" + (float.Parse(hpCurrentPercentage) * 100).ToString("0") + "%" + "</color>";
             GameObject.Find("CurrentHealth").GetComponent<Image>().color = new Color32(174, 174, 0, 190);
@@ -57,16 +48,7 @@ public class DisplayHUD: MonoBehaviour{
 
     public void CurrentMP(string message)
     {
-        char[] separator = new char[1];
-        separator[0] = ':';
-        string[] arreglo = message.Split(separator);
-
-        string mpCurrentPercentage = arreglo[0];
-        if (arreglo.Length != 1)
-        {
-            currentMP = arreglo[1];
-            maxMP = arreglo[2];
-        }
+        string mpCurrentPercentage = message;
 
         Text percentageText = GameObject.Find("ManaPercentage").GetComponent<Text>();
         percentageText.text = (float.Parse(mpCurrentPercentage) * 100).ToString("0") + "%";

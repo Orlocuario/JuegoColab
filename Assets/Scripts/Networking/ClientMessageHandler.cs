@@ -141,7 +141,7 @@ public class ClientMessageHandler {
         float positionX = float.Parse(arreglo[3], CultureInfo.InvariantCulture);
         float positionY = float.Parse(arreglo[4], CultureInfo.InvariantCulture);
         EngineerController script = client.GetEngineer();
-        script.CastLocalProyectile(direction, speed, positionX, positionY, script);
+        script.CastLocalProyectile(direction, positionX, positionY, script);
     }
 
     private void HandlePlayersAreDead()
