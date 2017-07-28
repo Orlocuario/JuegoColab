@@ -11,8 +11,8 @@ using UnityEngine.SceneManagement;
 public class Chat : MonoBehaviour
 {
     public static Chat instance;
-    public Text myName = null; // Lo que se está escribiendo, se hace en "myName"
-    public Text theirName = null;
+    public Text myName = null; //Lo que se está escribiendo, se hace en "myName"
+    public Text theirName = null; //Es el chat
     public Text textOriginalCanvas;
     public GameObject originalCanvas;
     public GameObject chatCanvas;
@@ -32,12 +32,12 @@ public class Chat : MonoBehaviour
         instance = this;
         originalCanvas = GameObject.FindGameObjectWithTag("OriginalCanvas");
         chatCanvas = GameObject.FindGameObjectWithTag("ChatCanvas");
+
         if (SceneManager.GetActiveScene().name != "ServerScene")
         {
             textOriginalCanvas = GameObject.FindGameObjectWithTag("OriginalTextCanvas").GetComponent<Text>();
             ToggleChatOff();
         }
-        Inventory.instance.displayPanel.SetActive(false);
     }
 
     public string SetJugador()

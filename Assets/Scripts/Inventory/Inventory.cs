@@ -5,8 +5,9 @@ using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    public static Inventory instance;
     public const int numSlots = 8;
+
+    public static Inventory instance;
     public Image[] items = new Image[numSlots];
     public GameObject displayPanel;
     public GameObject actualItem;
@@ -68,6 +69,18 @@ public class Inventory : MonoBehaviour
 
     public void ToggleDisplayPanelOff()
     {
+        displayPanel.SetActive(false);
+    }
+
+    public void UnselectItem()
+    {
+        Items.instance.itemName = null;
+        Items.instance.itemId = 0;
+
+        Image actualItemImage = actualItem.GetComponent<Image>();
+        actualItemImage = null;
+
+        actualItem.SetActive(false);
         displayPanel.SetActive(false);
     }
 
