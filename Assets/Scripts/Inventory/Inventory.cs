@@ -28,7 +28,6 @@ public class Inventory : MonoBehaviour
                 items[i] = itemToAdd.GetComponent<Image>();
                 items[i].sprite = itemToAdd.GetComponent<Sprite>();
                 items[i].enabled = true;
-                //make server distroy item when player collides with object in room & make it save in record
                 return;
             }
             else
@@ -44,8 +43,8 @@ public class Inventory : MonoBehaviour
         {
             if (items[i] == itemToRemove.GetComponent<Image>())
             {
-                items[i] = null;
                 items[i].sprite = null;
+                items[i] = null;
                 items[i].enabled = false;
                 //make server, drop or distroy or trade item (best is to drop and countdown to destroy) & make it gone in record
                 return;
@@ -78,6 +77,7 @@ public class Inventory : MonoBehaviour
         Items.instance.itemId = 0;
 
         Image actualItemImage = actualItem.GetComponent<Image>();
+        actualItemImage.sprite = null;
         actualItemImage = null;
 
         actualItem.SetActive(false);

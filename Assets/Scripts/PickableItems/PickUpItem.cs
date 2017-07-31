@@ -4,49 +4,57 @@ using UnityEngine;
 
 public class PickUpItem : MonoBehaviour {
 
-	// Use this for initialization
-	void Start ()
+    public GameObject PickUpButton;
+    LevelManager levelManager;
+    Vector2 myPosition;
+    private bool lockValue;
+
+    void Start()
     {
-		
-	}
-	
-	// Update is called once per frame
+        lockValue = false;
+        myPosition = gameObject.transform.position;
+        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        PickUpButton.SetActive(false);
+    }
+    
 	void Update ()
     {
-	    
-	}
+        PlayerController player = levelManager.thePlayer;
+        Vector2 playerPosition = player.gameObject.transform.position;
+        float distance = (playerPosition - myPosition).magnitude;
 
-    private void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.tag == "Player1")
+        if (distance < 0.2f)
         {
-
+            lockValue = true;
+            PickUpButton.SetActive(true);
         }
-        else if (other.gameObject.tag == "Player2")
-        {
 
-        }
-        else if (other.gameObject.tag == "Player3")
-        {
-
-        }
         else
         {
-            return;
+            PickUpButton.SetActive(false);
+            if (lockValue)
+            {
+                lockValue = false;
+            }
+        }
+    } 
+
+    public void PickUp()
+    {
+        GameObject[] pickableItems = GameObject.FindGameObjectsWithTag("PickUpItems");
+        
+        for (int i = 0; i < pickableItems.Length; i++)
+        {
+            Vector2 itemPosition = new Vector2(pickableItems[i].transform.position.x, pickableItems[i].transform.position.y);
+            if(itemPosition == myPosition)
+            {
+                Inventory.instance.AddItemToInventory(pickableItems[i]);
+                Destroy(pickableItems[i]);
+            }
         }
     }
 
-    private void PickUp()
-    {
-        
-    }
-
-    private void Destroy(GameObject item)
-    {
-        Destroy(item);
-    }
-
-    public void Create(GameObject parent)
+    public void Drop(GameObject parent)
     {
 
     }

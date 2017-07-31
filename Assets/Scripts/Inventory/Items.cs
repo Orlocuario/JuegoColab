@@ -15,8 +15,9 @@ public class Items
     public Items()
     {
         instance = this;
-        itemsInGame.Add("Engranaje");
+        itemsInGame.Add("engranaje");
         itemsInGame.Add("car");
+        itemsInGame.Add("Elementos_29");
     }
 
     public void ItemsInGame(Image itemImage)
@@ -38,7 +39,7 @@ public class Items
     {
         string itemInfo = ItemInformation()[0];
         Inventory.instance.displayItemInfo.text = "";
-        Inventory.instance.displayItemInfo.text = "<color=#e67f84ff><b>" + "Usando " + itemName + ": </b></color>" + "\r\n";
+        Inventory.instance.displayItemInfo.text = "<color=#e67f84ff><b>" + "Usando '" + itemName + "': </b></color>" + "\r\n";
         Inventory.instance.displayItemInfo.text += "<color=#f9ca45ff>" + itemInfo + "</color>";
 
         Image actualItemImage = Inventory.instance.actualItem.GetComponent<Image>();
@@ -59,17 +60,17 @@ public class Items
         {
             case ("car"):
                 info = "Un medio de transporte";
-                //actionToDo = "";
+                actionToDo = "Everyone/SpeedUp";
                 itemId = 1;
                 break;
-            case ("Engranaje"):
+            case ("engranaje"):
                 info = "Una pieza hecha para construir armas";
-                //actionToDo = "";
+                actionToDo = "Engineer/Create1";
                 itemId = 2;
                 break;
-            case ("rope"):
+            case ("Elementos_29"): //Rope
                 info = "Una cuerda para llegar alto";
-                actionToDo = "climb";
+                actionToDo = "Everyone/climb";
                 itemId = 3;
                 break;
             //etc;

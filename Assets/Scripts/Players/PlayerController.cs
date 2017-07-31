@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     public bool rightPressed;
     public bool jumpPressed;
     public bool localPlayer;
-    protected int direction;  //1 = derecha, -1 = izquierda
+    public int direction;  //1 = derecha, -1 = izquierda
     protected Vector3 previous_transform;
     protected Transform transform;
     public int characterId;
