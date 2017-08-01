@@ -19,6 +19,7 @@ TagManager:
   - OriginalTextCanvas
   - MovingPlatform
   - PickUpItems
+  - PickUpButton
   layers:
   - Default
   - TransparentFX

@@ -6,23 +6,32 @@ using UnityEngine.UI;
 public class BagButton : MonoBehaviour {
 
     public static BagButton instance;
+    public GameObject inventory;
 
 	void Start ()
     {
         instance = this;
         GameObject.Find("DisplayPanel").SetActive(false);
-	}
+        inventory.SetActive(false);
+    }
 	
 	// Update is called once per frame
 	public void ActionToDo()
     {
-        if (Inventory.instance.actualItem.GetComponent<Image>().sprite != null)
+        if (inventory.GetComponent<Inventory>().actualItem.GetComponent<Image>().sprite != null)
         {
             UseItem();
         }
         else
         {
-            return;
+            if (inventory.activeSelf == true)
+            {
+                inventory.SetActive(false);
+            }
+            else
+            {
+                inventory.SetActive(true);
+            }
         }
     }
     
