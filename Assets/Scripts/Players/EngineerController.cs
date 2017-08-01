@@ -6,6 +6,7 @@ using UnityEngine;
 public class EngineerController : PlayerController {
 
     private float skillSpeed;
+    private bool salte;
 
     protected override bool IsAttacking()
     {
@@ -70,9 +71,42 @@ public class EngineerController : PlayerController {
         return skillSpeed;
     }
 
-   /*public int GetLevel()
+    protected override bool IsJumping(bool isGrounded)
     {
-       
-    }*/
+        if (localPlayer)
+        {
+            bool pressedJump = CnInputManager.GetButtonDown("Jump Button");
+            bool voySaltar = pressedJump && isGrounded;
+            bool dobleSalto = pressedJump && !isGrounded;
+
+            if (voySaltar)
+            {
+                saltarDoble++;
+                remoteJumping = true;
+                SendObjectDataToServer();
+            }
+           
+            else if (saltarDoble == 0 && dobleSalto)
+            {
+                remoteJumping = true;
+                SendObjectDataToServer();
+                saltarDoble++;
+                return true;
+            }
+
+            if (isGrounded)
+            {
+                saltarDoble = 0;
+            }
+
+            SendObjectDataToServer();
+            return voySaltar;
+        }
+        return remoteJumping;
+    }
+    /*public int GetLevel()
+     {
+
+     }*/
 }
 

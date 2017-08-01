@@ -27,7 +27,8 @@ public class PlayerController : MonoBehaviour
     public int characterId;
     public float speed; //For animation nonlocal purposes
 	public int SortingOrder = 0;
-	private SpriteRenderer sprite; 
+    public int saltarDoble;
+    private SpriteRenderer sprite; 
     public bool remoteRight; //Used to synchronize data from the server
     public bool remoteLeft; 
     public bool remoteJumping;
@@ -47,6 +48,7 @@ public class PlayerController : MonoBehaviour
         theLevelManager = FindObjectOfType<LevelManager>();
         localPlayer = false;
         direction = 1;
+        saltarDoble = 0;
         IgnoreCollisionStar2puntoCero();
     }
 
@@ -136,7 +138,7 @@ public class PlayerController : MonoBehaviour
         return verticalSpeed == 0;
     }
 
-    protected bool IsJumping(bool isGrounded)
+    protected virtual bool IsJumping(bool isGrounded)
     {
         if (localPlayer)
         {
@@ -216,7 +218,7 @@ public class PlayerController : MonoBehaviour
         isGrounded = IsItGrounded();
         if (IsJumping(isGrounded))
         {
-            rb2d.AddForce(new Vector2(0, jumpSpeed), ForceMode2D.Impulse);
+            rb2d.velocity = new Vector2(0, 8f);
         }
         previous_transform = transform.position;
         SetAnimVariables();
