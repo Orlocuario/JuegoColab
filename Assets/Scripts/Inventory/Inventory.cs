@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -8,56 +9,70 @@ public class Inventory : MonoBehaviour
     public const int numSlots = 8;
 
     public static Inventory instance;
-    public SpriteRenderer[] items = new SpriteRenderer[numSlots];
+    public Image[] items = new Image[numSlots];
     public GameObject displayPanel;
-    public GameObject actualItem;
+    public GameObject actualItemSlot;
     public Text displayItemInfo;
+    private int numSlot;
 
     public void Start()
     {
         new Items();
-        instance = this;
+        //instance setteada desde el bag buttons
     }
 
     public void AddItemToInventory(GameObject itemToAdd)
     {
-
-        for (int i = 0; i < items.Length; i++)
+        if (!IsFull())
         {
-            Sprite sprite = items[i].sprite;
-            if (sprite == null)
+            for (int i = 0; i < items.Length; i++)
             {
-                items[i] = itemToAdd.GetComponent<SpriteRenderer>();
-                items[i].sprite = itemToAdd.GetComponent<SpriteRenderer>().sprite;
-                items[i].enabled = true;
-                return;
+                Sprite actualItemSprite = items[i].GetComponent<Image>().sprite;
+                if (actualItemSprite == null)
+                {
+                    items[i].sprite = itemToAdd.GetComponent<SpriteRenderer>().sprite;
+                    items[i].enabled = true;
+                    Client.instance.SendMessageToServer("InventoryUpdate/Add" + i.ToString() + "/" + items[i].sprite.name);
+                    UpdateInventory(items[i], i);
+                    return;
+                }
             }
         }
-        return;
+        else
+        {
+            return;
+        }
     }
 
     public void RemoveItemFromInventory(GameObject itemToRemove)
     {
         for (int i = 0; i < items.Length; i++)
         {
-            if (items[i] == itemToRemove.GetComponent<SpriteRenderer>())
+            if (items[i] == itemToRemove.GetComponent<Image>())
             {
                 items[i].sprite = null;
-                items[i] = null;
                 items[i].enabled = false;
-                //make server drop and record it
+                Client.instance.SendMessageToServer("InventoryUpdate/Remove" + "/" + i.ToString());
+                UpdateInventory(items[i], i);
                 return;
             }
         }
     }
 
+    public void UpdateInventory(Image spriteImage, int i)
+    {
+        Image slotSprite = GameObject.Find("SlotSprite" + i.ToString()).GetComponent<Image>();
+        slotSprite.sprite = spriteImage.sprite;
+    }
+
     public void GetItemName(string slot)
     {
-        SpriteRenderer itemSpriteRenderer = GameObject.Find("Sprite" + slot).GetComponent<SpriteRenderer>();
+        numSlot = Int32.Parse(slot);
+        Image itemImage = GameObject.Find("SlotSprite" + slot).GetComponent<Image>();
 
-        if (itemSpriteRenderer.sprite != null)
+        if (itemImage.sprite != null)
         {
-            Items.instance.ItemsInGame(itemSpriteRenderer);
+            Items.instance.ItemsInGame(itemImage);
         }
         else
         {
@@ -70,16 +85,23 @@ public class Inventory : MonoBehaviour
         displayPanel.SetActive(false);
     }
 
+    public void DropItem()
+    {
+        string actualItemSpriteName = Items.instance.itemSprite.name;
+        RemoveItemFromInventory(GameObject.Find("SlotSprite" + numSlot));
+        Client.instance.SendMessageToServer("CreateGameObject/" + actualItemSpriteName);
+    }
+
     public void UnselectItem()
     {
         Items.instance.itemName = null;
-        Items.instance.itemId = 0;
+        Items.instance.itemId = 0; //enviar id en vez de name propuesta a futuro
 
-        SpriteRenderer actualSpriteRenderer = actualItem.GetComponent<SpriteRenderer>();
-        actualSpriteRenderer.sprite = null;
-        actualSpriteRenderer = null;
+        Image actualImage = actualItemSlot.GetComponent<Image>();
+        actualImage.sprite = null;
+        actualImage = null;
 
-        actualItem.SetActive(false);
+        actualItemSlot.SetActive(false);
         displayPanel.SetActive(false);
     }
 

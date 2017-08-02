@@ -19,9 +19,4 @@ public class PickUpItem : MonoBehaviour
         Inventory.instance.AddItemToInventory(this.gameObject);
         Client.instance.SendMessageToServer("DestroyItem/" + itemName);
     }
-
-    public void Drop(GameObject parent)
-    {
-
-    }
 }

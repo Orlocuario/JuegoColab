@@ -72,6 +72,31 @@ public class LevelManager : MonoBehaviour {
     public void DestroyItemInGame(GameObject itemToDestroy)
     {
         Destroy(itemToDestroy);
+        return;
     }
 
+    public void CreateGameObject(string spriteName, int charId)
+    {
+        GameObject createGameObject = (GameObject)Instantiate(Resources.Load("Prefabs/Items" + spriteName));
+        RectTransform playerTransform = null;
+
+        switch (charId)
+        {
+            case 0:
+                playerTransform = GameObject.Find("Mage").GetComponent<RectTransform>();
+                break;
+            case 1:
+                playerTransform = GameObject.Find("Warrior").GetComponent<RectTransform>();
+                break;
+            case 2:
+                playerTransform = GameObject.Find("Engineer").GetComponent<RectTransform>();
+                break;
+            default:
+                break;
+        }
+
+        Vector2 createGameObjectPosition = createGameObject.GetComponent<RectTransform>().position;
+        createGameObjectPosition = new Vector2(playerTransform.position.x, playerTransform.position.y);
+        //missing rate pick up
+    }
 }

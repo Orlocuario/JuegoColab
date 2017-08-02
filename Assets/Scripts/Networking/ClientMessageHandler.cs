@@ -53,12 +53,22 @@ public class ClientMessageHandler {
             case "PlayersAreDead":
                 HandlePlayersAreDead();
                 break;
+            case "CreateGameObject":
+                HandleCreateGameObject(arreglo);
+                break;
             case "DestroyItem":
                 HandleDestroyItem(arreglo);
                 break;
             default:
                 break;
         }
+    }
+
+    private void HandleCreateGameObject(string[] arreglo)
+    {
+        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+        int charId = Int32.Parse(arreglo[2]);
+        scriptLevel.CreateGameObject(arreglo[1], charId);
     }
 
     private void HandleDestroyItem(string[] arreglo)

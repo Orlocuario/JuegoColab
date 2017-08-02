@@ -9,6 +9,7 @@ public class Items
     public static Items instance;
 
     public List<string> itemsInGame = new List<string>();
+    public Sprite itemSprite;
     public string itemName;
     public int itemId;
 
@@ -20,33 +21,34 @@ public class Items
         itemsInGame.Add("Elementos_29");
     }
 
-    public void ItemsInGame(SpriteRenderer itemSpriteRenderer)
+    public void ItemsInGame(Image itemImage)
     {
-        itemName = itemSpriteRenderer.sprite.name;
+        itemSprite = itemImage.sprite;
+        itemName = itemSprite.name;
         string[] itemsInGameArray = itemsInGame.ToArray();
 
         for (int i = 0; i < itemsInGameArray.Length; i++)
         {
             if (itemsInGameArray[i] == itemName)
             {
-                DisplayItemInfo(itemSpriteRenderer);
+                DisplayItemInfo(itemImage);
                 return;
             }
         }
     }
 
-    public void DisplayItemInfo(SpriteRenderer itemSpriteRenderer)
+    public void DisplayItemInfo(Image itemImage)
     {
-        string itemInfo = ItemInformation()[0];
+        string itemInfo = ItemInformation()[1];
         Inventory.instance.displayItemInfo.text = "";
         Inventory.instance.displayItemInfo.text = "<color=#e67f84ff><b>" + "Usando '" + itemName + "': </b></color>" + "\r\n";
         Inventory.instance.displayItemInfo.text += "<color=#f9ca45ff>" + itemInfo + "</color>";
 
-        Image actualItemImage = Inventory.instance.actualItem.GetComponent<Image>();
-        actualItemImage.sprite = itemSpriteRenderer.sprite;
+        Image actualItemImage = Inventory.instance.actualItemSlot.GetComponent<Image>();
+        actualItemImage.sprite = itemImage.sprite;
 
         Inventory.instance.displayPanel.SetActive(true);
-        Inventory.instance.actualItem.SetActive(true);
+        Inventory.instance.actualItemSlot.SetActive(true);
         /*Call this variable from a script from the room to interact with it,
         like the ChatZone (not monobehaviour). Try switch and case for all items */
     }
@@ -70,7 +72,7 @@ public class Items
                 break;
             case ("Elementos_29"): //Rope
                 info = "Una cuerda para llegar alto";
-                actionToDo = "Everyone/climb";
+                actionToDo = "Everyone/Climb";
                 itemId = 3;
                 break;
             //etc;
@@ -79,7 +81,7 @@ public class Items
         }
 
         string[] itemInfo;
-        itemInfo = new string[2] { info, actionToDo };
+        itemInfo = new string[2] { actionToDo, info };
         return itemInfo;
     }
 }
