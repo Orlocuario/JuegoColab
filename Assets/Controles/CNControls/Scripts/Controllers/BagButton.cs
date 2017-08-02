@@ -5,12 +5,10 @@ using UnityEngine.UI;
 
 public class BagButton : MonoBehaviour {
 
-    public static BagButton instance;
     public GameObject inventory;
 
 	void Start ()
     {
-        instance = this;
         GameObject.Find("DisplayPanel").SetActive(false);
         inventory.SetActive(false);
     }
@@ -18,7 +16,7 @@ public class BagButton : MonoBehaviour {
 	// Update is called once per frame
 	public void ActionToDo()
     {
-        if (inventory.GetComponent<Inventory>().actualItem.GetComponent<Image>().sprite != null)
+        if (inventory.GetComponent<Inventory>().actualItem.GetComponent<SpriteRenderer>().sprite != null)
         {
             UseItem();
         }

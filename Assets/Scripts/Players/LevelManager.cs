@@ -25,13 +25,13 @@ public class LevelManager : MonoBehaviour {
         players[2] = GameObject.FindGameObjectsWithTag("Player3")[0];
         switch (id)
         {
-            case 2:
+            case 0:
                 player = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<MageController>();                
                 break;
             case 1:
                 player = GameObject.FindGameObjectsWithTag("Player2")[0].GetComponent<WarriorController>();
                 break;
-            case 0:
+            case 2:
                 player = GameObject.FindGameObjectsWithTag("Player3")[0].GetComponent<EngineerController>();
                 break;
             default:
@@ -67,6 +67,11 @@ public class LevelManager : MonoBehaviour {
         thePlayer.gameObject.SetActive(true);
         thePlayer.IgnoreCollisionStar2puntoCero();
         thePlayer.SendObjectDataToServer();
+    }
+
+    public void DestroyItemInGame(GameObject itemToDestroy)
+    {
+        Destroy(itemToDestroy);
     }
 
 }

@@ -53,9 +53,19 @@ public class ClientMessageHandler {
             case "PlayersAreDead":
                 HandlePlayersAreDead();
                 break;
+            case "DestroyItem":
+                HandleDestroyItem(arreglo);
+                break;
             default:
                 break;
         }
+    }
+
+    private void HandleDestroyItem(string[] arreglo)
+    {
+        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+        GameObject itemToDestroy = GameObject.Find(arreglo[1]);
+        scriptLevel.DestroyItemInGame(itemToDestroy);
     }
 
     private void HandleChangeScene(string[] arreglo)

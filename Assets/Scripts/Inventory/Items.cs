@@ -20,22 +20,22 @@ public class Items
         itemsInGame.Add("Elementos_29");
     }
 
-    public void ItemsInGame(Image itemImage)
+    public void ItemsInGame(SpriteRenderer itemSpriteRenderer)
     {
-        itemName = itemImage.sprite.name;
+        itemName = itemSpriteRenderer.sprite.name;
         string[] itemsInGameArray = itemsInGame.ToArray();
 
         for (int i = 0; i < itemsInGameArray.Length; i++)
         {
             if (itemsInGameArray[i] == itemName)
             {
-                DisplayItemInfo(itemImage);
+                DisplayItemInfo(itemSpriteRenderer);
                 return;
             }
         }
     }
 
-    public void DisplayItemInfo(Image itemImage)
+    public void DisplayItemInfo(SpriteRenderer itemSpriteRenderer)
     {
         string itemInfo = ItemInformation()[0];
         Inventory.instance.displayItemInfo.text = "";
@@ -43,7 +43,7 @@ public class Items
         Inventory.instance.displayItemInfo.text += "<color=#f9ca45ff>" + itemInfo + "</color>";
 
         Image actualItemImage = Inventory.instance.actualItem.GetComponent<Image>();
-        actualItemImage.sprite = itemImage.sprite;
+        actualItemImage.sprite = itemSpriteRenderer.sprite;
 
         Inventory.instance.displayPanel.SetActive(true);
         Inventory.instance.actualItem.SetActive(true);

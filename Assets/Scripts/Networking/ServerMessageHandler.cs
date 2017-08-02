@@ -46,9 +46,19 @@ public class ServerMessageHandler
             case "CastFireball":
                 SendNewFireball(message, connectionId, arreglo);
                 break;
+            case "DestroyItem":
+                SendDestroyItem(message, connectionId);
+                break;
             default:
                 break;
         }
+    }
+
+    private void SendDestroyItem(string message, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.SendMessageToAllPlayers(message);
     }
 
     private void SendHpHUDToRoom(string[] arreglo, int connectionId)

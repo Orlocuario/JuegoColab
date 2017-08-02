@@ -237,7 +237,7 @@ public class PlayerController : MonoBehaviour
         {
             if (localPlayer)
             {
-                Client.instance.SendMessageToServer("ChangeHpHUDToRoom/-25");
+                Client.instance.SendMessageToServer("ChangeHpHUDToRoom/-12.5");
                 theLevelManager.Respawn();
             }
         }
