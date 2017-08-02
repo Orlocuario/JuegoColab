@@ -104,6 +104,42 @@ public class Client : MonoBehaviour {
         return script;
     }
 
+    public EnemyController GetEnemy(int enemyId)
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            EnemyController script = enemy.GetComponent<EnemyController>();
+            if (script.enemyId == enemyId)
+            {
+                return script;
+            }
+        }
+        return null;
+    }
+
+    public PlayerController GetLocalPlayer()
+    {
+        MageController player1 = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<MageController>();
+        WarriorController player2 = GameObject.FindGameObjectsWithTag("Player2")[0].GetComponent<WarriorController>();
+        EngineerController player3 = GameObject.FindGameObjectsWithTag("Player3")[0].GetComponent<EngineerController>();
+        if (player1.localPlayer)
+        {
+            return player1;
+        }
+        if (player2.localPlayer)
+        {
+            return player2;
+        }
+        if (player3.localPlayer)
+        {
+            return player3;
+        }
+        return null;
+
+        
+    }
+
     public MageController GetMage()
     {
         GameObject player = GameObject.FindGameObjectsWithTag("Player1")[0];

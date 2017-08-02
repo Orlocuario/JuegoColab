@@ -33,6 +33,8 @@ public class PlayerController : MonoBehaviour
     public bool remoteJumping;
     public bool remoteAttacking;
 
+    public bool controlOverEnemies;
+
     // Use this for initialization
     protected virtual void Start()
     {
@@ -47,6 +49,7 @@ public class PlayerController : MonoBehaviour
         theLevelManager = FindObjectOfType<LevelManager>();
         localPlayer = false;
         direction = 1;
+        controlOverEnemies = false;
         IgnoreCollisionStar2puntoCero();
     }
 

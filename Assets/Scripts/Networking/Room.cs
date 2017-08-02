@@ -17,7 +17,7 @@ public class Room
     public bool started;
     string numeroPartidas;
     string historial;
-
+    public List<Enemy> enemigos;
     //Inicialización
     public Room(int id, Server server, ServerMessageHandler sender, int maxJugadores)
     {
@@ -30,6 +30,12 @@ public class Room
         started = false;
         historial = "";
         hpManaGer = new HpAndManaHUD(this);
+        enemigos = new List<Enemy>();
+    }
+
+    public void AddEnemy(int enemyId)
+    {
+        enemigos.Add(new Enemy(enemyId));
     }
 
     public string HoraMinuto()
@@ -82,6 +88,18 @@ public class Room
     private int GetCharId(int numJugadores)
     {
         return numJugadores;
+    }
+
+    public Enemy GetEnemy(int id)
+    {
+        foreach(Enemy enemy in enemigos)
+        {
+            if(enemy.enemyId == id)
+            {
+                return enemy;
+            }
+        }
+        return null;
     }
 
     public Jugador FindPlayerInRoom(int id)

@@ -47,8 +47,34 @@ public class ClientMessageHandler {
             case "CastFireball":
                 HandleCastFireball(arreglo);
                 break;
+            case "Die":
+                KillEnemy(arreglo);
+                break;
+            case "EnemyChangePosition":
+                ChangeEnemyPosition(arreglo);
+                break;
             default:
                 break;
+        }
+    }
+
+    private void ChangeEnemyPosition(string[] arreglo)
+    {
+        int enemyId = Int32.Parse(arreglo[1]);
+        float posX = float.Parse(arreglo[2]);
+        float posY = float.Parse(arreglo[3]);
+        EnemyController enemyScript = Client.instance.GetEnemy(enemyId);
+        enemyScript.SetPosition(posX, posY);
+    }
+
+
+    private void KillEnemy(string[] arreglo)
+    {
+        int enemyId = Int32.Parse(arreglo[1]);
+        EnemyController script = Client.instance.GetEnemy(enemyId);
+        if(script != null)
+        {
+            script.Die();
         }
     }
 

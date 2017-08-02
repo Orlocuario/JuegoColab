@@ -43,9 +43,46 @@ public class ServerMessageHandler
             case "CastFireball":
                 SendNewFireball(message, connectionId, arreglo);
                 break;
+            case "NewEnemyId":
+                NewEnemy(arreglo, connectionId);
+                break;
+            case "EnemyHpChange":
+                ReduceEnemyHp(message, arreglo, connectionId);
+                break;
+            case "EnemyChangePosition":
+                EnemyChangePosition(message, arreglo, connectionId);
+                break;
             default:
                 break;
         }
+    }
+
+    private void EnemyChangePosition(string message, string[] arreglo, int connectionId)
+    {
+        int enemyId = Int32.Parse(arreglo[1]);
+        float posX = float.Parse(arreglo[2]);
+        float posY = float.Parse(arreglo[3]);
+        Jugador player = server.GetPlayer(connectionId);
+        Enemy enemy = player.room.GetEnemy(enemyId);
+        enemy.posX = posX;
+        enemy.posY = posY;
+        player.room.SendMessageToAllPlayersExceptOne(message, connectionId);
+    }
+
+    private void ReduceEnemyHp(string message, string[] arreglo, int connectionId)
+    {
+        int enemyId = Int32.Parse(arreglo[1]);
+        float enemyHp = float.Parse(arreglo[2]);
+        Jugador player = server.GetPlayer(connectionId);
+        Enemy enemy = player.room.GetEnemy(enemyId);
+        enemy.ReduceHp(enemyHp);
+    }
+
+    private void NewEnemy(string[] arreglo, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        int id = Int32.Parse(arreglo[1]);
+        player.room.AddEnemy(id);
     }
 
     private void SendHpHUDToRoom(string[] arreglo, int connectionId)

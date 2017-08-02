@@ -121,7 +121,7 @@ public class Server : MonoBehaviour {
             {
                 role = "Engineer: Has Disconnected";
             }
-            player.room.SendMessageToAllPlayers("NewChatMessage/" + role);
+            player.room.SendMessageToAllPlayers("NewChatMessage/" + role);    
         }
     }
 

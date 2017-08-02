@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class Jugador
 {
@@ -34,4 +35,5 @@ public class Jugador
         pressingLeft = false;
         attacking = false;
     }
+
 }
