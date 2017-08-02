@@ -8,9 +8,17 @@ public class WarriorController : PlayerController {
 
     private int numHits = 0;
     bool par;
+	GameObject particulas;
+
+	private void Start()
+	{
+		base.Start();
+		particulas = GameObject.Find("ParticulasWarrior");
+		particulas.SetActive (false);
+	}
 
     protected override bool IsAttacking()
-    {
+	{	return false;
         if (localPlayer)
         {
             bool buttonState = CnInputManager.GetButtonDown("Attack Button");
@@ -19,6 +27,7 @@ public class WarriorController : PlayerController {
                 remoteAttacking = true;
                 SendAttackDataToServer();
                 numHits++;
+				SetAnimacion (remoteAttacking);
                 //CastOnePunchMan(Client.instance.GetAllEnemies(), this.GetComponent<RectTransform>().position);
                 //CastFireball(this.direction, 4);
             }
@@ -26,10 +35,35 @@ public class WarriorController : PlayerController {
             {
                 remoteAttacking = false;
                 SendAttackDataToServer();
+				SetAnimacion (remoteAttacking);
             }
         }
         return remoteAttacking;
     }
+
+	protected override bool isPower()
+	{
+		if (localPlayer) 
+		{	
+			bool primeraVez = false;
+			int contador = 0;
+			bool buttonState = CnInputManager.GetButtonDown ("Power Button");
+			if (buttonState && !primeraVez) 
+			{
+				primeraVez = true;
+				remotePower = contador%2 == 0;
+				contador++;
+				SendPowerDataToServer();
+				SetAnimacion (remotePower);
+			}
+
+			else if (!buttonState && primeraVez)
+			{
+				primeraVez = false;
+			}
+		}
+		return remotePower;
+	}
 
     protected override void SetAnimVariables()
     {
@@ -55,8 +89,15 @@ public class WarriorController : PlayerController {
 
     }
 
-    private void CastOnePunchMan(string[] enemies, Vector3 position)
-    {
-        
-    }
+	private void SetAnimacion(bool activo)
+	{
+		particulas.SetActive (activo);
+	}
+    
+	public void RemoteSetter(bool power)
+	{
+		SetAnimacion (power);
+		remotePower = power;
+
+	}
 }

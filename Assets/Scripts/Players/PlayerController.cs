@@ -32,6 +32,7 @@ public class PlayerController : MonoBehaviour
     public bool remoteLeft; 
     public bool remoteJumping;
     public bool remoteAttacking;
+	public bool remotePower;
 
     // Use this for initialization
     protected virtual void Start()
@@ -40,6 +41,7 @@ public class PlayerController : MonoBehaviour
         remoteLeft = false;
         remoteJumping = false;
         remoteAttacking = false;
+		remotePower = false;
         transform = GetComponent<Transform>();
         rb2d = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
@@ -220,13 +222,20 @@ public class PlayerController : MonoBehaviour
         }
         previous_transform = transform.position;
         SetAnimVariables();
+		isPower ();
     }
+
+	protected virtual bool isPower()
+	{
+		return false;
+	}
 
     protected virtual void SetAnimVariables()
     {
         myAnim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
         myAnim.SetBool("IsGrounded", isGrounded);
         myAnim.SetBool("IsAttacking", IsAttacking());
+
     }
 
     protected void OnTriggerEnter2D(Collider2D other)
@@ -293,4 +302,10 @@ public class PlayerController : MonoBehaviour
         string message = "Attack/" + characterId + "/" + remoteAttacking;
         Client.instance.SendMessageToServer(message);
     }
+
+	protected void SendPowerDataToServer()
+	{
+		string message = "Power/" + characterId + "/" + remotePower;
+		Client.instance.SendMessageToServer(message);
+	}
 }
