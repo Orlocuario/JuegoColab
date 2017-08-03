@@ -8,6 +8,7 @@ public class WarriorController : PlayerController {
 
     private int numHits = 0;
     bool par;
+	int contador = 0;
 	GameObject particulas;
 
 	private void Start()
@@ -46,7 +47,6 @@ public class WarriorController : PlayerController {
 		if (localPlayer) 
 		{	
 			bool primeraVez = false;
-			int contador = 0;
 			bool buttonState = CnInputManager.GetButtonDown ("Power Button");
 			if (buttonState && !primeraVez) 
 			{
