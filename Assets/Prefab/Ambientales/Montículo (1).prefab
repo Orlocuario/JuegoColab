@@ -100,7 +100,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4739193521722092}
   m_Layer: 0
-  m_Name: "Mont\xEDculo (1)"
+  m_Name: "Monti\u0301culo (1)"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
