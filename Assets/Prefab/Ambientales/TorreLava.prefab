@@ -148,7 +148,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4010742959824516}
-  - component: {fileID: 61555369822261510}
   m_Layer: 9
   m_Name: BasePared
   m_TagString: Untagged
@@ -260,7 +259,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1262473140254694}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 60.05, y: -20.723, z: 2.515625}
+  m_LocalPosition: {x: 52.751, y: -20.723, z: 2.515625}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4010742959824516}
@@ -281,20 +280,6 @@ Transform:
   m_Father: {fileID: 4010742959824516}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &61555369822261510
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1823837451025200}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_UsedByEffector: 0
-  m_Offset: {x: 4.5068455, y: -3.630764}
-  serializedVersion: 2
-  m_Size: {x: 0.69886017, y: 2.48563}
 --- !u!61 &61615104241552894
 BoxCollider2D:
   m_ObjectHideFlags: 1
