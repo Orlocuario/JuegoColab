@@ -18,7 +18,7 @@ public class Items
         instance = this;
         itemsInGame.Add("engranaje");
         itemsInGame.Add("car");
-        itemsInGame.Add("Elementos_29");
+        itemsInGame.Add("Rope");
     }
 
     public void ItemsInGame(Image itemImage)
@@ -59,7 +59,7 @@ public class Items
         string actionToDo = "";
 
         switch (itemName)
-        {
+        {//itemId = 0 implies the fact that there is no item selected item
             case ("car"):
                 info = "Un medio de transporte";
                 actionToDo = "Everyone/SpeedUp";
@@ -70,7 +70,7 @@ public class Items
                 actionToDo = "Engineer/Create1";
                 itemId = 2;
                 break;
-            case ("Elementos_29"): //Rope
+            case ("Rope"):
                 info = "Una cuerda para llegar alto";
                 actionToDo = "Everyone/Climb";
                 itemId = 3;

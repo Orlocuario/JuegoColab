@@ -47,21 +47,24 @@ public class Inventory : MonoBehaviour
 
     public void RemoveItemFromInventory(GameObject itemToRemove)
     {
-        for (int i = 0; i < items.Length; i++)
+        if (Client.instance.GetLocalPlayer().isGrounded)
         {
-            if (items[i] == itemToRemove.GetComponent<Image>())
+            for (int i = 0; i < items.Length; i++)
             {
-                Image actualImage = actualItemSlot.GetComponent<Image>();
-                actualImage.sprite = null;
-                items[i].sprite = null;
-                items[i].enabled = false;
-                actualItemSlot.SetActive(false);
+                if (items[i] == itemToRemove.GetComponent<Image>())
+                {
+                    Image actualImage = actualItemSlot.GetComponent<Image>();
+                    actualImage.sprite = null;
+                    items[i].sprite = null;
+                    items[i].enabled = false;
+                    actualItemSlot.SetActive(false);
 
-                Client.instance.SendMessageToServer("InventoryUpdate/Remove/" + i.ToString());
-                UpdateInventory(items[i], i);
-                return;
+                    Client.instance.SendMessageToServer("InventoryUpdate/Remove/" + i.ToString());
+                    UpdateInventory(items[i], i);
+                    return;
+                }
             }
-        }
+        }   
     }
 
     public void UpdateInventory(Image spriteImage, int i)

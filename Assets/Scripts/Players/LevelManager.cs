@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -10,11 +11,13 @@ public class LevelManager : MonoBehaviour {
     private Client client;
     private GameObject createGameObject;
     private GameObject player;
+    private GameObject[] itemsInLevel;
+    private List<Vector3> itemsOriginalPositions = new List<Vector3>();
     private float waitToGrabItem;
+    private float waitToResetItemPos;
 
-
-    // Use this for initialization
-    void Start () {
+    void Start ()
+    {
         waitToGrabItem = 5f;
         thePlayer = null;
         client = GameObject.Find("ClientObject").GetComponent<Client>();
@@ -28,10 +31,11 @@ public class LevelManager : MonoBehaviour {
         players[0] = GameObject.FindGameObjectsWithTag("Player1")[0];
         players[1] = GameObject.FindGameObjectsWithTag("Player2")[0];
         players[2] = GameObject.FindGameObjectsWithTag("Player3")[0];
+
         switch (id)
         {
             case 0:
-                player = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<MageController>();                
+                player = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<MageController>();
                 break;
             case 1:
                 player = GameObject.FindGameObjectsWithTag("Player2")[0].GetComponent<WarriorController>();
@@ -42,14 +46,10 @@ public class LevelManager : MonoBehaviour {
             default:
                 break;
         }
+
         player.Activate(id);
         thePlayer = player;
-        Camera.main.GetComponent<CameraController>().target = player.gameObject;        
-    }
-
-    public void ReloadLevel()
-    {
-        Debug.Log("PLAYERS ARE DEAD MUAJAJAJA");
+        Camera.main.GetComponent<CameraController>().target = player.gameObject;
     }
 
     public void Respawn()
@@ -99,11 +99,17 @@ public class LevelManager : MonoBehaviour {
         RectTransform createGameObjectRectTransform = GameObject.Find(spriteName + "(Clone)").GetComponent<RectTransform>();
         createGameObjectRectTransform.position = new Vector3(player.GetComponent<Transform>().position.x, player.GetComponent<Transform>().position.y, 1);
         StartCoroutine("WaitForCollision");
+        StartCoroutine("ResetGameObjectPosition");
     }
 
     private IEnumerator WaitForCollision()
     {
         yield return new WaitForSeconds(waitToGrabItem);
         Physics2D.IgnoreCollision(createGameObject.GetComponent<Collider2D>(), player.GetComponent<Collider2D>(), false);
+    }
+
+    public void ReloadLevel()
+    {
+        Debug.Log("PLAYERS ARE DEAD MUAJAJAJA");
     }
 }
