@@ -5,36 +5,38 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
-    public float moveSpeed;
     protected Rigidbody2D rb2d;
-    public float jumpSpeed;
+    protected Vector3 previous_transform;
+    protected Transform transform;
+
     public Transform groundCheck;
-    public float groundCheckRadius;
-    public LayerMask whatIsGround;
-    public bool isGrounded;
     public Animator myAnim;
     public Vector3 respawnPosition;
+    public LayerMask whatIsGround;
+
+    private SpriteRenderer sprite;
     private LevelManager theLevelManager;
 
+    public float moveSpeed;
+    public float jumpSpeed;
+    public float speed; //For animation nonlocal purposes
+    public float groundCheckRadius;
+
+    public bool isGrounded;
     public bool leftPressed;
     public bool rightPressed;
     public bool jumpPressed;
     public bool localPlayer;
-    public int direction;  //1 = derecha, -1 = izquierda
-    protected Vector3 previous_transform;
-    protected Transform transform;
-    public int characterId;
-    public float speed; //For animation nonlocal purposes
-	public int SortingOrder = 0;
-    public int saltarDoble;
-    private SpriteRenderer sprite; 
     public bool remoteRight; //Used to synchronize data from the server
-    public bool remoteLeft; 
+    public bool remoteLeft;
     public bool remoteJumping;
     public bool remoteAttacking;
 
-    // Use this for initialization
+    public int SortingOrder = 0;
+    public int saltarDoble;
+    public int direction;  //1 = derecha, -1 = izquierda
+    public int characterId;
+    
     protected virtual void Start()
     {
         remoteRight = false;
@@ -237,7 +239,8 @@ public class PlayerController : MonoBehaviour
         {
             if (localPlayer)
             {
-                Client.instance.SendMessageToServer("ChangeHpHUDToRoom/-12.5");
+                string daño = other.gameObject.GetComponent<KillPlane>().killPlaneDamage;
+                Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);
                 theLevelManager.Respawn();
             }
         }

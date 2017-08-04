@@ -1149,6 +1149,11 @@ Prefab:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114960681359633366, guid: 569954dbf67baea4096cb76605d73154,
+        type: 2}
+      propertyPath: killPlaneDamage
+      value: -12.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 569954dbf67baea4096cb76605d73154, type: 2}
   m_IsPrefabParent: 0
@@ -6565,6 +6570,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1026944990}
   - component: {fileID: 1026944989}
+  - component: {fileID: 1026944991}
   m_Layer: 0
   m_Name: KillPlane
   m_TagString: KillPlane
@@ -6599,6 +6605,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1026944991
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1026944988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5fb81130ce142f4d843a50d243a2e69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  killPlaneDamage: -12.5
 --- !u!1001 &1030732954
 Prefab:
   m_ObjectHideFlags: 0
@@ -8551,6 +8569,11 @@ Prefab:
         type: 2}
       propertyPath: m_IsTrigger
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114658916424741128, guid: 8eaea97fb58378f4abf6cca2e20773c1,
+        type: 2}
+      propertyPath: killPlaneDamage
+      value: 12.5
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 8eaea97fb58378f4abf6cca2e20773c1, type: 2}
@@ -15385,6 +15408,11 @@ Prefab:
       propertyPath: m_IsTrigger
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114579401004344598, guid: b64b55a54fc665148aedec65d539d439,
+        type: 2}
+      propertyPath: killPlaneDamage
+      value: 12.5
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: b64b55a54fc665148aedec65d539d439, type: 2}
   m_IsPrefabParent: 0
@@ -15727,6 +15755,10 @@ Prefab:
         type: 2}
       propertyPath: m_SizeDelta.y
       value: -120.96687
+      objectReference: {fileID: 0}
+    - target: {fileID: 1477081313561122, guid: 9d2cd65abdb9ebf44b704fd18fefed64, type: 2}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 9d2cd65abdb9ebf44b704fd18fefed64, type: 2}
