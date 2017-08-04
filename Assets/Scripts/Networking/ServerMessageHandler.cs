@@ -20,7 +20,7 @@ public class ServerMessageHandler
         switch (arreglo[0])
         {
             case "RequestCharId":
-                SendCharId(connectionId);
+                SendCharIdAndControl(connectionId);
                 break;
             case "ChangePosition":
                 SendUpdatedPosition(message, connectionId, arreglo);
@@ -145,11 +145,11 @@ public class ServerMessageHandler
         room.SendMessageToAllPlayersExceptOne(message, connectionID);
     }
 
-    private void SendCharId(int connectionId)
+    private void SendCharIdAndControl(int connectionId)
     {
         Jugador player = server.GetPlayer(connectionId);
         int charId = player.charId;
-        string message = "SetCharId/" + charId;
+        string message = "SetCharId/" + charId + "/" + player.controlOverEnemies;
         server.SendMessageToClient(connectionId, message);
     }
 

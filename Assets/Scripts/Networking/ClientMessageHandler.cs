@@ -53,9 +53,18 @@ public class ClientMessageHandler {
             case "EnemyChangePosition":
                 ChangeEnemyPosition(arreglo);
                 break;
+            case "SetControlOverEnemies":
+                SetControlOverEnemies();
+                break;
             default:
                 break;
         }
+    }
+
+    private void SetControlOverEnemies()
+    {
+        PlayerController localPlayer = Client.instance.GetLocalPlayer();
+        localPlayer.controlOverEnemies = true;
     }
 
     private void ChangeEnemyPosition(string[] arreglo)
@@ -122,9 +131,12 @@ public class ClientMessageHandler {
     private void HandleSetCharId(string[] arreglo)
     {
         string charId = arreglo[1];
+        bool controlOverEnemies = bool.Parse(arreglo[2]);
         int charIdint = Convert.ToInt32(charId);
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
         scriptLevel.SetCharAsLocal(charIdint);
+        PlayerController scriptPlayer = Client.instance.GetLocalPlayer();
+        scriptPlayer.controlOverEnemies = controlOverEnemies;
     }
 
     private void HandleChangePosition(string[] data)

@@ -14,6 +14,8 @@ public class Room
     public int maxJugadores;
     public int id;
 
+
+
     public bool started;
     string numeroPartidas;
     string historial;
@@ -35,7 +37,7 @@ public class Room
 
     public void AddEnemy(int enemyId)
     {
-        enemigos.Add(new Enemy(enemyId));
+        enemigos.Add(new Enemy(enemyId, this));
     }
 
     public string HoraMinuto()
@@ -72,7 +74,7 @@ public class Room
         Jugador newPlayer = new Jugador(connectionId, GetCharId(numJugadores), this);
         players.Add(newPlayer);
         numJugadores++;
-        
+        SetControlEnemies(newPlayer);
         if (IsFull())
         {
             Debug.Log("Full room");
@@ -170,4 +172,47 @@ public class Room
             }
         }
     }
+
+    private void SetControlEnemies(Jugador targetPlayer)
+    {
+        bool check = false;
+        foreach(Jugador player in players)
+        {
+            if(player.controlOverEnemies == true)
+            {
+                check = true;
+            }
+        }
+        if (!check)
+        {
+            targetPlayer.controlOverEnemies = true;
+        }
+    }
+
+    //Set current controller to False, and find a new one that is connected
+    public void ChangeControlEnemies() 
+    {
+        foreach(Jugador player in players)
+        {
+            if(player.controlOverEnemies == true)
+            {
+                player.controlOverEnemies = false;
+            }
+        }
+        foreach(Jugador player in players)
+        {
+            if(player.connected == true)
+            {
+                player.controlOverEnemies = true;
+                SendControlSignal(player);
+            }
+        }
+    }
+
+    private void SendControlSignal(Jugador player)
+    {
+        string message = "SetControlOverEnemies";
+        Server.instance.SendMessageToClient(player, message);
+    }
+
 }
