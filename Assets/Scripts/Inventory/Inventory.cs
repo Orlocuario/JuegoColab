@@ -32,7 +32,8 @@ public class Inventory : MonoBehaviour
                 {
                     items[i].sprite = itemToAdd.GetComponent<SpriteRenderer>().sprite;
                     items[i].enabled = true;
-                    Client.instance.SendMessageToServer("InventoryUpdate/Add" + i.ToString() + "/" + items[i].sprite.name);
+
+                    Client.instance.SendMessageToServer("InventoryUpdate/Add/" + i.ToString() + "/" + items[i].sprite.name);
                     UpdateInventory(items[i], i);
                     return;
                 }
@@ -50,9 +51,13 @@ public class Inventory : MonoBehaviour
         {
             if (items[i] == itemToRemove.GetComponent<Image>())
             {
+                Image actualImage = actualItemSlot.GetComponent<Image>();
+                actualImage.sprite = null;
                 items[i].sprite = null;
                 items[i].enabled = false;
-                Client.instance.SendMessageToServer("InventoryUpdate/Remove" + "/" + i.ToString());
+                actualItemSlot.SetActive(false);
+
+                Client.instance.SendMessageToServer("InventoryUpdate/Remove/" + i.ToString());
                 UpdateInventory(items[i], i);
                 return;
             }
@@ -87,8 +92,9 @@ public class Inventory : MonoBehaviour
 
     public void DropItem()
     {
-        string actualItemSpriteName = Items.instance.itemSprite.name;
+        displayPanel.SetActive(false);
         RemoveItemFromInventory(GameObject.Find("SlotSprite" + numSlot));
+        string actualItemSpriteName = Items.instance.itemSprite.name;
         Client.instance.SendMessageToServer("CreateGameObject/" + actualItemSpriteName);
     }
 
@@ -99,7 +105,6 @@ public class Inventory : MonoBehaviour
 
         Image actualImage = actualItemSlot.GetComponent<Image>();
         actualImage.sprite = null;
-        actualImage = null;
 
         actualItemSlot.SetActive(false);
         displayPanel.SetActive(false);
@@ -109,7 +114,7 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < items.Length; i++)
         {
-            if (items[i] == null)
+            if (items[i].sprite == null)
             {
                 return false;
             }

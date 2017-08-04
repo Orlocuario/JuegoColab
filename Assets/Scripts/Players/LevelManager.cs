@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class LevelManager : MonoBehaviour {
 
-    public float waitToRespawn;
     public PlayerController thePlayer;
+    public float waitToRespawn;
+
     private Client client;
+    private GameObject createGameObject;
+    private GameObject player;
+    private float waitToGrabItem;
 
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
+        waitToGrabItem = 5f;
         thePlayer = null;
         client = GameObject.Find("ClientObject").GetComponent<Client>();
         client.RequestCharIdToServer();
@@ -41,11 +46,6 @@ public class LevelManager : MonoBehaviour {
         thePlayer = player;
         Camera.main.GetComponent<CameraController>().target = player.gameObject;        
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 
     public void ReloadLevel()
     {
@@ -77,26 +77,33 @@ public class LevelManager : MonoBehaviour {
 
     public void CreateGameObject(string spriteName, int charId)
     {
-        GameObject createGameObject = (GameObject)Instantiate(Resources.Load("Prefabs/Items" + spriteName));
-        RectTransform playerTransform = null;
+        createGameObject = (GameObject)Instantiate(Resources.Load("Prefabs/Items/" + spriteName));
+        player = null;
 
         switch (charId)
         {
             case 0:
-                playerTransform = GameObject.Find("Mage").GetComponent<RectTransform>();
+                player = GameObject.Find("Mage");
                 break;
             case 1:
-                playerTransform = GameObject.Find("Warrior").GetComponent<RectTransform>();
+                player = GameObject.Find("Warrior");
                 break;
             case 2:
-                playerTransform = GameObject.Find("Engineer").GetComponent<RectTransform>();
+                player = GameObject.Find("Engineer");
                 break;
             default:
                 break;
         }
 
-        Vector2 createGameObjectPosition = createGameObject.GetComponent<RectTransform>().position;
-        createGameObjectPosition = new Vector2(playerTransform.position.x, playerTransform.position.y);
-        //missing rate pick up
+        Physics2D.IgnoreCollision(createGameObject.GetComponent<Collider2D>(), player.GetComponent<Collider2D>());
+        RectTransform createGameObjectRectTransform = GameObject.Find(spriteName + "(Clone)").GetComponent<RectTransform>();
+        createGameObjectRectTransform.position = new Vector3(player.GetComponent<Transform>().position.x, player.GetComponent<Transform>().position.y, 1);
+        StartCoroutine("WaitForCollision");
+    }
+
+    private IEnumerator WaitForCollision()
+    {
+        yield return new WaitForSeconds(waitToGrabItem);
+        Physics2D.IgnoreCollision(createGameObject.GetComponent<Collider2D>(), player.GetComponent<Collider2D>(), false);
     }
 }
