@@ -17,6 +17,7 @@ public class ServerMessageHandler
         char[] separator = new char[1];
         separator[0] = '/';
         string[] arreglo = message.Split(separator);
+
         switch (arreglo[0])
         {
             case "RequestCharId":
@@ -38,14 +39,47 @@ public class ServerMessageHandler
                 SendHpHAndMpHUDToRoom(arreglo, connectionId);
                 break;
             case "Attack":
-                SendAttackState(message, connectionId,arreglo);
+                SendAttackState(message, connectionId, arreglo);
+                break;
+            case "AttackWarrior":
+                SendAttackState(message, connectionId, arreglo);
                 break;
             case "CastFireball":
                 SendNewFireball(message, connectionId, arreglo);
                 break;
+            case "CreateGameObject":
+                SendNewGameObject(message, connectionId);
+                break;
+            case "DestroyItem":
+                SendDestroyItem(message, connectionId);
+                break;
+            case "InventoryUpdate":
+                SendInventoryUpdate(message, connectionId);
+                break;
             default:
                 break;
         }
+    }
+
+    private void SendNewGameObject(string message, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        int charId = player.charId;
+        room.SendMessageToAllPlayers(message + "/" + charId.ToString());
+    }
+
+    private void SendInventoryUpdate(string message, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        player.InventoryUpdate(message);
+    }
+
+    private void SendDestroyItem(string message, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.SendMessageToAllPlayers(message);
     }
 
     private void SendHpHUDToRoom(string[] arreglo, int connectionId)

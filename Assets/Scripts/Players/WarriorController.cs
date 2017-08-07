@@ -6,7 +6,8 @@ using System;
 
 public class WarriorController : PlayerController {
 
-    private int numHits = 0;
+    public int numHits = 0;
+    private int prevNumHits = 0;
     bool par;
 
     protected override bool IsAttacking()
@@ -20,12 +21,10 @@ public class WarriorController : PlayerController {
                 SendAttackDataToServer();
                 numHits++;
                 //CastOnePunchMan(Client.instance.GetAllEnemies(), this.GetComponent<RectTransform>().position);
-                //CastFireball(this.direction, 4);
             }
             else if (!buttonState && remoteAttacking)
             {
                 remoteAttacking = false;
-                SendAttackDataToServer();
             }
         }
         return remoteAttacking;
@@ -33,6 +32,18 @@ public class WarriorController : PlayerController {
 
     protected override void SetAnimVariables()
     {
+        bool isAttacking = IsAttacking();
+        myAnim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
+        myAnim.SetBool("IsGrounded", isGrounded);
+
+        if (prevNumHits >=numHits)
+        {
+            myAnim.SetBool("IsAttacking", false);
+            myAnim.SetBool("IsAttacking2", false);
+
+            return;
+        }
+
         if (numHits % 2 == 0)
         {
             par = true;
@@ -41,22 +52,28 @@ public class WarriorController : PlayerController {
         {
             par = false;
         }
+        prevNumHits = numHits;
 
-        myAnim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
-        myAnim.SetBool("IsGrounded", isGrounded);
+
         if (par == false)
         {
-            myAnim.SetBool("IsAttacking", IsAttacking());
+            myAnim.SetBool("IsAttacking", isAttacking);
+
         }
         else
         {
-            myAnim.SetBool("IsAttacking2", IsAttacking());
+            myAnim.SetBool("IsAttacking2", isAttacking);
         }
-
     }
 
     private void CastOnePunchMan(string[] enemies, Vector3 position)
     {
         
+    }
+
+    protected override void SendAttackDataToServer()
+    {
+        string message = "AttackWarrior/" + characterId + "/" + remoteAttacking + "/" + numHits.ToString();
+        Client.instance.SendMessageToServer(message);
     }
 }

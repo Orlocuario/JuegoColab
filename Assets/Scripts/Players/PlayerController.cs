@@ -5,35 +5,38 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
-    public float moveSpeed;
     protected Rigidbody2D rb2d;
-    public float jumpSpeed;
+    protected Vector3 previous_transform;
+    protected Transform transform;
+
     public Transform groundCheck;
-    public float groundCheckRadius;
-    public LayerMask whatIsGround;
-    public bool isGrounded;
     public Animator myAnim;
     public Vector3 respawnPosition;
+    public LayerMask whatIsGround;
+
+    private SpriteRenderer sprite;
     private LevelManager theLevelManager;
 
+    public float moveSpeed;
+    public float jumpSpeed;
+    public float speed; //For animation nonlocal purposes
+    public float groundCheckRadius;
+
+    public bool isGrounded;
     public bool leftPressed;
     public bool rightPressed;
     public bool jumpPressed;
     public bool localPlayer;
-    protected int direction;  //1 = derecha, -1 = izquierda
-    protected Vector3 previous_transform;
-    protected Transform transform;
-    public int characterId;
-    public float speed; //For animation nonlocal purposes
-	public int SortingOrder = 0;
-	private SpriteRenderer sprite; 
     public bool remoteRight; //Used to synchronize data from the server
-    public bool remoteLeft; 
+    public bool remoteLeft;
     public bool remoteJumping;
     public bool remoteAttacking;
 
-    // Use this for initialization
+    public int SortingOrder = 0;
+    public int saltarDoble;
+    public int direction;  //1 = derecha, -1 = izquierda
+    public int characterId;
+    
     protected virtual void Start()
     {
         remoteRight = false;
@@ -47,6 +50,7 @@ public class PlayerController : MonoBehaviour
         theLevelManager = FindObjectOfType<LevelManager>();
         localPlayer = false;
         direction = 1;
+        saltarDoble = 0;
         IgnoreCollisionStar2puntoCero();
     }
 
@@ -136,7 +140,7 @@ public class PlayerController : MonoBehaviour
         return verticalSpeed == 0;
     }
 
-    protected bool IsJumping(bool isGrounded)
+    protected virtual bool IsJumping(bool isGrounded)
     {
         if (localPlayer)
         {
@@ -216,7 +220,7 @@ public class PlayerController : MonoBehaviour
         isGrounded = IsItGrounded();
         if (IsJumping(isGrounded))
         {
-            rb2d.AddForce(new Vector2(0, jumpSpeed), ForceMode2D.Impulse);
+            rb2d.velocity = new Vector2(0, 8f);
         }
         previous_transform = transform.position;
         SetAnimVariables();
@@ -235,7 +239,8 @@ public class PlayerController : MonoBehaviour
         {
             if (localPlayer)
             {
-                Client.instance.SendMessageToServer("ChangeHpHUDToRoom/-25");
+                string daño = other.gameObject.GetComponent<KillPlane>().killPlaneDamage;
+                Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);
                 theLevelManager.Respawn();
             }
         }
@@ -288,7 +293,7 @@ public class PlayerController : MonoBehaviour
         Client.instance.SendMessageToServer(message);
     }
 
-    protected void SendAttackDataToServer()
+    protected virtual void SendAttackDataToServer()
     {
         string message = "Attack/" + characterId + "/" + remoteAttacking;
         Client.instance.SendMessageToServer(message);
