@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 57ba4181729beb142bfd795c32f0de9e
-timeCreated: 1501959226
+timeCreated: 1501877158
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -26,23 +26,23 @@ TextureImporter:
     21300038: Elementos_19
     21300040: Elementos_20
     21300042: Elementos_21
-    21300044: ButtMageOff
-    21300046: ButtMageOn
-    21300048: SwitchMage0
-    21300050: SwitchMagem1
-    21300052: SwitchMage1
-    21300054: TargMage
-    21300056: TargMageCheck
-    21300058: Elementos_29
-    21300060: ButtWarriorOff
-    21300062: ButWarriorOn
-    21300064: SwitchWarrior0
-    21300066: SwitchWarriorm1
-    21300068: SwitchWarrior1
+    21300044: Elementos_22
+    21300046: Elementos_23
+    21300048: Elementos_24
+    21300050: Elementos_25
+    21300052: Elementos_26
+    21300054: Elementos_27
+    21300056: Elementos_28
+    21300058: Rope
+    21300060: Elementos_30
+    21300062: Elementos_31
+    21300064: Elementos_32
+    21300066: Elementos_33
+    21300068: Elementos_34
     21300070: Elementos_35
     21300072: Elementos_36
-    21300074: ButtEnginOff
-    21300076: ButtEnginOn
+    21300074: Elementos_37
+    21300076: Elementos_38
     21300078: Elementos_39
     21300080: Elementos_40
     21300082: Elementos_41
@@ -414,7 +414,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ButtMageOff
+      name: Elementos_22
       rect:
         serializedVersion: 2
         x: 81
@@ -427,7 +427,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ButtMageOn
+      name: Elementos_23
       rect:
         serializedVersion: 2
         x: 117
@@ -440,7 +440,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SwitchMage0
+      name: Elementos_24
       rect:
         serializedVersion: 2
         x: 171
@@ -453,7 +453,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SwitchMagem1
+      name: Elementos_25
       rect:
         serializedVersion: 2
         x: 207
@@ -466,7 +466,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SwitchMage1
+      name: Elementos_26
       rect:
         serializedVersion: 2
         x: 243
@@ -479,7 +479,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: TargMage
+      name: Elementos_27
       rect:
         serializedVersion: 2
         x: 295
@@ -492,7 +492,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: TargMageCheck
+      name: Elementos_28
       rect:
         serializedVersion: 2
         x: 317
@@ -505,7 +505,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: Elementos_29
+      name: Rope
       rect:
         serializedVersion: 2
         x: 1
@@ -518,7 +518,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ButtWarriorOff
+      name: Elementos_30
       rect:
         serializedVersion: 2
         x: 81
@@ -531,7 +531,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ButWarriorOn
+      name: Elementos_31
       rect:
         serializedVersion: 2
         x: 117
@@ -544,7 +544,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SwitchWarrior0
+      name: Elementos_32
       rect:
         serializedVersion: 2
         x: 171
@@ -557,7 +557,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SwitchWarriorm1
+      name: Elementos_33
       rect:
         serializedVersion: 2
         x: 207
@@ -570,7 +570,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SwitchWarrior1
+      name: Elementos_34
       rect:
         serializedVersion: 2
         x: 243
@@ -609,7 +609,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ButtEnginOff
+      name: Elementos_37
       rect:
         serializedVersion: 2
         x: 81
@@ -622,7 +622,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ButtEnginOn
+      name: Elementos_38
       rect:
         serializedVersion: 2
         x: 117

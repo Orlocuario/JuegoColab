@@ -18,7 +18,8 @@ TagManager:
   - ChatCanvas
   - OriginalTextCanvas
   - MovingPlatform
-  - Agua
+  - PickUpItems
+  - PickUpButton
   layers:
   - Default
   - TransparentFX
@@ -58,9 +59,6 @@ TagManager:
     locked: 0
   - name: Default
     uniqueID: 0
-    locked: 0
-  - name: Paredes
-    uniqueID: 2928461413
     locked: 0
   - name: Suelo
     uniqueID: 3817540167
