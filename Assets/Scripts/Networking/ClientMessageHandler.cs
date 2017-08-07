@@ -58,6 +58,7 @@ public class ClientMessageHandler {
                 break;
             case "SetControlOverEnemies":
                 SetControlOverEnemies();
+                break;
             case "CastProyectile":
                 HandleCastProyectile(arreglo);
                 break;
@@ -110,8 +111,6 @@ public class ClientMessageHandler {
     {
         DisplayHUD.instance.CurrentMP(arreglo[1]);
     }
-
-    private void HandlePlayersAreDead()
 
     private void HandleCreateGameObject(string[] arreglo)
     {
@@ -173,16 +172,6 @@ public class ClientMessageHandler {
 		script.RemoteSetter (bool.Parse (arreglo [2]));
 
 	}
-
-    private void HandleChangeHpHUDToClient(string[] arreglo)
-    {
-        DisplayHUD.instance.CurrentHP(arreglo[1]);
-    }
-
-    private void HandleChangeMpHUDToClient(string[] arreglo)
-    {
-        DisplayHUD.instance.CurrentMP(arreglo[1]);
-    }
 
     private void HandleUpdatedAttackState(string[] arreglo)
     {
