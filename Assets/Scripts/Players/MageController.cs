@@ -42,7 +42,7 @@ public class MageController : PlayerController {
     private void SendFireballSignalToServer(int direction, float speed)
     { 
         string x = transform.position.x.ToString();
-        string y = transform.position.y.ToString(); 
-        Client.instance.SendMessageToServer("CastFireball/" + direction + "/" + speed + "/" + x + "/" +y);
+        string y = transform.position.y.ToString();
+        Client.instance.SendMessageToServer("CastFireball/" + direction + "/" + speed + "/" + x + "/" + y);
     }
 }
