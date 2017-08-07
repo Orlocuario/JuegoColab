@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 public class Client : MonoBehaviour {
 
-    int port = 8888;
+    int port = 7777;
     int socketId; // Host ID
     int connectionId;
     int channelId;
@@ -118,7 +118,7 @@ public class Client : MonoBehaviour {
         return null;
     }
 
-    public PlayerController GetLocalPlayer()
+  public PlayerController GetLocalPlayer()
     {
         MageController player1 = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<MageController>();
         WarriorController player2 = GameObject.FindGameObjectsWithTag("Player2")[0].GetComponent<WarriorController>();
@@ -136,14 +136,26 @@ public class Client : MonoBehaviour {
             return player3;
         }
         return null;
-
-        
     }
 
     public MageController GetMage()
     {
         GameObject player = GameObject.FindGameObjectsWithTag("Player1")[0];
         MageController script = player.GetComponent<MageController>();
+        return script;
+    }
+
+    public WarriorController GetWarrior()
+    {
+        GameObject player = GameObject.FindGameObjectsWithTag("Player2")[0];
+        WarriorController script = player.GetComponent<WarriorController>();
+        return script;
+    }
+
+    public EngineerController GetEngineer()
+    {
+        GameObject player = GameObject.FindGameObjectsWithTag("Player2")[0];
+        EngineerController script = player.GetComponent<EngineerController>();
         return script;
     }
 

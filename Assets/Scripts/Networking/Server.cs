@@ -10,7 +10,7 @@ using System;
 public class Server : MonoBehaviour {
 
     public int maxConnections;
-    int port = 8888;
+    int port = 7777;
     int socketId;
     int channelId;
     int timesScene1IsLoaded;

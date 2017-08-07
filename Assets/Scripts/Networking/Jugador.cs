@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 public class Jugador
 {
@@ -18,7 +19,7 @@ public class Jugador
     public bool pressingLeft;
     public bool attacking;
     public bool controlOverEnemies;
-
+    public string[] inventory = new string[8];
 
     public Jugador(int connectionId, int charId, Room room)
     {
@@ -38,4 +39,44 @@ public class Jugador
         controlOverEnemies = false;
     }
 
+    public void InventoryUpdate(string message)
+    {
+        char[] separator = new char[1];
+        separator[0] = '/';
+        string[] arreglo = message.Split(separator);
+        int index = Int32.Parse(arreglo[2]);
+
+        if (arreglo[1] == "Add")
+        {
+            AddItemToInventory(index, arreglo[3]);
+        }
+        else
+        {
+            RemoveItemFromInventory(index);
+        }
+    }
+
+    private void AddItemToInventory(int index, string spriteName)
+    {
+        for (int i = 0; i < inventory.Length; i++)
+        {
+            if (i == index)
+            {
+                inventory[i] = spriteName;
+                return;
+            }
+        }
+    }
+
+    private void RemoveItemFromInventory(int index)
+    {
+        for (int i = 0; i < inventory.Length; i++)
+        {
+            if (i == index)
+            {
+                inventory[i] = null;
+                return;
+            }
+        }
+    }
 }

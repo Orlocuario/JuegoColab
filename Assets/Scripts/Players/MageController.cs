@@ -5,12 +5,6 @@ using UnityEngine;
 
 public class MageController : PlayerController {
 
-
-    protected override void Start()
-    {
-        base.Start();
-    }
-
     protected override bool IsAttacking()
     {
         if (localPlayer)
@@ -34,7 +28,7 @@ public class MageController : PlayerController {
     private void CastFireball(int direction, float speed)
     {
         Vector3 myPosition = transform.position;
-        CastLocalFireball(direction, speed,myPosition.x, myPosition.y,this);
+        CastLocalFireball(direction, speed,myPosition.x, myPosition.y, this);
         SendFireballSignalToServer(direction, speed);
     }
 
@@ -50,10 +44,5 @@ public class MageController : PlayerController {
         string x = transform.position.x.ToString();
         string y = transform.position.y.ToString(); 
         Client.instance.SendMessageToServer("CastFireball/" + direction + "/" + speed + "/" + x + "/" +y);
-    }
-
-    protected override void Update()
-    {
-        base.Update();
     }
 }

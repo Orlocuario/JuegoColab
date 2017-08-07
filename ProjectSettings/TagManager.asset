@@ -18,6 +18,8 @@ TagManager:
   - ChatCanvas
   - OriginalTextCanvas
   - MovingPlatform
+  - PickUpItems
+  - PickUpButton
   layers:
   - Default
   - TransparentFX
