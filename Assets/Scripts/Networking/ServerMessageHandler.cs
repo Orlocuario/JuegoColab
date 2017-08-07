@@ -47,6 +47,9 @@ public class ServerMessageHandler
             case "CastFireball":
                 SendNewFireball(message, connectionId, arreglo);
                 break;
+       			case "Power":
+				        SendPowerState (message, connectionId, arreglo);
+		          	break;
             case "NewEnemyId":
                 NewEnemy(arreglo, connectionId);
                 break;
@@ -199,4 +202,11 @@ public class ServerMessageHandler
         player.attacking = bool.Parse(data[2]);
         room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
+	public void SendPowerState(string message, int connectionId, string[] data)
+	{
+		Jugador player = server.GetPlayer (connectionId);
+		Room room = player.room;
+		player.power = bool.Parse (data [2]);
+		room.SendMessageToAllPlayersExceptOne (message, connectionId);
+	}
 }

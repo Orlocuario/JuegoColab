@@ -145,6 +145,13 @@ public class Client : MonoBehaviour {
         return script;
     }
 
+	public WarriorController GetWarrior()
+	{
+		GameObject player = GameObject.FindGameObjectsWithTag("Player2")[0];
+		WarriorController script = player.GetComponent<WarriorController>();
+		return script;
+	}
+  
     public WarriorController GetWarrior()
     {
         GameObject player = GameObject.FindGameObjectsWithTag("Player2")[0];

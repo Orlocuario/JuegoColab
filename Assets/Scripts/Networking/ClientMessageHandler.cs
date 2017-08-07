@@ -47,6 +47,9 @@ public class ClientMessageHandler {
             case "CastFireball":
                 HandleCastFireball(arreglo);
                 break;
+			      case "Power":
+			         	HandleUpdatedPowerState (arreglo);
+			         	break;
             case "Die":
                 KillEnemy(arreglo);
                 break;
@@ -164,6 +167,12 @@ public class ClientMessageHandler {
         string chatMessage = arreglo[1];
         Chat.instance.UpdateChat(chatMessage);
     }
+	private void HandleUpdatedPowerState(string[] arreglo)
+	{
+		WarriorController script = Client.instance.GetWarrior();
+		script.RemoteSetter (bool.Parse (arreglo [2]));
+
+	}
 
     private void HandleChangeHpHUDToClient(string[] arreglo)
     {
