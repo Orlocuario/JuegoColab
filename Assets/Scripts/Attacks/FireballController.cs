@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FireballController : MonoBehaviour {
 
-
     private int direction;
     private float speed;
     float maxDistance;

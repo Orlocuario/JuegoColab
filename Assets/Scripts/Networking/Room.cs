@@ -14,10 +14,12 @@ public class Room
     public int maxJugadores;
     public int id;
 
+
+
     public bool started;
     string numeroPartidas;
     string historial;
-
+    public List<Enemy> enemigos;
     //Inicialización
     public Room(int id, Server server, ServerMessageHandler sender, int maxJugadores)
     {
@@ -30,6 +32,12 @@ public class Room
         started = false;
         historial = "";
         hpManaGer = new HpAndManaHUD(this);
+        enemigos = new List<Enemy>();
+    }
+
+    public void AddEnemy(int enemyId)
+    {
+        enemigos.Add(new Enemy(enemyId, this));
     }
 
     public string HoraMinuto()
@@ -66,7 +74,7 @@ public class Room
         Jugador newPlayer = new Jugador(connectionId, GetCharId(numJugadores), this);
         players.Add(newPlayer);
         numJugadores++;
-        
+        SetControlEnemies(newPlayer);
         if (IsFull())
         {
             Debug.Log("Full room");
@@ -82,6 +90,18 @@ public class Room
     private int GetCharId(int numJugadores)
     {
         return numJugadores;
+    }
+
+    public Enemy GetEnemy(int id)
+    {
+        foreach(Enemy enemy in enemigos)
+        {
+            if(enemy.enemyId == id)
+            {
+                return enemy;
+            }
+        }
+        return null;
     }
 
     public Jugador FindPlayerInRoom(int id)
@@ -152,4 +172,47 @@ public class Room
             }
         }
     }
+
+    private void SetControlEnemies(Jugador targetPlayer)
+    {
+        bool check = false;
+        foreach(Jugador player in players)
+        {
+            if(player.controlOverEnemies == true)
+            {
+                check = true;
+            }
+        }
+        if (!check)
+        {
+            targetPlayer.controlOverEnemies = true;
+        }
+    }
+
+    //Set current controller to False, and find a new one that is connected
+    public void ChangeControlEnemies() 
+    {
+        foreach(Jugador player in players)
+        {
+            if(player.controlOverEnemies == true)
+            {
+                player.controlOverEnemies = false;
+            }
+        }
+        foreach(Jugador player in players)
+        {
+            if(player.connected == true)
+            {
+                player.controlOverEnemies = true;
+                SendControlSignal(player);
+            }
+        }
+    }
+
+    private void SendControlSignal(Jugador player)
+    {
+        string message = "SetControlOverEnemies";
+        Server.instance.SendMessageToClient(player, message);
+    }
+
 }

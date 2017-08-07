@@ -17,10 +17,11 @@ public class ServerMessageHandler
         char[] separator = new char[1];
         separator[0] = '/';
         string[] arreglo = message.Split(separator);
+
         switch (arreglo[0])
         {
             case "RequestCharId":
-                SendCharId(connectionId);
+                SendCharIdAndControl(connectionId);
                 break;
             case "ChangePosition":
                 SendUpdatedPosition(message, connectionId, arreglo);
@@ -38,17 +39,86 @@ public class ServerMessageHandler
                 SendHpHAndMpHUDToRoom(arreglo, connectionId);
                 break;
             case "Attack":
-                SendAttackState(message, connectionId,arreglo);
+                SendAttackState(message, connectionId, arreglo);
+                break;
+            case "AttackWarrior":
+                SendAttackState(message, connectionId, arreglo);
                 break;
             case "CastFireball":
                 SendNewFireball(message, connectionId, arreglo);
                 break;
-			case "Power":
-				SendPowerState (message, connectionId, arreglo);
-				break;
+       			case "Power":
+				        SendPowerState (message, connectionId, arreglo);
+		          	break;
+            case "NewEnemyId":
+                NewEnemy(arreglo, connectionId);
+                break;
+            case "EnemyHpChange":
+                ReduceEnemyHp(message, arreglo, connectionId);
+                break;
+            case "EnemyChangePosition":
+                EnemyChangePosition(message, arreglo, connectionId);
+                break;
+            case "CreateGameObject":
+                SendNewGameObject(message, connectionId);
+                break;
+            case "DestroyItem":
+                SendDestroyItem(message, connectionId);
+                break;
+            case "InventoryUpdate":
+                SendInventoryUpdate(message, connectionId);
+                break;
             default:
                 break;
         }
+    }
+
+    private void EnemyChangePosition(string message, string[] arreglo, int connectionId)
+    {
+        int enemyId = Int32.Parse(arreglo[1]);
+        float posX = float.Parse(arreglo[2]);
+        float posY = float.Parse(arreglo[3]);
+        Jugador player = server.GetPlayer(connectionId);
+        Enemy enemy = player.room.GetEnemy(enemyId);
+        enemy.posX = posX;
+        enemy.posY = posY;
+        player.room.SendMessageToAllPlayersExceptOne(message, connectionId);
+    }
+
+    private void ReduceEnemyHp(string message, string[] arreglo, int connectionId)
+    {
+        int enemyId = Int32.Parse(arreglo[1]);
+        float enemyHp = float.Parse(arreglo[2]);
+        Jugador player = server.GetPlayer(connectionId);
+        Enemy enemy = player.room.GetEnemy(enemyId);
+        enemy.ReduceHp(enemyHp);
+    }
+
+    private void NewEnemy(string[] arreglo, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        int id = Int32.Parse(arreglo[1]);
+        player.room.AddEnemy(id);
+    }
+    private void SendNewGameObject(string message, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        int charId = player.charId;
+        room.SendMessageToAllPlayers(message + "/" + charId.ToString());
+    }
+
+    private void SendInventoryUpdate(string message, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        player.InventoryUpdate(message);
+    }
+
+    private void SendDestroyItem(string message, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.SendMessageToAllPlayers(message);
     }
 
     private void SendHpHUDToRoom(string[] arreglo, int connectionId)
@@ -111,11 +181,11 @@ public class ServerMessageHandler
         room.SendMessageToAllPlayersExceptOne(message, connectionID);
     }
 
-    private void SendCharId(int connectionId)
+    private void SendCharIdAndControl(int connectionId)
     {
         Jugador player = server.GetPlayer(connectionId);
         int charId = player.charId;
-        string message = "SetCharId/" + charId;
+        string message = "SetCharId/" + charId + "/" + player.controlOverEnemies;
         server.SendMessageToClient(connectionId, message);
     }
 

@@ -10,7 +10,7 @@ using System;
 public class Server : MonoBehaviour {
 
     public int maxConnections;
-    int port = 8888;
+    int port = 7777;
     int socketId;
     int channelId;
     int timesScene1IsLoaded;
@@ -79,6 +79,11 @@ public class Server : MonoBehaviour {
         NetworkTransport.Send(socketId, clientId, channelId, buffer, bufferSize, out error);
     }
 
+    public void SendMessageToClient(Jugador player, string message)
+    {
+        SendMessageToClient(player.connectionId, message);
+    }
+
     private void AddConnection(int connectionId)
     {
         //Jugador existía y se reconecta.
@@ -121,7 +126,11 @@ public class Server : MonoBehaviour {
             {
                 role = "Engineer: Has Disconnected";
             }
-            player.room.SendMessageToAllPlayers("NewChatMessage/" + role);
+            player.room.SendMessageToAllPlayers("NewChatMessage/" + role);   
+            if(player.controlOverEnemies == true)
+            {
+                player.room.ChangeControlEnemies();
+            }
         }
     }
 
