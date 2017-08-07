@@ -78,7 +78,7 @@ public class Room
         if (IsFull())
         {
             Debug.Log("Full room");
-            sender.SendChangeScene("Etapa2", this);
+            sender.SendChangeScene("Escena2", this);
             started = true;
             SendMessageToAllPlayers("Mago: Conectado");
             SendMessageToAllPlayers("Guerrero: Conectado");

@@ -91,7 +91,7 @@ public class Server : MonoBehaviour {
         if (player != null)
         {
             player.connected = true;
-            SendMessageToClient(connectionId, "ChangeScene/Escena1");
+            SendMessageToClient(connectionId, "ChangeScene/Escena2");
             timesScene1IsLoaded += 1;
             return;
         }

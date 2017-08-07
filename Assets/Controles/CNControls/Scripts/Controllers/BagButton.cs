@@ -7,6 +7,7 @@ using UnityEngine.UI;
 public class BagButton : MonoBehaviour {
 
     public GameObject inventory;
+    public GameObject canvas;
 
 	void Start ()
     {

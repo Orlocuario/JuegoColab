@@ -22,6 +22,7 @@ public class LevelManager : MonoBehaviour {
         thePlayer = null;
         client = GameObject.Find("ClientObject").GetComponent<Client>();
         client.RequestCharIdToServer();
+        //SetHpAndManaToMax();
 	}
 
     public void SetCharAsLocal(int id)

@@ -10,17 +10,17 @@ public class WarriorController : PlayerController {
     private int prevNumHits = 0;
     bool par;
 	int contador = 0;
-	GameObject particulas;
+    GameObject particulas;
 
-	private void Start()
+	protected override void Start()
 	{
 		base.Start();
-		particulas = GameObject.Find("ParticulasWarrior");
+        particulas = (GameObject)Instantiate(Resources.Load("Prefabs/Particulas/ParticulasWarrior"));
 		particulas.SetActive (false);
 	}
 
     protected override bool IsAttacking()
-	{	return false;
+	{	
         if (localPlayer)
         {
             bool buttonState = CnInputManager.GetButtonDown("Attack Button");

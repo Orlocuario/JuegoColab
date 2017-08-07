@@ -104,12 +104,14 @@ public class ClientMessageHandler {
 
     private void HandleChangeHpHUDToClient(string[] arreglo)
     {
-        DisplayHUD.instance.CurrentHP(arreglo[1]);
+        DisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
+        displayHudScript.CurrentHP(arreglo[1]);
     }
 
     private void HandleChangeMpHUDToClient(string[] arreglo)
     {
-        DisplayHUD.instance.CurrentMP(arreglo[1]);
+        DisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
+        displayHudScript.CurrentMP(arreglo[1]);
     }
 
     private void HandleCreateGameObject(string[] arreglo)
@@ -130,8 +132,6 @@ public class ClientMessageHandler {
     {
         string scene = arreglo[1];
         SceneManager.LoadScene(scene);
-        DisplayHUD.instance.CurrentHP("1");
-        DisplayHUD.instance.CurrentMP("1");
         //falta settear su vida/mana real al 100%
     }
 

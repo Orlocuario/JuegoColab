@@ -4,17 +4,11 @@ using UnityEngine;
 using UnityEngine.UI;
 
 public class DisplayHUD: MonoBehaviour{
-
-    public static DisplayHUD instance;
+    
     public string maxHP;
     public string maxMP;
     public string currentHP;
     public string currentMP;
-
-    public void Start()
-    {
-        instance = this;
-    }
 
     public void CurrentHP(string message)
     {
