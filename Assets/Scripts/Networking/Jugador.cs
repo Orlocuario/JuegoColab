@@ -18,6 +18,7 @@ public class Jugador
     public bool pressingRight;
     public bool pressingLeft;
     public bool attacking;
+    public bool controlOverEnemies;
     public string[] inventory = new string[8];
 
     public Jugador(int connectionId, int charId, Room room)
@@ -35,6 +36,7 @@ public class Jugador
         pressingRight = false;
         pressingLeft = false;
         attacking = false;
+        controlOverEnemies = false;
     }
 
     public void InventoryUpdate(string message)

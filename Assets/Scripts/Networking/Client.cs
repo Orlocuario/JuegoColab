@@ -104,7 +104,21 @@ public class Client : MonoBehaviour {
         return script;
     }
 
-    public PlayerController GetLocalPlayer()
+    public EnemyController GetEnemy(int enemyId)
+    {
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        foreach (GameObject enemy in enemies)
+        {
+            EnemyController script = enemy.GetComponent<EnemyController>();
+            if (script.enemyId == enemyId)
+            {
+                return script;
+            }
+        }
+        return null;
+    }
+
+  public PlayerController GetLocalPlayer()
     {
         MageController player1 = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<MageController>();
         WarriorController player2 = GameObject.FindGameObjectsWithTag("Player2")[0].GetComponent<WarriorController>();

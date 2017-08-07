@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     public bool remoteLeft;
     public bool remoteJumping;
     public bool remoteAttacking;
-
+    public bool controlOverEnemies;
     public int SortingOrder = 0;
     public int saltarDoble;
     public int direction;  //1 = derecha, -1 = izquierda
@@ -50,6 +50,7 @@ public class PlayerController : MonoBehaviour
         theLevelManager = FindObjectOfType<LevelManager>();
         localPlayer = false;
         direction = 1;
+        controlOverEnemies = false;
         saltarDoble = 0;
         IgnoreCollisionStar2puntoCero();
     }

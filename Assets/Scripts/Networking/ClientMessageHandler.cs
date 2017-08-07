@@ -47,6 +47,14 @@ public class ClientMessageHandler {
             case "CastFireball":
                 HandleCastFireball(arreglo);
                 break;
+            case "Die":
+                KillEnemy(arreglo);
+                break;
+            case "EnemyChangePosition":
+                ChangeEnemyPosition(arreglo);
+                break;
+            case "SetControlOverEnemies":
+                SetControlOverEnemies();
             case "CastProyectile":
                 HandleCastProyectile(arreglo);
                 break;
@@ -63,6 +71,44 @@ public class ClientMessageHandler {
                 break;
         }
     }
+
+    private void SetControlOverEnemies()
+    {
+        PlayerController localPlayer = Client.instance.GetLocalPlayer();
+        localPlayer.controlOverEnemies = true;
+    }
+
+    private void ChangeEnemyPosition(string[] arreglo)
+    {
+        int enemyId = Int32.Parse(arreglo[1]);
+        float posX = float.Parse(arreglo[2]);
+        float posY = float.Parse(arreglo[3]);
+        EnemyController enemyScript = Client.instance.GetEnemy(enemyId);
+        enemyScript.SetPosition(posX, posY);
+    }
+
+
+    private void KillEnemy(string[] arreglo)
+    {
+        int enemyId = Int32.Parse(arreglo[1]);
+        EnemyController script = Client.instance.GetEnemy(enemyId);
+        if(script != null)
+        {
+            script.Die();
+        }
+    }
+
+    private void HandleChangeHpHUDToClient(string[] arreglo)
+    {
+        DisplayHUD.instance.CurrentHP(arreglo[1]);
+    }
+
+    private void HandleChangeMpHUDToClient(string[] arreglo)
+    {
+        DisplayHUD.instance.CurrentMP(arreglo[1]);
+    }
+
+    private void HandlePlayersAreDead()
 
     private void HandleCreateGameObject(string[] arreglo)
     {
@@ -90,9 +136,12 @@ public class ClientMessageHandler {
     private void HandleSetCharId(string[] arreglo)
     {
         string charId = arreglo[1];
+        bool controlOverEnemies = bool.Parse(arreglo[2]);
         int charIdint = Convert.ToInt32(charId);
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
         scriptLevel.SetCharAsLocal(charIdint);
+        PlayerController scriptPlayer = Client.instance.GetLocalPlayer();
+        scriptPlayer.controlOverEnemies = controlOverEnemies;
     }
 
     private void HandleChangePosition(string[] data)
