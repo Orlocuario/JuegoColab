@@ -6,11 +6,16 @@ using UnityEngine.UI;
 
 public class BagButton : MonoBehaviour {
 
+    public static BagButton instance;
     public GameObject inventory;
     public GameObject canvas;
 
+    public bool usingRune;
+
 	void Start ()
     {
+        instance = this;
+        usingRune = false;
         GameObject.Find("DisplayPanel").SetActive(false);
         Inventory.instance = inventory.GetComponent<Inventory>();
     }
@@ -30,22 +35,24 @@ public class BagButton : MonoBehaviour {
     
     public void UseItem()
     {
-        string who = Items.instance.ItemInformation()[0];
-        string actionToDo = Items.instance.ItemInformation()[1];
+        string actionToDo = Items.instance.ItemInformation()[0];
+        char[] separator = new char[1];
+        separator[0] = '/';
+        string[] arreglo = actionToDo.Split(separator);
 
-        switch (who)
+        switch (arreglo[0])
         {
             case "Everyone":
-                EveryoneActions(actionToDo);
+                EveryoneActions(arreglo[1]);
                 break;
             case "Mage":
-                MageActions(actionToDo);
+                MageActions(arreglo[1]);
                 break;
             case "Warrior":
-                WarriorActions(actionToDo);
+                WarriorActions(arreglo[1]);
                 break;
             case "Engineer":
-                EngineerActions(actionToDo);
+                EngineerActions(arreglo[1]);
                 break;
             default:
                 break;
@@ -57,6 +64,9 @@ public class BagButton : MonoBehaviour {
         switch (actionToDo)
         {
             case "Climb":
+                break;
+            case "RuneOpenDoors":
+                usingRune = true;
                 break;
             default:
                 break;
