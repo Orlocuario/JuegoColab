@@ -1,0 +1,490 @@
+fileFormatVersion: 2
+guid: 6b6ab95ebd2404c46ad0d9d93548239f
+timeCreated: 1502161344
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: SpiderBossX3_0
+    21300002: SpiderBossX3_1
+    21300004: SpiderBossX3_2
+    21300006: SpiderBossX3_3
+    21300008: SpiderBossX3_4
+    21300010: SpiderBossX3_5
+    21300012: SpiderBossX3_6
+    21300014: SpiderBossX3_7
+    21300016: SpiderBossX3_8
+    21300018: SpiderBossX3_9
+    21300020: SpiderBossX3_10
+    21300022: SpiderBossX3_11
+    21300024: SpiderBossX3_12
+    21300026: SpiderBossX3_13
+    21300028: SpiderBossX3_14
+    21300030: SpiderBossX3_15
+    21300032: SpiderBossX3_16
+    21300034: SpiderBossX3_17
+    21300036: SpiderBossX3_18
+    21300038: SpiderBossX3_19
+    21300040: SpiderBossX3_20
+    21300042: SpiderBossX3_21
+    21300044: SpiderBossX3_22
+    21300046: SpiderBossX3_23
+    21300048: SpiderBossX3_24
+    21300050: SpiderBossX3_25
+    21300052: SpiderBossX3_26
+    21300054: SpiderBossX3_27
+    21300056: SpiderBossX3_28
+  serializedVersion: 4
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: -1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaUsage: 1
+  alphaIsTransparency: 0
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  platformSettings:
+  - buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Standalone
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: Android
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: SpiderBossX3_0
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 2063
+        width: 441
+        height: 390
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_1
+      rect:
+        serializedVersion: 2
+        x: 504
+        y: 2067
+        width: 441
+        height: 390
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_2
+      rect:
+        serializedVersion: 2
+        x: 1006
+        y: 2067
+        width: 439
+        height: 390
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_3
+      rect:
+        serializedVersion: 2
+        x: 1510
+        y: 2067
+        width: 438
+        height: 390
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_4
+      rect:
+        serializedVersion: 2
+        x: 2029
+        y: 2067
+        width: 439
+        height: 390
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_5
+      rect:
+        serializedVersion: 2
+        x: 2860
+        y: 2067
+        width: 439
+        height: 390
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_6
+      rect:
+        serializedVersion: 2
+        x: 3339
+        y: 2067
+        width: 438
+        height: 390
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_7
+      rect:
+        serializedVersion: 2
+        x: 895
+        y: 1521
+        width: 439
+        height: 452
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_8
+      rect:
+        serializedVersion: 2
+        x: 1384
+        y: 1521
+        width: 439
+        height: 452
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_9
+      rect:
+        serializedVersion: 2
+        x: 1864
+        y: 1521
+        width: 439
+        height: 452
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_10
+      rect:
+        serializedVersion: 2
+        x: 2356
+        y: 1521
+        width: 439
+        height: 452
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_11
+      rect:
+        serializedVersion: 2
+        x: 2848
+        y: 1521
+        width: 439
+        height: 452
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_12
+      rect:
+        serializedVersion: 2
+        x: 3339
+        y: 1521
+        width: 438
+        height: 452
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_13
+      rect:
+        serializedVersion: 2
+        x: 1701
+        y: 1126
+        width: 15
+        height: 109
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_14
+      rect:
+        serializedVersion: 2
+        x: 1834
+        y: 1135
+        width: 37
+        height: 118
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_15
+      rect:
+        serializedVersion: 2
+        x: 1884
+        y: 1128
+        width: 39
+        height: 120
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_16
+      rect:
+        serializedVersion: 2
+        x: 2043
+        y: 1130
+        width: 70
+        height: 107
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_17
+      rect:
+        serializedVersion: 2
+        x: 2118
+        y: 1127
+        width: 37
+        height: 120
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_18
+      rect:
+        serializedVersion: 2
+        x: 2164
+        y: 1128
+        width: 70
+        height: 107
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_19
+      rect:
+        serializedVersion: 2
+        x: 2332
+        y: 1012
+        width: 439
+        height: 391
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_20
+      rect:
+        serializedVersion: 2
+        x: 2839
+        y: 1012
+        width: 439
+        height: 391
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_21
+      rect:
+        serializedVersion: 2
+        x: 3339
+        y: 1012
+        width: 438
+        height: 391
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_22
+      rect:
+        serializedVersion: 2
+        x: 1814
+        y: 408
+        width: 441
+        height: 452
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 4, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_23
+      rect:
+        serializedVersion: 2
+        x: 2328
+        y: 451
+        width: 441
+        height: 391
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_24
+      rect:
+        serializedVersion: 2
+        x: 2836
+        y: 447
+        width: 438
+        height: 395
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_25
+      rect:
+        serializedVersion: 2
+        x: 3339
+        y: 462
+        width: 438
+        height: 380
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_26
+      rect:
+        serializedVersion: 2
+        x: 2242
+        y: 0
+        width: 527
+        height: 392
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_27
+      rect:
+        serializedVersion: 2
+        x: 2836
+        y: 0
+        width: 438
+        height: 392
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: SpiderBossX3_28
+      rect:
+        serializedVersion: 2
+        x: 3339
+        y: 0
+        width: 438
+        height: 392
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
