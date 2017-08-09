@@ -13,8 +13,7 @@ public class Room
     public int numJugadores;
     public int maxJugadores;
     public int id;
-
-
+    public string sceneToLoad;
 
     public bool started;
     string numeroPartidas;
@@ -33,6 +32,7 @@ public class Room
         historial = "";
         hpManaGer = new HpAndManaHUD(this);
         enemigos = new List<Enemy>();
+        sceneToLoad = Server.instance.sceneToLoad;
     }
 
     public void AddEnemy(int enemyId)
@@ -78,7 +78,7 @@ public class Room
         if (IsFull())
         {
             Debug.Log("Full room");
-            sender.SendChangeScene("Escena2", this);
+            sender.SendChangeScene(sceneToLoad, this);
             started = true;
             SendMessageToAllPlayers("Mago: Conectado");
             SendMessageToAllPlayers("Guerrero: Conectado");
