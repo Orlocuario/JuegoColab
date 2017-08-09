@@ -15,6 +15,15 @@ public class Switch : MonoBehaviour
     public bool on; //Si esta encendido o no
     public TypeOfActivation activation; //Forma en que se activa (pisando o disparando)
     public Color switchColor; //Color del switch. Determina quien lo puede apretar.
+    public GroupOfSwitchs switchGroup;
+    private SwitchManager manager;
+
+    private void Start()
+    {
+        manager = GameObject.FindGameObjectWithTag("SwitchManager").GetComponent<SwitchManager>();
+        manager.Add(this);
+    }
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
