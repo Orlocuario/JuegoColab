@@ -17,6 +17,7 @@ public class Switch : MonoBehaviour
     public Color switchColor; //Color del switch. Determina quien lo puede apretar.
     public GroupOfSwitchs switchGroup;
     private SwitchManager manager;
+    private bool jobDone = false; //true si es que su grupo de botones ya terminó su función
 
     private void Start()
     {
@@ -96,13 +97,25 @@ public class Switch : MonoBehaviour
 
     private void Activate()
     {
-        bool newOn = (desactivable && !on) || !desactivable;
+        if (jobDone)
+        {
+            return;
+        }
+
+        bool newOn =(desactivable && !on) || !desactivable;
         if(newOn != on)
         {
             on = newOn;
             SetSprite();
             SendOnDataToServer(on);
+            switchGroup.CheckIfReady();
+      
         }
+    }
+
+    public void SetJobDone()
+    {
+        jobDone = true;
     }
 
     private int GetIntFromColor(Color color)

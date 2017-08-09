@@ -34,16 +34,21 @@ public class GroupOfSwitchs{
         return null;
     }
 
-    public bool CheckIfReady()
+    public void CheckIfReady()
     {
-        bool ready = true;
         foreach(Switch switchi in switchs)
         {
             if (!switchi.on)
             {
-                ready = false;
+                return;
             }
         }
-        return ready;
+        SwitchActions handler = new SwitchActions(this);
+        handler.DoSomething();
+    }
+
+    public List<Switch> GetSwitchs()
+    {
+        return switchs;
     }
 }
