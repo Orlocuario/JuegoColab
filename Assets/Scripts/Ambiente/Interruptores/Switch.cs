@@ -40,7 +40,7 @@ public class Switch : MonoBehaviour
 
     private void CheckPisando(Collision2D collision)
     {
-        if (CheckIfColliderIsLocalPlayer(collision))
+        if (CheckIfColliderIsLocalPlayer(collision) && CheckIfColliderIsAbove(collision))
         {
             Activate();
         }
@@ -67,6 +67,13 @@ public class Switch : MonoBehaviour
             }
         }
         return false;
+    }
+
+    private bool CheckIfColliderIsAbove(Collision2D collision)
+    {
+        GameObject colliderGameObject = collision.collider.gameObject;
+        return transform.position.y < (colliderGameObject.transform.position.y + 0.001);
+
     }
 
 
