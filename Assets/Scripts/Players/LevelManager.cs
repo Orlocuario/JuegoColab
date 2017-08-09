@@ -35,10 +35,10 @@ public class LevelManager : MonoBehaviour {
 
         switch (id)
         {
-            case 0:
+            case 1:
                 player = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<MageController>();
                 break;
-            case 1:
+            case 0:
                 player = GameObject.FindGameObjectsWithTag("Player2")[0].GetComponent<WarriorController>();
                 break;
             case 2:

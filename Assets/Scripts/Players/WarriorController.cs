@@ -16,7 +16,7 @@ public class WarriorController : PlayerController {
 	{
 		base.Start();
         particulas = (GameObject)Instantiate(Resources.Load("Prefabs/Particulas/ParticulasWarrior"));
-		particulas.SetActive (false);
+		particulas.SetActive(true);
 	}
 
     protected override bool IsAttacking()

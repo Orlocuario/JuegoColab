@@ -5,6 +5,16 @@ using UnityEngine;
 
 public class MageController : PlayerController {
 
+	int contador = 0;
+	GameObject particulasMago;
+
+	protected override void Start()
+	{
+		base.Start();
+		particulasMago = (GameObject)Instantiate(Resources.Load("Prefabs/Particulas/ParticulasMago"));
+		particulasMago.SetActive (false);
+	}
+
     protected override bool IsAttacking()
     {
         if (localPlayer)
@@ -24,6 +34,34 @@ public class MageController : PlayerController {
         }
         return remoteAttacking;
     }
+
+	protected override bool isPower()
+	{
+		if (localPlayer) 
+		{	
+			bool primeraVez = false;
+			bool buttonState = CnInputManager.GetButtonDown ("Power Button");
+			if (buttonState && !primeraVez) 
+			{
+				primeraVez = true;
+				remotePower = contador%2 == 0;
+				contador++;
+				SendPowerDataToServer();
+				SetAnimacion (remotePower);
+			}
+
+			else if (!buttonState && primeraVez)
+			{
+				primeraVez = false;
+			}
+		}
+		return remotePower;
+	}
+
+	private void SetAnimacion(bool activo)
+	{
+		particulasMago.SetActive (activo);
+	}
 
     private void CastFireball(int direction, float speed)
     {

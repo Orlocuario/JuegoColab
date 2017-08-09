@@ -47,9 +47,9 @@ public class ServerMessageHandler
             case "CastFireball":
                 SendNewFireball(message, connectionId, arreglo);
                 break;
-       			case "Power":
-				        SendPowerState (message, connectionId, arreglo);
-		          	break;
+   			case "Power":
+				SendPowerState (message, connectionId, arreglo);
+		        break;
             case "NewEnemyId":
                 NewEnemy(arreglo, connectionId);
                 break;
