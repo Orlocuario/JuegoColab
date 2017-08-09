@@ -8,19 +8,20 @@ public class RuneSystem : MonoBehaviour
 {
     LevelManager levelManager;
     Vector2 myPosition;
-    GameObject createGameObject;
-    public const int numOfRunesForDoor = 4;
+    public const int numOfRunesForDoor = 3;
     public List<string> runesThatDoorRequires = new List<string>();
-    List<string> runesThatTheDoorHas = new List<string>();
 
-    string[] runesThatTheDoorRequiresArray;
-    string[] runesThatTheDoorHasArray;
-    string[] runes = new string[numOfRunesForDoor];
-    bool lockValue;
+    private List<string> runesThatTheDoorHas = new List<string>();
+    private string[] runesThatTheDoorRequiresArray;
+    private string[] runesThatTheDoorHasArray;
+    private string[] runes = new string[numOfRunesForDoor];
+    private bool lockValue;
+    private bool doorHasBeenChecked;
 
     private void Start()
     {
         lockValue = false;
+        doorHasBeenChecked = false;
         myPosition = gameObject.transform.position;
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
 
@@ -31,6 +32,7 @@ public class RuneSystem : MonoBehaviour
                 runesThatDoorRequires.Add(runes[i]);
             }
         }
+
         runesThatTheDoorRequiresArray = runesThatDoorRequires.ToArray();
     }
 
@@ -40,56 +42,74 @@ public class RuneSystem : MonoBehaviour
         Vector2 playerPosition = player.gameObject.transform.position;
         float distance = (playerPosition - myPosition).magnitude;
 
-        if (distance <= 0.4f && BagButton.instance.usingRune && !RuneDoorIsFull())
+        if (distance <= 0.4f && BagButton.instance.usingRune &&!RuneDoorIsFull())
         {
             lockValue = true;
             string itemName = Items.instance.itemName;
             for (int i = 0; i < runesThatTheDoorRequiresArray.Length; i++)
             {
-                if (runesThatTheDoorRequiresArray[i] == itemName)
+                if (runesThatTheDoorRequiresArray[i] == itemName && !runesThatTheDoorHas.Contains(itemName))
                 {
                     runesThatTheDoorHas.Add(itemName);
                     runesThatTheDoorHasArray = runesThatTheDoorHas.ToArray();
 
                     Sprite door = this.gameObject.GetComponent<SpriteRenderer>().sprite;
-                    door = GetDoorSprite(runesThatTheDoorHasArray);
+                    //door = GetDoorSprite(runesThatTheDoorHasArray);
 
                     BagButton.instance.usingRune = false;
-                    Inventory.instance.RemoveItemFromInventory(Inventory.instance.items[i]);
+                    Inventory.instance.RemoveItemFromInventory(GetItemImage(itemName));
                 }
             }
-
         }
         else
         {
+            BagButton.instance.usingRune = false;
             if (lockValue)
             {
                 lockValue = false;
             }
 
-            if (RuneDoorIsFull())
+            if (RuneDoorIsFull() && !doorHasBeenChecked)
             {
-                ActivateDoorFunction();
+                //ActivateDoorFunction();
             }
         }
     }
 
-    private Sprite GetDoorSprite(string[] runesThatTheDoorHas)
+    private Image GetItemImage(string itemName)
+    {
+        Image[] items = Inventory.instance.items;
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i].sprite.name == itemName)
+            {
+                return items[i];
+            }
+        }
+        return null;
+    }
+
+    /*private Sprite GetDoorSprite(string[] runesThatTheDoorHas)
     {
         Sprite newSprite;
 
         return newSprite;
-    }
+    }*/
 
     public bool RuneDoorIsFull()
     {
-        for (int i = 0; i < runesThatTheDoorHasArray.Length; i++)
+        if (runesThatTheDoorHasArray != null)
         {
-            if (runesThatTheDoorHasArray[i] == null)
+            for (int i = 0; i < runesThatTheDoorHasArray.Length; i++)
             {
-                return false;
+                if (runesThatTheDoorHasArray[i] == null)
+                {
+                    return false;
+                }
             }
+            doorHasBeenChecked = true;
+            return true;
         }
-        return true;
+        return false;
     }
 }
