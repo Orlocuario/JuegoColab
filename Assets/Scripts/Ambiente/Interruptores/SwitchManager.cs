@@ -48,4 +48,15 @@ public class SwitchManager : MonoBehaviour {
         listOfGroups.Add(group);
         return group;
     }
+
+    public void CallAction(int groupId)
+    {
+        foreach(GroupOfSwitchs group in listOfGroups)
+        {
+            if(group.groupId == groupId)
+            {
+                group.CallAction();
+            }
+        }
+    }
 }

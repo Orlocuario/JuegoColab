@@ -43,12 +43,24 @@ public class GroupOfSwitchs{
                 return;
             }
         }
-        SwitchActions handler = new SwitchActions(this);
-        handler.DoSomething();
+        CallAction();
     }
 
     public List<Switch> GetSwitchs()
     {
         return switchs;
+    }
+
+    private void SendNewEventToServer()
+    {
+        string message = "SwitchGroupReady/" + groupId;
+        Client.instance.SendMessageToServer(message);
+    }
+
+    public void CallAction()
+    {
+        SwitchActions handler = new SwitchActions(this);
+        handler.DoSomething();
+        SendNewEventToServer();
     }
 }

@@ -25,7 +25,6 @@ public class Switch : MonoBehaviour
         manager.Add(this);
     }
 
-
     private void OnCollisionEnter2D(Collision2D collision)
     {
         switch (activation)
@@ -108,8 +107,7 @@ public class Switch : MonoBehaviour
             on = newOn;
             SetSprite();
             SendOnDataToServer(on);
-            switchGroup.CheckIfReady();
-      
+            switchGroup.CheckIfReady();      
         }
     }
 
@@ -167,7 +165,7 @@ public class Switch : MonoBehaviour
         throw new NotImplementedException();
     }
 
-    private void ReceiveDataFromServer(bool onData)
+    public void ReceiveDataFromServer(bool onData)
     {
         on = onData;
         SetSprite();

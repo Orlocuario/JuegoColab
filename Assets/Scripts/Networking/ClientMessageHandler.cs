@@ -71,9 +71,33 @@ public class ClientMessageHandler {
             case "DestroyItem":
                 HandleDestroyItem(arreglo);
                 break;
+            case "ChangeSwitchSatus":
+                HandleChangeSwitchStatus(arreglo);
+                break;
+            case "SwitchGroupReady":
+                HandleSwitchGroupReady(arreglo);
+                break;
             default:
                 break;
         }
+    }
+
+    private void HandleSwitchGroupReady(string[] arreglo)
+    {
+        int groupId = Int32.Parse(arreglo[1]);
+        SwitchManager manager = GameObject.FindGameObjectWithTag("SwitchManager").GetComponent<SwitchManager>();
+        manager.CallAction(groupId);
+
+    }
+
+    private void HandleChangeSwitchStatus(string[] arreglo)
+    {
+        int groupId = Int32.Parse(arreglo[1]);
+        int individualId = Int32.Parse(arreglo[2]);
+        bool on = bool.Parse(arreglo[3]);
+        SwitchManager manager = GameObject.FindGameObjectWithTag("SwitchManager").GetComponent<SwitchManager>();
+        manager.GetSwitch(groupId, individualId).ReceiveDataFromServer(on);
+
     }
 
     private void SetControlOverEnemies()
