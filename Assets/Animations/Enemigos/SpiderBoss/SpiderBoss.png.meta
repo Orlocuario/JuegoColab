@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 6b6ab95ebd2404c46ad0d9d93548239f
-timeCreated: 1502392626
+timeCreated: 1502398065
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -10,7 +10,7 @@ TextureImporter:
     21300006: SpiderBossIdle4
     21300008: SpiderBossIdle5
     21300010: SpiderBossvigilia
-    21300012: SpiderBossHit2
+    21300012: "SpiderBossDa\xF1o"
     21300014: SpiderBossmove1
     21300016: SpiderBossMove2
     21300018: SpiderBossMove3
@@ -27,7 +27,7 @@ TextureImporter:
     21300040: SpiderBossX3_20
     21300042: SpiderBossX3_21
     21300044: SpiderBossHit1
-    21300046: SpiderBossX3_23
+    21300046: SpiderBossHit2
     21300048: SpiderBossHit3
     21300050: SpiderBossHit4
     21300052: SpiderBossHit5
@@ -185,7 +185,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossHit2
+      name: "SpiderBossDa\xF1o"
       rect:
         serializedVersion: 2
         x: 3339
@@ -214,7 +214,7 @@ TextureImporter:
       name: SpiderBossMove2
       rect:
         serializedVersion: 2
-        x: 1384
+        x: 1387
         y: 1521
         width: 439
         height: 452
@@ -397,16 +397,16 @@ TextureImporter:
       rect:
         serializedVersion: 2
         x: 1814
-        y: 408
+        y: 444
         width: 441
-        height: 452
+        height: 398
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 4, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossX3_23
+      name: SpiderBossHit2
       rect:
         serializedVersion: 2
         x: 2328
