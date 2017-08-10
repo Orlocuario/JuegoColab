@@ -8196,6 +8196,10 @@ Prefab:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
   m_IsPrefabParent: 0
@@ -8939,6 +8943,10 @@ Prefab:
         type: 2}
       propertyPath: m_SortingLayerID
       value: -477427129
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
@@ -15938,6 +15946,10 @@ Prefab:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
   m_IsPrefabParent: 0
@@ -20256,6 +20268,10 @@ Prefab:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
   m_IsPrefabParent: 0
@@ -22737,6 +22753,25 @@ SpriteRenderer:
   m_Color: {r: 0.85172415, g: 0.85172415, b: 0.85172415, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!1 &347015918 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d,
+    type: 2}
+  m_PrefabInternal: {fileID: 1169303532}
+--- !u!61 &347015919
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 347015918}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 10.427952, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 24.633648, y: 0.74}
 --- !u!1 &348440603
 GameObject:
   m_ObjectHideFlags: 0
@@ -25124,6 +25159,134 @@ Transform:
   m_Father: {fileID: 740634563}
   m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!43 &402104575
+Mesh:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  serializedVersion: 8
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 63
+    topology: 0
+    firstVertex: 0
+    vertexCount: 23
+    localAABB:
+      m_Center: {x: -0.15810397, y: -0.014713883, z: 0}
+      m_Extent: {x: 0.69943213, y: 2.3138137, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexBuffer: 0400160002000500130004000600090005000700090006000800090007000300090008000a000d0009000b000d000a000c000d000b000c0001000d0009000d000e0013000e000f0013000f00100013001000110013001100120013001200000004001500160004001400150009000e00050004001300140005000e001300
+  m_Skin: []
+  m_VertexData:
+    m_CurrentChannels: 15
+    m_VertexCount: 23
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 12
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 24
+      format: 0
+      dimension: 4
+    - stream: 0
+      offset: 40
+      format: 0
+      dimension: 2
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 1104
+    _typelessdata: 4ffb78be732413400000000000000000000000000000803f0000803f0000803f0000803f0000803f6aff1c3e903ae53eafcb85bee73a07c00000000000000000000000000000803f0000803f0000803f0000803f0000803f6aff1c3efd51273e406de93d25f2333f0000000000000000000000000000803f0000803f0000803f0000803f0000803f50988c3e903ae53e60ccda3e38ac06c00000000000000000000000000000803f0000803f0000803f0000803f0000803f50988c3efd51273e3694623eaf8c243f0000000000000000000000000000803f0000803f0000803f0000803f0000803f50988c3e72bfd33e1841873eea60c13e0000000000000000000000000000803f0000803f0000803f0000803f0000803f50988c3e8424b73e9658893e4ff74bbe0000000000000000000000000000803f0000803f0000803f0000803f0000803f50988c3e512c9b3e7b940a3f426502be0000000000000000000000000000803f0000803f0000803f0000803f0000803f50988c3ec19b6c3e2b8d083f8e88a1bf0000000000000000000000000000803f0000803f0000803f0000803f0000803f50988c3e921a473e9e66863ee63507c00000000000000000000000000000803f0000803f0000803f0000803f0000803f1221803efd51273e90d5573d32b7dcbf0000000000000000000000000000803f0000803f0000803f0000803f0000803f95fd613efd51273e50076dbd562c00c00000000000000000000000000000803f0000803f0000803f0000803f0000803f769e483efd51273ea291ffbd980615c00000000000000000000000000000803f0000803f0000803f0000803f0000803f8b772d3efd51273e7f7babbececdf5bf0000000000000000000000000000803f0000803f0000803f0000803f0000803f6aff1c3e175e4f3e0a5cdebee685eabf0000000000000000000000000000803f0000803f0000803f0000803f0000803f6aff1c3ec5227d3eb6ca05bfa66ec8bf0000000000000000000000000000803f0000803f0000803f0000803f0000803f6aff1c3ef3da9a3e7c875bbfc6cb52bf0000000000000000000000000000803f0000803f0000803f0000803f0000803f6aff1c3e2c4aad3e39425abfc93010400000000000000000000000000000803f0000803f0000803f0000803f0000803f6aff1c3e9c20c53e12f5e6be7c610d400000000000000000000000000000803f0000803f0000803f0000803f0000803f6aff1c3e8ab3d43e285270be259e243f0000000000000000000000000000803f0000803f0000803f0000803f0000803faf08353e903ae53efcdd56bd59ce3c3f0000000000000000000000000000803f0000803f0000803f0000803f0000803fb44b4f3e903ae53e8cf4903d11433c3f0000000000000000000000000000803f0000803f0000803f0000803f0000803fe038683e903ae53e9409c43def653a3f0000000000000000000000000000803f0000803f0000803f0000803f0000803fd821823e903ae53e
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: -0.158104, y: -0.014713764, z: 0}
+    m_Extent: {x: 0.6994321, y: 2.3138137, z: 0.5}
+  m_MeshUsageFlags: 0
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  m_MeshOptimized: 0
 --- !u!1 &402184887
 GameObject:
   m_ObjectHideFlags: 0
@@ -27452,6 +27615,10 @@ Prefab:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
   m_IsPrefabParent: 0
@@ -28914,6 +29081,10 @@ Prefab:
         type: 2}
       propertyPath: m_SortingOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
@@ -31366,6 +31537,10 @@ Prefab:
         type: 2}
       propertyPath: m_SortingOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
@@ -40369,6 +40544,10 @@ Prefab:
       propertyPath: m_SortingLayerID
       value: -477427129
       objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
   m_IsPrefabParent: 0
@@ -40872,6 +41051,10 @@ Prefab:
         type: 2}
       propertyPath: m_SortingLayerID
       value: -477427129
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
@@ -43737,6 +43920,10 @@ Prefab:
       propertyPath: m_SortingLayerID
       value: -477427129
       objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
   m_IsPrefabParent: 0
@@ -45595,6 +45782,10 @@ Prefab:
         type: 2}
       propertyPath: m_SortingLayerID
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
@@ -47851,6 +48042,10 @@ Prefab:
         type: 2}
       propertyPath: m_SortingLayerID
       value: -477427129
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
@@ -57632,6 +57827,10 @@ Prefab:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
   m_IsPrefabParent: 0
@@ -58388,6 +58587,10 @@ Prefab:
         type: 2}
       propertyPath: m_SortingOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
@@ -61552,6 +61755,10 @@ Prefab:
       propertyPath: m_SortingLayerID
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
   m_IsPrefabParent: 0
@@ -63094,6 +63301,10 @@ Prefab:
         type: 2}
       propertyPath: m_SortingOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
@@ -66414,6 +66625,10 @@ Prefab:
       propertyPath: m_LocalScale.x
       value: 28.154146
       objectReference: {fileID: 0}
+    - target: {fileID: 1663590096580092, guid: 112025fecd8caf84fa2ff4db6a78f95c, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 212400473003910566, guid: 112025fecd8caf84fa2ff4db6a78f95c, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 112025fecd8caf84fa2ff4db6a78f95c, type: 2}
@@ -66440,7 +66655,7 @@ MonoBehaviour:
     boundsEditorMode: 1
     pivot: {x: 0, y: 0}
     oriant: 0
-    mainToolBar: 0
+    mainToolBar: 1
     selectedPoints: []
     serelizableSelectedPoints: 
     inversGizmos: 0
@@ -66684,7 +66899,7 @@ MonoBehaviour:
   _bounds:
     m_Center: {x: -0.158104, y: -0.014713764, z: 0}
     m_Extent: {x: 0.6994321, y: 2.3138137, z: 0.5}
-  mesh: {fileID: 2006867370}
+  mesh: {fileID: 402104575}
   _triangulateWithOffsetPosition: 0
   mesh_uvs:
   - {x: 0.15331808, y: 0.44771242}
@@ -66872,7 +67087,21 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 1320643004}
-  m_Mesh: {fileID: 2006867370}
+  m_Mesh: {fileID: 402104575}
+--- !u!61 &1320643008
+BoxCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1320643004}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: -0.0012256552, y: -1.9815894}
+  serializedVersion: 2
+  m_Size: {x: 2.5653884, y: 0.69387203}
 --- !u!1 &1321048567
 GameObject:
   m_ObjectHideFlags: 0
@@ -71360,6 +71589,10 @@ Prefab:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
   m_IsPrefabParent: 0
@@ -75730,6 +75963,10 @@ Prefab:
         type: 2}
       propertyPath: m_SortingOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
@@ -84595,6 +84832,10 @@ Prefab:
       propertyPath: m_SortingLayerID
       value: -477427129
       objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
   m_IsPrefabParent: 0
@@ -84722,6 +84963,10 @@ Prefab:
         type: 2}
       propertyPath: m_SortingOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
@@ -85510,7 +85755,6 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 1764737683}
-  - component: {fileID: 1764737684}
   m_Layer: 0
   m_Name: Lava
   m_TagString: KillPlane
@@ -85556,20 +85800,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 25
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!61 &1764737684
-BoxCollider2D:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1764737682}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: 4.8732224, y: -1.6825199}
-  serializedVersion: 2
-  m_Size: {x: 20.162079, y: 0.3422103}
 --- !u!1 &1766289173
 GameObject:
   m_ObjectHideFlags: 0
@@ -88495,6 +88725,10 @@ Prefab:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
   m_IsPrefabParent: 0
@@ -90644,6 +90878,10 @@ Prefab:
         type: 2}
       propertyPath: m_SortingOrder
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
@@ -96627,6 +96865,10 @@ Prefab:
       propertyPath: m_SortingOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
   m_IsPrefabParent: 0
@@ -97790,6 +98032,10 @@ Prefab:
       propertyPath: m_SortingLayerID
       value: -477427129
       objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
   m_IsPrefabParent: 0
@@ -98244,134 +98490,6 @@ Prefab:
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 70b39b9223c8a43e29c4c1fe39767712, type: 2}
   m_IsPrefabParent: 0
---- !u!43 &2006867370
-Mesh:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  serializedVersion: 8
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 63
-    topology: 0
-    firstVertex: 0
-    vertexCount: 23
-    localAABB:
-      m_Center: {x: -0.15810397, y: -0.014713883, z: 0}
-      m_Extent: {x: 0.69943213, y: 2.3138137, z: 0}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
-  m_IndexBuffer: 0400160002000500130004000600090005000700090006000800090007000300090008000a000d0009000b000d000a000c000d000b000c0001000d0009000d000e0013000e000f0013000f00100013001000110013001100120013001200000004001500160004001400150009000e00050004001300140005000e001300
-  m_Skin: []
-  m_VertexData:
-    m_CurrentChannels: 15
-    m_VertexCount: 23
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 12
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 24
-      format: 0
-      dimension: 4
-    - stream: 0
-      offset: 40
-      format: 0
-      dimension: 2
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 1104
-    _typelessdata: 4ffb78be732413400000000000000000000000000000803f0000803f0000803f0000803f0000803f6aff1c3e903ae53eafcb85bee73a07c00000000000000000000000000000803f0000803f0000803f0000803f0000803f6aff1c3efd51273e406de93d25f2333f0000000000000000000000000000803f0000803f0000803f0000803f0000803f50988c3e903ae53e60ccda3e38ac06c00000000000000000000000000000803f0000803f0000803f0000803f0000803f50988c3efd51273e3694623eaf8c243f0000000000000000000000000000803f0000803f0000803f0000803f0000803f50988c3e72bfd33e1841873eea60c13e0000000000000000000000000000803f0000803f0000803f0000803f0000803f50988c3e8424b73e9658893e4ff74bbe0000000000000000000000000000803f0000803f0000803f0000803f0000803f50988c3e512c9b3e7b940a3f426502be0000000000000000000000000000803f0000803f0000803f0000803f0000803f50988c3ec19b6c3e2b8d083f8e88a1bf0000000000000000000000000000803f0000803f0000803f0000803f0000803f50988c3e921a473e9e66863ee63507c00000000000000000000000000000803f0000803f0000803f0000803f0000803f1221803efd51273e90d5573d32b7dcbf0000000000000000000000000000803f0000803f0000803f0000803f0000803f95fd613efd51273e50076dbd562c00c00000000000000000000000000000803f0000803f0000803f0000803f0000803f769e483efd51273ea291ffbd980615c00000000000000000000000000000803f0000803f0000803f0000803f0000803f8b772d3efd51273e7f7babbececdf5bf0000000000000000000000000000803f0000803f0000803f0000803f0000803f6aff1c3e175e4f3e0a5cdebee685eabf0000000000000000000000000000803f0000803f0000803f0000803f0000803f6aff1c3ec5227d3eb6ca05bfa66ec8bf0000000000000000000000000000803f0000803f0000803f0000803f0000803f6aff1c3ef3da9a3e7c875bbfc6cb52bf0000000000000000000000000000803f0000803f0000803f0000803f0000803f6aff1c3e2c4aad3e39425abfc93010400000000000000000000000000000803f0000803f0000803f0000803f0000803f6aff1c3e9c20c53e12f5e6be7c610d400000000000000000000000000000803f0000803f0000803f0000803f0000803f6aff1c3e8ab3d43e285270be259e243f0000000000000000000000000000803f0000803f0000803f0000803f0000803faf08353e903ae53efcdd56bd59ce3c3f0000000000000000000000000000803f0000803f0000803f0000803f0000803fb44b4f3e903ae53e8cf4903d11433c3f0000000000000000000000000000803f0000803f0000803f0000803f0000803fe038683e903ae53e9409c43def653a3f0000000000000000000000000000803f0000803f0000803f0000803f0000803fd821823e903ae53e
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: -0.15810397, y: -0.014713883, z: 0}
-    m_Extent: {x: 0.69943213, y: 2.3138137, z: 0}
-  m_MeshUsageFlags: 0
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  m_MeshOptimized: 0
 --- !u!1 &2009392407
 GameObject:
   m_ObjectHideFlags: 0
@@ -101746,6 +101864,10 @@ Prefab:
         type: 2}
       propertyPath: m_SortingLayerID
       value: -477427129
+      objectReference: {fileID: 0}
+    - target: {fileID: 1239596834028750, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
+      propertyPath: m_TagString
+      value: KillPlane
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 6dc36a6aeccf37249998d0121f30130d, type: 2}
