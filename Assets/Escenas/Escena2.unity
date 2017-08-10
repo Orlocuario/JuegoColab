@@ -2109,7 +2109,7 @@ MeshFilter:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
   m_GameObject: {fileID: 43808957}
-  m_Mesh: {fileID: 2115873342}
+  m_Mesh: {fileID: 1529282439}
 --- !u!23 &43808961
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -2167,7 +2167,7 @@ MonoBehaviour:
       normal: {x: 0, y: 0, z: 0}
       name: point
       offsets:
-      - {x: -0.1920215, y: 0.23527694, z: 0}
+      - {x: 0.3378264, y: 0.24434862, z: 0}
       colliderOffset: {x: 0, y: 0}
       id: 1
     - _countOfOfsset: 1
@@ -2177,7 +2177,7 @@ MonoBehaviour:
       normal: {x: 0, y: 0, z: 0}
       name: point
       offsets:
-      - {x: -0.660606, y: 0.35182562, z: 0}
+      - {x: 0.05886237, y: 0.3594394, z: 0}
       colliderOffset: {x: 0, y: 0}
       id: 3
     - _countOfOfsset: 1
@@ -2187,7 +2187,7 @@ MonoBehaviour:
       normal: {x: 0, y: 0, z: 0}
       name: point
       offsets:
-      - {x: -0.6678171, y: 0.34857836, z: 0}
+      - {x: 0.047224123, y: 0.35608485, z: 0}
       colliderOffset: {x: 0, y: 0}
       id: 5
     - _countOfOfsset: 1
@@ -2197,7 +2197,7 @@ MonoBehaviour:
       normal: {x: 0, y: 0, z: 0}
       name: point
       offsets:
-      - {x: -0.46677336, y: 0.3092532, z: 0}
+      - {x: 0.26015097, y: 0.28080705, z: 0}
       colliderOffset: {x: 0, y: 0}
       id: 6
     serelizableSelectedPoints: 00000000020000000400000005000000
@@ -2216,7 +2216,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: -0.1920215, y: 0.23527694, z: 0}
+    - {x: 0.3378264, y: 0.24434862, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 1
   - _countOfOfsset: 1
@@ -2236,7 +2236,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: -0.660606, y: 0.35182562, z: 0}
+    - {x: 0.05886237, y: 0.3594394, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 3
   - _countOfOfsset: 1
@@ -2256,7 +2256,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: -0.6678171, y: 0.34857836, z: 0}
+    - {x: 0.047224123, y: 0.35608485, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 5
   - _countOfOfsset: 1
@@ -2266,7 +2266,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: -0.46677336, y: 0.3092532, z: 0}
+    - {x: 0.26015097, y: 0.28080705, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 6
   - _countOfOfsset: 1
@@ -2276,7 +2276,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: 0.09267492, y: 0.31365615, z: 0}
+    - {x: 0.629381, y: 0.27619356, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 7
   - _countOfOfsset: 1
@@ -2286,7 +2286,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: -0.06567987, y: 0.20859744, z: 0}
+    - {x: 0.6786694, y: 0.23338354, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 8
   - _countOfOfsset: 1
@@ -2306,7 +2306,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: 0.14001355, y: 0.17355649, z: 0}
+    - {x: 0.63764733, y: 0.15024845, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 10
   - _countOfOfsset: 1
@@ -2326,7 +2326,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: 0.09419104, y: 0.19938998, z: 0}
+    - {x: 0.7185727, y: 0.19596307, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 12
   - _countOfOfsset: 1
@@ -2366,7 +2366,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: -0.1915487, y: 0.30001718, z: 0}
+    - {x: 0.54203784, y: 0.30990693, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 16
   - _countOfOfsset: 1
@@ -2376,7 +2376,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: -0.072966516, y: 0.2572627, z: 0}
+    - {x: 0.66885704, y: 0.26715246, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 17
   - _countOfOfsset: 1
@@ -2386,7 +2386,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: -0.04848951, y: 0.26930296, z: 0}
+    - {x: 0.69333404, y: 0.27919275, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 18
   - _countOfOfsset: 1
@@ -2396,7 +2396,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: 0.105861485, y: 0.23925322, z: 0}
+    - {x: 0.8476848, y: 0.24799462, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 19
   - _countOfOfsset: 1
@@ -2406,7 +2406,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: 0.15218982, y: 0.19272105, z: 0}
+    - {x: 0.70665354, y: 0.14451265, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 20
   - _countOfOfsset: 1
@@ -2416,13 +2416,13 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: -0.13378175, y: 0.17691462, z: 0}
+    - {x: 0.60804176, y: 0.18680444, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 21
   _bounds:
     m_Center: {x: -0.15087056, y: 0.9531944, z: 0}
     m_Extent: {x: 1.6691842, y: 3.3131943, z: 0.5}
-  mesh: {fileID: 2115873342}
+  mesh: {fileID: 1529282439}
   _triangulateWithOffsetPosition: 0
   mesh_uvs:
   - {x: 0.33402377, y: 0.7609871}
@@ -2447,27 +2447,27 @@ MonoBehaviour:
   - {x: 0.3212853, y: 0.33464321}
   - {x: 0.43444377, y: 0.3324456}
   mesh_vertecs:
-  - {x: -0.7120135, y: 3.244479, z: 0}
+  - {x: 0.07745993, y: 3.2872975, z: 0}
   - {x: -0.31321365, y: -1.8999157, z: 0}
-  - {x: -0.6115846, y: 3.6350396, z: 0}
+  - {x: 0.46042335, y: 3.6709764, z: 0}
   - {x: 1.5183133, y: -1.9156184, z: 0}
-  - {x: -0.649794, y: 4.00529, z: 0}
-  - {x: -0.988436, y: 3.8196752, z: 0}
-  - {x: -0.30111155, y: 3.0560067, z: 0}
-  - {x: -0.550356, y: 2.0548894, z: 0}
+  - {x: 0.41561747, y: 4.04072, z: 0}
+  - {x: 0.09468132, y: 3.6854088, z: 0}
+  - {x: 0.49858057, y: 2.8791826, z: 0}
+  - {x: 0.5587244, y: 2.17188, z: 0}
   - {x: -0.047298193, y: -1.421268, z: 0}
-  - {x: -0.25716853, y: -0.118165255, z: 0}
+  - {x: 0.48430586, y: -0.22817922, z: 0}
   - {x: 0.99156237, y: -0.9927623, z: 0}
-  - {x: 0.5396545, y: -0.1424849, z: 0}
+  - {x: 1.469983, y: -0.15865993, z: 0}
   - {x: 0.47123706, y: -1.8999157, z: 0}
   - {x: 1.2382289, y: -1.9156184, z: 0}
   - {x: 0.07236385, y: -1.8999157, z: 0}
-  - {x: 0.1006065, y: 3.0847008, z: 0}
-  - {x: 0.33047712, y: 2.3909557, z: 0}
-  - {x: 0.3137647, y: 1.4638984, z: 0}
-  - {x: -0.33464664, y: 1.4151347, z: 0}
-  - {x: -0.30550477, y: 0.46423483, z: 0}
-  - {x: 0.2132709, y: 0.37633276, z: 0}
+  - {x: 1.1936504, y: 3.1313803, z: 0}
+  - {x: 1.4357942, y: 2.4376352, z: 0}
+  - {x: 1.4190818, y: 1.5105782, z: 0}
+  - {x: 0.77067006, y: 1.456394, z: 0}
+  - {x: 0.5206462, y: 0.236691, z: 0}
+  - {x: 1.3185879, y: 0.4230125, z: 0}
   mesh_triangles: 0d0000000a000000030000000d0000000c0000000a0000000e000000080000000c0000000e000000010000000800000010000000110000000f0000000900000013000000120000000b00000011000000140000000a0000000c0000000b0000000c000000080000000b00000009000000120000001100000005000000070000000600000005000000060000000000000002000000050000000400000011000000020000000f0000000b00000008000000090000000500000012000000070000001100000012000000050000000b0000000900000011000000110000000500000002000000
   mesh_normals:
   - {x: 0, y: 0, z: 1}
@@ -2571,7 +2571,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: -0.1920215, y: 0.23527694, z: 0}
+    - {x: 0.3378264, y: 0.24434862, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 1
   - _countOfOfsset: 1
@@ -2591,7 +2591,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: -0.660606, y: 0.35182562, z: 0}
+    - {x: 0.05886237, y: 0.3594394, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 3
   - _countOfOfsset: 1
@@ -2611,7 +2611,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: -0.6678171, y: 0.34857836, z: 0}
+    - {x: 0.047224123, y: 0.35608485, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 5
   - _countOfOfsset: 1
@@ -2621,7 +2621,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: -0.46677336, y: 0.3092532, z: 0}
+    - {x: 0.26015097, y: 0.28080705, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 6
   - _countOfOfsset: 1
@@ -2631,7 +2631,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: 0.09267492, y: 0.31365615, z: 0}
+    - {x: 0.629381, y: 0.27619356, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 7
   - _countOfOfsset: 1
@@ -2641,7 +2641,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: -0.06567987, y: 0.20859744, z: 0}
+    - {x: 0.6786694, y: 0.23338354, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 8
   - _countOfOfsset: 1
@@ -2661,7 +2661,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: 0.14001355, y: 0.17355649, z: 0}
+    - {x: 0.63764733, y: 0.15024845, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 10
   - _countOfOfsset: 1
@@ -2681,7 +2681,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: 0.09419104, y: 0.19938998, z: 0}
+    - {x: 0.7185727, y: 0.19596307, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 12
   - _countOfOfsset: 1
@@ -2721,7 +2721,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: -0.1915487, y: 0.30001718, z: 0}
+    - {x: 0.54203784, y: 0.30990693, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 16
   - _countOfOfsset: 1
@@ -2731,7 +2731,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: -0.072966516, y: 0.2572627, z: 0}
+    - {x: 0.66885704, y: 0.26715246, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 17
   - _countOfOfsset: 1
@@ -2741,7 +2741,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: -0.04848951, y: 0.26930296, z: 0}
+    - {x: 0.69333404, y: 0.27919275, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 18
   - _countOfOfsset: 1
@@ -2751,7 +2751,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: 0.105861485, y: 0.23925322, z: 0}
+    - {x: 0.8476848, y: 0.24799462, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 19
   - _countOfOfsset: 1
@@ -2761,7 +2761,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: 0.15218982, y: 0.19272105, z: 0}
+    - {x: 0.70665354, y: 0.14451265, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 20
   - _countOfOfsset: 1
@@ -2771,7 +2771,7 @@ MonoBehaviour:
     normal: {x: 0, y: 0, z: 0}
     name: point
     offsets:
-    - {x: -0.13378175, y: 0.17691462, z: 0}
+    - {x: 0.60804176, y: 0.18680444, z: 0}
     colliderOffset: {x: 0, y: 0}
     id: 21
   - _countOfOfsset: 0
@@ -20863,11 +20863,11 @@ Prefab:
     m_Modifications:
     - target: {fileID: 4609187180626130, guid: 8eaea97fb58378f4abf6cca2e20773c1, type: 2}
       propertyPath: m_LocalPosition.x
-      value: 58.4
+      value: 37.36
       objectReference: {fileID: 0}
     - target: {fileID: 4609187180626130, guid: 8eaea97fb58378f4abf6cca2e20773c1, type: 2}
       propertyPath: m_LocalPosition.y
-      value: -2.3
+      value: -5.56
       objectReference: {fileID: 0}
     - target: {fileID: 4609187180626130, guid: 8eaea97fb58378f4abf6cca2e20773c1, type: 2}
       propertyPath: m_LocalPosition.z
@@ -75449,6 +75449,134 @@ Transform:
   m_PrefabParentObject: {fileID: 4518741016968824, guid: e385baa4a89c41d4e83289ae8c80a4b8,
     type: 2}
   m_PrefabInternal: {fileID: 1528324647}
+--- !u!43 &1529282439
+Mesh:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: 
+  serializedVersion: 8
+  m_SubMeshes:
+  - serializedVersion: 2
+    firstByte: 0
+    indexCount: 57
+    topology: 0
+    firstVertex: 0
+    vertexCount: 21
+    localAABB:
+      m_Center: {x: 0.26493865, y: 1.0448358, z: 0}
+      m_Extent: {x: 1.2533746, y: 2.9604542, z: 0}
+  m_Shapes:
+    vertices: []
+    shapes: []
+    channels: []
+    fullWeights: []
+  m_BindPose: []
+  m_BoneNameHashes: 
+  m_RootBoneNameHash: 0
+  m_MeshCompression: 0
+  m_IsReadable: 1
+  m_KeepVertices: 1
+  m_KeepIndices: 1
+  m_IndexBuffer: 0d000a0003000d000c000a000e0008000c000e0001000800100011000f000900130012000b00110014000a000c000b000c0008000b00090012001100050007000600050006000000020005000400110002000f000b00080009000500120007001100120005000b0009001100110005000200
+  m_Skin: []
+  m_VertexData:
+    m_CurrentChannels: 15
+    m_VertexCount: 21
+    m_Channels:
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 12
+      format: 0
+      dimension: 3
+    - stream: 0
+      offset: 24
+      format: 0
+      dimension: 4
+    - stream: 0
+      offset: 40
+      format: 0
+      dimension: 2
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    - stream: 0
+      offset: 0
+      format: 0
+      dimension: 0
+    m_DataSize: 1008
+    _typelessdata: 50a39e3d156352400000000000000000000000000000803f0000803f0000803f0000803f0000803f2a05ab3e0dd0423f8a5da0be7030f3bf0000000000000000000000000000803f0000803f0000803f0000803f0000803f3274973e09f2943c9cbceb3e47f16a400000000000000000000000000000803f0000803f0000803f0000803f0000803f4cfddb3ec00f3c3f1758c23ffc32f5bf0000000000000000000000000000803f0000803f0000803f0000803f0000803f18d1f23e09f2943cd0cbd43e944d81400000000000000000000000000000803f0000803f0000803f0000803f0000803f2c4eda3e7a604c3f48e8c13dbddd6b400000000000000000000000000000803f0000803f0000803f0000803f0000803f3c2cb33e7a604c3ff445ff3e874438400000000000000000000000000000803f0000803f0000803f0000803f0000803f7534aa3eff2e2b3f90080f3f15000b400000000000000000000000000000803f0000803f0000803f0000803f0000803fc063a93e0bce153fc0bb41bd1cecb5bf0000000000000000000000000000803f0000803f0000803f0000803f0000803f56c2a73eba43c73df0f6f73ed0a769be0000000000000000000000000000803f0000803f0000803f0000803f0000803f0b93a83e81b4813e08d77d3fac257ebf0000000000000000000000000000803f0000803f0000803f0000803f0000803fd510e03e7ba3073e6728bc3fc07722be0000000000000000000000000000803f0000803f0000803f0000803f0000803fb69edd3ee5a76a3efc45f13e7030f3bf0000000000000000000000000000803f0000803f0000803f0000803f0000803fe98dc73e09f2943c497e9e3ffc32f5bf0000000000000000000000000000803f0000803f0000803f0000803f0000803f8aa4e13e09f2943c8033943d7030f3bf0000000000000000000000000000803f0000803f0000803f0000803f0000803fb318af3e09f2943c89c9983f896848400000000000000000000000000000803f0000803f0000803f0000803f0000803f00cedc3e2c1f2f3f1bc8b73f37021c400000000000000000000000000000803f0000803f0000803f0000803f0000803fd510e03e3d4e1a3f79a4b53fa05ac13f0000000000000000000000000000803f0000803f0000803f0000803f0000803f00cedc3ec558e13ea24a453f1e6bba3f0000000000000000000000000000803f0000803f0000803f0000803f0000803fa1f1a63e2139e93e1249053f205f723e0000000000000000000000000000803f0000803f0000803f0000803f0000803f827fa43e5b56ab3e7dc7a83f1895d83e0000000000000000000000000000803f0000803f0000803f0000803f0000803f6a6fde3e4f36aa3e
+  m_CompressedMesh:
+    m_Vertices:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UV:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Normals:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Tangents:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Weights:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_NormalSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_TangentSigns:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_FloatColors:
+      m_NumItems: 0
+      m_Range: 0
+      m_Start: 0
+      m_Data: 
+      m_BitSize: 0
+    m_BoneIndices:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_Triangles:
+      m_NumItems: 0
+      m_Data: 
+      m_BitSize: 0
+    m_UVInfo: 0
+  m_LocalAABB:
+    m_Center: {x: -0.15087056, y: 0.9531944, z: 0}
+    m_Extent: {x: 1.6691842, y: 3.3131943, z: 0.5}
+  m_MeshUsageFlags: 0
+  m_BakedConvexCollisionMesh: 
+  m_BakedTriangleCollisionMesh: 
+  m_MeshOptimized: 0
 --- !u!1 &1530577469
 GameObject:
   m_ObjectHideFlags: 0
@@ -103736,134 +103864,6 @@ Transform:
   m_Father: {fileID: 602979113}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!43 &2115873342
-Mesh:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_Name: 
-  serializedVersion: 8
-  m_SubMeshes:
-  - serializedVersion: 2
-    firstByte: 0
-    indexCount: 57
-    topology: 0
-    firstVertex: 0
-    vertexCount: 21
-    localAABB:
-      m_Center: {x: 0.26493865, y: 1.0448358, z: 0}
-      m_Extent: {x: 1.2533746, y: 2.9604542, z: 0}
-  m_Shapes:
-    vertices: []
-    shapes: []
-    channels: []
-    fullWeights: []
-  m_BindPose: []
-  m_BoneNameHashes: 
-  m_RootBoneNameHash: 0
-  m_MeshCompression: 0
-  m_IsReadable: 1
-  m_KeepVertices: 1
-  m_KeepIndices: 1
-  m_IndexBuffer: 0d000a0003000d000c000a000e0008000c000e0001000800100011000f000900130012000b00110014000a000c000b000c0008000b00090012001100050007000600050006000000020005000400110002000f000b00080009000500120007001100120005000b0009001100110005000200
-  m_Skin: []
-  m_VertexData:
-    m_CurrentChannels: 15
-    m_VertexCount: 21
-    m_Channels:
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 12
-      format: 0
-      dimension: 3
-    - stream: 0
-      offset: 24
-      format: 0
-      dimension: 4
-    - stream: 0
-      offset: 40
-      format: 0
-      dimension: 2
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    - stream: 0
-      offset: 0
-      format: 0
-      dimension: 0
-    m_DataSize: 1008
-    _typelessdata: 844636bf8ba54f400000000000000000000000000000803f0000803f0000803f0000803f0000803f2a05ab3e0dd0423f8a5da0be7030f3bf0000000000000000000000000000803f0000803f0000803f0000803f0000803f3274973e09f2943ccf901cbf7da468400000000000000000000000000000803f0000803f0000803f0000803f0000803f4cfddb3ec00f3c3f1758c23ffc32f5bf0000000000000000000000000000803f0000803f0000803f0000803f0000803f18d1f23e09f2943ce65826bf562b80400000000000000000000000000000803f0000803f0000803f0000803f0000803f2c4eda3e7a604c3f240a7dbf8f7574400000000000000000000000000000803f0000803f0000803f0000803f0000803f3c2cb33e7a604c3f4b2b9abe9d9543400000000000000000000000000000803f0000803f0000803f0000803f0000803f7534aa3eff2e2b3f21e40cbf4f8303400000000000000000000000000000803f0000803f0000803f0000803f0000803fc063a93e0bce153fc0bb41bd1cecb5bf0000000000000000000000000000803f0000803f0000803f0000803f0000803f56c2a73eba43c73d98ab83bea000f2bd0000000000000000000000000000803f0000803f0000803f0000803f0000803f0b93a83e81b4813e08d77d3fac257ebf0000000000000000000000000000803f0000803f0000803f0000803f0000803fd510e03e7ba3073ecc260a3f90e711be0000000000000000000000000000803f0000803f0000803f0000803f0000803fb69edd3ee5a76a3efc45f13e7030f3bf0000000000000000000000000000803f0000803f0000803f0000803f0000803fe98dc73e09f2943c497e9e3ffc32f5bf0000000000000000000000000000803f0000803f0000803f0000803f0000803f8aa4e13e09f2943c8033943d7030f3bf0000000000000000000000000000803f0000803f0000803f0000803f0000803fb318af3e09f2943cc80ace3dbd6b45400000000000000000000000000000803f0000803f0000803f0000803f0000803f00cedc3e2c1f2f3f4c34a93e6b0519400000000000000000000000000000803f0000803f0000803f0000803f0000803fd510e03e3d4e1a3fc4a5a03e0661bb3f0000000000000000000000000000803f0000803f0000803f0000803f0000803f00cedc3ec558e13ece56abbe2223b53f0000000000000000000000000000803f0000803f0000803f0000803f0000803fa1f1a63e2139e93e1f6b9cbe30b0ed3e0000000000000000000000000000803f0000803f0000803f0000803f0000803f827fa43e5b56ab3eb0635a3eb0aec03e0000000000000000000000000000803f0000803f0000803f0000803f0000803f6a6fde3e4f36aa3e
-  m_CompressedMesh:
-    m_Vertices:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UV:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Normals:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Tangents:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Weights:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_NormalSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_TangentSigns:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_FloatColors:
-      m_NumItems: 0
-      m_Range: 0
-      m_Start: 0
-      m_Data: 
-      m_BitSize: 0
-    m_BoneIndices:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_Triangles:
-      m_NumItems: 0
-      m_Data: 
-      m_BitSize: 0
-    m_UVInfo: 0
-  m_LocalAABB:
-    m_Center: {x: -0.15087056, y: 0.9531944, z: 0}
-    m_Extent: {x: 1.6691842, y: 3.3131943, z: 0.5}
-  m_MeshUsageFlags: 0
-  m_BakedConvexCollisionMesh: 
-  m_BakedTriangleCollisionMesh: 
-  m_MeshOptimized: 0
 --- !u!1001 &2116227096
 Prefab:
   m_ObjectHideFlags: 0
