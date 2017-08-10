@@ -1,22 +1,22 @@
 fileFormatVersion: 2
 guid: 6b6ab95ebd2404c46ad0d9d93548239f
-timeCreated: 1502161344
+timeCreated: 1502392626
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
-    21300000: SpiderBossX3_0
-    21300002: SpiderBossX3_1
-    21300004: SpiderBossX3_2
-    21300006: SpiderBossX3_3
-    21300008: SpiderBossX3_4
-    21300010: SpiderBossX3_5
-    21300012: SpiderBossX3_6
-    21300014: SpiderBossX3_7
-    21300016: SpiderBossX3_8
-    21300018: SpiderBossX3_9
-    21300020: SpiderBossX3_10
-    21300022: SpiderBossX3_11
-    21300024: SpiderBossX3_12
+    21300000: SpiderBossIdle1
+    21300002: SpiderBossIdle2
+    21300004: SpiderBossIdle3
+    21300006: SpiderBossIdle4
+    21300008: SpiderBossIdle5
+    21300010: SpiderBossvigilia
+    21300012: SpiderBossHit2
+    21300014: SpiderBossmove1
+    21300016: SpiderBossMove2
+    21300018: SpiderBossMove3
+    21300020: SpiderBossMove4
+    21300022: SpiderBossMove5
+    21300024: SpiderBossMove6
     21300026: SpiderBossX3_13
     21300028: SpiderBossX3_14
     21300030: SpiderBossX3_15
@@ -26,13 +26,13 @@ TextureImporter:
     21300038: SpiderBossX3_19
     21300040: SpiderBossX3_20
     21300042: SpiderBossX3_21
-    21300044: SpiderBossX3_22
+    21300044: SpiderBossHit1
     21300046: SpiderBossX3_23
-    21300048: SpiderBossX3_24
-    21300050: SpiderBossX3_25
-    21300052: SpiderBossX3_26
-    21300054: SpiderBossX3_27
-    21300056: SpiderBossX3_28
+    21300048: SpiderBossHit3
+    21300050: SpiderBossHit4
+    21300052: SpiderBossHit5
+    21300054: SpiderBossHit6
+    21300056: SpiderBossHit7
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -107,11 +107,11 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: SpiderBossX3_0
+      name: SpiderBossIdle1
       rect:
         serializedVersion: 2
         x: 0
-        y: 2063
+        y: 2067
         width: 441
         height: 390
       alignment: 0
@@ -120,7 +120,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossX3_1
+      name: SpiderBossIdle2
       rect:
         serializedVersion: 2
         x: 504
@@ -133,7 +133,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossX3_2
+      name: SpiderBossIdle3
       rect:
         serializedVersion: 2
         x: 1006
@@ -146,7 +146,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossX3_3
+      name: SpiderBossIdle4
       rect:
         serializedVersion: 2
         x: 1510
@@ -159,7 +159,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossX3_4
+      name: SpiderBossIdle5
       rect:
         serializedVersion: 2
         x: 2029
@@ -167,12 +167,12 @@ TextureImporter:
         width: 439
         height: 390
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossX3_5
+      name: SpiderBossvigilia
       rect:
         serializedVersion: 2
         x: 2860
@@ -180,12 +180,12 @@ TextureImporter:
         width: 439
         height: 390
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossX3_6
+      name: SpiderBossHit2
       rect:
         serializedVersion: 2
         x: 3339
@@ -193,12 +193,12 @@ TextureImporter:
         width: 438
         height: 390
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossX3_7
+      name: SpiderBossmove1
       rect:
         serializedVersion: 2
         x: 895
@@ -211,7 +211,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossX3_8
+      name: SpiderBossMove2
       rect:
         serializedVersion: 2
         x: 1384
@@ -224,7 +224,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossX3_9
+      name: SpiderBossMove3
       rect:
         serializedVersion: 2
         x: 1864
@@ -237,7 +237,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossX3_10
+      name: SpiderBossMove4
       rect:
         serializedVersion: 2
         x: 2356
@@ -245,12 +245,12 @@ TextureImporter:
         width: 439
         height: 452
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossX3_11
+      name: SpiderBossMove5
       rect:
         serializedVersion: 2
         x: 2848
@@ -258,12 +258,12 @@ TextureImporter:
         width: 439
         height: 452
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossX3_12
+      name: SpiderBossMove6
       rect:
         serializedVersion: 2
         x: 3339
@@ -271,7 +271,7 @@ TextureImporter:
         width: 438
         height: 452
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -284,7 +284,7 @@ TextureImporter:
         width: 15
         height: 109
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -297,7 +297,7 @@ TextureImporter:
         width: 37
         height: 118
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -310,7 +310,7 @@ TextureImporter:
         width: 39
         height: 120
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -362,7 +362,7 @@ TextureImporter:
         width: 439
         height: 391
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -375,7 +375,7 @@ TextureImporter:
         width: 439
         height: 391
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
@@ -388,12 +388,12 @@ TextureImporter:
         width: 438
         height: 391
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossX3_22
+      name: SpiderBossHit1
       rect:
         serializedVersion: 2
         x: 1814
@@ -419,7 +419,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossX3_24
+      name: SpiderBossHit3
       rect:
         serializedVersion: 2
         x: 2836
@@ -432,7 +432,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossX3_25
+      name: SpiderBossHit4
       rect:
         serializedVersion: 2
         x: 3339
@@ -440,12 +440,12 @@ TextureImporter:
         width: 438
         height: 380
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossX3_26
+      name: SpiderBossHit5
       rect:
         serializedVersion: 2
         x: 2242
@@ -458,7 +458,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossX3_27
+      name: SpiderBossHit6
       rect:
         serializedVersion: 2
         x: 2836
@@ -471,7 +471,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: SpiderBossX3_28
+      name: SpiderBossHit7
       rect:
         serializedVersion: 2
         x: 3339
