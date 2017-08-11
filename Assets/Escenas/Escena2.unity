@@ -94630,6 +94630,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1585699144}
   - component: {fileID: 1585699145}
+  - component: {fileID: 1585699146}
   m_Layer: 9
   m_Name: tileset_24 (28)
   m_TagString: Untagged
@@ -94687,6 +94688,22 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!68 &1585699146
+EdgeCollider2D:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1585699143}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  m_Points:
+  - {x: -2.5325832, y: -2.9501247}
+  - {x: -2.3980007, y: -2.528694}
+  - {x: -2.1183681, y: -1.7008376}
 --- !u!4 &1590621712 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4823448081449148, guid: d2c6b7b9e4e0a324f8c80c588da8f4ab,
