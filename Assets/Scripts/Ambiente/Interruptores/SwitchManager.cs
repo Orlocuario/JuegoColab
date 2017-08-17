@@ -5,9 +5,24 @@ using UnityEngine;
 public class SwitchManager : MonoBehaviour {
 
     List<GroupOfSwitchs> listOfGroups;
+    public Sprite On11;
+    public Sprite Off11;
+    public Sprite On12;
+    public Sprite Off12;
+    public Sprite On21;
+    public Sprite Off21;
+    public Sprite On22;
+    public Sprite Off22;
+    public Sprite On31;
+    public Sprite Off31;
+    public Sprite On32;
+    public Sprite Off32;
+    public Sprite On01;
+    public Sprite Off01;
+    public Sprite On02;
+    public Sprite Off02;    
 
-	// Use this for initialization
-	void Awake () {
+    void Awake () {
         listOfGroups = new List<GroupOfSwitchs>();
 	}
 

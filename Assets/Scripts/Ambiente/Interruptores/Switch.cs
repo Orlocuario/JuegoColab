@@ -76,6 +76,22 @@ public class Switch : MonoBehaviour
 
     }
 
+    private bool CheckIfObjectMatchWithColor(string name)
+    {
+        if (switchColor == Color.Any)
+        {
+            if(name == "BolaM1"){
+                return true;
+            }
+        }
+        switch (name)
+        {
+            case "BolaM1":
+                return switchColor == Color.Blue;
+            default:
+                return false;
+        }
+    }
 
     private bool CheckIfTagMatchWithColor(string tag)
     {
@@ -98,7 +114,21 @@ public class Switch : MonoBehaviour
 
     private bool CheckIfColliderIsAttack(Collision2D collision)
     {
-        throw new NotImplementedException();
+        GameObject colliderGameObject = collision.collider.gameObject;
+        string objectName = colliderGameObject.name;
+        if (CheckIfObjectMatchWithColor(objectName))
+        {
+            switch (objectName)
+            {
+                case "BolaM1":
+                    if(Client.instance.GetLocalPlayer.tag == "Player1")
+                    {
+                        return true;
+                    }
+                    break;
+            }
+        }
+        return false;
     }
 
     private void Activate()
@@ -169,7 +199,94 @@ public class Switch : MonoBehaviour
 
     private void SetSprite()
     {
-        throw new NotImplementedException();
+        SpriteRenderer rendererx = this.gameObject.GetComponent<SpriteRenderer>();
+        if (on)
+        {
+           if(activation == TypeOfActivation.Disparando)
+            {
+                switch (switchColor)
+                {
+                    case Color.Blue:
+                        rendererx.sprite = manager.On11;
+                        break;
+                    case Color.Red:
+                        rendererx.sprite = manager.On21;
+                        break;
+                    case Color.Yellow:
+                        rendererx.sprite = manager.On31;
+                        break;
+                    case Color.Any:
+                        rendererx.sprite = manager.On01;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                switch (switchColor)
+                {
+                    case Color.Blue:
+                        rendererx.sprite = manager.On12;
+                        break;
+                    case Color.Red:
+                        rendererx.sprite = manager.On22;
+                        break;
+                    case Color.Yellow:
+                        rendererx.sprite = manager.On32;
+                        break;
+                    case Color.Any:
+                        rendererx.sprite = manager.On02;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+        else
+        {
+            if (activation == TypeOfActivation.Disparando)
+            {
+                switch (switchColor)
+                {
+                    case Color.Blue:
+                        rendererx.sprite = manager.Off11;
+                        break;
+                    case Color.Red:
+                        rendererx.sprite = manager.Off21;
+                        break;
+                    case Color.Yellow:
+                        rendererx.sprite = manager.Off31;
+                        break;
+                    case Color.Any:
+                        rendererx.sprite = manager.Off01;
+                        break;
+                    default:
+                        break;
+                }
+            }
+            else
+            {
+                switch (switchColor)
+                {
+                    case Color.Blue:
+                        rendererx.sprite = manager.Off12;
+                        break;
+                    case Color.Red:
+                        rendererx.sprite = manager.Off22;
+                        break;
+                    case Color.Yellow:
+                        rendererx.sprite = manager.Off32;
+                        break;
+                    case Color.Any:
+                        rendererx.sprite = manager.Off02;
+                        break;
+                    default:
+                        break;
+                }
+            }
+        }
+
     }
 
     public void ReceiveDataFromServer(bool onData)
