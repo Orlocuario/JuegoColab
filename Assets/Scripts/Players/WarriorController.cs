@@ -15,8 +15,8 @@ public class WarriorController : PlayerController {
 	protected override void Start()
 	{
 		base.Start();
-        particulas = (GameObject)Instantiate(Resources.Load("Prefabs/Particulas/ParticulasWarrior"));
-		particulas.SetActive(true);
+		particulas = GameObject.Find ("ParticulasWarrior");
+		particulas.SetActive(false);
 	}
 
     protected override bool IsAttacking()
@@ -106,12 +106,13 @@ public class WarriorController : PlayerController {
 		particulas.SetActive (activo);
 	}
     
-	public void RemoteSetter(bool power)
+	public override void RemoteSetter(bool power)
 	{
 		SetAnimacion (power);
 		remotePower = power;
 
 	}
+
     private void CastOnePunchMan(string[] enemies, Vector3 position)
     {
         

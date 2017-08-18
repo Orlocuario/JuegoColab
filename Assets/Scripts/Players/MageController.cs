@@ -6,13 +6,16 @@ using UnityEngine;
 public class MageController : PlayerController {
 
 	int contador = 0;
-	GameObject particulasMago;
+	GameObject particulas1;
+	GameObject particulas2;
 
 	protected override void Start()
 	{
 		base.Start();
-		particulasMago = (GameObject)Instantiate(Resources.Load("Prefabs/Particulas/ParticulasMago"));
-		particulasMago.SetActive (false);
+		particulas1 = GameObject.Find ("ParticulasMage");
+		particulas1.SetActive(false);
+		particulas2 = GameObject.Find ("ParticulasMage2");
+		particulas2.SetActive(false);
 	}
 
     protected override bool IsAttacking()
@@ -60,7 +63,15 @@ public class MageController : PlayerController {
 
 	private void SetAnimacion(bool activo)
 	{
-		particulasMago.SetActive (activo);
+		particulas1.SetActive (activo);
+		particulas2.SetActive (activo);
+	}
+
+	public override void RemoteSetter(bool power)
+	{
+		SetAnimacion (power);
+		remotePower = power;
+
 	}
 
     private void CastFireball(int direction, float speed)
@@ -83,4 +94,5 @@ public class MageController : PlayerController {
         string y = transform.position.y.ToString();
         Client.instance.SendMessageToServer("CastFireball/" + direction + "/" + speed + "/" + x + "/" + y);
     }
+		
 }

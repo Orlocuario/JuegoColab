@@ -31,7 +31,7 @@ public class PlayerController : MonoBehaviour
     public bool remoteLeft;
     public bool remoteJumping;
     public bool remoteAttacking;
-	  public bool remotePower;
+	public bool remotePower;
     public bool controlOverEnemies;
     public int SortingOrder = 0;
     public int saltarDoble;
@@ -313,5 +313,8 @@ public class PlayerController : MonoBehaviour
 	{
 		string message = "Power/" + characterId + "/" + remotePower;
 		Client.instance.SendMessageToServer(message);
+	}
+
+	public virtual void RemoteSetter (bool power){
 	}
 }
