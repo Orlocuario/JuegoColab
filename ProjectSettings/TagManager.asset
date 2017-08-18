@@ -22,6 +22,7 @@ TagManager:
   - PickUpButton
   - Agua
   - Canvas
+  - SwitchManager
   layers:
   - Default
   - TransparentFX

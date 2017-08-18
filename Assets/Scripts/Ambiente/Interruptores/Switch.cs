@@ -44,6 +44,10 @@ public class Switch : MonoBehaviour
         {
             Activate();
         }
+        else
+        {
+            Desactivate();
+        }
     }
 
     private void CheckDisparando(Collision2D collision)
@@ -121,7 +125,7 @@ public class Switch : MonoBehaviour
             switch (objectName)
             {
                 case "BolaM1":
-                    if(Client.instance.GetLocalPlayer.tag == "Player1")
+                    if(Client.instance.GetLocalPlayer().tag == "Player1")
                     {
                         return true;
                     }
@@ -137,15 +141,32 @@ public class Switch : MonoBehaviour
         {
             return;
         }
-
-        bool newOn =(desactivable && !on) || !desactivable;
-        if(newOn != on)
+        bool newOn;
+        if (activation == TypeOfActivation.Disparando) {
+            newOn = (desactivable && !on) || !desactivable;
+        }
+        else
+        {
+            newOn = true;
+        }
+        if (newOn != on)
         {
             on = newOn;
             SetSprite();
             SendOnDataToServer(on);
             switchGroup.CheckIfReady();      
         }
+    }
+
+    private void Desactivate()
+    {
+        if (jobDone)
+        {
+            return;
+        }
+        on = false;
+        SetSprite();
+        SendOnDataToServer(on);
     }
 
     public void SetJobDone()

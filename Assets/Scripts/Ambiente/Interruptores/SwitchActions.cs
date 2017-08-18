@@ -19,6 +19,12 @@ public class SwitchActions {
     {
         switch(groupId)
         {
+            case 0:
+                //loquehaceel0
+                break;
+            case 1:
+                //asdada
+                break;
             default:
                 break;
         }

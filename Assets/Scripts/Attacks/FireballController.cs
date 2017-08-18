@@ -16,7 +16,7 @@ public class FireballController : MonoBehaviour {
     }
 
     public void SetMovement(int direction, float speed, float x, float y, MageController caster)
-    {
+    { 
         this.caster = caster;
         this.direction = direction;
         this.speed = speed;

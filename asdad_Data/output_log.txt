@@ -1,0 +1,25 @@
+Initialize engine version: 5.5.4f1 (8ffd0efd98b1)
+GfxDevice: creating device client; threaded=1
+Direct3D:
+    Version:  Direct3D 11.0 [level 11.0]
+    Renderer: Intel(R) HD Graphics 4000 (ID=0x166)
+    Vendor:   Intel
+    VRAM:     912 MB
+    Driver:   10.18.10.4358
+Begin MonoManager ReloadAssembly
+Platform assembly: C:\Users\jaime\Documents\GitHub\JuegoColab\asdad_Data\Managed\UnityEngine.dll (this message is harmless)
+Loading C:\Users\jaime\Documents\GitHub\JuegoColab\asdad_Data\Managed\UnityEngine.dll into Unity Child Domain
+Platform assembly: C:\Users\jaime\Documents\GitHub\JuegoColab\asdad_Data\Managed\Assembly-CSharp.dll (this message is harmless)
+Loading C:\Users\jaime\Documents\GitHub\JuegoColab\asdad_Data\Managed\Assembly-CSharp.dll into Unity Child Domain
+Platform assembly: C:\Users\jaime\Documents\GitHub\JuegoColab\asdad_Data\Managed\UnityEngine.UI.dll (this message is harmless)
+Loading C:\Users\jaime\Documents\GitHub\JuegoColab\asdad_Data\Managed\UnityEngine.UI.dll into Unity Child Domain
+Platform assembly: C:\Users\jaime\Documents\GitHub\JuegoColab\asdad_Data\Managed\UnityEngine.Networking.dll (this message is harmless)
+Loading C:\Users\jaime\Documents\GitHub\JuegoColab\asdad_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
+Platform assembly: C:\Users\jaime\Documents\GitHub\JuegoColab\asdad_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
+Loading C:\Users\jaime\Documents\GitHub\JuegoColab\asdad_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
+- Completed reload, in  0.537 seconds
+Platform assembly: C:\Users\jaime\Documents\GitHub\JuegoColab\asdad_Data\Managed\System.Core.dll (this message is harmless)
+Platform assembly: C:\Users\jaime\Documents\GitHub\JuegoColab\asdad_Data\Managed\System.dll (this message is harmless)
+desktop: 1280x720 60Hz; virtual: 1280x720 at 0,0
+<RI> Initializing input.
+<RI> Input initialized.

@@ -22,6 +22,7 @@ GameObject:
   - component: {fileID: 212717431903042324}
   - component: {fileID: 95566057749944130}
   - component: {fileID: 114650161279034298}
+  - component: {fileID: 61052274237556098}
   m_Layer: 11
   m_Name: BolaM1
   m_TagString: Untagged
@@ -42,6 +43,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &61052274237556098
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1621529500680332}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 0.06, y: 0.05}
 --- !u!95 &95566057749944130
 Animator:
   serializedVersion: 3
