@@ -6,19 +6,21 @@ public class ProyectileController : MonoBehaviour {
 
     private int direction;
     private float skillSpeed;
+    bool goingUp;
     float maxDistance;
     float currentDistance;
     EngineerController caster;
-    // Use this for initialization
+
     void Start()
     {
-        maxDistance = 3; //Get From Bag
+        maxDistance = 3;
         currentDistance = 0;
     }
 
     public void SetMovement(int direction, float skillSpeed, float x, float y, EngineerController caster)
     {
         this.caster = caster;
+        this.goingUp = caster.IsGoingUp();
         this.direction = direction;
         this.skillSpeed = skillSpeed;
         transform.position = new Vector2(x, y - 0.02f);
@@ -32,7 +34,14 @@ public class ProyectileController : MonoBehaviour {
     void Update()
     {
         float distance = skillSpeed * direction * Time.deltaTime;
-        transform.position = transform.position + Vector3.right * distance;
+        if (this.goingUp)
+        {
+            transform.position = transform.position + Vector3.up * distance;
+        }
+        else
+        {
+            transform.position = transform.position + Vector3.right * distance;
+        }
         currentDistance += System.Math.Abs(distance);
         if (maxDistance <= currentDistance)
         {

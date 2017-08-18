@@ -22,6 +22,7 @@ TagManager:
   - PickUpButton
   - Agua
   - Canvas
+  - RuneSlot
   layers:
   - Default
   - TransparentFX

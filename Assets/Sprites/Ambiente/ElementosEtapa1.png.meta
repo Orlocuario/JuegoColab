@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 30179213fca29da409a064aeaa7a5e9f
-timeCreated: 1502152650
+timeCreated: 1502484448
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -11,7 +11,7 @@ TextureImporter:
     21300008: ElementosEtapa1_4
     21300010: ElementosEtapa1_5
     21300012: DoorType0
-    21300014: ElementosEtapa1_7
+    21300014: DoorType1
     21300016: ElementosEtapa1_8
     21300018: ElementosEtapa1_9
     21300020: RunaM1
@@ -207,7 +207,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ElementosEtapa1_7
+      name: DoorType1
       rect:
         serializedVersion: 2
         x: 128

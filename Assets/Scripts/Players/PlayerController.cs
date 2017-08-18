@@ -25,13 +25,15 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded;
     public bool leftPressed;
     public bool rightPressed;
+    public bool upPressed;
     public bool jumpPressed;
     public bool localPlayer;
     public bool remoteRight; //Used to synchronize data from the server
     public bool remoteLeft;
+    public bool remoteUp;
     public bool remoteJumping;
     public bool remoteAttacking;
-	  public bool remotePower;
+    public bool remotePower;
     public bool controlOverEnemies;
     public int SortingOrder = 0;
     public int saltarDoble;
@@ -134,6 +136,26 @@ public class PlayerController : MonoBehaviour
         return remoteLeft;
     }
 
+    public bool IsGoingUp()
+    {
+        if (localPlayer)
+        {
+            float axis = CnInputManager.GetAxisRaw("Vertical");
+            if (!remoteUp && axis > 0)
+            {
+                remoteUp = true;
+                SendObjectDataToServer();
+            }
+            else if (remoteUp && axis <= 0)
+            {
+                remoteUp = false;
+                SendObjectDataToServer();
+            }
+            return axis > 0f;
+        }
+        return remoteUp;
+    }
+
     protected bool IsItGrounded()
     {
 
@@ -220,6 +242,7 @@ public class PlayerController : MonoBehaviour
         {
             rb2d.velocity = new Vector3(0f, rb2d.velocity.y, 0f);
         }
+
         isGrounded = IsItGrounded();
         if (IsJumping(isGrounded))
         {
