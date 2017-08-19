@@ -34,9 +34,13 @@ public class ProyectileController : MonoBehaviour {
     void Update()
     {
         float distance = skillSpeed * direction * Time.deltaTime;
-        if (this.goingUp)
+        if (this.goingUp && direction > 0f)
         {
             transform.position = transform.position + Vector3.up * distance;
+        }
+        else if (this.goingUp && direction < 0f)
+        {
+            transform.position = transform.position + Vector3.up * (-distance);
         }
         else
         {
