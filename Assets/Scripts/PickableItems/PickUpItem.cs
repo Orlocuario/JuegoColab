@@ -9,7 +9,12 @@ public class PickUpItem : MonoBehaviour
     {
         if (other.collider.tag == "Player1" || other.collider.tag == "Player2" || other.collider.tag == "Player3")
         {
-            PickUp();
+            PlayerController localPlayer = Client.instance.GetLocalPlayer();
+            if (localPlayer.gameObject.tag == other.collider.tag)
+            {
+                PickUp();
+            }
+
         }
     }
 

@@ -18,7 +18,7 @@ public class Inventory : MonoBehaviour
     public void Start()
     {
         new Items();
-        //instance setteada desde el bag buttons
+        //instance setteada desde el bag button
     }
 
     public void AddItemToInventory(GameObject itemToAdd)
@@ -45,19 +45,20 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void RemoveItemFromInventory(GameObject itemToRemove)
+    public void RemoveItemFromInventory(Image itemToRemove)
     {
         if (Client.instance.GetLocalPlayer().isGrounded)
         {
             for (int i = 0; i < items.Length; i++)
             {
-                if (items[i] == itemToRemove.GetComponent<Image>())
+                if (items[i] == itemToRemove)
                 {
                     Image actualImage = actualItemSlot.GetComponent<Image>();
                     actualImage.sprite = null;
                     items[i].sprite = null;
                     items[i].enabled = false;
                     actualItemSlot.SetActive(false);
+                    displayPanel.SetActive(false);
 
                     Client.instance.SendMessageToServer("InventoryUpdate/Remove/" + i.ToString());
                     UpdateInventory(items[i], i);
@@ -96,7 +97,7 @@ public class Inventory : MonoBehaviour
     public void DropItem()
     {
         displayPanel.SetActive(false);
-        RemoveItemFromInventory(GameObject.Find("SlotSprite" + numSlot));
+        RemoveItemFromInventory(GameObject.Find("SlotSprite" + numSlot).GetComponent<Image>());
         string actualItemSpriteName = Items.instance.itemSprite.name;
         Client.instance.SendMessageToServer("CreateGameObject/" + actualItemSpriteName);
     }

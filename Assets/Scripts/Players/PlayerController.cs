@@ -25,13 +25,15 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded;
     public bool leftPressed;
     public bool rightPressed;
+    public bool upPressed;
     public bool jumpPressed;
     public bool localPlayer;
     public bool remoteRight; //Used to synchronize data from the server
     public bool remoteLeft;
+    public bool remoteUp;
     public bool remoteJumping;
     public bool remoteAttacking;
-	  public bool remotePower;
+    public bool remotePower;
     public bool controlOverEnemies;
     public int SortingOrder = 0;
     public int saltarDoble;
@@ -96,42 +98,121 @@ public class PlayerController : MonoBehaviour
     {
         if (localPlayer)
         {
-            float axis = CnInputManager.GetAxisRaw("Horizontal");
-            if (!remoteRight && axis>0)
+            bool up;
+            float axisHorizontal = CnInputManager.GetAxisRaw("Horizontal");
+            float axisVertical = CnInputManager.GetAxisRaw("Vertical");
+
+            if (axisVertical > 0f)
+            {
+                up = true;
+            }
+            else
+            {
+                up = false;
+            }
+            // si el wn esta apuntando hacia arriba/abajo con menor inclinacion que hacia la derecha, start moving
+            if ((!remoteRight && axisHorizontal > 0f) && ((up && axisHorizontal >= axisVertical) || (!up && axisHorizontal >= -axisVertical)))
             {
                 remoteRight = true;
                 remoteLeft = false;
                 SendObjectDataToServer();
             }
-            else if(remoteRight && axis<=0)
+            // si el wn esta apuntando hacia arriba/abajo con mayor inclinacion que hacia la derecha, stop moving
+            else if ((up && axisHorizontal < axisVertical) || (!up && axisHorizontal < -axisVertical))
+            {
+                remoteRight = false;
+                remoteLeft = false;
+                SendObjectDataToServer();
+            }
+            // si no se esta apretando el joystick
+            else if (remoteRight && axisHorizontal == 0)
             {
                 remoteRight = false;
                 SendObjectDataToServer();
             }
-            return CnInputManager.GetAxisRaw("Horizontal") > 0f;
-        }
             return remoteRight;
+        }
+        return remoteRight;
     }
 
     protected bool IsGoingLeft()
     {
         if (localPlayer)
         {
-            float axis = CnInputManager.GetAxisRaw("Horizontal");
-            if (!remoteLeft && axis < 0)
+            bool up;
+            float axisHorizontal = CnInputManager.GetAxisRaw("Horizontal");
+            float axisVertical = CnInputManager.GetAxisRaw("Vertical");
+
+            if (axisVertical > 0f)
+            {
+                up = true;
+            }
+            else
+            {
+                up = false;
+            }
+            // si el wn esta apuntando hacia arriba/abajo con menor inclinacion que hacia la izquierda, start moving
+            if ((!remoteLeft && axisHorizontal < 0f) && ((up && -axisHorizontal >= axisVertical) || (!up && axisHorizontal <= axisVertical)))
             {
                 remoteLeft = true;
                 remoteRight = false;
                 SendObjectDataToServer();
             }
-            else if(remoteLeft && axis >= 0)
+            // si el wn esta apuntando hacia arriba/abajo con mayor inclinacion que hacia la izquierda, stop moving
+            else if ((up && -axisHorizontal < axisVertical)  || (!up && axisHorizontal > axisVertical))
+            {
+                remoteLeft = false;
+                remoteRight = false;
+                SendObjectDataToServer();
+            }
+            // si no se esta apretando el joystick
+            else if (remoteLeft && axisHorizontal == 0)
             {
                 remoteLeft = false;
                 SendObjectDataToServer();
             }
-            return axis < 0f;
+            return remoteLeft;
         }
         return remoteLeft;
+    }
+
+    public bool IsGoingUp()
+    {
+        if (localPlayer)
+        {
+            bool right;
+            float axisHorizontal = CnInputManager.GetAxisRaw("Horizontal");
+            float axisVertical = CnInputManager.GetAxisRaw("Vertical");
+
+            if (axisHorizontal > 0f)
+            {
+                right = true;
+            }
+            else
+            {
+                right = false;
+            }
+            // si el wn esta apuntando hacia izq/der con menor inclinacion que hacia arriba, return true
+            if ((!remoteUp && axisVertical > 0f) && ((right && axisHorizontal <= axisVertical) || (!right && -axisHorizontal <= axisVertical)))
+            {
+                remoteUp = true;
+                SendObjectDataToServer();
+            }
+            // si el wn esta apuntando hacia izq/der con mayor inclinacion que hacia arriba, o bien, esta apuntando hacia abajo, return false
+            else if ((!remoteUp && axisVertical > 0f) && ((right && axisHorizontal > axisVertical) || (!right && -axisHorizontal > axisVertical)) || axisVertical <= 0f)
+            {
+                remoteUp = false;
+                SendObjectDataToServer();
+            }
+            // si no se esta apretando el joystick
+            else if (remoteUp && axisVertical <= 0.5)
+            {
+                remoteUp = false;
+                SendObjectDataToServer();
+            }
+            return remoteUp;
+        }
+        return remoteUp;
     }
 
     protected bool IsItGrounded()
@@ -220,6 +301,7 @@ public class PlayerController : MonoBehaviour
         {
             rb2d.velocity = new Vector3(0f, rb2d.velocity.y, 0f);
         }
+
         isGrounded = IsItGrounded();
         if (IsJumping(isGrounded))
         {

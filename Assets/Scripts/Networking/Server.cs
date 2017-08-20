@@ -21,6 +21,7 @@ public class Server : MonoBehaviour {
     public static Server instance;
     int bufferSize = 100;
     public int maxJugadores;
+    public string sceneToLoad;
 
     	//Planner Thread
 	Thread planner;
@@ -51,7 +52,8 @@ public class Server : MonoBehaviour {
         rooms = new List<Room>();
         messageHandler = new ServerMessageHandler(this);
         planner = new Thread(new ThreadStart(this.Plan));
-		planner.Start ();
+	     	planner.Start ();
+        this.sceneToLoad = "Escena1";
     }
 
     // Update is called once per frame
@@ -110,7 +112,7 @@ public class Server : MonoBehaviour {
         if (player != null)
         {
             player.connected = true;
-            SendMessageToClient(connectionId, "ChangeScene/Escena2");
+            SendMessageToClient(connectionId, "ChangeScene/" + sceneToLoad);
             timesScene1IsLoaded += 1;
             return;
         }

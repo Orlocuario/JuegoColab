@@ -18,6 +18,7 @@ public class ClientMessageHandler {
         char[] separator = new char[1];
         separator[0] = '/';
         string[] arreglo = message.Split(separator);
+
         switch (arreglo[0])
         {
             case "ChangeScene":
@@ -47,9 +48,9 @@ public class ClientMessageHandler {
             case "CastFireball":
                 HandleCastFireball(arreglo);
                 break;
-			      case "Power":
-			         	HandleUpdatedPowerState (arreglo);
-			         	break;
+			case "Power":
+			    HandleUpdatedPowerState (arreglo);
+			    break;
             case "Die":
                 KillEnemy(arreglo);
                 break;
