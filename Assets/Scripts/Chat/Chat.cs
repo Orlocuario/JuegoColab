@@ -259,6 +259,7 @@ public class Chat : MonoBehaviour
     {
         originalCanvas.SetActive(true);
         chatCanvas.SetActive(false);
+        inventory.SetActive(true);
     }
 
     public void ToggleChatOn()

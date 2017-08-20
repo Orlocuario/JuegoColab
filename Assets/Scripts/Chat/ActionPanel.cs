@@ -25,11 +25,12 @@ public class ActionPanel : MonoBehaviour {
     {
         Text inputText = GameObject.Find("InputPlayerText").GetComponent<Text>();
         int number = Int32.Parse(inputText.text);
-        List<Room> rooms = Server.instance.rooms;
-        foreach (Room room in rooms)
-        {
-            room.maxJugadores = number;
-        }
         Server.instance.maxJugadores = number;
+    }
+
+    public void SceneToLoadButton()
+    {
+        Text inputText = GameObject.Find("InputSceneText").GetComponent<Text>();
+        Server.instance.sceneToLoad = inputText.text;
     }
 }
