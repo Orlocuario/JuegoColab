@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class SwitchActions {
 
+    GameObject Chasca = GameObject.Find("Chasca");
     int groupId;
-
     public SwitchActions(GroupOfSwitchs group)
     {
         this.groupId = group.groupId;
@@ -20,7 +20,8 @@ public class SwitchActions {
         switch(groupId)
         {
             case 0:
-                GameObject.Find("ArbolPlatBut0").SetActive(true);
+                Chasca.GetComponent<SpriteRenderer>().enabled = true;
+                Chasca.GetComponent<BoxCollider2D>().enabled = true;
                 break;
             case 1:
                 //asdada
