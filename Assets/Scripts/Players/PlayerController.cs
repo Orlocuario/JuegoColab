@@ -218,10 +218,10 @@ public class PlayerController : MonoBehaviour
     protected bool IsItGrounded()
     {
 
-        //bool ground = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
-        //return ground;
-        float verticalSpeed = rb2d.velocity.y;
-        return verticalSpeed == 0;
+        bool ground = Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+        return ground;
+        //float verticalSpeed = rb2d.velocity.y;
+        //return verticalSpeed == 0;
     }
 
     protected virtual bool IsJumping(bool isGrounded)
