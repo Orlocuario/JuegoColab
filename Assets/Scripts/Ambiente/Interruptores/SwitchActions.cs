@@ -20,7 +20,7 @@ public class SwitchActions {
         switch(groupId)
         {
             case 0:
-                //loquehaceel0
+                GameObject.Find("ArbolPlatBut0").SetActive(true);
                 break;
             case 1:
                 //asdada
