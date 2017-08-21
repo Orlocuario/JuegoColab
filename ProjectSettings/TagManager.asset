@@ -22,7 +22,8 @@ TagManager:
   - PickUpButton
   - Agua
   - Canvas
-  - RuneSlot
+  - SwitchManager
+  - Fireball
   layers:
   - Default
   - TransparentFX
