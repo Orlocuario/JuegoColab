@@ -13,7 +13,7 @@ public class HpAndManaHUD {
     Room room;
 
     public HpAndManaHUD(Room room)
-    {
+    {                         
         this.room = room;
         maxHP = 250;
         maxMP = 250;

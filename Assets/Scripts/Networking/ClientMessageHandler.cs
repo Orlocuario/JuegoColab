@@ -18,6 +18,7 @@ public class ClientMessageHandler {
         char[] separator = new char[1];
         separator[0] = '/';
         string[] arreglo = message.Split(separator);
+
         switch (arreglo[0])
         {
             case "ChangeScene":
@@ -48,8 +49,8 @@ public class ClientMessageHandler {
                 HandleCastFireball(arreglo);
                 break;
 			      case "Power":
-			         	HandleUpdatedPowerState (arreglo);
-			         	break;
+			         HandleUpdatedPowerState (arreglo);
+			         break;
             case "Die":
                 KillEnemy(arreglo);
                 break;
@@ -192,7 +193,8 @@ public class ClientMessageHandler {
     }
 	private void HandleUpdatedPowerState(string[] arreglo)
 	{
-		WarriorController script = Client.instance.GetWarrior();
+
+		PlayerController script = Client.instance.GetById(Int32.Parse(arreglo[1]));
 		script.RemoteSetter (bool.Parse (arreglo [2]));
 
 	}
