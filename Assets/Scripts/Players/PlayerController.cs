@@ -311,11 +311,6 @@ public class PlayerController : MonoBehaviour
         previous_transform = transform.position;
         SetAnimVariables();
 		isPower ();
-
-        if (rb2d.velocity.magnitude > maxSpeed)
-            {
-                rb2d.velocity = rb2d.velocity.normalized * maxSpeed;
-            }
     }
 
 	protected virtual bool isPower()
