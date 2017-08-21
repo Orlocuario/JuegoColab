@@ -23,6 +23,7 @@ TagManager:
   - Agua
   - Canvas
   - SwitchManager
+  - Fireball
   layers:
   - Default
   - TransparentFX

@@ -17,7 +17,7 @@ Platform assembly: C:\Users\jaime\Documents\GitHub\JuegoColab\asdad_Data\Managed
 Loading C:\Users\jaime\Documents\GitHub\JuegoColab\asdad_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
 Platform assembly: C:\Users\jaime\Documents\GitHub\JuegoColab\asdad_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
 Loading C:\Users\jaime\Documents\GitHub\JuegoColab\asdad_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
-- Completed reload, in  0.537 seconds
+- Completed reload, in  0.039 seconds
 Platform assembly: C:\Users\jaime\Documents\GitHub\JuegoColab\asdad_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\jaime\Documents\GitHub\JuegoColab\asdad_Data\Managed\System.dll (this message is harmless)
 desktop: 1280x720 60Hz; virtual: 1280x720 at 0,0

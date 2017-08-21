@@ -68,7 +68,7 @@ public class ServerMessageHandler
             case "InventoryUpdate":
                 SendInventoryUpdate(message, connectionId);
                 break;
-            case "ChangeSwitchSatus":
+            case "ChangeSwitchStatus":
                 SendChangeSwitchStatus(message, arreglo, connectionId);
                 break;
             case "SwitchGroupReady":

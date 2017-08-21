@@ -23,6 +23,7 @@ public class Switch : MonoBehaviour
     {
         manager = GameObject.FindGameObjectWithTag("SwitchManager").GetComponent<SwitchManager>();
         manager.Add(this);
+        SetSprite();
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -54,6 +55,7 @@ public class Switch : MonoBehaviour
     {
         if (CheckIfColliderIsAttack(collision))
         {
+            SendOnDataToServer(on);
             Activate();
         }
     }
@@ -76,7 +78,7 @@ public class Switch : MonoBehaviour
     private bool CheckIfColliderIsAbove(Collision2D collision)
     {
         GameObject colliderGameObject = collision.collider.gameObject;
-        return transform.position.y < (colliderGameObject.transform.position.y + 0.001);
+        return transform.position.y  < (colliderGameObject.transform.position.y);
 
     }
 
@@ -84,13 +86,13 @@ public class Switch : MonoBehaviour
     {
         if (switchColor == Color.Any)
         {
-            if(name == "BolaM1"){
+            if(name == "Fireball"){
                 return true;
             }
         }
         switch (name)
         {
-            case "BolaM1":
+            case "Fireball":
                 return switchColor == Color.Blue;
             default:
                 return false;
@@ -119,13 +121,14 @@ public class Switch : MonoBehaviour
     private bool CheckIfColliderIsAttack(Collision2D collision)
     {
         GameObject colliderGameObject = collision.collider.gameObject;
-        string objectName = colliderGameObject.name;
-        if (CheckIfObjectMatchWithColor(objectName))
+        string objectTag = colliderGameObject.tag;
+        if (CheckIfObjectMatchWithColor(objectTag))
         {
-            switch (objectName)
+            switch (objectTag)
             {
-                case "BolaM1":
-                    if(Client.instance.GetLocalPlayer().tag == "Player1")
+                case "Fireball":
+                    Destroy(colliderGameObject);
+                    if (Client.instance.GetLocalPlayer().tag == "Player1")
                     {
                         return true;
                     }

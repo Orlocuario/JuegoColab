@@ -25,7 +25,6 @@ public class SwitchManager : MonoBehaviour {
     void Awake () {
         listOfGroups = new List<GroupOfSwitchs>();
 	}
-
 	
     public Switch GetSwitch(int groupId, int individualId)
     {

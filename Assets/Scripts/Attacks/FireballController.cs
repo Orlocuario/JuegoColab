@@ -13,6 +13,10 @@ public class FireballController : MonoBehaviour {
     void Start() {
         maxDistance = 2;
         currentDistance = 0;
+        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), Client.instance.GetMage().GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), Client.instance.GetWarrior().GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), Client.instance.GetEngineer().GetComponent<Collider2D>());
+
     }
 
     public void SetMovement(int direction, float speed, float x, float y, MageController caster)
@@ -20,7 +24,7 @@ public class FireballController : MonoBehaviour {
         this.caster = caster;
         this.direction = direction;
         this.speed = speed;
-        transform.position = new Vector2(x, y - 0.02f);
+        transform.position = new Vector2(x + (direction*0.0001f), y - 0.02f);
         if (direction == -1)
         {
             transform.localScale = new Vector3(-1f, 1f, 1f);
