@@ -22,6 +22,8 @@ TagManager:
   - PickUpButton
   - Agua
   - Canvas
+  - SwitchManager
+  - Fireball
   layers:
   - Default
   - TransparentFX

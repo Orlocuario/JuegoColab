@@ -7,6 +7,15 @@ public class EngineerController : PlayerController {
 
     private float skillSpeed;
     private bool salte;
+	int contador = 0;
+	GameObject particulas;
+
+	protected override void Start()
+	{
+		base.Start();
+		particulas = GameObject.Find ("ParticulasEngin");
+		particulas.SetActive(false);
+	}
 
     protected override bool IsAttacking()
     {
@@ -17,7 +26,7 @@ public class EngineerController : PlayerController {
             {
                 remoteAttacking = true;
                 SendAttackDataToServer();
-                CastProyectile(this.direction);
+                CastProyectile(this.direction, this.IsGoingUp());
             }
             else if (!buttonState && remoteAttacking)
             {
@@ -28,7 +37,7 @@ public class EngineerController : PlayerController {
         return remoteAttacking;
     }
 
-    private void CastProyectile(int direction)
+    private void CastProyectile(int direction, bool goingUp)
     {
         Vector3 myPosition = transform.position;
         CastLocalProyectile(direction, myPosition.x, myPosition.y, this);
@@ -37,7 +46,7 @@ public class EngineerController : PlayerController {
 
     public void CastLocalProyectile(int direction, float x, float y, EngineerController caster)
     {
-        GameObject proyectile = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/BolaM1")); //Encontrar el prefab de la roca
+        GameObject proyectile = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/FlechaE1")); //Encontrar el prefab de la roca
         ProyectileController controller = proyectile.GetComponent<ProyectileController>();
         controller.SetMovement(direction, SkillSpeed(1), x, y, this);
     }
@@ -108,5 +117,39 @@ public class EngineerController : PlayerController {
      {
 
      }*/
+	protected override bool isPower()
+	{
+		if (localPlayer) 
+		{	
+			bool primeraVez = false;
+			bool buttonState = CnInputManager.GetButtonDown ("Power Button");
+			if (buttonState && !primeraVez) 
+			{
+				primeraVez = true;
+				remotePower = contador%2 == 0;
+				contador++;
+				SendPowerDataToServer();
+				SetAnimacion (remotePower);
+			}
+
+			else if (!buttonState && primeraVez)
+			{
+				primeraVez = false;
+			}
+		}
+		return remotePower;
+	}
+
+	private void SetAnimacion(bool activo)
+	{
+		particulas.SetActive (activo);
+	}
+
+	public override void RemoteSetter(bool power)
+	{
+		SetAnimacion (power);
+		remotePower = power;
+
+	}
 }
 

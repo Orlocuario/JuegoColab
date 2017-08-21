@@ -7,14 +7,14 @@ using System.IO;
 public class Room
 {
     List<Jugador> players;
+    List<ServerSwitch> switchs;
     Server server;
     ServerMessageHandler sender;
     public HpAndManaHUD hpManaGer;
     public int numJugadores;
     public int maxJugadores;
     public int id;
-
-
+    public string sceneToLoad;
 
     public bool started;
     string numeroPartidas;
@@ -27,12 +27,14 @@ public class Room
         this.id = id;
         this.maxJugadores = maxJugadores;
         players = new List<Jugador>();
+        switchs = new List<ServerSwitch>();
         this.server = server;
         this.sender = sender;
         started = false;
         historial = "";
         hpManaGer = new HpAndManaHUD(this);
         enemigos = new List<Enemy>();
+        sceneToLoad = Server.instance.sceneToLoad;
     }
 
     public void AddEnemy(int enemyId)
@@ -78,7 +80,7 @@ public class Room
         if (IsFull())
         {
             Debug.Log("Full room");
-            sender.SendChangeScene("Escena2", this);
+            sender.SendChangeScene(sceneToLoad, this);
             started = true;
             SendMessageToAllPlayers("Mago: Conectado");
             SendMessageToAllPlayers("Guerrero: Conectado");
@@ -215,4 +217,38 @@ public class Room
         Server.instance.SendMessageToClient(player, message);
     }
 
+    public ServerSwitch AddSwitch(int groupId, int individualId)
+    {
+            ServerSwitch switchi = new ServerSwitch(groupId, individualId, this);
+            switchs.Add(switchi);
+            return switchi;
+    }
+
+    public ServerSwitch GetSwitch(int groupId, int individualId)
+    {
+        foreach (ServerSwitch switchi in switchs)
+        {
+            if (switchi.groupId == groupId && switchi.individualId == individualId)
+            {
+                return switchi;
+            }
+        }
+        ServerSwitch switchis = AddSwitch(groupId, individualId);
+        return switchis;
+    }
+
+    private bool CheckIfSwitchExist(int groupId, int individualId)
+    {
+        if(GetSwitch(groupId, individualId) == null)
+        {
+            return false;
+        }
+        return true;
+    }
+
+    public void SetSwitchOn(bool on, int groupId, int individualId)
+    {
+        ServerSwitch switchi = GetSwitch(groupId, individualId);
+        switchi.on = on;
+    }
 }

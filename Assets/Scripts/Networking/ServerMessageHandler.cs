@@ -47,9 +47,9 @@ public class ServerMessageHandler
             case "CastFireball":
                 SendNewFireball(message, connectionId, arreglo);
                 break;
-       			case "Power":
-				        SendPowerState (message, connectionId, arreglo);
-		          	break;
+   			case "Power":
+				SendPowerState (message, connectionId, arreglo);
+		        break;
             case "NewEnemyId":
                 NewEnemy(arreglo, connectionId);
                 break;
@@ -68,9 +68,33 @@ public class ServerMessageHandler
             case "InventoryUpdate":
                 SendInventoryUpdate(message, connectionId);
                 break;
+            case "ChangeSwitchStatus":
+                SendChangeSwitchStatus(message, arreglo, connectionId);
+                break;
+            case "SwitchGroupReady":
+                SendSwitchGroupAction(message, connectionId);
+                break;
             default:
                 break;
         }
+    }
+
+    private void SendSwitchGroupAction(string message, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.SendMessageToAllPlayersExceptOne(message, connectionId);
+    }
+
+    private void SendChangeSwitchStatus(string message, string[] arreglo, int connectionId)
+    {
+        int groupId = Int32.Parse(arreglo[1]);
+        int individualId = Int32.Parse(arreglo[2]);
+        bool on = bool.Parse(arreglo[3]);
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.SetSwitchOn(on, groupId, individualId);
+        room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 
     private void EnemyChangePosition(string message, string[] arreglo, int connectionId)
