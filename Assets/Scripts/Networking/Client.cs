@@ -137,6 +137,23 @@ public class Client : MonoBehaviour {
         }
         return null;
     }
+	public PlayerController GetById(int playerId)
+	{
+		if (playerId == 0) 
+		{
+			return GetMage ();
+		} 
+
+		else if (playerId == 1) 
+		{
+			return GetWarrior ();
+		}
+
+		else 
+		{
+			return GetEngineer ();
+		}
+	}
 
     public MageController GetMage()
     {

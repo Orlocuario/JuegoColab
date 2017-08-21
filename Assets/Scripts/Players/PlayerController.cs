@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     public int saltarDoble;
     public int direction;  //1 = derecha, -1 = izquierda
     public int characterId;
-    
+
     protected virtual void Start()
     {
         remoteRight = false;
@@ -88,7 +88,7 @@ public class PlayerController : MonoBehaviour
             Chat.instance.EnterFunction("Engineer: Has Connected");
         }
 
-        if (sprite) 
+        if (sprite)
 		{
 			sprite.sortingOrder = SortingOrder + 1;
 		}
@@ -278,7 +278,7 @@ public class PlayerController : MonoBehaviour
             }
             SetAnimVariables();
         }
-			
+
     }
 
     protected int updateFrames = 0;
@@ -340,7 +340,7 @@ public class PlayerController : MonoBehaviour
         if (other.tag == "Checkpoint")
         {
             respawnPosition = other.transform.position;
-        }        
+        }
     }
 
     protected void OnCollisionEnter2D(Collision2D other)
@@ -395,5 +395,8 @@ public class PlayerController : MonoBehaviour
 	{
 		string message = "Power/" + characterId + "/" + remotePower;
 		Client.instance.SendMessageToServer(message);
+	}
+
+	public virtual void RemoteSetter (bool power){
 	}
 }
