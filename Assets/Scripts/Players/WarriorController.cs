@@ -48,6 +48,7 @@ public class WarriorController : PlayerController {
 			bool buttonState = CnInputManager.GetButtonDown ("Power Button");
 			if (buttonState && !primeraVez) 
 			{
+                Client.instance.SendMessageToServer("ChangeMpHUDToRoom/-10");
 				primeraVez = true;
 				remotePower = contador%2 == 0;
 				contador++;

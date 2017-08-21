@@ -7,6 +7,7 @@ public class LevelManager : MonoBehaviour {
 
     public PlayerController thePlayer;
     public float waitToRespawn;
+    public GameObject[] players;
 
     private Client client;
     private GameObject createGameObject;
@@ -28,7 +29,7 @@ public class LevelManager : MonoBehaviour {
     public void SetCharAsLocal(int id)
     {
         PlayerController player = null;
-        GameObject[] players = new GameObject[3];
+        players = new GameObject[3];
         players[0] = GameObject.FindGameObjectsWithTag("Player1")[0];
         players[1] = GameObject.FindGameObjectsWithTag("Player2")[0];
         players[2] = GameObject.FindGameObjectsWithTag("Player3")[0];

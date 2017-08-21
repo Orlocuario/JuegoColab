@@ -7,12 +7,18 @@ public class DisplayHUD: MonoBehaviour{
     
     public string maxHP;
     public string maxMP;
-    public string currentHP;
-    public string currentMP;
+    public string hpCurrentPercentage;
+    public string mpCurrentPercentage;
+
+    public void Start()
+    {
+        hpCurrentPercentage = "1";
+        mpCurrentPercentage = "1";
+    }
 
     public void CurrentHP(string message)
     {
-        string hpCurrentPercentage = message;
+        hpCurrentPercentage = message;
 
         Text percentageText = GameObject.Find("HealthPercentage").GetComponent<Text>();
         if (float.Parse(hpCurrentPercentage) <= 0.2f)
@@ -42,7 +48,7 @@ public class DisplayHUD: MonoBehaviour{
 
     public void CurrentMP(string message)
     {
-        string mpCurrentPercentage = message;
+        mpCurrentPercentage = message;
 
         Text percentageText = GameObject.Find("ManaPercentage").GetComponent<Text>();
         percentageText.text = (float.Parse(mpCurrentPercentage) * 100).ToString("0") + "%";

@@ -125,7 +125,8 @@ public class EngineerController : PlayerController {
 			bool buttonState = CnInputManager.GetButtonDown ("Power Button");
 			if (buttonState && !primeraVez) 
 			{
-				primeraVez = true;
+                Client.instance.SendMessageToServer("ChangeMpHUDToRoom/-10");
+                primeraVez = true;
 				remotePower = contador%2 == 0;
 				contador++;
 				SendPowerDataToServer();

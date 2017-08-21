@@ -126,7 +126,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1883630760672116}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -17.77, y: -2.37, z: 1}
+  m_LocalPosition: {x: 34.72, y: -15.12, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4101700835687490}
@@ -204,16 +204,19 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   moveSpeed: 3
+  maxSpeed: 15
   jumpSpeed: 7
   speed: 0
   groundCheckRadius: 0.25
   isGrounded: 0
   leftPressed: 0
   rightPressed: 0
+  upPressed: 0
   jumpPressed: 0
   localPlayer: 0
   remoteRight: 0
   remoteLeft: 0
+  remoteUp: 0
   remoteJumping: 0
   remoteAttacking: 0
   remotePower: 0

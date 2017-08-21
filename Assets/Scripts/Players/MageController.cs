@@ -1,21 +1,31 @@
 ﻿using CnControls;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MageController : PlayerController {
 
-	int contador = 0;
+    string changeMpRate;
+	int contadorPar;
+    int contadorHpAndMp;
+    int rate;
 	GameObject particulas1;
 	GameObject particulas2;
+    DisplayHUD hpAndMp;
 
 	protected override void Start()
 	{
 		base.Start();
-		particulas1 = GameObject.Find ("ParticulasMage");
+        changeMpRate = "0";
+        rate = 100;
+        contadorPar = 0;
+        contadorHpAndMp = 0;
+        particulas1 = GameObject.Find ("ParticulasMage");
 		particulas1.SetActive(false);
 		particulas2 = GameObject.Find ("ParticulasMage2");
 		particulas2.SetActive(false);
+        hpAndMp = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
 	}
 
     protected override bool IsAttacking()
@@ -41,18 +51,43 @@ public class MageController : PlayerController {
 	protected override bool IsPower()
 	{
 		if (localPlayer) 
-		{	
-			bool primeraVez = false;
+		{
+            if (contadorHpAndMp < rate)
+            {
+                contadorHpAndMp++;
+            }
+            else if (float.Parse(hpAndMp.mpCurrentPercentage) > 0f)
+            {
+                Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + changeMpRate);
+                contadorHpAndMp = 0;
+            }
+            bool primeraVez = false;
 			bool buttonState = CnInputManager.GetButtonDown ("Power Button");
-			if (buttonState && !primeraVez) 
+            InShield();
+            if (float.Parse(hpAndMp.mpCurrentPercentage) == 0f)
+            {
+                changeMpRate = "0";
+                remotePower = false;
+                contadorPar = 0;
+                SendPowerDataToServer();
+                SetAnimacion(remotePower);
+            }
+            else if (buttonState && !primeraVez) 
 			{
-				primeraVez = true;
-				remotePower = contador%2 == 0;
-				contador++;
-				SendPowerDataToServer();
-				SetAnimacion (remotePower);
-			}
-
+                primeraVez = true;
+                remotePower = contadorPar % 2 == 0;
+                if (remotePower)
+                {
+                    changeMpRate = "-50";
+                }
+                else
+                {
+                    changeMpRate = "0";
+                }
+                contadorPar++;
+                SendPowerDataToServer();
+                SetAnimacion(remotePower);
+            }
 			else if (!buttonState && primeraVez)
 			{
 				primeraVez = false;
@@ -60,6 +95,25 @@ public class MageController : PlayerController {
 		}
 		return remotePower;
 	}
+
+    public bool[] InShield()
+    {
+        List<bool> shieldInPlayers = new List<bool>();
+        GameObject[] players = GameObject.Find("LevelManager").GetComponent<LevelManager>().players;
+        for (int i = 0; i < players.Length; i++)
+        {
+            Vector3 distance = (players[i].GetComponent<Transform>().position - this.gameObject.GetComponent<Transform>().position);
+            if (distance.magnitude <= 0.77f)
+            {
+                shieldInPlayers.Add(true);
+            }
+            else
+            {
+                shieldInPlayers.Add(false);
+            }
+        }
+        return shieldInPlayers.ToArray();
+    }
 
 	private void SetAnimacion(bool activo)
 	{
