@@ -18,6 +18,7 @@ public class PlayerController : MonoBehaviour
     private LevelManager theLevelManager;
 
     public float moveSpeed;
+    public float maxSpeed;
     public float jumpSpeed;
     public float speed; //For animation nonlocal purposes
     public float groundCheckRadius;
@@ -310,6 +311,11 @@ public class PlayerController : MonoBehaviour
         previous_transform = transform.position;
         SetAnimVariables();
 		isPower ();
+
+        if (rb2d.velocity.magnitude > maxSpeed)
+            {
+                rb2d.velocity = rb2d.velocity.normalized * maxSpeed;
+            }
     }
 
 	protected virtual bool isPower()
