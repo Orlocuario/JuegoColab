@@ -32,16 +32,15 @@ public class LevelManager : MonoBehaviour {
         players[0] = GameObject.FindGameObjectsWithTag("Player1")[0];
         players[1] = GameObject.FindGameObjectsWithTag("Player2")[0];
         players[2] = GameObject.FindGameObjectsWithTag("Player3")[0];
-
         switch (id)
         {
-            case 2:
+            case 0:
                 player = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<MageController>();
                 break;
             case 1:
                 player = GameObject.FindGameObjectsWithTag("Player2")[0].GetComponent<WarriorController>();
                 break;
-            case 0:
+            case 2:
                 player = GameObject.FindGameObjectsWithTag("Player3")[0].GetComponent<EngineerController>();
                 break;
             default:

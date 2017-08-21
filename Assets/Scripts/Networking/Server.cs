@@ -73,18 +73,18 @@ public class Server : MonoBehaviour {
                 break;
             case NetworkEventType.ConnectEvent:
                 AddConnection(recConnectionId);
-                Debug.Log("incoming connection event received " + recConnectionId);
+                UnityEngine.Debug.Log("incoming connection event received " + recConnectionId);
                 break;
             case NetworkEventType.DataEvent:
                 Stream stream = new MemoryStream(recBuffer);
                 BinaryFormatter formatter = new BinaryFormatter();
                 string message = formatter.Deserialize(stream) as string;
                 messageHandler.HandleMessage(message, recConnectionId);
-                Debug.Log("incoming message event received: " + message);
+                UnityEngine.Debug.Log("incoming message event received: " + message);
                 break;
             case NetworkEventType.DisconnectEvent:
                 DeleteConnection(recConnectionId);
-                Debug.Log("remote client event disconnected " + recConnectionId);
+                UnityEngine.Debug.Log("remote client event disconnected " + recConnectionId);
                 break;
         }
     }
