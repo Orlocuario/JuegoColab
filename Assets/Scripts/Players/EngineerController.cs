@@ -117,7 +117,7 @@ public class EngineerController : PlayerController {
      {
 
      }*/
-	protected override bool isPower()
+	protected override bool IsPower()
 	{
 		if (localPlayer) 
 		{	

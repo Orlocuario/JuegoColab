@@ -38,7 +38,7 @@ public class MageController : PlayerController {
         return remoteAttacking;
     }
 
-	protected override bool isPower()
+	protected override bool IsPower()
 	{
 		if (localPlayer) 
 		{	

@@ -27,22 +27,20 @@ public class WarriorController : PlayerController {
             if (buttonState && !remoteAttacking)
             {
                 remoteAttacking = true;
-                SendAttackDataToServer();
                 numHits++;
-				        SetAnimacion (remoteAttacking);
+                SendAttackDataToServer();
                 //CastOnePunchMan(Client.instance.GetAllEnemies(), this.GetComponent<RectTransform>().position);
             }
             else if (!buttonState && remoteAttacking)
             {
                 remoteAttacking = false;
                 SendAttackDataToServer();
-				        SetAnimacion (remoteAttacking);
             }
         }
         return remoteAttacking;
     }
 
-	protected override bool isPower()
+	protected override bool IsPower()
 	{
 		if (localPlayer) 
 		{	
@@ -53,8 +51,8 @@ public class WarriorController : PlayerController {
 				primeraVez = true;
 				remotePower = contador%2 == 0;
 				contador++;
-				SendPowerDataToServer();
-				SetAnimacion (remotePower);
+                SetAnimacion(remotePower);
+                SendPowerDataToServer();
 			}
 
 			else if (!buttonState && primeraVez)

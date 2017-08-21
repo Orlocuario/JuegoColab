@@ -70,7 +70,6 @@ public class PlayerController : MonoBehaviour
         Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), player3.GetComponent<Collider2D>());
     }
 
-
     public void Activate(int charId)
     {
         localPlayer = true;
@@ -310,10 +309,10 @@ public class PlayerController : MonoBehaviour
         }
         previous_transform = transform.position;
         SetAnimVariables();
-		isPower ();
+		IsPower ();
     }
 
-	protected virtual bool isPower()
+	protected virtual bool IsPower()
 	{
 		return false;
 	}
