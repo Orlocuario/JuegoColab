@@ -24,6 +24,7 @@ TagManager:
   - Canvas
   - SwitchManager
   - Fireball
+  - ExperienceItem
   layers:
   - Default
   - TransparentFX

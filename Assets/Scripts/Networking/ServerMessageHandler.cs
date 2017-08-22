@@ -38,6 +38,9 @@ public class ServerMessageHandler
             case "ChangeHpAndManaHUDToRoom": //Necessary coz' ChatZone changes both at the same rate
                 SendHpHAndMpHUDToRoom(arreglo, connectionId);
                 break;
+            case "GainExp":
+                SendExpToRoom(arreglo, connectionId);
+                break;
             case "Attack":
                 SendAttackState(message, connectionId, arreglo);
                 break;
@@ -166,6 +169,12 @@ public class ServerMessageHandler
         room.hpManaGer.RecieveHpAndMpHUD(arreglo[1]);
     }
 
+    private void SendExpToRoom(string[] arreglo, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.hpManaGer.ChangeExp(arreglo[1]);
+    }
 
     private void SendNewFireball(string message, int connectionId, string[] data)
     {

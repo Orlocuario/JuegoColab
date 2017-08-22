@@ -39,6 +39,9 @@ public class ClientMessageHandler {
             case "DisplayChangeMPToClient":
                 HandleChangeMpHUDToClient(arreglo);
                 break;
+            case "DisplayChangeExpToClient":
+                HandleChangeExpHUDToClient(arreglo);
+                break;
             case "Attack":
                 HandleUpdatedAttackState(arreglo);
                 break;
@@ -48,9 +51,9 @@ public class ClientMessageHandler {
             case "CastFireball":
                 HandleCastFireball(arreglo);
                 break;
-			      case "Power":
-			         HandleUpdatedPowerState (arreglo);
-			         break;
+		    case "Power":
+			    HandleUpdatedPowerState (arreglo);
+			    break;
             case "Die":
                 KillEnemy(arreglo);
                 break;
@@ -139,6 +142,12 @@ public class ClientMessageHandler {
         displayHudScript.CurrentMP(arreglo[1]);
     }
 
+    private void HandleChangeExpHUDToClient(string[] arreglo)
+    {
+        DisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
+        displayHudScript.ExperienceBar(arreglo[1]);
+    }
+
     private void HandleCreateGameObject(string[] arreglo)
     {
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
@@ -191,12 +200,11 @@ public class ClientMessageHandler {
         string chatMessage = arreglo[1];
         Chat.instance.UpdateChat(chatMessage);
     }
+
 	private void HandleUpdatedPowerState(string[] arreglo)
 	{
-
 		PlayerController script = Client.instance.GetById(Int32.Parse(arreglo[1]));
 		script.RemoteSetter (bool.Parse (arreglo [2]));
-
 	}
 
     private void HandleUpdatedAttackState(string[] arreglo)

@@ -9,6 +9,7 @@ public class DisplayHUD: MonoBehaviour{
     public string maxMP;
     public string hpCurrentPercentage;
     public string mpCurrentPercentage;
+    public string expCurrentPercentage;
 
     public void Start()
     {
@@ -57,5 +58,18 @@ public class DisplayHUD: MonoBehaviour{
         float currentY = GameObject.Find("ManaMask").GetComponent<RectTransform>().sizeDelta.y;
         float currentX = float.Parse(mpCurrentPercentage) * maxLimitWidth;
         GameObject.Find("CurrentMana").GetComponent<RectTransform>().sizeDelta = new Vector2(currentX, currentY);
+    }
+
+    public void ExperienceBar(string message)
+    {
+        expCurrentPercentage = message;
+
+        Text percentageText = GameObject.Find("ExpPercentage").GetComponent<Text>();
+        percentageText.text = "Exp: " + (float.Parse(expCurrentPercentage) * 100).ToString("0") + "%";
+
+        float maxLimitWidth = GameObject.Find("ExpMask").GetComponent<RectTransform>().sizeDelta.x;
+        float currentY = GameObject.Find("ExpMask").GetComponent<RectTransform>().sizeDelta.y;
+        float currentX = float.Parse(expCurrentPercentage) * maxLimitWidth;
+        GameObject.Find("CurrentExp").GetComponent<RectTransform>().sizeDelta = new Vector2(currentX, currentY);
     }
 }

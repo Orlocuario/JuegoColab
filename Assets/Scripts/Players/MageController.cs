@@ -18,7 +18,7 @@ public class MageController : PlayerController {
 	{
 		base.Start();
         changeMpRate = "0";
-        rate = 100;
+        rate = 150;
         contadorPar = 0;
         contadorHpAndMp = 0;
         particulas1 = GameObject.Find ("ParticulasMage");
