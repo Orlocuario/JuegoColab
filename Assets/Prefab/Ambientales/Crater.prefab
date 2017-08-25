@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4783518700891108}
   - component: {fileID: 212660562278895880}
   m_Layer: 0
-  m_Name: Arbol
+  m_Name: Crater
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

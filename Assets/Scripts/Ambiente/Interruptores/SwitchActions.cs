@@ -20,8 +20,7 @@ public class SwitchActions {
         switch(groupId)
         {
             case 0:
-                Chasca.GetComponent<SpriteRenderer>().enabled = true;
-                Chasca.GetComponent<BoxCollider2D>().enabled = true;
+                
                 break;
             case 1:
                 //asdada
