@@ -24,8 +24,8 @@ public class SwitchActions : MonoBehaviour {
 			break;
 
 		case 0:
-			GameObject platescalerain = (GameObject)Instantiate (Resources.Load ("Prefabs/MagePlath"));
-			platescalerain.GetComponent<Transform> ().position = new Vector2 (-3.67f, -4.2f);
+			GameObject platescalerain = (GameObject)Instantiate (Resources.Load ("Prefabs/EnginPlath1"));
+			platescalerain.GetComponent<Transform> ().position = new Vector2 (12.9f, -1.4f);
 			GameObject feedbackswitchin = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
 			feedbackswitchin.GetComponent<Transform> ().position = new Vector2 (8.224f, -0.976f);
 			break;
