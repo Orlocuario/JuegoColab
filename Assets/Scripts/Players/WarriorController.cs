@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System;
+using UnityEngine.SceneManagement;
 
 public class WarriorController : PlayerController {
 
@@ -13,12 +14,14 @@ public class WarriorController : PlayerController {
 	int contadorPar;
     int contadorHpAndMp;
     int rate;
+	float damage;
     GameObject particulas;
     DisplayHUD hpAndMp;
 
     protected override void Start()
 	{
 		base.Start();
+		damage = 3;
         changeMpRate = "0";
         rate = 150;
         contadorPar = 0;
@@ -39,6 +42,10 @@ public class WarriorController : PlayerController {
                 numHits++;
                 SendAttackDataToServer();
                 //CastOnePunchMan(Client.instance.GetAllEnemies(), this.GetComponent<RectTransform>().position);
+				if (SceneManager.GetActiveScene ().name == "Escena2") 
+				{
+					RemoveRockMass ();
+				}
             }
             else if (!buttonState && remoteAttacking)
             {
@@ -79,10 +86,12 @@ public class WarriorController : PlayerController {
                 if (remotePower)
                 {
                     changeMpRate = "-50";
+					damage = 8;
                 }
                 else
                 {
                     changeMpRate = "0";
+					damage = 3;
                 }
                 contadorPar++;
                 SetAnimacion(remotePower);
@@ -146,12 +155,26 @@ public class WarriorController : PlayerController {
 
     private void CastOnePunchMan(string[] enemies, Vector3 position)
     {
-        
+		
+		
     }
+
 
     protected override void SendAttackDataToServer()
     {
         string message = "AttackWarrior/" + characterId + "/" + remoteAttacking + "/" + numHits.ToString();
         Client.instance.SendMessageToServer(message);
     }
+
+	public void RemoveRockMass()
+	{
+		Vector3 myPosition = this.GetComponent<Transform>().position;
+		GameObject piedra = GameObject.FindGameObjectWithTag ("RocaGiganteAraña");
+		Rigidbody2D rigidez = piedra.GetComponent<Rigidbody2D> ();
+		Vector3 posicionPiedra = piedra.GetComponent<Transform> ().position;
+		if ((myPosition - posicionPiedra).magnitude < 3f && rigidez.mass - 10f * damage > 50) 
+		{
+			rigidez.mass -= 10f * damage;
+		}
+	}
 }

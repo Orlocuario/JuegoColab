@@ -182,17 +182,28 @@ public class ClientMessageHandler {
 
     private void HandleChangePosition(string[] data)
     {
-        int charId = Int32.Parse(data[1]);
-        float positionX = float.Parse(data[2], CultureInfo.InvariantCulture);
-        float positionY = float.Parse(data[3], CultureInfo.InvariantCulture);
-        bool isGrounded = bool.Parse(data[4]);
-        float speed = float.Parse(data[5], CultureInfo.InvariantCulture);
-        int direction = Int32.Parse(data[6]);
-        bool pressingJump = bool.Parse(data[7]);
-        bool pressingLeft = bool.Parse(data[8]);
-        bool pressingRight = bool.Parse(data[9]);
-        PlayerController script = client.GetPlayerController(charId);
-        script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction, pressingRight, pressingLeft, pressingJump);
+		float positionX = float.Parse(data[2], CultureInfo.InvariantCulture);
+		float positionY = float.Parse(data[3], CultureInfo.InvariantCulture);
+		if (data.Length == 6) 
+		{
+			string name = data[1]
+			float rotationX = float.Parse (data [4]);
+			float rotationY = float.Parse (data [5]);
+			// UPDATE IT PAUL
+		} 
+		else 
+		{
+			int charId = Int32.Parse(data[1]);
+			bool isGrounded = bool.Parse (data [4]);
+			float speed = float.Parse (data [5], CultureInfo.InvariantCulture);
+			int direction = Int32.Parse (data [6]);
+			bool pressingJump = bool.Parse (data [7]);
+			bool pressingLeft = bool.Parse (data [8]);
+			bool pressingRight = bool.Parse (data [9]);
+			PlayerController script = client.GetPlayerController(charId);
+			script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction, pressingRight, pressingLeft, pressingJump);
+		}
+        
     }
 
     private void HandleNewChatMessage(string[] arreglo)

@@ -194,24 +194,27 @@ public class ServerMessageHandler
     {
         Jugador player = server.GetPlayer(connectionID);
         Room room = player.room;
-        int charId = Int32.Parse(data[1]);
-        float positionX = float.Parse(data[2], CultureInfo.InvariantCulture);
-        float positionY = float.Parse(data[3], CultureInfo.InvariantCulture);
-        bool isGrounded = bool.Parse(data[4]);
-        float speed = float.Parse(data[5], CultureInfo.InvariantCulture);
-        int direction = Int32.Parse(data[6]);
-        bool pressingJump = bool.Parse(data[7]);
-        bool pressingLeft = bool.Parse(data[8]);
-        bool pressingRight = bool.Parse(data[9]);
-        player.positionX = positionX;
-        player.positionY = positionY;
-        player.isGrounded = isGrounded;
-        player.speed = speed;
-        player.direction = direction;
-        player.pressingJump = pressingJump;
-        player.pressingLeft = pressingLeft;
-        player.pressingRight = pressingRight;
-        room.SendMessageToAllPlayersExceptOne(message, connectionID);
+		float positionX = float.Parse(data[2], CultureInfo.InvariantCulture);
+		float positionY = float.Parse(data[3], CultureInfo.InvariantCulture);
+		if (data.Length > 6f) 
+		{
+			int charId = Int32.Parse (data [1]);
+			bool isGrounded = bool.Parse (data [4]);
+			float speed = float.Parse (data [5], CultureInfo.InvariantCulture);
+			int direction = Int32.Parse (data [6]);
+			bool pressingJump = bool.Parse (data [7]);
+			bool pressingLeft = bool.Parse (data [8]);
+			bool pressingRight = bool.Parse (data [9]);
+			player.positionX = positionX;
+			player.positionY = positionY;
+			player.isGrounded = isGrounded;
+			player.speed = speed;
+			player.direction = direction;
+			player.pressingJump = pressingJump;
+			player.pressingLeft = pressingLeft;
+			player.pressingRight = pressingRight;
+		}
+		room.SendMessageToAllPlayersExceptOne(message, connectionID);
     }
 
     private void SendCharIdAndControl(int connectionId)
