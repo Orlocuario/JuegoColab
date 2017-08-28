@@ -32,7 +32,8 @@ public class SwitchActions : MonoBehaviour {
 
 		case 1:
                 GameObject sujetaRoca = GameObject.FindGameObjectWithTag("SujetaRoca");
-                sujetaRoca.GetComponent<Animator>().SetBool("isSwitch", true);
+                sujetaRoca.GetComponent<Roca>().switchRocaOn = true;
+               
 			break;
 		case 2:
 			GameObject platescalera = (GameObject)Instantiate (Resources.Load ("Prefabs/MagePlath"));
