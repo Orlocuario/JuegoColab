@@ -19,8 +19,8 @@ public class SwitchActions : MonoBehaviour {
 	{
 		switch (groupId) {
 		case 3789:
-			Animator animadorRoca = GameObject.FindGameObjectWithTag ("rocaql").GetComponent<Animator> ();
-			animadorRoca.SetBool ("rocasecae", true);
+			//Animator animadorRoca = GameObject.FindGameObjectWithTag ("rocaql").GetComponent<Animator> ();
+			//animadorRoca.SetBool ("rocasecae", true);
 			break;
 
 		case 0:
@@ -31,7 +31,8 @@ public class SwitchActions : MonoBehaviour {
 			break;
 
 		case 1:
-            
+                GameObject sujetaRoca = GameObject.FindGameObjectWithTag("SujetaRoca");
+                sujetaRoca.GetComponent<Animator>().SetBool("isSwitch", true);
 			break;
 		case 2:
 			GameObject platescalera = (GameObject)Instantiate (Resources.Load ("Prefabs/MagePlath"));

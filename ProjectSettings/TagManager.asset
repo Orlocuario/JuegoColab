@@ -25,6 +25,10 @@ TagManager:
   - SwitchManager
   - Fireball
   - PartButt
+  - Caja
+  - RuneSlot
+  - ArbolCaida
+  - SujetaRoca
   layers:
   - Default
   - TransparentFX
