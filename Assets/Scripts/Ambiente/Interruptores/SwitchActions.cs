@@ -32,7 +32,7 @@ public class SwitchActions : MonoBehaviour {
 
 		case 1:
                 GameObject sujetaRoca = GameObject.FindGameObjectWithTag("SujetaRoca");
-                sujetaRoca.GetComponent<Roca>().switchRocaOn = true;
+                sujetaRoca.GetComponent<Animator>().SetBool("isSwitch", true);
                
 			break;
 		case 2:
