@@ -30,12 +30,39 @@ public class SwitchActions : MonoBehaviour {
 			feedbackswitchEng.GetComponent<Transform> ().position = new Vector2 (8.224f, -0.976f);
 			break;
 
+		case 1: 
+			GameObject rejaMage = GameObject.FindGameObjectWithTag ("RejaRocaMage");
+			GameObject rejaEng = GameObject.FindGameObjectWithTag ("RejaRocaEng");
+			rejaMage.SetActive (false);
+			rejaEng.SetActive (false);
+			bool case1 = true;
+			break;
+		
+		
 		case 3:
-			
-			GameObject sujetaRoca = GameObject.FindGameObjectWithTag ("SujetaRoca");
-			sujetaRoca.GetComponent<Animator> ().SetBool ("isSwitch", true);
+			if (case1 = false) 
+			{
+				bool isSwitch = true;
+				GameObject sujetaRoca = GameObject.FindGameObjectWithTag ("SujetaRoca");
+				Animator sujetaRocaAnim = sujetaRoca.GetComponent<Animator> ();
+				sujetaRocaAnim.SetBool ("isSwitch", isSwitch);
+			}
+			if (case1 = true) 
+			{
+				bool isSwitch = true;
+				GameObject sujetaRoca = GameObject.FindGameObjectWithTag ("SujetaRoca");
+				Animator sujetaRocaAnim = sujetaRoca.GetComponent<Animator> ();
+				sujetaRocaAnim.SetBool ("isSwitch", isSwitch);
+				GameObject rocaCaida = GameObject.FindGameObjectWithTag ("rocaCaida");
+				rocaCaida.GetComponent<Animator> ().SetBool ("switchRocaOn", case1);
+				GameObject arbolCaida = GameObject.FindGameObjectWithTag ("ArbolCaida");
+				Animator arbolCaidaAnim = arbolCaida.GetComponent<Animator> ();
+				arbolCaidaAnim.SetBool ("RockBottom", true);
+			}
 			               
 			break;
+		
+		
 		case 2:
 			GameObject platescalera = (GameObject)Instantiate (Resources.Load ("Prefabs/MagePlath"));
 			platescalera.GetComponent<Transform> ().position = new Vector2 (43f, -16f);

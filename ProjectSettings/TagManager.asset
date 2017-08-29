@@ -29,6 +29,9 @@ TagManager:
   - RuneSlot
   - ArbolCaida
   - SujetaRoca
+  - RejaRocaMage
+  - RejaRocaEng
+  - rocaCaida
   layers:
   - Default
   - TransparentFX

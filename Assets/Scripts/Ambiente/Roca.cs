@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class Roca : MonoBehaviour {
 
-    public bool switchRocaOn = false;
-    public bool isArbol = false;
+    public bool switchRocaOn;
+    public bool isArbol;
     private Animator animRoca;
 
 
@@ -24,13 +24,24 @@ public class Roca : MonoBehaviour {
 
         if (isArbol == true)
         {
-            animRoca.SetBool("isArbol", isArbol);
+            animRoca.SetBool("isArbol", true);
         }
     
 	}
 
-    private void OnTriggerEnter(Collider other)
+    private void OnColliderEnter2D(Collider2D other)
     {
-        isArbol = true;
+		if (other.gameObject.tag == "ArbolCaida") 
+		{
+			isArbol = true;
+			other.GetComponent<Animator>().SetBool("Rockbottom", true);
+		}
     }
+
+	public void IgnoreCollision()
+	{
+		GameObject arbolQl = GameObject.FindGameObjectWithTag ("ArbolCaida");
+
+		Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), arbolQl.GetComponent<Collider2D> ()); 
+	}
 }
