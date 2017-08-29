@@ -8,7 +8,7 @@ AnimatorController:
   m_Name: BaseRoca
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: IsSwitch
+  - m_Name: isSwitch
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -35,7 +35,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: IsSwitch
+    m_ConditionEvent: isSwitch
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102910106447656816}
@@ -67,7 +67,7 @@ AnimatorStateTransition:
   m_TransitionDuration: 0.25
   m_TransitionOffset: 0
   m_ExitTime: 0.8333333
-  m_HasExitTime: 1
+  m_HasExitTime: 0
   m_HasFixedDuration: 1
   m_InterruptionSource: 0
   m_OrderedInterruption: 1
@@ -164,7 +164,7 @@ AnimatorState:
   m_Motion: {fileID: 7400000, guid: 126a6e683f99fb741a3c180c455328b7, type: 2}
   m_Tag: 
   m_SpeedParameter: 
-  m_MirrorParameter: 
+  m_MirrorParameter: IsSwitch
   m_CycleOffsetParameter: 
 --- !u!1107 &1107031261196318424
 AnimatorStateMachine:
@@ -176,10 +176,10 @@ AnimatorStateMachine:
   m_ChildStates:
   - serializedVersion: 1
     m_State: {fileID: 1102586459165333610}
-    m_Position: {x: 252, y: -60, z: 0}
+    m_Position: {x: 252, y: -12, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102910106447656816}
-    m_Position: {x: 372, y: 96, z: 0}
+    m_Position: {x: 516, y: 108, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []

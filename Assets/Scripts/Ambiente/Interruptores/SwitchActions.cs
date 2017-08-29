@@ -24,16 +24,17 @@ public class SwitchActions : MonoBehaviour {
 			break;
 
 		case 0:
-			GameObject platescalerain = (GameObject)Instantiate (Resources.Load ("Prefabs/EnginPlath1"));
-			platescalerain.GetComponent<Transform> ().position = new Vector2 (12.9f, -1.4f);
-			GameObject feedbackswitchin = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
-			feedbackswitchin.GetComponent<Transform> ().position = new Vector2 (8.224f, -0.976f);
+			GameObject platEscaleraEng = (GameObject)Instantiate (Resources.Load ("Prefabs/EnginPlath1"));
+			platEscaleraEng.GetComponent<Transform> ().position = new Vector2 (12.9f, -1.4f);
+			GameObject feedbackswitchEng = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
+			feedbackswitchEng.GetComponent<Transform> ().position = new Vector2 (8.224f, -0.976f);
 			break;
 
-		case 1:
-                GameObject sujetaRoca = GameObject.FindGameObjectWithTag("SujetaRoca");
-                sujetaRoca.GetComponent<Animator>().SetBool("isSwitch", true);
-               
+		case 3:
+			
+			GameObject sujetaRoca = GameObject.FindGameObjectWithTag ("SujetaRoca");
+			sujetaRoca.GetComponent<Animator> ().SetBool ("isSwitch", true);
+			               
 			break;
 		case 2:
 			GameObject platescalera = (GameObject)Instantiate (Resources.Load ("Prefabs/MagePlath"));
