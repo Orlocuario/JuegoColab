@@ -69,7 +69,7 @@ GameObject:
   - component: {fileID: 4693854691394444}
   - component: {fileID: 61107701499603126}
   m_Layer: 9
-  m_Name: PlatRoca
+  m_Name: SueloRoca
   m_TagString: Ground
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -738,8 +738,8 @@ Transform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1200053725320676}
-  m_LocalRotation: {x: -0, y: -0, z: 0.07252772, w: 0.9973664}
-  m_LocalPosition: {x: 83.401, y: -7.325, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: 0.10166014, w: 0.9948192}
+  m_LocalPosition: {x: 83.431, y: -7.616, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4113354143524328}
@@ -771,7 +771,7 @@ Transform:
   - {fileID: 4601298972280920}
   m_Father: {fileID: 0}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 8.318001}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 11.670001}
 --- !u!4 &4721445069695222
 Transform:
   m_ObjectHideFlags: 1
@@ -861,9 +861,9 @@ BoxCollider2D:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_UsedByEffector: 0
-  m_Offset: {x: 1.8714516, y: 0.032446597}
+  m_Offset: {x: 2.042279, y: 0.032500193}
   serializedVersion: 2
-  m_Size: {x: 4.652942, y: 0.13633338}
+  m_Size: {x: 4.9949455, y: 0.13633338}
 --- !u!212 &212008357754034726
 SpriteRenderer:
   m_ObjectHideFlags: 1

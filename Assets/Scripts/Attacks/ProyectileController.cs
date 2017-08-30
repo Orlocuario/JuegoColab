@@ -15,6 +15,10 @@ public class ProyectileController : MonoBehaviour {
     {
         maxDistance = 3;
         currentDistance = 0;
+        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), GameObject.Find("RocaGiganteAraña").GetComponents<CircleCollider2D>()[0]);
+        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), Client.instance.GetMage().GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), Client.instance.GetWarrior().GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), Client.instance.GetEngineer().GetComponent<Collider2D>());
     }
 
     public void SetMovement(int direction, float skillSpeed, float x, float y, EngineerController caster)

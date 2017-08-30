@@ -5,27 +5,33 @@ using UnityEngine;
 public class RocaGigante : MonoBehaviour {
 
 	GameObject createGameObject;
-	Transform myTransform;
-	Transform aux;
+    Quaternion myQuaternion;
+	Vector3 myPosition;
+	Vector3 aux;
 
-	private void Update()
+    private void Start()
+    {
+        aux = this.gameObject.GetComponent<Transform>().position;
+    }
+
+    private void Update()
 	{
-		myTransform = this.gameObject.GetComponent<Transform> ();
-		if (myTransform != aux) 
+		myPosition = this.gameObject.GetComponent<Transform>().position;
+        myQuaternion = this.gameObject.GetComponent<Transform>().rotation;
+		if (myPosition != aux) 
 		{
-			aux = myTransform;
-			Client.instance.SendMessageToServer ("ChangePosition/" + this.gameObject.name + "/" + 
-				myTransform.position.x + "/" + myTransform.position.y + "/" + myTransform.rotation.x + "/" + myTransform.rotation.y);
-			
+			aux = myPosition;
+			Client.instance.SendMessageToServer ("ChangeItemPosition/" + this.gameObject.name + "/" + 
+                myPosition.x.ToString() + "/" + myPosition.y.ToString() + "/" + myQuaternion.z.ToString());
 		}
 	}
 
-	private void OnCollisionEnter2D(Collision2D other)
+	private void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.collider.name == "TriggerRocaGigante") 
+		if (other.name == "TriggerRocaGigante") 
 		{
 			createGameObject = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/SueloRoca"));
-			Client.instance.SendMessageToServer("DestroyItem/" + this.gameObject.name)
+            Client.instance.SendMessageToServer("DestroyItem/" + this.gameObject.name);
 		}
 	}
 }
