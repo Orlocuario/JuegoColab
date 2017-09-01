@@ -19,6 +19,11 @@ public class SwitchActions : MonoBehaviour {
 	{
 		switch (groupId) {
 		case 3789:
+			/*GameObject camaraObject = GameObject.FindGameObjectWithTag ("MainCamera");
+			CameraController camaraScript = camaraObject.GetComponent<CameraController> ();
+			camaraScript.ChangeState (CameraState.Zoomed, -100);*/
+
+
 			//Animator animadorRoca = GameObject.FindGameObjectWithTag ("rocaql").GetComponent<Animator> ();
 			//animadorRoca.SetBool ("rocasecae", true);
 			break;

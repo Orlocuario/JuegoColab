@@ -109,6 +109,7 @@ MonoBehaviour:
   smoothCamera: 2
   followAhead: 1
   followUp: 0.7
+  currentState: 0
 --- !u!124 &124275173956192328
 Behaviour:
   m_ObjectHideFlags: 1
