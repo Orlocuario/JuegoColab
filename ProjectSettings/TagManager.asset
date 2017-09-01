@@ -24,9 +24,14 @@ TagManager:
   - Canvas
   - SwitchManager
   - Fireball
-  - ExperienceItem
+  - PartButt
+  - Caja
   - RuneSlot
-  - "RocaGiganteAra\xF1a"
+  - ArbolCaida
+  - SujetaRoca
+  - RejaRocaMage
+  - RejaRocaEng
+  - rocaCaida
   layers:
   - Default
   - TransparentFX

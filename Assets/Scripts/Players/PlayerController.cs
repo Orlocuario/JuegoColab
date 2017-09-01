@@ -40,9 +40,11 @@ public class PlayerController : MonoBehaviour
     public int saltarDoble;
     public int direction;  //1 = derecha, -1 = izquierda
     public int characterId;
+	private bool puedoMoverme;
 
     protected virtual void Start()
     {
+		puedoMoverme = true;
         remoteRight = false;
         remoteLeft = false;
         remoteJumping = false;
@@ -281,10 +283,24 @@ public class PlayerController : MonoBehaviour
 
     }
 
+	public virtual void DejaDeMoverte(){
+		puedoMoverme = false;
+		myAnim.SetFloat("Speed", 0);
+		myAnim.SetBool("IsGrounded", true);
+		myAnim.SetBool("IsAttacking", false);
+	}
+
+	public virtual void VuelveAMoverte(){
+		puedoMoverme = true;
+	}
+
     protected int updateFrames = 0;
 
     protected virtual void Update()
     {
+		if (!puedoMoverme) {
+			return;
+		}
         if (IsGoingRight())
         {
             rb2d.velocity = new Vector3(moveSpeed, rb2d.velocity.y, 0f);
