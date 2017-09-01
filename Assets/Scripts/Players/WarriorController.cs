@@ -174,7 +174,8 @@ public class WarriorController : PlayerController {
 		Vector3 posicionPiedra = piedra.GetComponent<Transform> ().position;
 		if ((myPosition - posicionPiedra).magnitude < 3f && rigidez.mass - 10f * damage > 50) 
 		{
-			rigidez.mass -= 10f * damage;
-		}
+			rigidez.mass -= 5f * damage;
+            rigidez.AddForce(Vector2.right * 3000);
+        }
 	}
 }

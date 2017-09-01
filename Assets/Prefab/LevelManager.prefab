@@ -53,3 +53,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   thePlayer: {fileID: 0}
   waitToRespawn: 2
+  players: []
+  canvas: {fileID: 0}

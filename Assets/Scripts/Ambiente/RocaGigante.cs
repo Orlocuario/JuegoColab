@@ -28,7 +28,7 @@ public class RocaGigante : MonoBehaviour {
 
 	private void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.name == "TriggerRocaGigante") 
+		if (other.gameObject.name == "TriggerRocaGigante") 
 		{
 			createGameObject = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/SueloRoca"));
             Client.instance.SendMessageToServer("DestroyItem/" + this.gameObject.name);
