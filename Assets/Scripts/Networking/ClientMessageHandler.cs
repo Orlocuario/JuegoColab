@@ -30,6 +30,9 @@ public class ClientMessageHandler {
             case "ChangePosition":
                 HandleChangePosition(arreglo);
                 break;
+            case "ChangeItemPosition":
+                HandleChangeItemPosition(arreglo);
+                break;
             case "NewChatMessage":
                 HandleNewChatMessage(arreglo);
                 break;
@@ -38,6 +41,9 @@ public class ClientMessageHandler {
                 break;
             case "DisplayChangeMPToClient":
                 HandleChangeMpHUDToClient(arreglo);
+                break;
+            case "DisplayChangeExpToClient":
+                HandleChangeExpHUDToClient(arreglo);
                 break;
             case "Attack":
                 HandleUpdatedAttackState(arreglo);
@@ -48,9 +54,9 @@ public class ClientMessageHandler {
             case "CastFireball":
                 HandleCastFireball(arreglo);
                 break;
-			      case "Power":
-			         HandleUpdatedPowerState (arreglo);
-			         break;
+		    case "Power":
+			    HandleUpdatedPowerState (arreglo);
+			    break;
             case "Die":
                 KillEnemy(arreglo);
                 break;
@@ -83,12 +89,17 @@ public class ClientMessageHandler {
         }
     }
 
+    private void HandleChangeItemPosition(string[] arreglo)
+    {
+        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+        scriptLevel.MoveItemInGame(arreglo[1], arreglo[2], arreglo[3], arreglo[4]);
+    }
+
     private void HandleSwitchGroupReady(string[] arreglo)
     {
         int groupId = Int32.Parse(arreglo[1]);
         SwitchManager manager = GameObject.FindGameObjectWithTag("SwitchManager").GetComponent<SwitchManager>();
         manager.CallAction(groupId);
-
     }
 
     private void HandleChangeSwitchStatus(string[] arreglo)
@@ -98,7 +109,6 @@ public class ClientMessageHandler {
         bool on = bool.Parse(arreglo[3]);
         SwitchManager manager = GameObject.FindGameObjectWithTag("SwitchManager").GetComponent<SwitchManager>();
         manager.GetSwitch(groupId, individualId).ReceiveDataFromServer(on);
-
     }
 
     private void SetControlOverEnemies()
@@ -139,6 +149,12 @@ public class ClientMessageHandler {
         displayHudScript.CurrentMP(arreglo[1]);
     }
 
+    private void HandleChangeExpHUDToClient(string[] arreglo)
+    {
+        DisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
+        displayHudScript.ExperienceBar(arreglo[1]);
+    }
+
     private void HandleCreateGameObject(string[] arreglo)
     {
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
@@ -173,17 +189,17 @@ public class ClientMessageHandler {
 
     private void HandleChangePosition(string[] data)
     {
-        int charId = Int32.Parse(data[1]);
-        float positionX = float.Parse(data[2], CultureInfo.InvariantCulture);
-        float positionY = float.Parse(data[3], CultureInfo.InvariantCulture);
-        bool isGrounded = bool.Parse(data[4]);
-        float speed = float.Parse(data[5], CultureInfo.InvariantCulture);
-        int direction = Int32.Parse(data[6]);
-        bool pressingJump = bool.Parse(data[7]);
-        bool pressingLeft = bool.Parse(data[8]);
-        bool pressingRight = bool.Parse(data[9]);
-        PlayerController script = client.GetPlayerController(charId);
-        script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction, pressingRight, pressingLeft, pressingJump);
+		float positionX = float.Parse(data[2], CultureInfo.InvariantCulture);
+	    float positionY = float.Parse(data[3], CultureInfo.InvariantCulture);  
+		int charId = Int32.Parse(data[1]);
+		bool isGrounded = bool.Parse (data [4]);
+		float speed = float.Parse (data [5], CultureInfo.InvariantCulture);
+		int direction = Int32.Parse (data [6]);
+		bool pressingJump = bool.Parse (data [7]);
+		bool pressingLeft = bool.Parse (data [8]);
+		bool pressingRight = bool.Parse (data [9]);
+		PlayerController script = client.GetPlayerController(charId);
+        script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction, pressingRight, pressingLeft, pressingJump);        
     }
 
     private void HandleNewChatMessage(string[] arreglo)
@@ -191,12 +207,11 @@ public class ClientMessageHandler {
         string chatMessage = arreglo[1];
         Chat.instance.UpdateChat(chatMessage);
     }
+
 	private void HandleUpdatedPowerState(string[] arreglo)
 	{
-
 		PlayerController script = Client.instance.GetById(Int32.Parse(arreglo[1]));
 		script.RemoteSetter (bool.Parse (arreglo [2]));
-
 	}
 
     private void HandleUpdatedAttackState(string[] arreglo)

@@ -34,7 +34,7 @@ public class ChatZone : MonoBehaviour {
         Vector2 playerPosition = player.gameObject.transform.position;
         float distance = (playerPosition - myPosition).magnitude;
 
-        if (distance <= 2)
+        if (distance <= 2f)
         {
             lockValue = true;
             chatButtonOn.SetActive(true);

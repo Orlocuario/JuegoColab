@@ -7,15 +7,24 @@ public class EngineerController : PlayerController {
 
     private float skillSpeed;
     private bool salte;
-	int contador = 0;
-	GameObject particulas;
+    string changeMpRate;
+    int contadorHpAndMp;
+    int rate;
+    int contadorPar;
+    GameObject particulas;
+    DisplayHUD hpAndMp;
 
-	protected override void Start()
+    protected override void Start()
 	{
 		base.Start();
-		particulas = GameObject.Find ("ParticulasEngin");
+        changeMpRate = "0";
+        rate = 150;
+        contadorPar = 0;
+        contadorHpAndMp = 0;
+        particulas = GameObject.Find ("ParticulasEngin");
 		particulas.SetActive(false);
-	}
+        hpAndMp = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
+    }
 
     protected override bool IsAttacking()
     {
@@ -120,15 +129,39 @@ public class EngineerController : PlayerController {
 	protected override bool IsPower()
 	{
 		if (localPlayer) 
-		{	
-			bool primeraVez = false;
+		{
+            if (contadorHpAndMp < rate)
+            {
+                contadorHpAndMp++;
+            }
+            else if (float.Parse(hpAndMp.mpCurrentPercentage) > 0f)
+            {
+                Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + changeMpRate);
+                contadorHpAndMp = 0;
+            }
+            bool primeraVez = false;
 			bool buttonState = CnInputManager.GetButtonDown ("Power Button");
-			if (buttonState && !primeraVez) 
+            if (float.Parse(hpAndMp.mpCurrentPercentage) == 0f)
+            {
+                changeMpRate = "0";
+                remotePower = false;
+                contadorPar = 0;
+                SendPowerDataToServer();
+                SetAnimacion(remotePower);
+            }
+            else if (buttonState && !primeraVez) 
 			{
-                Client.instance.SendMessageToServer("ChangeMpHUDToRoom/-10");
                 primeraVez = true;
-				remotePower = contador%2 == 0;
-				contador++;
+				remotePower = contadorPar%2 == 0;
+                if (remotePower)
+                {
+                    changeMpRate = "-50";
+                }
+                else
+                {
+                    changeMpRate = "0";
+                }
+                contadorPar++;
 				SendPowerDataToServer();
 				SetAnimacion (remotePower);
 			}

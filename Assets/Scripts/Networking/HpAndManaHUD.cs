@@ -6,10 +6,13 @@ public class HpAndManaHUD {
 
     public float maxHP;
     public float maxMP;
+    public float maxExp;
     public float currentHP;
     public float currentMP;
+    public float currentExp;
     public float percentageHP;
     public float percentageMP;
+    public float percentageExp;
     Room room;
 
     public HpAndManaHUD(Room room)
@@ -17,10 +20,13 @@ public class HpAndManaHUD {
         this.room = room;
         maxHP = 250;
         maxMP = 250;
+        maxExp = 250;
         currentHP = maxHP;
         currentMP = maxMP;
+        currentExp = 0;
         percentageHP = 1;
         percentageMP = 1;
+        percentageExp = 0;
     }
 
     public void RecieveHpAndMpHUD(string changeRate)
@@ -80,4 +86,25 @@ public class HpAndManaHUD {
         ChangeMP(NewMaxMP);
     }
 
+    public void ChangeExp(string deltaExp)
+    {
+        float valueDeltaExp = float.Parse(deltaExp);
+        currentExp += valueDeltaExp;
+
+        if (currentExp >= maxExp)
+        {
+            currentExp = 0;
+            // levelUp
+        }
+
+        percentageExp = currentExp / maxExp;
+        room.SendMessageToAllPlayers("DisplayChangeExpToClient/" + percentageExp);
+    }
+
+    public void ChangeMaxExp(string NewMaxExp)
+    {
+        float valueMaxExp = float.Parse(NewMaxExp);
+        maxExp = valueMaxExp;
+        ChangeMP(NewMaxExp);
+    }
 }
