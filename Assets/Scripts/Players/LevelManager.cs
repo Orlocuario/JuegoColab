@@ -70,6 +70,14 @@ public class LevelManager : MonoBehaviour {
         thePlayer.SendObjectDataToServer();
     }
 
+    public void MoveItemInGame(string itemName, string posX, string posY, string rotZ)
+    {
+        Transform gameObjectToMove = GameObject.Find(itemName).GetComponent<Transform>();
+        gameObjectToMove.position = new Vector3(float.Parse(posX), float.Parse(posY), gameObjectToMove.position.z);
+        Quaternion gORotation = gameObjectToMove.rotation;
+        gORotation = new Quaternion(gameObjectToMove.rotation.x, gameObjectToMove.rotation.y, float.Parse(rotZ), gameObjectToMove.rotation.w);
+    }
+
     public void DestroyItemInGame(GameObject itemToDestroy)
     {
         Destroy(itemToDestroy);

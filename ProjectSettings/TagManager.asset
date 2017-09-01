@@ -25,6 +25,8 @@ TagManager:
   - SwitchManager
   - Fireball
   - ExperienceItem
+  - RuneSlot
+  - "RocaGiganteAra\xF1a"
   layers:
   - Default
   - TransparentFX

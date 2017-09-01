@@ -26,6 +26,9 @@ public class ServerMessageHandler
             case "ChangePosition":
                 SendUpdatedPosition(message, connectionId, arreglo);
                 break;
+            case "ChangeItemPosition":
+                SendUpdatedItemPosition(message, connectionId);
+                break;
             case "NewChatMessage":
                 SendNewChatMessage(message, connectionId);
                 break;
@@ -196,22 +199,30 @@ public class ServerMessageHandler
         Room room = player.room;
         int charId = Int32.Parse(data[1]);
         float positionX = float.Parse(data[2], CultureInfo.InvariantCulture);
-        float positionY = float.Parse(data[3], CultureInfo.InvariantCulture);
-        bool isGrounded = bool.Parse(data[4]);
-        float speed = float.Parse(data[5], CultureInfo.InvariantCulture);
-        int direction = Int32.Parse(data[6]);
-        bool pressingJump = bool.Parse(data[7]);
-        bool pressingLeft = bool.Parse(data[8]);
-        bool pressingRight = bool.Parse(data[9]);
-        player.positionX = positionX;
-        player.positionY = positionY;
-        player.isGrounded = isGrounded;
-        player.speed = speed;
-        player.direction = direction;
-        player.pressingJump = pressingJump;
-        player.pressingLeft = pressingLeft;
-        player.pressingRight = pressingRight;
-        room.SendMessageToAllPlayersExceptOne(message, connectionID);
+		float positionY = float.Parse(data[3], CultureInfo.InvariantCulture);
+		bool isGrounded = bool.Parse (data [4]);
+		float speed = float.Parse (data [5], CultureInfo.InvariantCulture);
+		int direction = Int32.Parse (data [6]);
+		bool pressingJump = bool.Parse (data [7]);
+		bool pressingLeft = bool.Parse (data [8]);
+		bool pressingRight = bool.Parse (data [9]);
+		player.positionX = positionX;
+		player.positionY = positionY;
+		player.isGrounded = isGrounded;
+		player.speed = speed;
+		player.direction = direction;
+		player.pressingJump = pressingJump;
+		player.pressingLeft = pressingLeft;
+		player.pressingRight = pressingRight;
+		room.SendMessageToAllPlayersExceptOne(message, connectionID);
+    }
+
+
+    private void SendUpdatedItemPosition(string message, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 
     private void SendCharIdAndControl(int connectionId)

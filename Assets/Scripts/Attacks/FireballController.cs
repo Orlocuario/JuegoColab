@@ -9,14 +9,14 @@ public class FireballController : MonoBehaviour {
     float maxDistance;
     float currentDistance;
     MageController caster;
-    // Use this for initialization
+
     void Start() {
         maxDistance = 2;
         currentDistance = 0;
+        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), GameObject.Find("RocaGiganteAraña").GetComponents<CircleCollider2D>()[0]);
         Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), Client.instance.GetMage().GetComponent<Collider2D>());
         Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), Client.instance.GetWarrior().GetComponent<Collider2D>());
         Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), Client.instance.GetEngineer().GetComponent<Collider2D>());
-
     }
 
     public void SetMovement(int direction, float speed, float x, float y, MageController caster)
@@ -31,7 +31,6 @@ public class FireballController : MonoBehaviour {
         }
     }
 
-    // Update is called once per frame
     void Update() {
         float distance = speed * direction * Time.deltaTime;
         transform.position = transform.position + Vector3.right * distance;
