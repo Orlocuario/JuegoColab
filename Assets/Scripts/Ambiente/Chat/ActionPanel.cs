@@ -6,7 +6,7 @@ using UnityEngine.UI;
 
 public class ActionPanel : MonoBehaviour {
 
-	public void ChatButton()
+    public void ChatButton()
     {
         List<Room> rooms = Server.instance.rooms;
         foreach (Room room in rooms)
@@ -21,6 +21,12 @@ public class ActionPanel : MonoBehaviour {
         script.ServerInitialize();
     }
 
+    public void ResetServer()
+    {
+        Broadcasting script = Server.instance.gameObject.GetComponent<Broadcasting>();
+        script.ResetServer();
+    }
+
     public void MaxPlayerRoomButton()
     {
         Text inputText = GameObject.Find("InputPlayerText").GetComponent<Text>();
@@ -31,6 +37,6 @@ public class ActionPanel : MonoBehaviour {
     public void SceneToLoadButton()
     {
         Text inputText = GameObject.Find("InputSceneText").GetComponent<Text>();
-        Server.instance.sceneToLoad = inputText.text;
+        Server.instance.sceneToLoad = "Escena" + inputText.text;
     }
 }

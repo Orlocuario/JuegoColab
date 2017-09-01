@@ -18,9 +18,9 @@ public class RocaGigante : MonoBehaviour {
 	{
 		myPosition = this.gameObject.GetComponent<Transform>().position;
         myQuaternion = this.gameObject.GetComponent<Transform>().rotation;
-		if (myPosition != aux) 
+		if (myPosition.ToString().Substring(0,4) != aux.ToString().Substring(0, 4) && Client.instance.GetWarrior().localPlayer == true) 
 		{
-			aux = myPosition;
+   			aux = myPosition;
 			Client.instance.SendMessageToServer ("ChangeItemPosition/" + this.gameObject.name + "/" + 
                 myPosition.x.ToString() + "/" + myPosition.y.ToString() + "/" + myQuaternion.z.ToString());
 		}
@@ -30,8 +30,8 @@ public class RocaGigante : MonoBehaviour {
 	{
 		if (other.gameObject.name == "TriggerRocaGigante") 
 		{
-			createGameObject = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/SueloRoca"));
-            Client.instance.SendMessageToServer("DestroyItem/" + this.gameObject.name);
+            Client.instance.SendMessageToServer("InstantiateObject/Prefabs/Ambientales/SueloRoca");
+            Client.instance.SendMessageToServer("DestroyObject/" + this.gameObject.name);
 		}
 	}
 }

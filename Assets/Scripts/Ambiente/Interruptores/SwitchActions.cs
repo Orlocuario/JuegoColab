@@ -74,6 +74,10 @@ public class SwitchActions : MonoBehaviour {
 			GameObject feedbackswitch = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
 			feedbackswitch.GetComponent<Transform> ().position = new Vector2 (41.4f, -16.3f);
 			break;
+
+        case 45:
+            Debug.Log("PICO");
+            break;
 		default:
 			break;
 

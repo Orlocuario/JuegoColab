@@ -113,6 +113,11 @@ public class LevelManager : MonoBehaviour {
         StartCoroutine("ResetGameObjectPosition");
     }
 
+    public void InsantiateGameObject(string objectName)
+    {
+        createGameObject = (GameObject)Instantiate(Resources.Load(objectName));
+    }
+
     private IEnumerator WaitForCollision()
     {
         yield return new WaitForSeconds(waitToGrabItem);

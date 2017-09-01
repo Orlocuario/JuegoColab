@@ -26,8 +26,11 @@ public class ServerMessageHandler
             case "ChangePosition":
                 SendUpdatedPosition(message, connectionId, arreglo);
                 break;
-            case "ChangeItemPosition":
-                SendUpdatedItemPosition(message, connectionId);
+            case "ChangeObjectPosition":
+                SendUpdatedObjectPosition(message, connectionId);
+                break;
+            case "InstantiateObject":
+                SendInstantiation(message, connectionId);
                 break;
             case "NewChatMessage":
                 SendNewChatMessage(message, connectionId);
@@ -218,11 +221,18 @@ public class ServerMessageHandler
     }
 
 
-    private void SendUpdatedItemPosition(string message, int connectionId)
+    private void SendUpdatedObjectPosition(string message, int connectionId)
     {
         Jugador player = server.GetPlayer(connectionId);
         Room room = player.room;
         room.SendMessageToAllPlayersExceptOne(message, connectionId);
+    }
+
+    private void SendInstantiation(string message, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.SendMessageToAllPlayers(message);
     }
 
     private void SendCharIdAndControl(int connectionId)

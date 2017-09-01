@@ -15,8 +15,10 @@ public class WarriorController : PlayerController {
     int contadorHpAndMp;
     int rate;
 	float damage;
+    double force = 0;
     GameObject particulas;
     DisplayHUD hpAndMp;
+    private int hits = 0;
 
     protected override void Start()
 	{
@@ -172,10 +174,11 @@ public class WarriorController : PlayerController {
 		GameObject piedra = GameObject.FindGameObjectWithTag ("RocaGiganteAraña");
 		Rigidbody2D rigidez = piedra.GetComponent<Rigidbody2D> ();
 		Vector3 posicionPiedra = piedra.GetComponent<Transform> ().position;
-		if ((myPosition - posicionPiedra).magnitude < 3f && rigidez.mass - 10f * damage > 50) 
+		if ((myPosition - posicionPiedra).magnitude < 3f) 
 		{
-			rigidez.mass -= 5f * damage;
-            rigidez.AddForce(Vector2.right * 3000);
+            hits++;
+            force = Math.Pow(damage, hits)/10;
+            rigidez.AddForce(Vector2.right * (float)force);
         }
 	}
 }

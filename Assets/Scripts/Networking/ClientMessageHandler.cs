@@ -30,8 +30,11 @@ public class ClientMessageHandler {
             case "ChangePosition":
                 HandleChangePosition(arreglo);
                 break;
-            case "ChangeItemPosition":
-                HandleChangeItemPosition(arreglo);
+            case "ChangeObjectPosition":
+                HandleChangeObjectPosition(arreglo);
+                break;
+            case "InstantiateObject":
+                HandleInstantiateObject(arreglo);
                 break;
             case "NewChatMessage":
                 HandleNewChatMessage(arreglo);
@@ -89,10 +92,16 @@ public class ClientMessageHandler {
         }
     }
 
-    private void HandleChangeItemPosition(string[] arreglo)
+    private void HandleChangeObjectPosition(string[] arreglo)
     {
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
         scriptLevel.MoveItemInGame(arreglo[1], arreglo[2], arreglo[3], arreglo[4]);
+    }
+    
+    private void HandleInstantiateObject(string[] arreglo)
+    {
+        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+        scriptLevel.InsantiateGameObject(arreglo[1]);
     }
 
     private void HandleSwitchGroupReady(string[] arreglo)
