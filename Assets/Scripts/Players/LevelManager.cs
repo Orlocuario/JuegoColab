@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour {
     public PlayerController thePlayer;
     public float waitToRespawn;
     public GameObject[] players;
+    public GameObject canvas;
 
     private Client client;
     private GameObject createGameObject;
@@ -19,6 +20,7 @@ public class LevelManager : MonoBehaviour {
 
     void Start ()
     {
+        canvas.SetActive(true);
         waitToGrabItem = 5f;
         thePlayer = null;
         client = GameObject.Find("ClientObject").GetComponent<Client>();
