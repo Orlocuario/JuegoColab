@@ -8,18 +8,18 @@ AnimatorController:
   m_Name: Roca
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: switchRocaOn
+  - m_Name: isReady
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
-  - m_Name: isArbol
+    m_Controller: {fileID: 0}
+  - m_Name: rockBottom
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -41,7 +41,10 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: switchRocaOn
+    m_ConditionEvent: isReady
+    m_EventTreshold: 0
+  - m_ConditionMode: 1
+    m_ConditionEvent: rockBottom
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102244578077356452}
