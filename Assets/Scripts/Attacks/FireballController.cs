@@ -11,7 +11,7 @@ public class FireballController : MonoBehaviour {
     MageController caster;
 
     void Start() {
-        maxDistance = 2;
+        maxDistance = 12;
         currentDistance = 0;
         Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), GameObject.Find("RocaGiganteAraña").GetComponents<CircleCollider2D>()[0]);
         Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), Client.instance.GetMage().GetComponent<Collider2D>());
