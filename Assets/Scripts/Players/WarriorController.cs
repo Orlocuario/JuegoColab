@@ -87,7 +87,7 @@ public class WarriorController : PlayerController {
 				remotePower = contadorPar%2 == 0;
                 if (remotePower)
                 {
-                    changeMpRate = "-50";
+                    changeMpRate = "-5";
 					damage = 8;
                 }
                 else
@@ -177,7 +177,7 @@ public class WarriorController : PlayerController {
 		if ((myPosition - posicionPiedra).magnitude < 3f) 
 		{
             hits++;
-            force = Math.Pow(damage, hits)/10;
+            force = Math.Pow(hits, damage)/50;
             rigidez.AddForce(Vector2.right * (float)force);
         }
 	}

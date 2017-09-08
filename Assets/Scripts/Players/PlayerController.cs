@@ -298,6 +298,10 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (rb2d.velocity.y > maxSpeed)
+        {
+            rb2d.velocity = new Vector2(rb2d.velocity.x, maxSpeed);
+        }
 		if (!puedoMoverme) {
 			return;
 		}

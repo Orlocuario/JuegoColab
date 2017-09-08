@@ -21,7 +21,7 @@ public class RocaGigante : MonoBehaviour {
 		if (myPosition.ToString().Substring(0,4) != aux.ToString().Substring(0, 4) && Client.instance.GetWarrior().localPlayer == true) 
 		{
    			aux = myPosition;
-			Client.instance.SendMessageToServer ("ChangeItemPosition/" + this.gameObject.name + "/" + 
+			Client.instance.SendMessageToServer ("ChangeObjectPosition/" + this.gameObject.name + "/" + 
                 myPosition.x.ToString() + "/" + myPosition.y.ToString() + "/" + myQuaternion.z.ToString());
 		}
 	}

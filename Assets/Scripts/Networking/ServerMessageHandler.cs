@@ -71,8 +71,8 @@ public class ServerMessageHandler
             case "CreateGameObject":
                 SendNewGameObject(message, connectionId);
                 break;
-            case "DestroyItem":
-                SendDestroyItem(message, connectionId);
+            case "DestroyObject":
+                SendDestroyObject(message, connectionId);
                 break;
             case "InventoryUpdate":
                 SendInventoryUpdate(message, connectionId);
@@ -147,7 +147,7 @@ public class ServerMessageHandler
         player.InventoryUpdate(message);
     }
 
-    private void SendDestroyItem(string message, int connectionId)
+    private void SendDestroyObject(string message, int connectionId)
     {
         Jugador player = server.GetPlayer(connectionId);
         Room room = player.room;

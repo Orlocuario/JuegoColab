@@ -78,8 +78,8 @@ public class ClientMessageHandler {
             case "CreateGameObject":
                 HandleCreateGameObject(arreglo);
                 break;
-            case "DestroyItem":
-                HandleDestroyItem(arreglo);
+            case "DestroyObject":
+                HandleDestroyObject(arreglo);
                 break;
             case "ChangeSwitchSatus":
                 HandleChangeSwitchStatus(arreglo);
@@ -101,7 +101,7 @@ public class ClientMessageHandler {
     private void HandleInstantiateObject(string[] arreglo)
     {
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.InsantiateGameObject(arreglo[1]);
+        scriptLevel.InsantiateGameObject(arreglo);
     }
 
     private void HandleSwitchGroupReady(string[] arreglo)
@@ -171,11 +171,11 @@ public class ClientMessageHandler {
         scriptLevel.CreateGameObject(arreglo[1], charId);
     }
 
-    private void HandleDestroyItem(string[] arreglo)
+    private void HandleDestroyObject(string[] arreglo)
     {
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        GameObject itemToDestroy = GameObject.Find(arreglo[1]);
-        scriptLevel.DestroyItemInGame(itemToDestroy);
+        GameObject objectToDestroy = GameObject.Find(arreglo[1]);
+        scriptLevel.DestroyObjectInGame(objectToDestroy);
     }
 
     private void HandleChangeScene(string[] arreglo)

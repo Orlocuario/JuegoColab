@@ -80,9 +80,9 @@ public class LevelManager : MonoBehaviour {
         gORotation = new Quaternion(gameObjectToMove.rotation.x, gameObjectToMove.rotation.y, float.Parse(rotZ), gameObjectToMove.rotation.w);
     }
 
-    public void DestroyItemInGame(GameObject itemToDestroy)
+    public void DestroyObjectInGame(GameObject objectToDestroy)
     {
-        Destroy(itemToDestroy);
+        Destroy(objectToDestroy);
         return;
     }
 
@@ -113,8 +113,17 @@ public class LevelManager : MonoBehaviour {
         StartCoroutine("ResetGameObjectPosition");
     }
 
-    public void InsantiateGameObject(string objectName)
+    public void InsantiateGameObject(string[] arreglo)
     {
+        string objectName = "";
+        for (int i = 1; i < arreglo.Length; i++)
+        {
+            objectName += arreglo[i];
+            if (i != arreglo.Length - 1)
+            {
+                objectName += "/";
+            }
+        }
         createGameObject = (GameObject)Instantiate(Resources.Load(objectName));
     }
 
