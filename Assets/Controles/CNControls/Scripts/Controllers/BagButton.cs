@@ -75,16 +75,52 @@ public class BagButton : MonoBehaviour {
 
     private void MageActions(string actionToDo)
     {
-        throw new NotImplementedException();
+        if (Client.instance.GetMage().localPlayer)
+        {
+            switch (actionToDo)
+            {
+                case "Climb":
+                    break;
+                case "RuneOpenDoors":
+                    usingRune = true;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     private void WarriorActions(string actionToDo)
     {
-        throw new NotImplementedException();
+        if (Client.instance.GetWarrior().localPlayer)
+        {
+            switch (actionToDo)
+            {
+                case "Climb":
+                    break;
+                case "RuneOpenDoors":
+                    usingRune = true;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 
     private void EngineerActions(string actionToDo)
     {
-        throw new NotImplementedException();
+        if (Client.instance.GetEngineer().localPlayer)
+        {
+            switch (actionToDo)
+            {
+                case "Climb":
+                    break;
+                case "RuneOpenDoors":
+                    usingRune = true;
+                    break;
+                default:
+                    break;
+            }
+        }
     }
 }

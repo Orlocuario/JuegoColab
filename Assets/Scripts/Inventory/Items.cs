@@ -80,16 +80,6 @@ public class Items
 
         switch (itemName)
         {//itemId = 0 implies the fact that there is no item selected item
-            case ("car"):
-                info = "Un medio de transporte";
-                actionToDo = "Everyone/SpeedUp";
-                itemId = 1;
-                break;
-            case ("engranaje"):
-                info = "Una pieza hecha para construir armas";
-                actionToDo = "Engineer/Create1";
-                itemId = 2;
-                break;
             case ("Rope"):
                 info = "Una cuerda para llegar alto";
                 actionToDo = "Everyone/Climb";
@@ -97,27 +87,27 @@ public class Items
                 break;
             case ("RunaA1"):
                 info = "Una piedra para abrir puertas mágicas";
-                actionToDo = "Everyone/RuneOpenDoors";
+                actionToDo = "Engineer/RuneOpenDoors";
                 itemId = 4;
                 break;
             case ("RunaA2"):
                 info = "Una piedra para abrir puertas mágicas";
-                actionToDo = "Everyone/RuneOpenDoors";
+                actionToDo = "Engineer/RuneOpenDoors";
                 itemId = 5;
                 break;
             case ("RunaA3"):
                 info = "Una piedra para abrir puertas mágicas";
-                actionToDo = "Everyone/RuneOpenDoors";
+                actionToDo = "Engineer/RuneOpenDoors";
                 itemId = 6;
                 break;
             case ("RunaA4"):
                 info = "Una piedra para abrir puertas mágicas";
-                actionToDo = "Everyone/RuneOpenDoors";
+                actionToDo = "Engineer/RuneOpenDoors";
                 itemId = 7;
                 break;
             case ("RunaA5"):
                 info = "Una piedra para abrir puertas mágicas";
-                actionToDo = "Everyone/RuneOpenDoors";
+                actionToDo = "Engineer/RuneOpenDoors";
                 itemId = 8;
                 break;
             case ("RunaM1"):
@@ -147,52 +137,52 @@ public class Items
                 break;
             case ("RunaR1"):
                 info = "Una piedra para abrir puertas mágicas";
-                actionToDo = "Everyone/RuneOpenDoors";
+                actionToDo = "Warrior/RuneOpenDoors";
                 itemId = 14;
                 break;
             case ("RunaR2"):
                 info = "Una piedra para abrir puertas mágicas";
-                actionToDo = "Everyone/RuneOpenDoors";
+                actionToDo = "Warrior/RuneOpenDoors";
                 itemId = 15;
                 break;
             case ("RunaR3"):
                 info = "Una piedra para abrir puertas mágicas";
-                actionToDo = "Everyone/RuneOpenDoors";
+                actionToDo = "Warrior/RuneOpenDoors";
                 itemId = 16;
                 break;
             case ("RunaR4"):
                 info = "Una piedra para abrir puertas mágicas";
-                actionToDo = "Everyone/RuneOpenDoors";
+                actionToDo = "Warrior/RuneOpenDoors";
                 itemId = 17;
                 break;
             case ("RunaR5"):
                 info = "Una piedra para abrir puertas mágicas";
-                actionToDo = "Everyone/RuneOpenDoors";
+                actionToDo = "Warrior/RuneOpenDoors";
                 itemId = 18;
                 break;
             case ("RunaV1"):
                 info = "Una piedra para abrir puertas mágicas";
-                actionToDo = "Everyone/RuneOpenDoors";
+                actionToDo = "Mage/RuneOpenDoors";
                 itemId = 19;
                 break;
             case ("RunaV2"):
                 info = "Una piedra para abrir puertas mágicas";
-                actionToDo = "Everyone/RuneOpenDoors";
+                actionToDo = "Mage/RuneOpenDoors";
                 itemId = 20;
                 break;
             case ("RunaV3"):
                 info = "Una piedra para abrir puertas mágicas";
-                actionToDo = "Everyone/RuneOpenDoors";
+                actionToDo = "Mage/RuneOpenDoors";
                 itemId = 21;
                 break;
             case ("RunaV4"):
                 info = "Una piedra para abrir puertas mágicas";
-                actionToDo = "Everyone/RuneOpenDoors";
+                actionToDo = "Mage/RuneOpenDoors";
                 itemId = 22;
                 break;
             case ("RunaV5"):
                 info = "Una piedra para abrir puertas mágicas";
-                actionToDo = "Everyone/RuneOpenDoors";
+                actionToDo = "Mage/RuneOpenDoors";
                 itemId = 23;
                 break;
             //etc;
