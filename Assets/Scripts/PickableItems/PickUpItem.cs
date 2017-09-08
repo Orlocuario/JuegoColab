@@ -23,13 +23,20 @@ public class PickUpItem : MonoBehaviour
                 PickUp();
             }
         }
+        else if (other.collider.tag == "Arrow")
+        {
+            if (Client.instance.GetLocalPlayer().tag == "Player3")
+            {
+                PickUp();
+            }
+        }
     }
 
     public void PickUp()
     {
         string itemName = this.gameObject.name;
         Inventory.instance.AddItemToInventory(this.gameObject);
-        Client.instance.SendMessageToServer("DestroyItem/" + itemName);
+        Client.instance.SendMessageToServer("DestroyObject/" + itemName);
     }
 
     public void PickUpExp(string item_name)
