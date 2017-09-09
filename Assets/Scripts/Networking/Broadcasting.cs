@@ -16,4 +16,10 @@ public class Broadcasting : NetworkDiscovery
     {
         StartAsServer();
     }
+
+    public void ResetServer()
+    {
+        StopBroadcast();
+        StartAsServer();
+    }
 }

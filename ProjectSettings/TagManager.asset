@@ -32,6 +32,8 @@ TagManager:
   - RejaRocaMage
   - RejaRocaEng
   - rocaCaida
+  - "RocaGiganteAra\xF1a"
+  - Arrow
   layers:
   - Default
   - TransparentFX

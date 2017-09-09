@@ -8,6 +8,7 @@ public class LevelManager : MonoBehaviour {
     public PlayerController thePlayer;
     public float waitToRespawn;
     public GameObject[] players;
+    public GameObject canvas;
 
     private Client client;
     private GameObject createGameObject;
@@ -19,6 +20,7 @@ public class LevelManager : MonoBehaviour {
 
     void Start ()
     {
+        canvas.SetActive(true);
         waitToGrabItem = 5f;
         thePlayer = null;
         client = GameObject.Find("ClientObject").GetComponent<Client>();
@@ -78,9 +80,9 @@ public class LevelManager : MonoBehaviour {
         gORotation = new Quaternion(gameObjectToMove.rotation.x, gameObjectToMove.rotation.y, float.Parse(rotZ), gameObjectToMove.rotation.w);
     }
 
-    public void DestroyItemInGame(GameObject itemToDestroy)
+    public void DestroyObjectInGame(GameObject objectToDestroy)
     {
-        Destroy(itemToDestroy);
+        Destroy(objectToDestroy);
         return;
     }
 
@@ -109,6 +111,20 @@ public class LevelManager : MonoBehaviour {
         createGameObjectRectTransform.position = new Vector3(player.GetComponent<Transform>().position.x, player.GetComponent<Transform>().position.y, 1);
         StartCoroutine("WaitForCollision");
         StartCoroutine("ResetGameObjectPosition");
+    }
+
+    public void InsantiateGameObject(string[] arreglo)
+    {
+        string objectName = "";
+        for (int i = 1; i < arreglo.Length; i++)
+        {
+            objectName += arreglo[i];
+            if (i != arreglo.Length - 1)
+            {
+                objectName += "/";
+            }
+        }
+        createGameObject = (GameObject)Instantiate(Resources.Load(objectName));
     }
 
     private IEnumerator WaitForCollision()

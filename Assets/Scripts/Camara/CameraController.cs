@@ -107,7 +107,7 @@ public class CameraController : MonoBehaviour {
 			SetDefaultValues();
 			break;
 		case CameraState.Zoomed:
-			SetZoomedValues (ortographicsize);
+			SetZoomedValues (ortographicsize,x,y);
 			break;
 		case CameraState.FixedX:
 			SetFixedX ();
@@ -121,12 +121,13 @@ public class CameraController : MonoBehaviour {
 		}
 	}
 
-	private void SetZoomedValues(float size){
+	private void SetZoomedValues(float size, float x, float y){
 		currentState = CameraState.Zoomed;
 		holiwix.orthographicSize = size;
-	}
+        transform.position = new Vector3(x, y, transform.position.z);
+    }
 
-	private void TargetedZoom(float size, float x, float y){
+    private void TargetedZoom(float size, float x, float y){
 		Client.instance.GetLocalPlayer ().DejaDeMoverte ();
 		currentState = CameraState.TargetZoom;
 		Vector3 targetPosition = new Vector3 (x, y,0);

@@ -83,7 +83,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1208380953250652}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 56.96, y: -5.29, z: 1}
+  m_LocalPosition: {x: 56.8, y: -5.27, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4006069394395388}
@@ -173,7 +173,7 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   moveSpeed: 3
-  maxSpeed: 0
+  maxSpeed: 15
   jumpSpeed: 7
   speed: 0
   groundCheckRadius: 0.25

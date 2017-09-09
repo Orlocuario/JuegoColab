@@ -8,11 +8,17 @@ public class TriggerCamera : MonoBehaviour {
 	public CameraState state;
 	public float targetX;
 	public float targetY;
+    public GameObject target;
 
-	// Use this for initialization
-	void Start () {
-		
-	}
+    // Use this for initialization
+    void Start()
+    {
+        if (target != null)
+        {
+            targetX = target.transform.position.x;
+            targetY = target.transform.position.y;          
+        }
+    }
 
 	private void OnEnter(){
 		GameObject camaraObject = GameObject.FindGameObjectWithTag ("MainCamera");

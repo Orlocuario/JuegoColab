@@ -21,6 +21,12 @@ public class Switch : MonoBehaviour
 
     private void Start()
     {
+        if (activation == TypeOfActivation.Disparando)
+        {
+            Physics2D.IgnoreCollision(this.gameObject.GetComponent<BoxCollider2D>(), Client.instance.GetMage().gameObject.GetComponent<BoxCollider2D>());
+            Physics2D.IgnoreCollision(this.gameObject.GetComponent<BoxCollider2D>(), Client.instance.GetWarrior().gameObject.GetComponent<BoxCollider2D>());
+            Physics2D.IgnoreCollision(this.gameObject.GetComponent<BoxCollider2D>(), Client.instance.GetEngineer().gameObject.GetComponent<BoxCollider2D>());
+        }
         manager = GameObject.FindGameObjectWithTag("SwitchManager").GetComponent<SwitchManager>();
         manager.Add(this);
         SetSprite();

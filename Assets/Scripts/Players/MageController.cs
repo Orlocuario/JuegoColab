@@ -78,7 +78,7 @@ public class MageController : PlayerController {
                 remotePower = contadorPar % 2 == 0;
                 if (remotePower)
                 {
-                    changeMpRate = "-50";
+                    changeMpRate = "-5";
                 }
                 else
                 {

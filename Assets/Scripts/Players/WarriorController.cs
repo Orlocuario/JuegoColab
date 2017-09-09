@@ -15,8 +15,10 @@ public class WarriorController : PlayerController {
     int contadorHpAndMp;
     int rate;
 	float damage;
+    double force = 0;
     GameObject particulas;
     DisplayHUD hpAndMp;
+    private int hits = 0;
 
     protected override void Start()
 	{
@@ -38,6 +40,7 @@ public class WarriorController : PlayerController {
             bool buttonState = CnInputManager.GetButtonDown("Attack Button");
             if (buttonState && !remoteAttacking)
             {
+                GameObject punch = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Punch"));
                 remoteAttacking = true;
                 numHits++;
                 SendAttackDataToServer();
@@ -85,7 +88,7 @@ public class WarriorController : PlayerController {
 				remotePower = contadorPar%2 == 0;
                 if (remotePower)
                 {
-                    changeMpRate = "-50";
+                    changeMpRate = "-5";
 					damage = 8;
                 }
                 else
@@ -172,9 +175,11 @@ public class WarriorController : PlayerController {
 		GameObject piedra = GameObject.FindGameObjectWithTag ("RocaGiganteAraña");
 		Rigidbody2D rigidez = piedra.GetComponent<Rigidbody2D> ();
 		Vector3 posicionPiedra = piedra.GetComponent<Transform> ().position;
-		if ((myPosition - posicionPiedra).magnitude < 3f && rigidez.mass - 10f * damage > 50) 
+		if ((myPosition - posicionPiedra).magnitude < 3f) 
 		{
-			rigidez.mass -= 10f * damage;
-		}
+            hits++;
+            force = Math.Pow(hits, damage)/50;
+            rigidez.AddForce(Vector2.right * (float)force);
+        }
 	}
 }

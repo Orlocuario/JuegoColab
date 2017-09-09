@@ -30,8 +30,11 @@ public class ClientMessageHandler {
             case "ChangePosition":
                 HandleChangePosition(arreglo);
                 break;
-            case "ChangeItemPosition":
-                HandleChangeItemPosition(arreglo);
+            case "ChangeObjectPosition":
+                HandleChangeObjectPosition(arreglo);
+                break;
+            case "InstantiateObject":
+                HandleInstantiateObject(arreglo);
                 break;
             case "NewChatMessage":
                 HandleNewChatMessage(arreglo);
@@ -75,8 +78,8 @@ public class ClientMessageHandler {
             case "CreateGameObject":
                 HandleCreateGameObject(arreglo);
                 break;
-            case "DestroyItem":
-                HandleDestroyItem(arreglo);
+            case "DestroyObject":
+                HandleDestroyObject(arreglo);
                 break;
             case "ChangeSwitchSatus":
                 HandleChangeSwitchStatus(arreglo);
@@ -89,10 +92,16 @@ public class ClientMessageHandler {
         }
     }
 
-    private void HandleChangeItemPosition(string[] arreglo)
+    private void HandleChangeObjectPosition(string[] arreglo)
     {
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
         scriptLevel.MoveItemInGame(arreglo[1], arreglo[2], arreglo[3], arreglo[4]);
+    }
+    
+    private void HandleInstantiateObject(string[] arreglo)
+    {
+        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+        scriptLevel.InsantiateGameObject(arreglo);
     }
 
     private void HandleSwitchGroupReady(string[] arreglo)
@@ -162,11 +171,11 @@ public class ClientMessageHandler {
         scriptLevel.CreateGameObject(arreglo[1], charId);
     }
 
-    private void HandleDestroyItem(string[] arreglo)
+    private void HandleDestroyObject(string[] arreglo)
     {
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        GameObject itemToDestroy = GameObject.Find(arreglo[1]);
-        scriptLevel.DestroyItemInGame(itemToDestroy);
+        GameObject objectToDestroy = GameObject.Find(arreglo[1]);
+        scriptLevel.DestroyObjectInGame(objectToDestroy);
     }
 
     private void HandleChangeScene(string[] arreglo)
