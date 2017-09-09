@@ -28,54 +28,56 @@ public class SwitchActions : MonoBehaviour {
 			//animadorRoca.SetBool ("rocasecae", true);
 			break;
 
-		case 0: //La Activa J3 para que puedan Pasar los demás
+		case 0:
 			GameObject platEscaleraEng = (GameObject)Instantiate (Resources.Load ("Prefabs/EnginPlath1"));
 			platEscaleraEng.GetComponent<Transform> ().position = new Vector2 (12.9f, -1.4f);
 			GameObject feedbackswitchEng = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
 			feedbackswitchEng.GetComponent<Transform> ().position = new Vector2 (8.224f, -0.976f);
 			break;
 
-		case 1: //Disparos de J1 y J3 para liberar roca Gigante
+		case 1: 
 			GameObject rejaMage = GameObject.FindGameObjectWithTag ("RejaRocaMage");
 			GameObject rejaEng = GameObject.FindGameObjectWithTag ("RejaRocaEng");
 			rejaMage.SetActive (false);
 			rejaEng.SetActive (false);
-			Animator rocaQl = GameObject.FindGameObjectWithTag ("rocaCaida").GetComponent<Animator> ();
-			rocaQl.SetBool ("isReady", true);
-			break;
+			Roca roca = GameObject.FindGameObjectWithTag ("RocaGigante").GetComponent <Roca>();
+			roca.isReady = true;
 
+			break;
 		
-		case 2: // Golpe de J2. 
-			Animator rocaQl2 = GameObject.FindGameObjectWithTag ("rocaCaida").GetComponent<Animator> ();
-			bool daleRocaQl2 = rocaQl2.GetBool ("isReady");
-			if (daleRocaQl2 == true)
-			{
+		
+		case 2:
+			Roca rocaGigante = GameObject.FindGameObjectWithTag ("RocaGigante").GetComponent <Roca> ();
+			if (rocaGigante.isReady == true) {
 				GameObject sujetaRoca = GameObject.FindGameObjectWithTag ("SujetaRoca");
 				Animator sujetaRocaAnim = sujetaRoca.GetComponent<Animator> ();
 				sujetaRocaAnim.SetBool ("isSwitch", true);
-				Animator Boom = GameObject.FindGameObjectWithTag ("rocaCaida").GetComponent<Animator> ();
-				Boom.SetBool ("rockBottom", true);
-			}
-			else 
-			{	GameObject sujetaRoca = GameObject.FindGameObjectWithTag ("SujetaRoca");
+				GameObject rocaCaida = GameObject.FindGameObjectWithTag ("rocaCaida");
+				rocaCaida.GetComponent<Animator> ().SetBool ("switchRocaOn", true);
+
+			} 
+			else {
+				Debug.Log ("Faltan weás");
+				GameObject sujetaRoca = GameObject.FindGameObjectWithTag ("SujetaRoca");
 				Animator sujetaRocaAnim = sujetaRoca.GetComponent<Animator> ();
 				sujetaRocaAnim.SetBool ("isSwitch", true);
-				Debug.Log ("HAY UNA FIESTA EN TU POTO"); 
 			}
+
 			               
 			break;
+		case 3: 
+			
+
+			break;
 		
-		
-		case 3:
+		case 4:
 			GameObject platescalera = (GameObject)Instantiate (Resources.Load ("Prefabs/MagePlath"));
 			platescalera.GetComponent<Transform> ().position = new Vector2 (43f, -16f);
 			GameObject feedbackswitch = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
 			feedbackswitch.GetComponent<Transform> ().position = new Vector2 (41.4f, -16.3f);
 			break;
-
-        case 45:
-            Debug.Log("PICO");
-            break;
+		
+		
 		default:
 			break;
 

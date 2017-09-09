@@ -716,7 +716,7 @@ MonoBehaviour:
     boundsEditorMode: 2
     pivot: {x: 0, y: 0}
     oriant: 0
-    mainToolBar: 2
+    mainToolBar: 0
     selectedPoints: []
     serelizableSelectedPoints: 
     inversGizmos: 0

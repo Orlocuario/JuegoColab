@@ -8,13 +8,13 @@ AnimatorController:
   m_Name: Roca
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: isReady
+  - m_Name: caidaOn
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 0}
-  - m_Name: rockBottom
+  - m_Name: IsReady
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -41,10 +41,10 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isReady
+    m_ConditionEvent: caidaOn
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: rockBottom
+    m_ConditionEvent: caidaOn
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102244578077356452}

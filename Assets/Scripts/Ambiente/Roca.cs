@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Roca : MonoBehaviour {
 
-    public bool switchRocaOn;
+    public bool caidaOn;
     public bool isArbol;
+	public bool isReady;
+
     private Animator animRoca;
 
 
@@ -16,32 +18,14 @@ public class Roca : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		if (switchRocaOn == true)
-        {
-            animRoca.SetBool("switchRocaOn", switchRocaOn);
-        }
-
-        if (isArbol == true)
-        {
-            animRoca.SetBool("isArbol", true);
-        }
-    
-	}
-
-    private void OnColliderEnter2D(Collider2D other)
-    {
-		if (other.gameObject.tag == "ArbolCaida") 
-		{
-			isArbol = true;
-			other.GetComponent<Animator>().SetBool("Rockbottom", true);
-		}
-    }
-
-	public void IgnoreCollision()
+	void Update ()
 	{
-		GameObject arbolQl = GameObject.FindGameObjectWithTag ("ArbolCaida");
 
-		Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), arbolQl.GetComponent<Collider2D> ()); 
+		if (caidaOn == true && isReady == false) {
+			Debug.Log ("Faltan los otros Switch");
+		} 
+		else {
+			animRoca.SetBool ("caidaOn", caidaOn);
+		}
 	}
 }
