@@ -21,11 +21,14 @@ public class Roca : MonoBehaviour {
 	void Update ()
 	{
 
-		if (caidaOn == true && isReady == false) {
-			Debug.Log ("Faltan los otros Switch");
-		} 
-		else {
-			animRoca.SetBool ("caidaOn", caidaOn);
+	}
+
+	provate void onTriggerEnter2D(Collider2D other)
+	{
+		if (other.gameObject.tag == "ArbolCaida") {
+			Animator animArbol = other.gameObject.GetComponent<Animator> ();
+			animArbol.SetBool ("RockBottom", true);
+			
 		}
 	}
 }
