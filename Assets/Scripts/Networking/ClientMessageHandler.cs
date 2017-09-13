@@ -87,9 +87,27 @@ public class ClientMessageHandler {
             case "SwitchGroupReady":
                 HandleSwitchGroupReady(arreglo);
                 break;
+            case "ActivateRuneDoor":
+                HandleActivationDoor(arreglo);
+                break;
+            case "ActivateMachine":
+                HandleActivationMachine(arreglo);
+                break;
             default:
                 break;
         }
+    }
+
+    private void HandleActivationMachine(string[] arreglo)
+    {
+        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+        scriptLevel.ActivateMachine(arreglo[1]);
+    }
+
+    private void HandleActivationDoor(string[] arreglo)
+    {
+        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+        scriptLevel.ActivateRuneDoor(arreglo[1]);
     }
 
     private void HandleChangeObjectPosition(string[] arreglo)

@@ -35,14 +35,14 @@ public class PickUpItem : MonoBehaviour
     public void PickUp()
     {
         string itemName = this.gameObject.name;
-        Inventory.instance.AddItemToInventory(this.gameObject);
         Client.instance.SendMessageToServer("DestroyObject/" + itemName);
+        Inventory.instance.AddItemToInventory(this.gameObject);
     }
 
     public void PickUpExp(string item_name)
     {
         string itemName = this.gameObject.name;
-        Client.instance.SendMessageToServer("GainExp/" + "50");
         Client.instance.SendMessageToServer("DestroyItem/" + itemName);
+        Client.instance.SendMessageToServer("GainExp/" + "50");
     }
 }

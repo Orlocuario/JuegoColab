@@ -83,9 +83,29 @@ public class ServerMessageHandler
             case "SwitchGroupReady":
                 SendSwitchGroupAction(message, connectionId);
                 break;
+            case "ActivateRuneDoor":
+                SendActivationDoor(message, connectionId);
+                break;
+            case "ActivateMachine":
+                SendActivationMachine(message, connectionId);
+                break;
             default:
                 break;
         }
+    }
+
+    private void SendActivationMachine(string message, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.SendMessageToAllPlayers(message);
+    }
+
+    private void SendActivationDoor(string message, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.SendMessageToAllPlayers(message);
     }
 
     private void SendSwitchGroupAction(string message, int connectionId)

@@ -16,9 +16,9 @@ public class Items
     public Items()
     {
         instance = this;
-        itemsInGame.Add("engranaje");
-        itemsInGame.Add("car");
         itemsInGame.Add("Rope");
+        itemsInGame.Add("EngranajeA");
+        itemsInGame.Add("EngranajeB");
         itemsInGame.Add("RunaA1");
         itemsInGame.Add("RunaA2");
         itemsInGame.Add("RunaA3");
@@ -79,10 +79,20 @@ public class Items
         string actionToDo = "";
 
         switch (itemName)
-        {//itemId = 0 implies the fact that there is no item selected item
+        {//itemId = 0 implies the fact that there is no selected item
             case ("Rope"):
                 info = "Una cuerda para llegar alto";
                 actionToDo = "Everyone/Climb";
+                itemId = 1;
+                break;
+            case ("EngranajeA"):
+                info = "Una pieza para arreglar maquinas";
+                actionToDo = "Engineer/FixMachine";
+                itemId = 2;
+                break;
+            case ("EngranajeB"):
+                info = "Una pieza para arreglar maquinas";
+                actionToDo = "Engineer/FixMachine";
                 itemId = 3;
                 break;
             case ("RunaA1"):

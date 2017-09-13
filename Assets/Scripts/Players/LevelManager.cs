@@ -37,13 +37,13 @@ public class LevelManager : MonoBehaviour {
         players[2] = GameObject.FindGameObjectsWithTag("Player3")[0];
         switch (id)
         {
-            case 0:
+            case 2:
                 player = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<MageController>();
                 break;
             case 1:
                 player = GameObject.FindGameObjectsWithTag("Player2")[0].GetComponent<WarriorController>();
                 break;
-            case 2:
+            case 0:
                 player = GameObject.FindGameObjectsWithTag("Player3")[0].GetComponent<EngineerController>();
                 break;
             default:
@@ -84,6 +84,39 @@ public class LevelManager : MonoBehaviour {
     {
         Destroy(objectToDestroy);
         return;
+    }
+
+    public void ActivateRuneDoor(string doorName)
+    {
+        GameObject door = GameObject.Find(doorName);
+        door.GetComponent<BoxCollider2D>().isTrigger = true;
+        SpriteRenderer doorSpriteRenderer = door.GetComponent<SpriteRenderer>();
+        SpriteRenderer[] doorSlotSpriteRenderer = door.GetComponentsInChildren<SpriteRenderer>();
+        for (int i = 0; i < doorSlotSpriteRenderer.Length; i++)
+        {
+            doorSlotSpriteRenderer[i].sprite = null;
+        }
+        doorSpriteRenderer.sprite = door.GetComponent<RuneSystem>().doorIsOpen;
+    }
+
+    public void ActivateMachine(string machineName)
+    {
+        GameObject machine = GameObject.Find(machineName);
+        SpriteRenderer maquinaSpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
+        SpriteRenderer[] maquinaSlotSpriteRenderer = this.gameObject.GetComponentsInChildren<SpriteRenderer>();
+        for (int i = 0; i < maquinaSlotSpriteRenderer.Length; i++)
+        {
+            maquinaSlotSpriteRenderer[i].sprite = null;
+        }
+        maquinaSpriteRenderer.sprite = machine.GetComponent<EngranajeSystem>().maquinaIsOpen;
+
+        if (machineName == "MaquinaEngranajeA")
+        {
+            GameObject viga = GameObject.Find("GiantBlocker");
+            GameObject viga2 = GameObject.Find("GiantBlocker (1)");
+            viga.SetActive(false);
+            viga2.SetActive(false);
+        }
     }
 
     public void CreateGameObject(string spriteName, int charId)
