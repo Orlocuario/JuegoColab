@@ -23,7 +23,7 @@ public class Roca : MonoBehaviour {
 
 	}
 
-	provate void onTriggerEnter2D(Collider2D other)
+	private void onTriggerEnter2D(Collider2D other)
 	{
 		if (other.gameObject.tag == "ArbolCaida") {
 			Animator animArbol = other.gameObject.GetComponent<Animator> ();

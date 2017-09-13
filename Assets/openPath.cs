@@ -14,7 +14,7 @@ public class openPath : MonoBehaviour {
 		
 	}
 
-	private void onTriggerEnter2D (Collider2D other)
+	void onTriggerEnter2D (Collider2D other)
 	{
 		if (other.gameObject.tag == "rocaCaida") 
 		{
