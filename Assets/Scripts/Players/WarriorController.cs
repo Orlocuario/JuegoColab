@@ -40,7 +40,7 @@ public class WarriorController : PlayerController {
             bool buttonState = CnInputManager.GetButtonDown("Attack Button");
             if (buttonState && !remoteAttacking)
             {
-                GameObject punch = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Punch"));
+                //GameObject punch = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Punch"));
                 remoteAttacking = true;
                 numHits++;
                 SendAttackDataToServer();

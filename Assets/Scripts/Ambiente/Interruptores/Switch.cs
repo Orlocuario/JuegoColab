@@ -21,12 +21,12 @@ public class Switch : MonoBehaviour
 
     private void Start()
     {
-        if (activation == TypeOfActivation.Disparando)
+        /*if (activation == TypeOfActivation.Disparando)
         {
             Physics2D.IgnoreCollision(this.gameObject.GetComponent<BoxCollider2D>(), Client.instance.GetMage().gameObject.GetComponent<BoxCollider2D>());
             Physics2D.IgnoreCollision(this.gameObject.GetComponent<BoxCollider2D>(), Client.instance.GetWarrior().gameObject.GetComponent<BoxCollider2D>());
             Physics2D.IgnoreCollision(this.gameObject.GetComponent<BoxCollider2D>(), Client.instance.GetEngineer().gameObject.GetComponent<BoxCollider2D>());
-        }
+        }*/
         manager = GameObject.FindGameObjectWithTag("SwitchManager").GetComponent<SwitchManager>();
         manager.Add(this);
         SetSprite();
@@ -92,7 +92,7 @@ public class Switch : MonoBehaviour
     {
         if (switchColor == Color.Any)
         {
-            if(name == "Fireball"){
+            if(name == "Fireball" || name =="Arrow" || name == "Player2"){
                 return true;
             }
         }
@@ -100,6 +100,10 @@ public class Switch : MonoBehaviour
         {
             case "Fireball":
                 return switchColor == Color.Blue;
+            case "Arrow":
+                return switchColor == Color.Yellow;
+            case "Player2":
+                return switchColor == Color.Red;
             default:
                 return false;
         }
@@ -139,6 +143,20 @@ public class Switch : MonoBehaviour
                         return true;
                     }
                     break;
+                case "Arrow":
+                    Destroy(colliderGameObject);
+                    if (Client.instance.GetLocalPlayer().tag == "Player3")
+                    {
+                        return true;
+                    }
+                    break;
+                case "Player2":
+                    if(Client.instance.GetLocalPlayer().tag == "Player2")
+                    {
+                        return true;
+                    }
+                    break;
+                 
             }
         }
         return false;
