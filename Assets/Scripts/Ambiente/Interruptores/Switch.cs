@@ -92,7 +92,7 @@ public class Switch : MonoBehaviour
     {
         if (switchColor == Color.Any)
         {
-            if(name == "Fireball"){
+            if(name == "Fireball" || name =="Arrow" || name == "Player2"){
                 return true;
             }
         }
@@ -100,6 +100,10 @@ public class Switch : MonoBehaviour
         {
             case "Fireball":
                 return switchColor == Color.Blue;
+            case "Arrow":
+                return switchColor == Color.Yellow;
+            case "Player2":
+                return switchColor == Color.Red;
             default:
                 return false;
         }
