@@ -36,9 +36,9 @@ public class SwitchActions : MonoBehaviour {
 			break;
 
 		case 1: 
-			GameObject rejaMage = GameObject.FindGameObjectWithTag ("RejaRocaMage");
+			ParticleSystem particleRoca = (ParticleSystem)Instantiate (Resources.Load ("Prefabs/ParticulasMage"));
 			GameObject rejaEng = GameObject.FindGameObjectWithTag ("RejaRocaEng");
-			rejaMage.SetActive (false);
+			particleRoca.GetComponent<Transform> ().position = new Vector2 (30.5f, 2.4f);
 			rejaEng.SetActive (false);
 			Roca roca = GameObject.FindGameObjectWithTag ("RocaGigante").GetComponent <Roca>();
 			roca.isReady = true;

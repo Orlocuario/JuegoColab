@@ -11,11 +11,13 @@ public class BagButton : MonoBehaviour {
     public GameObject canvas;
 
     public bool usingRune;
+    public bool usingEngranaje;
 
 	void Start ()
     {
         instance = this;
         usingRune = false;
+        usingEngranaje = false;
         GameObject.Find("DisplayPanel").SetActive(false);
         Inventory.instance = inventory.GetComponent<Inventory>();
     }
@@ -114,6 +116,9 @@ public class BagButton : MonoBehaviour {
             switch (actionToDo)
             {
                 case "Climb":
+                    break;
+                case "FixMachine":
+                    usingEngranaje = true;
                     break;
                 case "RuneOpenDoors":
                     usingRune = true;

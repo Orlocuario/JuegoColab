@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 30179213fca29da409a064aeaa7a5e9f
-timeCreated: 1502484448
+timeCreated: 1505325608
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -26,22 +26,23 @@ TextureImporter:
     21300038: RunaV3
     21300040: RunaA3
     21300042: RunaR3
-    21300044: ElementosEtapa1_22
-    21300046: ElementosEtapa1_23
+    21300044: EngranajeA
+    21300046: Engranaje
     21300048: RunaM4
     21300050: RunaV4
     21300052: RunaA4
     21300054: RunaR4
-    21300056: ElementosEtapa1_28
+    21300056: Llave
     21300058: RunaM5
     21300060: RunaV5
     21300062: RunaA5
     21300064: RunaR5
     21300066: ElementosEtapa1_33
-    21300068: ElementosEtapa1_34
-    21300070: ElementosEtapa1_35
-    21300072: ElementosEtapa1_36
+    21300068: MaquinaType1
+    21300070: MaquinaType2
+    21300072: MaquinaType3
     21300074: ElementosEtapa1_37
+    21300076: EngranajeB
   serializedVersion: 4
   mipmaps:
     mipMapMode: 0
@@ -402,7 +403,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ElementosEtapa1_22
+      name: EngranajeA
       rect:
         serializedVersion: 2
         x: 60
@@ -415,7 +416,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ElementosEtapa1_23
+      name: EngranajeB
       rect:
         serializedVersion: 2
         x: 88
@@ -480,7 +481,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ElementosEtapa1_28
+      name: Llave
       rect:
         serializedVersion: 2
         x: 77
@@ -558,7 +559,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ElementosEtapa1_34
+      name: MaquinaType1
       rect:
         serializedVersion: 2
         x: 80
@@ -571,7 +572,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ElementosEtapa1_35
+      name: MaquinaType2
       rect:
         serializedVersion: 2
         x: 128
@@ -584,7 +585,7 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: ElementosEtapa1_36
+      name: MaquinaType3
       rect:
         serializedVersion: 2
         x: 179
