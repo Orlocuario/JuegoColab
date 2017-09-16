@@ -30,15 +30,16 @@ public class SwitchActions : MonoBehaviour {
 
 		case 0:
 			GameObject platEscaleraEng = (GameObject)Instantiate (Resources.Load ("Prefabs/EnginPlath1"));
-			platEscaleraEng.GetComponent<Transform> ().position = new Vector2 (12.9f, -1.4f);
+			platEscaleraEng.GetComponent<Transform> ().position = new Vector2 (12.9f, -1.3f);
 			GameObject feedbackswitchEng = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
-			feedbackswitchEng.GetComponent<Transform> ().position = new Vector2 (8.224f, -0.976f);
-			break;
+			feedbackswitchEng.GetComponent<Transform> ().position = new Vector2 (13.2f, -1.3f);
+			break; 
 
 		case 1: 
-			ParticleSystem particleRoca = (ParticleSystem)Instantiate (Resources.Load ("Prefabs/ParticulasMage"));
+			ParticleSystem particleRoca = (ParticleSystem)Instantiate (Resources.Load ("Prefabs/ParticulasMageRoca"));
 			GameObject rejaEng = GameObject.FindGameObjectWithTag ("RejaRocaEng");
 			particleRoca.GetComponent<Transform> ().position = new Vector2 (30.5f, 2.4f);
+                particleRoca.SetActive(true);
 			rejaEng.SetActive (false);
 			Roca roca = GameObject.FindGameObjectWithTag ("RocaGigante").GetComponent <Roca>();
 			roca.isReady = true;
