@@ -35,12 +35,4 @@ public class Roca : MonoBehaviour {
 
 	}
 
-	private void onTriggerEnter2D(Collider2D other)
-	{
-		if (other.gameObject.tag == "ArbolCaida") {
-			Animator animArbol = other.gameObject.GetComponent<Animator> ();
-			animArbol.SetBool ("RockBottom", true);
-			
-		}
-	}
 }
