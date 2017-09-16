@@ -56,7 +56,8 @@ public class SwitchActions : MonoBehaviour {
 				rocaCaida.GetComponent<Animator> ().SetBool ("switchRocaOn", true);
 
 			} 
-			else {
+			else if (rocaGigante.isReady == false)
+            {
 				Debug.Log ("Faltan weás");
 				GameObject sujetaRoca = GameObject.FindGameObjectWithTag ("SujetaRoca");
 				Animator sujetaRocaAnim = sujetaRoca.GetComponent<Animator> ();

@@ -14,12 +14,24 @@ public class Roca : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
-		
+        caidaOn = false;
+        isReady = false;
+
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
+        if (isReady == true)
+        {
+            animRoca.SetBool("isReady", true);
+        }
+
+        if (caidaOn == true)
+        {
+            animRoca.SetBool("caidaOn", true);
+        }
+     
 
 	}
 
