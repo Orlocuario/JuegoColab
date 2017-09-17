@@ -93,9 +93,18 @@ public class ClientMessageHandler {
             case "ActivateMachine":
                 HandleActivationMachine(arreglo);
                 break;
+            case "ActivateNPCLog":
+                HandleActivationNpcLog(arreglo);
+                break;
             default:
                 break;
         }
+    }
+
+    private void HandleActivationNpcLog(string[] arreglo)
+    {
+        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+        scriptLevel.ActivateNPCLog(arreglo[1]);
     }
 
     private void HandleActivationMachine(string[] arreglo)

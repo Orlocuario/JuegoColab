@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour {
 
@@ -9,6 +10,7 @@ public class LevelManager : MonoBehaviour {
     public float waitToRespawn;
     public GameObject[] players;
     public GameObject canvas;
+    public GameObject npcLog;
 
     private Client client;
     private GameObject createGameObject;
@@ -16,15 +18,20 @@ public class LevelManager : MonoBehaviour {
     private GameObject[] itemsInLevel;
     private List<Vector3> itemsOriginalPositions = new List<Vector3>();
     private float waitToGrabItem;
+    private float waitToKillNPCCountdown;
     private float waitToResetItemPos;
 
     void Start ()
     {
         canvas.SetActive(true);
         waitToGrabItem = 5f;
+        waitToKillNPCCountdown = 10f;
         thePlayer = null;
+        npcLog = GameObject.Find("NPCLog");
+        npcLog.SetActive(false);
         client = GameObject.Find("ClientObject").GetComponent<Client>();
         client.RequestCharIdToServer();
+
         //SetHpAndManaToMax();
 	}
 
@@ -51,7 +58,7 @@ public class LevelManager : MonoBehaviour {
         }
 
         player.Activate(id);
-        thePlayer = player;
+        thePlayer = player; 
         Camera.main.GetComponent<CameraController>().target = player.gameObject;
     }
 
@@ -97,6 +104,14 @@ public class LevelManager : MonoBehaviour {
             doorSlotSpriteRenderer[i].sprite = null;
         }
         doorSpriteRenderer.sprite = door.GetComponent<RuneSystem>().doorIsOpen;
+    }
+
+    internal void ActivateNPCLog(string message)
+    {
+        npcLog.SetActive(true);
+        Text npcLogText = GameObject.Find("NPCLogText").GetComponent<Text>();
+        npcLogText.text = message;
+        StartCoroutine("WaitToKillNPC");
     }
 
     public void ActivateMachine(string machineName)
@@ -164,6 +179,12 @@ public class LevelManager : MonoBehaviour {
     {
         yield return new WaitForSeconds(waitToGrabItem);
         Physics2D.IgnoreCollision(createGameObject.GetComponent<Collider2D>(), player.GetComponent<Collider2D>(), false);
+    }
+
+    private IEnumerator WaitToKillNPC()
+    {
+        yield return new WaitForSeconds(waitToGrabItem);
+        npcLog.SetActive(false);
     }
 
     public void ReloadLevel()

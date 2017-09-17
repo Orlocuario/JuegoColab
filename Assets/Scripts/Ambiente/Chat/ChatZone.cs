@@ -45,6 +45,7 @@ public class ChatZone : MonoBehaviour {
                 countTillRate = 0;
                 Client.instance.SendMessageToServer("ChangeHpAndManaHUDToRoom/" + HUDRate);
             }
+            Client.instance.SendMessageToServer("ActivateNPCLog/Pickle Rick! :D");
         }
         else
         {
