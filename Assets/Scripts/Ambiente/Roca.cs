@@ -27,7 +27,7 @@ public class Roca : MonoBehaviour {
             animRoca.SetBool("isReady", true);
         }
 
-        if (caidaOn == true)
+        if (caidaOn == true && isReady == true)
         {
             animRoca.SetBool("caidaOn", true);
         }
