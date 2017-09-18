@@ -42,8 +42,7 @@ public class SwitchActions : MonoBehaviour {
 			rejaEng.SetActive (false);
 			Roca roca = GameObject.FindGameObjectWithTag ("RocaGigante").GetComponent <Roca>();
 			roca.isReady = true;
-
-			break;
+            break;
 		
 		
 		case 2:
@@ -66,18 +65,20 @@ public class SwitchActions : MonoBehaviour {
 
 			               
 			break;
-		case 3: 
-			
-
-			break;
+		case 3:
+                GameObject platescalera = (GameObject)Instantiate(Resources.Load("Prefabs/MagePlath"));
+                platescalera.GetComponent<Transform>().position = new Vector2(43f, -16f);
+                GameObject feedbackswitch = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
+                feedbackswitch.GetComponent<Transform>().position = new Vector2(41.4f, -16.3f);
+                break;
 		
 		case 4:
-			GameObject platescalera = (GameObject)Instantiate (Resources.Load ("Prefabs/MagePlath"));
-			platescalera.GetComponent<Transform> ().position = new Vector2 (43f, -16f);
-			GameObject feedbackswitch = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
-			feedbackswitch.GetComponent<Transform> ().position = new Vector2 (41.4f, -16.3f);
-			break;
-		
+                GameObject platparaMage = (GameObject)Instantiate(Resources.Load("Prefabs/plathParaMageWarrior"));
+                platparaMage.GetComponent<Transform>().position = new Vector2(61f, -9.5f);
+                GameObject feedbackswitchwarr = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
+                feedbackswitchwarr.GetComponent<Transform>().position = new Vector2(72.86f, -19.3f);
+                break;
+                
 		
 		default:
 			break;
