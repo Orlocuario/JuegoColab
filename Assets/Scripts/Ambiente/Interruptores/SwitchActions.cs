@@ -53,14 +53,17 @@ public class SwitchActions : MonoBehaviour {
 				sujetaRocaAnim.SetBool ("isSwitch", true);
 				GameObject rocaCaida = GameObject.FindGameObjectWithTag ("rocaCaida");
 				rocaCaida.GetComponent<Animator> ().SetBool ("switchRocaOn", true);
+				sujetaRocaAnim.SetBool ("isSwitch", false); 
 
 			} 
 			else if (rocaGigante.isReady == false)
             {
-				Debug.Log ("Faltan weás");
+
 				GameObject sujetaRoca = GameObject.FindGameObjectWithTag ("SujetaRoca");
 				Animator sujetaRocaAnim = sujetaRoca.GetComponent<Animator> ();
 				sujetaRocaAnim.SetBool ("isSwitch", true);
+
+				sujetaRocaAnim.SetBool ("isSwitch", false);
 			}
 
 			               
@@ -79,6 +82,8 @@ public class SwitchActions : MonoBehaviour {
                 feedbackswitchwarr.GetComponent<Transform>().position = new Vector2(72.86f, -19.3f);
                 break;
                 
+		case 5:
+				
 		
 		default:
 			break;
