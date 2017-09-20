@@ -7,8 +7,6 @@ public class ServerMessageHandler
 {
     Server server;
 
-    public string NPCsLastMessage = "";
-
     public ServerMessageHandler(Server server)
     {
         this.server = server;
@@ -107,7 +105,7 @@ public class ServerMessageHandler
         {
             message = "ActivateNPCLog/" + message;
         }
-        NPCsLastMessage = message;
+        server.NPCsLastMessage = message;
         room.SendMessageToPlayer(message, connectionId); // Message es el texto a mostrar en el NPC Log
     }
 
