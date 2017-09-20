@@ -125,7 +125,6 @@ public class MageController : PlayerController {
 	{
 		SetAnimacion (power);
 		remotePower = power;
-
 	}
 
     private void CastFireball(int direction, float speed)

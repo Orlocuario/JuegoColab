@@ -51,9 +51,9 @@ public class Switch : MonoBehaviour
         {
             Activate();
         }
-        else
+		else if(CheckIfColliderIsLocalPlayer (collision))
         {
-            Desactivate();
+			Desactivate();
         }
     }
 
