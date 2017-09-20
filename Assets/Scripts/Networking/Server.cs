@@ -21,6 +21,7 @@ public class Server : MonoBehaviour {
     public ServerMessageHandler messageHandler;
     public static Server instance;
     int bufferSize = 100;
+    int bigBufferSize = 64000;
     public int maxJugadores;
     public string sceneToLoad;
 
@@ -72,8 +73,8 @@ public class Server : MonoBehaviour {
         if (Error == NetworkError.MessageToLong)
         {
             //Trata de capturar el mensaje denuevo, pero asumiendo buffer más grande.
-            recBuffer = new byte[1024];
-            recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, 1024, out dataSize, out error);
+            recBuffer = new byte[bigBufferSize];
+            recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, bigBufferSize, out dataSize, out error);
         }
         switch (recNetworkEvent)
         {
@@ -91,8 +92,9 @@ public class Server : MonoBehaviour {
                 {
                     //Mensaje corto normal
                     messageHandler.HandleMessage(message, recConnectionId);
+
                 }
-                if(recChannelId == bigChannelId)
+                if (recChannelId == bigChannelId)
                 {
                     //Mensaje largo. Planner
                     SendMessagToPlanner(message, recConnectionId);
@@ -121,11 +123,11 @@ public class Server : MonoBehaviour {
     {
         byte error;
         //int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[bigBufferSize];
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, message);
-        NetworkTransport.Send(socketId, clientId, bigChannelId, buffer, bufferSize, out error);
+        NetworkTransport.Send(socketId, clientId, bigChannelId, buffer, bigBufferSize, out error);
     }
 
     public void SendMessageToClient(Jugador player, string message)
@@ -216,7 +218,7 @@ public class Server : MonoBehaviour {
 
     private void SendMessagToPlanner(string message, int connectionId)
     {
-        //blablabla
+        //Algo
     }
     
     private void Plan()

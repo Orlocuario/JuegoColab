@@ -19,6 +19,7 @@ public class Client : MonoBehaviour {
     int channelId;
     public static Client instance;
     int bufferSize = 100;
+    int bigBufferSize = 64000;
     ClientMessageHandler handler;
 
 	void Start () {
@@ -54,11 +55,11 @@ public class Client : MonoBehaviour {
     {
         byte error;
         //int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
-        byte[] buffer = new byte[1024];
+        byte[] buffer = new byte[bigBufferSize];
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, message);
-        NetworkTransport.Send(socketId, connectionId, bigChannelId, buffer, 1024, out error);
+        NetworkTransport.Send(socketId, connectionId, bigChannelId, buffer, bigBufferSize, out error);
     }
 
     void LateUpdate()
@@ -68,14 +69,14 @@ public class Client : MonoBehaviour {
         int recChannelId;
         byte[] recBuffer = new byte[bufferSize];
         int dataSize;
-        byte error;
+        byte error;        
         NetworkEventType recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, bufferSize, out dataSize, out error);
         NetworkError Error = (NetworkError)error;
         if (Error == NetworkError.MessageToLong)
         {
             //Trata de capturar el mensaje denuevo, pero asumiendo buffer más grande.
-            recBuffer = new byte[1024];
-            recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, 1024, out dataSize, out error);
+            recBuffer = new byte[bigBufferSize];
+            recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, bigBufferSize, out dataSize, out error);
         }
         switch (recNetworkEvent)
         {
