@@ -24,6 +24,7 @@ public class Server : MonoBehaviour {
     int bigBufferSize = 64000;
     public int maxJugadores;
     public string sceneToLoad;
+    public string NPCsLastMessage;
 
     	//Planner Thread
 	Thread planner;
@@ -43,6 +44,7 @@ public class Server : MonoBehaviour {
     // Use this for initialization
     void Start()
     {
+        NPCsLastMessage = "";
         maxJugadores = 1;
         instance = this;
         timesScene1IsLoaded = 0;
