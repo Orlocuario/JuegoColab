@@ -15,11 +15,13 @@ public class Server : MonoBehaviour {
     int port = 7777;
     int socketId;
     int channelId;
+    int bigChannelId;
     int timesScene1IsLoaded;
     public List<Room> rooms;
     public ServerMessageHandler messageHandler;
     public static Server instance;
     int bufferSize = 100;
+    int bigBufferSize = 64000;
     public int maxJugadores;
     public string sceneToLoad;
 
@@ -47,6 +49,7 @@ public class Server : MonoBehaviour {
         NetworkTransport.Init();
         ConnectionConfig config = new ConnectionConfig();
         channelId = config.AddChannel(QosType.Unreliable);
+        bigChannelId = config.AddChannel(QosType.ReliableFragmented);
         HostTopology topology = new HostTopology(config, maxConnections);
         socketId = NetworkTransport.AddHost(topology, port);
         rooms = new List<Room>();
@@ -66,7 +69,13 @@ public class Server : MonoBehaviour {
         int dataSize;
         byte error;
         NetworkEventType recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, bufferSize, out dataSize, out error);
-
+        NetworkError Error = (NetworkError)error;
+        if (Error == NetworkError.MessageToLong)
+        {
+            //Trata de capturar el mensaje denuevo, pero asumiendo buffer más grande.
+            recBuffer = new byte[bigBufferSize];
+            recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, bigBufferSize, out dataSize, out error);
+        }
         switch (recNetworkEvent)
         {
             case NetworkEventType.Nothing:
@@ -79,7 +88,17 @@ public class Server : MonoBehaviour {
                 Stream stream = new MemoryStream(recBuffer);
                 BinaryFormatter formatter = new BinaryFormatter();
                 string message = formatter.Deserialize(stream) as string;
-                messageHandler.HandleMessage(message, recConnectionId);
+                if(recChannelId == channelId)
+                {
+                    //Mensaje corto normal
+                    messageHandler.HandleMessage(message, recConnectionId);
+
+                }
+                if (recChannelId == bigChannelId)
+                {
+                    //Mensaje largo. Planner
+                    SendMessagToPlanner(message, recConnectionId);
+                }
                 UnityEngine.Debug.Log("incoming message event received: " + message);
                 break;
             case NetworkEventType.DisconnectEvent:
@@ -98,6 +117,17 @@ public class Server : MonoBehaviour {
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, message);
         NetworkTransport.Send(socketId, clientId, channelId, buffer, bufferSize, out error);
+    }
+
+    public void SendPlannerInfoToClient(int clientId, string message)
+    {
+        byte error;
+        //int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
+        byte[] buffer = new byte[bigBufferSize];
+        Stream stream = new MemoryStream(buffer);
+        BinaryFormatter formatter = new BinaryFormatter();
+        formatter.Serialize(stream, message);
+        NetworkTransport.Send(socketId, clientId, bigChannelId, buffer, bigBufferSize, out error);
     }
 
     public void SendMessageToClient(Jugador player, string message)
@@ -184,6 +214,11 @@ public class Server : MonoBehaviour {
             }
         }
         return selectedRoom;
+    }
+
+    private void SendMessagToPlanner(string message, int connectionId)
+    {
+        //Algo
     }
     
     private void Plan()

@@ -148,6 +148,17 @@ public class Room
         }
     }
 
+    public void SendMessageToPlayer(string message, int connectionId)
+    {
+        foreach (Jugador player in players)
+        {
+            if (player.connected && player.connectionId == connectionId)
+            {
+                server.SendMessageToClient(player.connectionId, message);
+            }
+        }
+    }
+
     public void CreateTextChat()
     {
         numeroPartidas = "Por Resolver";
