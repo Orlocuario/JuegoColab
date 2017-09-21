@@ -5,6 +5,7 @@ using UnityEngine;
 public class SwitchActions : MonoBehaviour {
 
     int groupId;
+	bool meActive = false;
 
     public SwitchActions(GroupOfSwitchs group)
     {
@@ -17,6 +18,9 @@ public class SwitchActions : MonoBehaviour {
 
 	public void DoSomething()
 	{
+		if (meActive) {
+			return;
+		}
 		switch (groupId) {
 		case 3789:
 			/*GameObject camaraObject = GameObject.FindGameObjectWithTag ("MainCamera");
@@ -93,5 +97,6 @@ public class SwitchActions : MonoBehaviour {
 		//GameObject fireball = (GameObject)Instantiate (Resources.Load ("Prefabs/Attacks/BolaM1"));
 		//fireball.GetComponent<Transform> ().position = new Vector2 (3, 4);*/
 			}
+		meActive = true;
 		}
 	}
