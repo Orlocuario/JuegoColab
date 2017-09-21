@@ -61,7 +61,6 @@ public class Switch : MonoBehaviour
     {
         if (CheckIfColliderIsAttack(collision))
         {
-            SendOnDataToServer(on);
             Activate();
         }
     }
