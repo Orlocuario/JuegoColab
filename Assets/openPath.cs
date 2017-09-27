@@ -22,7 +22,4 @@ public class OpenPath : MonoBehaviour {
 		}
 			
 	}
-
-
-
-
+}
