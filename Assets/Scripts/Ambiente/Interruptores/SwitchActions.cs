@@ -58,18 +58,18 @@ public class SwitchActions : MonoBehaviour {
 		case 2:
 			Roca rocaGigante = GameObject.FindGameObjectWithTag ("rocaCaida").GetComponent <Roca> ();
 			if (rocaGigante.isReady == true) {
-				GameObject sujetaRoca = GameObject.FindGameObjectWithTag ("SujetaRoca");
-				Animator sujetaRocaAnim = sujetaRoca.GetComponent<Animator> ();
-				sujetaRocaAnim.SetBool ("isSwitch", true);
+				GameObject sujetaRoca = GameObject.FindGameObjectWithTag ("SujetaRoca"); //identificaplataformarocaGigante
+				Animator sujetaRocaAnim = sujetaRoca.GetComponent<Animator> ();	//animador
+				sujetaRocaAnim.SetBool ("isSwitch", true);//bool
 				GameObject rocaCaida = GameObject.FindGameObjectWithTag ("rocaCaida");
 				rocaCaida.GetComponent<Animator> ().SetBool ("caidaOn", true);
 				GameObject arbolGigante = GameObject.FindGameObjectWithTag ("ArbolCaida");
 				Animator arbolQl = arbolGigante.GetComponent<Animator> ();
-				arbolQl.SetBool ("RockBottom", true);
-				GameObject caminoSub = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
-				caminoSub.GetComponent<Transform> ().position = new Vector2 (34.2f, -7f);
-				GameObject pasadizo = GameObject.FindGameObjectWithTag ("openPathSub");
-				pasadizo.SetActive (false);
+				arbolQl.SetBool ("RockBottom", true); //activa camino arbol
+				GameObject particulasCaminosub = (GameObject)Instantiate (Resources.Load ("Prefabs/ParticulasWarriorMaleta"));
+				particulasCaminosub.GetComponent<Transform> ().position = new Vector2 (34.2f, -7f);
+				OpenPath abreteSesamo = GameObject.FindGameObjectWithTag ("openPathSub").GetComponent <OpenPath>();//destruyePasadizo
+				abreteSesamo.killMePlease = true;
 				Debug.Log ("wiiiiiii");
 			} 
 			else if (rocaGigante.isReady == false)
@@ -78,7 +78,6 @@ public class SwitchActions : MonoBehaviour {
 				GameObject sujetaRoca = GameObject.FindGameObjectWithTag ("SujetaRoca");
 				Animator sujetaRocaAnim = sujetaRoca.GetComponent<Animator> ();
 				sujetaRocaAnim.SetBool ("isSwitch", true);
-
 				sujetaRocaAnim.SetBool ("isSwitch", false);
 			}
 
@@ -99,8 +98,13 @@ public class SwitchActions : MonoBehaviour {
                 break;
                 
 		case 5:
-				
-		
+			GameObject platEnginUp = (GameObject)Instantiate (Resources.Load ("Prefabs/PlataformaPastVoladora"));
+			platEnginUp.GetComponent<Transform> ().position = new Vector2 (39f, 7.5f);
+			GameObject platEnginUp2 = (GameObject)Instantiate (Resources.Load ("Prefabs/PlataformaPastVoladora"));
+			platEnginUp2.GetComponent<Transform> ().position = new Vector2 (36f, 7.5f);
+
+			break;
+
 		default:
 			break;
 

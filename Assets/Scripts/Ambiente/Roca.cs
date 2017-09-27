@@ -33,8 +33,9 @@ public class Roca : MonoBehaviour {
         if (caidaOn == true && isReady == true)
         {
             animRoca.SetBool("caidaOn", true);
-        }
 
+			Destroy (gameObject, 5);
+        }
 	}
 
 }
