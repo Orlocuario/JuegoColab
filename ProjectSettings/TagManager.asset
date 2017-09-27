@@ -35,6 +35,7 @@ TagManager:
   - "RocaGiganteAra\xF1a"
   - Arrow
   - Punch
+  - openPathSub
   layers:
   - Default
   - TransparentFX

@@ -4,12 +4,14 @@ using UnityEngine;
 
 public class caidArbol : MonoBehaviour {
 
-    public Animator animArbol;
+    private Animator animArbol;
 
 
 	// Use this for initialization
 	void Start () {
-		
+		animArbol = this.gameObject.GetComponent<Animator> ();
+		animArbol.SetBool("RockBottom", false);
+
 	}
 	
 	// Update is called once per frame
@@ -21,7 +23,7 @@ public class caidArbol : MonoBehaviour {
         if (other.gameObject.tag == "rocaCaida")
         {
             animArbol.SetBool("RockBottom", true);
-
+			Debug.Log("ccccccabdfjbfjsbfjhasbdf");
         }
     }
 }

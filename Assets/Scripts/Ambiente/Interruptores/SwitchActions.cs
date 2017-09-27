@@ -40,25 +40,37 @@ public class SwitchActions : MonoBehaviour {
 			break; 
 
 		case 1: 
-			ParticleSystem particleRoca = (ParticleSystem)Instantiate (Resources.Load ("Prefabs/ParticulasMageRoca"));
-            particleRoca.GetComponent<Transform>().position = new Vector2(30.5f, 2.4f);
-            GameObject rejaEng = GameObject.FindGameObjectWithTag ("RejaRocaEng");
+			
+			GameObject particleRoca = (GameObject)Instantiate (Resources.Load ("Prefabs/ParticulasMageRoca"));
+		
+			particleRoca.GetComponent<Transform> ().position = new Vector2 (30.5f, 2.4f);
+		
+			GameObject rejaEng = GameObject.FindGameObjectWithTag ("RejaRocaEng");
+		
 			rejaEng.SetActive (false);
-			Roca roca = GameObject.FindGameObjectWithTag ("RocaGigante").GetComponent <Roca>();
+
+			Roca roca = GameObject.FindGameObjectWithTag ("rocaCaida").GetComponent <Roca> ();
 			roca.isReady = true;
+			Debug.Log ("chai");
             break;
 		
 		
 		case 2:
-			Roca rocaGigante = GameObject.FindGameObjectWithTag ("RocaGigante").GetComponent <Roca> ();
+			Roca rocaGigante = GameObject.FindGameObjectWithTag ("rocaCaida").GetComponent <Roca> ();
 			if (rocaGigante.isReady == true) {
 				GameObject sujetaRoca = GameObject.FindGameObjectWithTag ("SujetaRoca");
 				Animator sujetaRocaAnim = sujetaRoca.GetComponent<Animator> ();
 				sujetaRocaAnim.SetBool ("isSwitch", true);
 				GameObject rocaCaida = GameObject.FindGameObjectWithTag ("rocaCaida");
-				rocaCaida.GetComponent<Animator> ().SetBool ("switchRocaOn", true);
-				sujetaRocaAnim.SetBool ("isSwitch", false); 
-
+				rocaCaida.GetComponent<Animator> ().SetBool ("caidaOn", true);
+				GameObject arbolGigante = GameObject.FindGameObjectWithTag ("ArbolCaida");
+				Animator arbolQl = arbolGigante.GetComponent<Animator> ();
+				arbolQl.SetBool ("RockBottom", true);
+				GameObject caminoSub = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
+				caminoSub.GetComponent<Transform> ().position = new Vector2 (34.2f, -7f);
+				GameObject pasadizo = GameObject.FindGameObjectWithTag ("openPathSub");
+				pasadizo.SetActive (false);
+				Debug.Log ("wiiiiiii");
 			} 
 			else if (rocaGigante.isReady == false)
             {

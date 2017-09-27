@@ -18,7 +18,7 @@ public class OpenPath : MonoBehaviour {
 	{
 		if (other.gameObject.tag == "rocaCaida") 
 		{
-			Destroy (this);
+			Destroy (this.gameObject);
 		}
 	}
 }

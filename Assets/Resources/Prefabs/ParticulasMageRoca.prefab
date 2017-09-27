@@ -83,7 +83,7 @@ ParticleSystem:
   simulationSpeed: 0.35
   looping: 1
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   autoRandomSeed: 1
   startDelay:
     scalar: 0
@@ -2720,7 +2720,7 @@ ParticleSystem:
   simulationSpeed: 0.35
   looping: 1
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   autoRandomSeed: 1
   startDelay:
     scalar: 0
