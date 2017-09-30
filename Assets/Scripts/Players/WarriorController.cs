@@ -178,6 +178,9 @@ public class WarriorController : PlayerController {
 		if ((myPosition - posicionPiedra).magnitude < 3f) 
 		{
             hits++;
+			if (hits > 6) {
+				hits = 6;
+			}
             force = Math.Pow(hits, damage)/50;
             rigidez.AddForce(Vector2.right * (float)force);
         }
