@@ -33,24 +33,20 @@ public class SwitchActions : MonoBehaviour {
 			break;
 
 		case 0:
-
-			GameObject arbolPlat = (GameObject)Network.Instantiate (Resources.Load ("ArbolPlat"));
-			arbolPlat.GetComponent<Transform> ().position = new Vector2 (14.45f, -1.07f);		
-			arbolPlat.GetComponent<Transform> ().localScale = new Vector2 (1f, -1f);
-			GameObject feedbackswitchEng = (GameObject)Network.Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
+			GameObject platEscaleraEng = (GameObject)Instantiate (Resources.Load ("Prefabs/EnginPlath1"));
+			platEscaleraEng.GetComponent<Transform> ().position = new Vector2 (12.9f, -1.3f);
+			GameObject feedbackswitchEng = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
 			feedbackswitchEng.GetComponent<Transform> ().position = new Vector2 (13.2f, -1.3f);
-			GameObject plat06 = (GameObject)Network.Instantiate (Resources.Load ("Prefabs/Plat0.6"));		
-			plat06.GetComponent <Transform>().position = new Vector2 (13.2f, -1f);
-	
 			break; 
 
 		case 1: 
-			Debug.Log ("llegueeeeee");
-			GameObject particleRoca = (GameObject)Network.Instantiate (Resources.Load ("Prefabs/ParticulasMageRoca"));
+			
+			GameObject particleRoca = (GameObject)Instantiate (Resources.Load ("Prefabs/ParticulasMageRoca"));
 		
 			particleRoca.GetComponent<Transform> ().position = new Vector2 (30.5f, 2.4f);
+		
 			GameObject rejaEng = GameObject.FindGameObjectWithTag ("RejaRocaEng");
-
+		
 			rejaEng.SetActive (false);
 
 			Roca roca = GameObject.FindGameObjectWithTag ("rocaCaida").GetComponent <Roca> ();
@@ -106,8 +102,7 @@ public class SwitchActions : MonoBehaviour {
 			platEnginUp.GetComponent<Transform> ().position = new Vector2 (39f, 7.5f);
 			GameObject platEnginUp2 = (GameObject)Instantiate (Resources.Load ("Prefabs/PlataformaPastVoladora"));
 			platEnginUp2.GetComponent<Transform> ().position = new Vector2 (36f, 7.5f);
-			GameObject feedbackswitch5 = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
-			feedbackswitch5.GetComponent <Transform>().position = new Vector2 (43f, 7.94f);
+
 			break;
 
 		default:
