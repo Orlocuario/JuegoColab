@@ -21,7 +21,7 @@ public class EngineerController : PlayerController {
         rate = 150;
         contadorPar = 0;
         contadorHpAndMp = 0;
-        particulas = GameObject.Find ("ParticulasEngin");
+		particulas = GameObject.FindGameObjectWithTag ("ParticulasEngin");
 		particulas.SetActive(false);
         hpAndMp = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
     }
@@ -162,8 +162,9 @@ public class EngineerController : PlayerController {
                     changeMpRate = "0";
                 }
                 contadorPar++;
-				SendPowerDataToServer();
 				SetAnimacion (remotePower);
+				Debug.Log (remotePower);
+				SendPowerDataToServer();
 			}
 
 			else if (!buttonState && primeraVez)
