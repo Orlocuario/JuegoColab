@@ -8,7 +8,7 @@ public class Roca : MonoBehaviour {
     public bool isArbol;
 	public bool isReady;
 	private Animator animRoca;
-
+	private GameObject roca;
 
 
 
@@ -18,7 +18,7 @@ public class Roca : MonoBehaviour {
 
         caidaOn = false;
         isReady = false;
-
+		roca = this.gameObject;
 	}
 	
 	// Update is called once per frame
@@ -31,10 +31,9 @@ public class Roca : MonoBehaviour {
         }
 
         if (caidaOn == true && isReady == true)
-        {
-            animRoca.SetBool("caidaOn", true);
-
-			Destroy (gameObject, 5);
+		{	
+			animRoca.SetBool("caidaOn", true);
+			Destroy (gameObject, 5.5f);
         }
 	}
 

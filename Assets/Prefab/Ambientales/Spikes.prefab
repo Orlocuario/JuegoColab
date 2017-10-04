@@ -24,7 +24,7 @@ GameObject:
   - component: {fileID: 61544660674928916}
   m_Layer: 0
   m_Name: Spikes (2)
-  m_TagString: Untagged
+  m_TagString: KillPlane
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -42,7 +42,7 @@ GameObject:
   - component: {fileID: 61960414206130258}
   m_Layer: 0
   m_Name: Spikes (3)
-  m_TagString: Untagged
+  m_TagString: KillPlane
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -56,11 +56,11 @@ GameObject:
   m_Component:
   - component: {fileID: 4514361974537842}
   - component: {fileID: 212984449835282588}
-  - component: {fileID: 114509053166220740}
   - component: {fileID: 61228883208574374}
+  - component: {fileID: 114733135895372728}
   m_Layer: 0
   m_Name: Spikes
-  m_TagString: Untagged
+  m_TagString: KillPlane
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -78,7 +78,7 @@ GameObject:
   - component: {fileID: 61811445639423664}
   m_Layer: 0
   m_Name: Spikes (1)
-  m_TagString: Untagged
+  m_TagString: KillPlane
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -96,7 +96,7 @@ GameObject:
   - component: {fileID: 61677423380132250}
   m_Layer: 0
   m_Name: Spikes (4)
-  m_TagString: Untagged
+  m_TagString: KillPlane
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -134,8 +134,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1666208087632226}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 24.7, y: 1.421, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 30.11, y: -4.283, z: 0}
+  m_LocalScale: {x: 1, y: -1, z: 1}
   m_Children:
   - {fileID: 4038018368823666}
   - {fileID: 4671796173814660}
@@ -248,9 +248,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1549909805525320}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: c5fb81130ce142f4d843a50d243a2e69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  killPlaneDamage: 25
 --- !u!114 &114402004665441712
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -259,9 +260,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1731911515884576}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: c5fb81130ce142f4d843a50d243a2e69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  killPlaneDamage: 25
 --- !u!114 &114452097874092814
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -270,20 +272,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 1637506560056638}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 0}
+  m_Script: {fileID: 11500000, guid: c5fb81130ce142f4d843a50d243a2e69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &114509053166220740
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1666208087632226}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b8246370886ff949bd3c36553bfd3e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
+  killPlaneDamage: 25
 --- !u!114 &114664572657944960
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -292,9 +284,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1677418725974356}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7b8246370886ff949bd3c36553bfd3e8, type: 3}
+  m_Script: {fileID: 11500000, guid: c5fb81130ce142f4d843a50d243a2e69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  killPlaneDamage: 25
+--- !u!114 &114733135895372728
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1666208087632226}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c5fb81130ce142f4d843a50d243a2e69, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  killPlaneDamage: 25
 --- !u!212 &212149928655738490
 SpriteRenderer:
   m_ObjectHideFlags: 1

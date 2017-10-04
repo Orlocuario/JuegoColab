@@ -356,6 +356,15 @@ public class PlayerController : MonoBehaviour
                 theLevelManager.Respawn();
             }
         }
+		if(other.tag == "KillPlaneSpike")
+		{
+			if (localPlayer)
+			{
+				string daño = other.gameObject.GetComponent<KillPlane>().killPlaneDamage;
+				Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);
+				theLevelManager.Respawn();
+			}
+		}
 
         if (other.tag == "Checkpoint")
         {

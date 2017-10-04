@@ -163,7 +163,6 @@ public class EngineerController : PlayerController {
                 }
                 contadorPar++;
 				SetAnimacion (remotePower);
-				Debug.Log (remotePower);
 				SendPowerDataToServer();
 			}
 

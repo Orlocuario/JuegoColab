@@ -37,6 +37,8 @@ TagManager:
   - Punch
   - openPathSub
   - ParticulasEngin
+  - CajaSwitchFierro
+  - KillPlaneSpikes
   layers:
   - Default
   - TransparentFX

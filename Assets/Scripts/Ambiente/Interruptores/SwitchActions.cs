@@ -41,48 +41,43 @@ public class SwitchActions : MonoBehaviour {
 
 		case 1: 
 			
-			GameObject particleRoca = (GameObject)Instantiate (Resources.Load ("Prefabs/ParticulasMageRoca"));
-		
-			particleRoca.GetComponent<Transform> ().position = new Vector2 (30.5f, 2.4f);
-		
-			GameObject rejaEng = GameObject.FindGameObjectWithTag ("RejaRocaEng");
-		
+			GameObject rejaEng = GameObject.FindGameObjectWithTag ("RejaRocaEng");		
 			rejaEng.SetActive (false);
-
 			Roca roca = GameObject.FindGameObjectWithTag ("rocaCaida").GetComponent <Roca> ();
 			roca.isReady = true;
-			Debug.Log ("chai");
+			GameObject particleRoca = (GameObject)Instantiate (Resources.Load ("Prefabs/ParticulasMageRoca"));		
+			particleRoca.GetComponent<Transform> ().position = new Vector2 (30.5f, 2.4f);	
+			CajaSwitch caja = GameObject.FindGameObjectWithTag ("CajaSwitchFierro").GetComponent <CajaSwitch> ();
+			caja.meVoy = true; 
+			caja.ahoraMeVoy = true;
+			GameObject spikes = GameObject.FindGameObjectWithTag ("KillPlaneSpikes");
+			Destroy (spikes);
+
+
             break;
 		
 		
 		case 2:
 			Roca rocaGigante = GameObject.FindGameObjectWithTag ("rocaCaida").GetComponent <Roca> ();
 			if (rocaGigante.isReady == true) {
-				GameObject sujetaRoca = GameObject.FindGameObjectWithTag ("SujetaRoca"); //identificaplataformarocaGigante
-				Animator sujetaRocaAnim = sujetaRoca.GetComponent<Animator> ();	//animador
-				sujetaRocaAnim.SetBool ("isSwitch", true);//bool
-				GameObject rocaCaida = GameObject.FindGameObjectWithTag ("rocaCaida");
-				rocaCaida.GetComponent<Animator> ().SetBool ("caidaOn", true);
-				GameObject arbolGigante = GameObject.FindGameObjectWithTag ("ArbolCaida");
-				Animator arbolQl = arbolGigante.GetComponent<Animator> ();
-				arbolQl.SetBool ("RockBottom", true); //activa camino arbol
-				GameObject particulasCaminosub = (GameObject)Instantiate (Resources.Load ("Prefabs/ParticulasWarriorMaleta"));
-				particulasCaminosub.GetComponent<Transform> ().position = new Vector2 (34.2f, -7f);
-				OpenPath abreteSesamo = GameObject.FindGameObjectWithTag ("openPathSub").GetComponent <OpenPath>();//destruyePasadizo
-				abreteSesamo.killMePlease = true;
-				Debug.Log ("wiiiiiii");
-			} 
-			else if (rocaGigante.isReady == false)
-            {
-
-				GameObject sujetaRoca = GameObject.FindGameObjectWithTag ("SujetaRoca");
-				Animator sujetaRocaAnim = sujetaRoca.GetComponent<Animator> ();
-				sujetaRocaAnim.SetBool ("isSwitch", true);
-				sujetaRocaAnim.SetBool ("isSwitch", false);
+			GameObject sujetaRoca = GameObject.FindGameObjectWithTag ("SujetaRoca"); //identificaplataformarocaGigante
+			Animator sujetaRocaAnim = sujetaRoca.GetComponent<Animator> ();	//animador
+			sujetaRocaAnim.SetBool ("isSwitch", true);//bool
+			//GameObject rocaCaida = GameObject.FindGameObjectWithTag ("rocaCaida");
+			//rocaCaida.GetComponent<Animator> ().SetBool ("caidaOn", true);
+			GameObject arbolGigante = GameObject.FindGameObjectWithTag ("ArbolCaida");
+			Animator arbolQl = arbolGigante.GetComponent<Animator> ();
+			arbolQl.SetBool ("RockBottom", true); //activa camino arbol
+			GameObject particulasCaminosub = (GameObject)Instantiate (Resources.Load ("Prefabs/ParticulasWarriorMaleta"));
+			particulasCaminosub.GetComponent<Transform> ().position = new Vector2 (34.2f, -7f);
+			PathSub abreteSesamo = GameObject.FindGameObjectWithTag ("openPathSub").GetComponent <PathSub>();//destruyePasadizo
+			abreteSesamo.killMe = true;
+			Debug.Log ("wiiiiiii");
+				
 			}
 
 			               
-			break;
+			break; 
 		case 3:
                 GameObject platescalera = (GameObject)Instantiate(Resources.Load("Prefabs/MagePlath"));
                 platescalera.GetComponent<Transform>().position = new Vector2(43f, -16f);
@@ -103,8 +98,15 @@ public class SwitchActions : MonoBehaviour {
 			GameObject platEnginUp2 = (GameObject)Instantiate (Resources.Load ("Prefabs/PlataformaPastVoladora"));
 			platEnginUp2.GetComponent<Transform> ().position = new Vector2 (36f, 7.5f);
 
-			break;
 
+			break;
+			case 1000:
+			GameObject platescaleraPrueba = (GameObject)Instantiate(Resources.Load("Prefabs/MagePlath"));
+			platescaleraPrueba.GetComponent<Transform>().position = new Vector2(15f, -6.5f);
+			GameObject feedbackswitchPrueba = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
+			feedbackswitchPrueba.GetComponent<Transform>().position = new Vector2(15f, -6.5f);
+			break;
+			
 		default:
 			break;
 

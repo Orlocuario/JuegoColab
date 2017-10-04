@@ -21,6 +21,7 @@ GameObject:
   - component: {fileID: 4344033110088068}
   - component: {fileID: 198342931540091304}
   - component: {fileID: 199936735060568180}
+  - component: {fileID: 114680916147504998}
   m_Layer: 0
   m_Name: ParticulasWarriorMaleta
   m_TagString: Untagged
@@ -35,12 +36,23 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1418479892983982}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 30.599, y: -5.772, z: 0}
+  m_LocalPosition: {x: 34.1, y: -7.07, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &114680916147504998
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1418479892983982}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: faa8d2e656f1e4d0687023c8962d2c11, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198342931540091304
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -96,7 +108,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -145066906
+  randomSeed: -2044676893
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -551,12 +563,12 @@ ParticleSystem:
   ShapeModule:
     serializedVersion: 3
     enabled: 1
-    type: 7
+    type: 5
     radius: 0.17
     angle: 0
     length: 5
-    boxX: 1
-    boxY: 1
+    boxX: 1.5085169
+    boxY: 0.17163959
     boxZ: 1
     arc: 360
     placementMode: 0
