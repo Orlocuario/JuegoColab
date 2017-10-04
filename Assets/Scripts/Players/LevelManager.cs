@@ -81,7 +81,17 @@ public class LevelManager : MonoBehaviour {
 
     public void MoveItemInGame(string itemName, string posX, string posY, string rotZ)
     {
-        Transform gameObjectToMove = GameObject.Find(itemName).GetComponent<Transform>();
+        GameObject obj = GameObject.Find(itemName);
+        Transform gameObjectToMove;
+        if (gameObject)
+        {
+            gameObjectToMove = obj.GetComponent<Transform>();
+        }
+        else
+        {
+            return;
+        }
+
         gameObjectToMove.position = new Vector3(float.Parse(posX), float.Parse(posY), gameObjectToMove.position.z);
         Quaternion gORotation = gameObjectToMove.rotation;
         gORotation = new Quaternion(gameObjectToMove.rotation.x, gameObjectToMove.rotation.y, float.Parse(rotZ), gameObjectToMove.rotation.w);
