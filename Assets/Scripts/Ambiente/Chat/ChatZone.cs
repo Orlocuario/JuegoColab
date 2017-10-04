@@ -14,6 +14,8 @@ public class ChatZone : MonoBehaviour {
     public string HUDRate;
     int rate;
     int countTillRate;
+    DisplayHUD displayHudScript;
+
 
     private void Start()
     {
@@ -23,9 +25,10 @@ public class ChatZone : MonoBehaviour {
         countTillRate = 0;
         chatButtonOn.SetActive(false);
         chatButtonOff.SetActive(false);
-
+        displayHudScript = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
         myPosition = gameObject.transform.position;
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
+        displayHudScript = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
     }
 
     private void Update()
@@ -43,7 +46,10 @@ public class ChatZone : MonoBehaviour {
             if (countTillRate == rate)
             {
                 countTillRate = 0;
-                Client.instance.SendMessageToServer("ChangeHpAndManaHUDToRoom/" + HUDRate);
+                if(!(Int32.Parse(displayHudScript.hpCurrentPercentage) == 1))
+                {
+                    Client.instance.SendMessageToServer("ChangeHpAndManaHUDToRoom/" + HUDRate);
+                }
             }
             //Client.instance.SendMessageToServer("ActivateNPCLog/Pickle Rick! :D");
         }
