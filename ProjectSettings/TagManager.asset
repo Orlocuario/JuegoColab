@@ -36,6 +36,9 @@ TagManager:
   - Arrow
   - Punch
   - openPathSub
+  - ParticulasEngin
+  - CajaSwitchFierro
+  - KillPlaneSpikes
   layers:
   - Default
   - TransparentFX
