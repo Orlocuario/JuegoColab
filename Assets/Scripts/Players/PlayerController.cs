@@ -195,13 +195,13 @@ public class PlayerController : MonoBehaviour
                 right = false;
             }
             // si el wn esta apuntando hacia izq/der con menor inclinacion que hacia arriba, return true
-            if ((!remoteUp && axisVertical > 0f) && ((right && axisHorizontal <= axisVertical) || (!right && -axisHorizontal <= axisVertical)))
+			if ((!remoteUp && axisVertical > 0f) && ((right && axisHorizontal <= axisVertical) || ( !right && -axisHorizontal <= axisVertical)))
             {
                 remoteUp = true;
                 SendObjectDataToServer();
             }
             // si el wn esta apuntando hacia izq/der con mayor inclinacion que hacia arriba, o bien, esta apuntando hacia abajo, return false
-            else if ((!remoteUp && axisVertical > 0f) && ((right && axisHorizontal > axisVertical) || (!right && -axisHorizontal > axisVertical)) || axisVertical <= 0f)
+            else if ((remoteUp && axisVertical > 0f) && ((right && axisHorizontal > axisVertical) || (!right && -axisHorizontal > axisVertical)) || axisVertical <= 0f)
             {
                 remoteUp = false;
                 SendObjectDataToServer();

@@ -19,7 +19,7 @@ public class CajaSwitch : MonoBehaviour {
 		if (meVoy == true && ahoraMeVoy == true) 
 		{
 			Destroy (gameObject, 1f);
-			GameObject particle = (GameObject)Instantiate (Resources.Load(Prefaf/)
+			GameObject particle = (GameObject)Instantiate(Resources.Load("Prefab/FeedbackParticles/FBMageButt"));
 		}
 		
 	}
