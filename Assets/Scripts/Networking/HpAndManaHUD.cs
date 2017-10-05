@@ -14,6 +14,7 @@ public class HpAndManaHUD {
     public float percentageMP;
     public float percentageExp;
     Room room;
+    private bool previuslyMax = false;
 
     public HpAndManaHUD(Room room)
     {                         
@@ -38,6 +39,10 @@ public class HpAndManaHUD {
     public void ChangeHP(string deltaHP)
     {
         float valueDeltaHP = float.Parse(deltaHP);
+        if (valueDeltaHP == 0)
+        {
+            return;
+        }
         currentHP += valueDeltaHP;
 
         if (currentHP >= maxHP)
@@ -64,18 +69,36 @@ public class HpAndManaHUD {
     public void ChangeMP(string deltaMP)
     {
         float valueDeltaMP = float.Parse(deltaMP);
+        if (valueDeltaMP == 0)
+        {
+            return;
+        }
         currentMP += valueDeltaMP;
 
-        if (currentMP >= maxMP)
+        if (currentMP > maxMP)
         {
             currentMP = maxMP;
+            return;
         }
-        else if (currentMP <= 0)
+        else if (currentMP < 0)
         {
             currentMP = 0;
+            return;
         }
 
         percentageMP = currentMP / maxMP;
+        if(percentageMP == 1)
+        {
+            if (previuslyMax)
+            {
+                return;
+            }
+            previuslyMax = true;
+        }
+        else
+        {
+            previuslyMax = false;
+        }
         room.SendMessageToAllPlayers("DisplayChangeMPToClient/" + percentageMP);
     }
 
