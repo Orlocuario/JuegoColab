@@ -125,6 +125,8 @@ public class ServerMessageHandler
 
     private void SendSwitchGroupAction(string message, int connectionId)
     {
+        Debug.Log("Desactivado para probar algo, si todo sale mal habilitar todo en SendSwitchGroupAction en el ServerMessageHandler");
+        return;
         Jugador player = server.GetPlayer(connectionId);
         Room room = player.room;
         room.SendMessageToAllPlayersExceptOne(message, connectionId);

@@ -163,27 +163,20 @@ public class Switch : MonoBehaviour
 
     private void Activate()
     {
-		Debug.Log ("Acciónactivarrrrrrrrrrrrr");
         if (jobDone)
         {
-			Debug.Log ("Ya está Jobdone");	
             return;
         }
         bool newOn;
         if (activation == TypeOfActivation.Disparando) {
-			Debug.Log ("Tipo de activación disparando" );
             newOn = (desactivable && !on) || !desactivable;
         }
         else
         {
-			Debug.Log ("TipoElse de activación");
             newOn = true;
         }
-		Debug.Log (on);
-		Debug.Log (newOn); 
         if (newOn != on)
         {	
-			Debug.Log ("new on no es on");
             on = newOn;
             SetSprite();
             SendOnDataToServer(on);
@@ -347,5 +340,6 @@ public class Switch : MonoBehaviour
     {
         on = onData;
         SetSprite();
+        switchGroup.CheckIfReady();
     }
 }
