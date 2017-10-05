@@ -6,10 +6,14 @@ public class SujetaRoca : MonoBehaviour {
 
 
 	public Animator sujetaRocaAnim;
-	public bool isSwitch = false;
+	public bool isSwitch;
+
 
 	// Use this for initialization
 	void Start () {
+
+		isSwitch = false;
+		sujetaRocaAnim = this.gameObject.GetComponent <Animator> ();
 		
 	}
 	
@@ -18,7 +22,7 @@ public class SujetaRoca : MonoBehaviour {
 
 		if (isSwitch==true)
 		{
-			sujetaRocaAnim.SetBool ("isSwitch", isSwitch);	
+			sujetaRocaAnim.SetBool ("isSwitch", true);	
 		}
 	}
 }

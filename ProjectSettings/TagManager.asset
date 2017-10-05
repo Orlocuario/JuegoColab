@@ -35,6 +35,10 @@ TagManager:
   - "RocaGiganteAra\xF1a"
   - Arrow
   - Punch
+  - openPathSub
+  - ParticulasEngin
+  - CajaSwitchFierro
+  - KillPlaneSpikes
   layers:
   - Default
   - TransparentFX

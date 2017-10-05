@@ -40,7 +40,8 @@ public class WarriorController : PlayerController {
             bool buttonState = CnInputManager.GetButtonDown("Attack Button");
             if (buttonState && !remoteAttacking)
             {
-                //GameObject punch = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Punch"));
+				GameObject punch = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Punch"));
+				punch.GetComponent <Transform>().position = new Vector2 (gameObject.transform.position.x, gameObject.transform.position.y);
                 remoteAttacking = true;
                 numHits++;
                 SendAttackDataToServer();
@@ -178,6 +179,9 @@ public class WarriorController : PlayerController {
 		if ((myPosition - posicionPiedra).magnitude < 3f) 
 		{
             hits++;
+			if (hits > 6) {
+				hits = 6;
+			}
             force = Math.Pow(hits, damage)/50;
             rigidez.AddForce(Vector2.right * (float)force);
         }
