@@ -55,3 +55,4 @@ MonoBehaviour:
   waitToRespawn: 2
   players: []
   canvas: {fileID: 0}
+  npcLog: {fileID: 0}

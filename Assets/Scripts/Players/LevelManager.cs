@@ -26,7 +26,6 @@ public class LevelManager : MonoBehaviour {
         canvas.SetActive(true);
         waitToGrabItem = 5f;
         waitToKillNPCCountdown = 10f;
-        thePlayer = null;
         npcLog = GameObject.Find("NPCLog");
         npcLog.SetActive(false);
         client = GameObject.Find("ClientObject").GetComponent<Client>();

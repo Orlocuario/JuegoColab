@@ -8,7 +8,6 @@ public class ChatZone : MonoBehaviour {
 
     public GameObject chatButtonOn;
     public GameObject chatButtonOff;
-    LevelManager levelManager;
     Vector2 myPosition;
     private bool lockValue;
     public string HUDRate;
@@ -27,13 +26,12 @@ public class ChatZone : MonoBehaviour {
         chatButtonOff.SetActive(false);
         displayHudScript = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
         myPosition = gameObject.transform.position;
-        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         displayHudScript = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
     }
 
     private void Update()
     {
-        PlayerController player = levelManager.thePlayer;
+        PlayerController player = Client.instance.GetLocalPlayer();
         Vector2 playerPosition = player.gameObject.transform.position;
         float distance = (playerPosition - myPosition).magnitude;
 
