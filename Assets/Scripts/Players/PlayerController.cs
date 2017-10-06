@@ -41,6 +41,9 @@ public class PlayerController : MonoBehaviour
     public int direction;  //1 = derecha, -1 = izquierda
     public int characterId;
 	private bool puedoMoverme;
+	public GameObject parent;
+	bool alreves = false;
+
 
     protected virtual void Start()
     {
@@ -117,21 +120,19 @@ public class PlayerController : MonoBehaviour
             {
                 remoteRight = true;
                 remoteLeft = false;
-                Debug.Log("1");
                 SendObjectDataToServer();
             }
             // si el wn esta apuntando hacia arriba/abajo con mayor inclinacion que hacia la derecha, stop moving
-            /*else if ((up && axisHorizontal < axisVertical) || (!up && axisHorizontal < -axisVertical))
+			else if (Mathf.Abs (axisVertical) > Mathf.Abs (axisHorizontal) && (remoteRight || remoteLeft))
             {
                 remoteRight = false;
                 remoteLeft = false;
                 SendObjectDataToServer();
-            }*/
+            }
             // si no se esta apretando el joystick
             else if (remoteRight && axisHorizontal == 0)
             {
                 remoteRight = false;
-                Debug.Log("2");
                 SendObjectDataToServer();
             }
             return remoteRight;
@@ -160,7 +161,6 @@ public class PlayerController : MonoBehaviour
             {
                 remoteLeft = true;
                 remoteRight = false;
-                Debug.Log("3");
                 SendObjectDataToServer();
             }
             // si el wn esta apuntando hacia arriba/abajo con mayor inclinacion que hacia la izquierda, stop moving
@@ -175,7 +175,6 @@ public class PlayerController : MonoBehaviour
             else if (remoteLeft && axisHorizontal == 0)
             {
                 remoteLeft = false;
-                Debug.Log("5");
                 SendObjectDataToServer();
             }
             return remoteLeft;
@@ -241,13 +240,11 @@ public class PlayerController : MonoBehaviour
             if(saltando && !remoteJumping)
             {
                 remoteJumping = true;
-                Debug.Log("7");
                 SendObjectDataToServer();
             }
             else if(!saltando && remoteJumping)
             {
                 remoteJumping = false;
-                Debug.Log("8");
                 SendObjectDataToServer();
             }
             return saltando;
@@ -278,13 +275,17 @@ public class PlayerController : MonoBehaviour
     {
         if (!localPlayer)
         {
+			int escalaVertical = 1;
+			if (alreves) {
+				escalaVertical = -1;
+			}
             if(direction == 1)
             {
-                transform.localScale = new Vector3(1f, 1f, 1f);
+				transform.localScale = new Vector3(1f, escalaVertical, 1f);
             }
             if(direction == -1)
             {
-                transform.localScale = new Vector3(-1f, 1f, 1f);
+				transform.localScale = new Vector3(-1f, escalaVertical, 1f);
             }
             SetAnimVariables();
         }
@@ -302,10 +303,32 @@ public class PlayerController : MonoBehaviour
 		puedoMoverme = true;
 	}
 
+	public void SetGravedad(bool normal){
+		if(normal){
+			alreves = false;
+			rb2d.gravityScale = 2.5f;
+		}
+		else{
+			alreves = true;
+			rb2d.gravityScale = -2.5f;
+		}
+
+	}
+
     protected int updateFrames = 0;
 
     protected virtual void Update()
     {
+		int intalreves = 1;
+
+		if (alreves) {
+			intalreves = -1;
+		}
+		Transform parent_transform = transform.parent;
+		if (parent_transform != null) {
+			parent = parent_transform.gameObject;		
+		}
+
         if (rb2d.velocity.y > maxSpeed)
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, maxSpeed);
@@ -316,13 +339,13 @@ public class PlayerController : MonoBehaviour
         if (IsGoingRight())
         {
             rb2d.velocity = new Vector3(moveSpeed, rb2d.velocity.y, 0f);
-            transform.localScale = new Vector3(1f, 1f, 1f);
+			transform.localScale = new Vector3(1f, intalreves, 1f);
             direction = 1;
         }
         else if (IsGoingLeft())
         {
             rb2d.velocity = new Vector3(-moveSpeed, rb2d.velocity.y, 0f);
-            transform.localScale = new Vector3(-1f, 1f, 1f);
+			transform.localScale = new Vector3(-1f, intalreves, 1f);
             direction = -1;
         }
         else // it's not moving
@@ -333,7 +356,8 @@ public class PlayerController : MonoBehaviour
         isGrounded = IsItGrounded();
         if (IsJumping(isGrounded))
         {
-            rb2d.velocity = new Vector2(0, 8f);
+
+			rb2d.velocity = new Vector2(0, 8 * intalreves);
         }
         previous_transform = transform.position;
         SetAnimVariables();
