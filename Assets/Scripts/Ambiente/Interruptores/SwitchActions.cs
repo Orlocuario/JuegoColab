@@ -100,13 +100,18 @@ public class SwitchActions : MonoBehaviour {
 
 
 			break;
-			case 1000:
+            case 87:
+                //Caso de prueba para switchs de test
+                Debug.Log("UwU");
+                break;
+            
+            case 1000:
 			GameObject platescaleraPrueba = (GameObject)Instantiate(Resources.Load("Prefabs/MagePlath"));
 			platescaleraPrueba.GetComponent<Transform>().position = new Vector2(15f, -6.5f);
 			GameObject feedbackswitchPrueba = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
 			feedbackswitchPrueba.GetComponent<Transform>().position = new Vector2(15f, -6.5f);
 			break;
-			
+
 		default:
 			break;
 
