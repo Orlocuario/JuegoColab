@@ -176,8 +176,12 @@ public class Switch : MonoBehaviour
             newOn = true;
         }
         if (newOn != on)
-        {	
+        {	          
             on = newOn;
+            if(!on && !desactivable)
+            {
+                return;
+            }
             SetSprite();
             SendOnDataToServer(on);
             switchGroup.CheckIfReady();      
@@ -240,6 +244,10 @@ public class Switch : MonoBehaviour
     }
     private void SendOnDataToServer(bool data)
     {
+        if(data == false && desactivable == false)
+        {
+            return;
+        }
         string message = "ChangeSwitchStatus/" + groupId + "/" + individualId + "/" + data;
         Client.instance.SendMessageToServer(message);
     }

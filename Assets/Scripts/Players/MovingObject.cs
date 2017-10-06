@@ -24,6 +24,10 @@ public class MovingObject : MonoBehaviour {
 
     // Update is called once per frame
     void Update() {
+        if(objectToMove == null)
+        {
+            return;
+        }
 
         objectToMove.transform.position = Vector3.MoveTowards(objectToMove.transform.position, currentTarget, moveSpeed * Time.deltaTime);
 
