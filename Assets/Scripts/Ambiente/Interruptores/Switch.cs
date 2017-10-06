@@ -346,7 +346,12 @@ public class Switch : MonoBehaviour
 
     public void ReceiveDataFromServer(bool onData)
     {
+        Debug.Log("Recibi la info");
         on = onData;
+        if (desactivable == false)
+        {
+            on = true;
+        }
         SetSprite();
         switchGroup.CheckIfReady();
     }

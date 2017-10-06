@@ -81,7 +81,7 @@ public class ClientMessageHandler {
             case "DestroyObject":
                 HandleDestroyObject(arreglo);
                 break;
-            case "ChangeSwitchSatus":
+            case "ChangeSwitchStatus":
                 HandleChangeSwitchStatus(arreglo);
                 break;
             case "SwitchGroupReady":
@@ -144,7 +144,8 @@ public class ClientMessageHandler {
         int individualId = Int32.Parse(arreglo[2]);
         bool on = bool.Parse(arreglo[3]);
         SwitchManager manager = GameObject.FindGameObjectWithTag("SwitchManager").GetComponent<SwitchManager>();
-        manager.GetSwitch(groupId, individualId).ReceiveDataFromServer(on);
+        Switch switchi = manager.GetSwitch(groupId, individualId);
+        switchi.ReceiveDataFromServer(on);
     }
 
     private void SetControlOverEnemies()
