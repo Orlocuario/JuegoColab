@@ -117,19 +117,21 @@ public class PlayerController : MonoBehaviour
             {
                 remoteRight = true;
                 remoteLeft = false;
+                Debug.Log("1");
                 SendObjectDataToServer();
             }
             // si el wn esta apuntando hacia arriba/abajo con mayor inclinacion que hacia la derecha, stop moving
-            else if ((up && axisHorizontal < axisVertical) || (!up && axisHorizontal < -axisVertical))
+            /*else if ((up && axisHorizontal < axisVertical) || (!up && axisHorizontal < -axisVertical))
             {
                 remoteRight = false;
                 remoteLeft = false;
                 SendObjectDataToServer();
-            }
+            }*/
             // si no se esta apretando el joystick
             else if (remoteRight && axisHorizontal == 0)
             {
                 remoteRight = false;
+                Debug.Log("2");
                 SendObjectDataToServer();
             }
             return remoteRight;
@@ -158,19 +160,22 @@ public class PlayerController : MonoBehaviour
             {
                 remoteLeft = true;
                 remoteRight = false;
+                Debug.Log("3");
                 SendObjectDataToServer();
             }
             // si el wn esta apuntando hacia arriba/abajo con mayor inclinacion que hacia la izquierda, stop moving
-            else if ((up && -axisHorizontal < axisVertical)  || (!up && axisHorizontal > axisVertical))
+           /* else if ((up && -axisHorizontal < axisVertical)  || (!up && axisHorizontal > axisVertical))
             {
                 remoteLeft = false;
                 remoteRight = false;
+                Debug.Log("4");
                 SendObjectDataToServer();
-            }
+            }*/
             // si no se esta apretando el joystick
             else if (remoteLeft && axisHorizontal == 0)
             {
                 remoteLeft = false;
+                Debug.Log("5");
                 SendObjectDataToServer();
             }
             return remoteLeft;
@@ -180,6 +185,7 @@ public class PlayerController : MonoBehaviour
 
     public bool IsGoingUp()
     {
+        return false;
         if (localPlayer)
         {
             bool right;
@@ -235,11 +241,13 @@ public class PlayerController : MonoBehaviour
             if(saltando && !remoteJumping)
             {
                 remoteJumping = true;
+                Debug.Log("7");
                 SendObjectDataToServer();
             }
             else if(!saltando && remoteJumping)
             {
                 remoteJumping = false;
+                Debug.Log("8");
                 SendObjectDataToServer();
             }
             return saltando;
@@ -406,6 +414,10 @@ public class PlayerController : MonoBehaviour
 
     public void SendObjectDataToServer()
     {
+        if (!localPlayer)
+        {
+            return;
+        }
         float position_x = transform.position.x;
         float position_y = transform.position.y;
         bool grounded = isGrounded;
