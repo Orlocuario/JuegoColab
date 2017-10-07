@@ -41,6 +41,7 @@ public class PlayerController : MonoBehaviour
     public int direction;  //1 = derecha, -1 = izquierda
     public int characterId;
 	private bool puedoMoverme;
+	public GameObject parent;
 
     protected virtual void Start()
     {
@@ -306,6 +307,11 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void Update()
     {
+		Transform parent_transform = transform.parent;
+		if (parent_transform != null) {
+			parent = parent_transform.gameObject;		
+		}
+
         if (rb2d.velocity.y > maxSpeed)
         {
             rb2d.velocity = new Vector2(rb2d.velocity.x, maxSpeed);

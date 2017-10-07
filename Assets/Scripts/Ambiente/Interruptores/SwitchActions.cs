@@ -37,6 +37,10 @@ public class SwitchActions : MonoBehaviour {
 			platEscaleraEng.GetComponent<Transform> ().position = new Vector2 (12.9f, -1.3f);
 			GameObject feedbackswitchEng = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
 			feedbackswitchEng.GetComponent<Transform> ().position = new Vector2 (13.2f, -1.3f);
+			Destroy (feedbackswitchEng, 3f);
+			MuereParticula hintPart = GameObject.FindGameObjectWithTag ("SwitchEnginPart").GetComponent <MuereParticula> ();
+			hintPart.living = false;
+
 			break; 
 
 		case 1: 
@@ -58,13 +62,13 @@ public class SwitchActions : MonoBehaviour {
 		
 		
 		case 2:
+			
 			Roca rocaGigante = GameObject.FindGameObjectWithTag ("rocaCaida").GetComponent <Roca> ();
-			if (rocaGigante.isReady == true) {
 			GameObject sujetaRoca = GameObject.FindGameObjectWithTag ("SujetaRoca"); //identificaplataformarocaGigante
 			Animator sujetaRocaAnim = sujetaRoca.GetComponent<Animator> ();	//animador
 			sujetaRocaAnim.SetBool ("isSwitch", true);//bool
-			//GameObject rocaCaida = GameObject.FindGameObjectWithTag ("rocaCaida");
-			//rocaCaida.GetComponent<Animator> ().SetBool ("caidaOn", true);
+			GameObject rocaCaida = GameObject.FindGameObjectWithTag ("rocaCaida");
+			rocaCaida.GetComponent<Animator> ().SetBool ("caidaOn", true);
 			GameObject arbolGigante = GameObject.FindGameObjectWithTag ("ArbolCaida");
 			Animator arbolQl = arbolGigante.GetComponent<Animator> ();
 			arbolQl.SetBool ("RockBottom", true); //activa camino arbol
@@ -73,11 +77,9 @@ public class SwitchActions : MonoBehaviour {
 			PathSub abreteSesamo = GameObject.FindGameObjectWithTag ("openPathSub").GetComponent <PathSub>();//destruyePasadizo
 			abreteSesamo.killMe = true;
 			Debug.Log ("wiiiiiii");
-				
-			}
-
 			               
 			break; 
+
 		case 3:
                 GameObject platescalera = (GameObject)Instantiate(Resources.Load("Prefabs/MagePlath"));
                 platescalera.GetComponent<Transform>().position = new Vector2(43f, -16f);
@@ -90,6 +92,7 @@ public class SwitchActions : MonoBehaviour {
                 platparaMage.GetComponent<Transform>().position = new Vector2(61f, -9.5f);
                 GameObject feedbackswitchwarr = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
                 feedbackswitchwarr.GetComponent<Transform>().position = new Vector2(72.86f, -19.3f);
+			Destroy (feedbackswitchwarr, 4f);
                 break;
                 
 		case 5:
@@ -105,7 +108,7 @@ public class SwitchActions : MonoBehaviour {
                 Debug.Log("UwU");
                 break;
             
-            case 1000:
+            case 6:
 			GameObject platescaleraPrueba = (GameObject)Instantiate(Resources.Load("Prefabs/MagePlath"));
 			platescaleraPrueba.GetComponent<Transform>().position = new Vector2(15f, -6.5f);
 			GameObject feedbackswitchPrueba = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
