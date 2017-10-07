@@ -42,6 +42,8 @@ public class PlayerController : MonoBehaviour
     public int characterId;
 	private bool puedoMoverme;
 	public GameObject parent;
+	bool alreves = false;
+
 
     protected virtual void Start()
     {
@@ -273,13 +275,17 @@ public class PlayerController : MonoBehaviour
     {
         if (!localPlayer)
         {
+			int escalaVertical = 1;
+			if (alreves) {
+				escalaVertical = -1;
+			}
             if(direction == 1)
             {
-                transform.localScale = new Vector3(1f, 1f, 1f);
+				transform.localScale = new Vector3(1f, escalaVertical, 1f);
             }
             if(direction == -1)
             {
-                transform.localScale = new Vector3(-1f, 1f, 1f);
+				transform.localScale = new Vector3(-1f, escalaVertical, 1f);
             }
             SetAnimVariables();
         }
@@ -297,10 +303,27 @@ public class PlayerController : MonoBehaviour
 		puedoMoverme = true;
 	}
 
+	public void SetGravedad(bool normal){
+		if(normal){
+			alreves = false;
+			rb2d.gravityScale = 2.5f;
+		}
+		else{
+			alreves = true;
+			rb2d.gravityScale = -2.5f;
+		}
+
+	}
+
     protected int updateFrames = 0;
 
     protected virtual void Update()
     {
+		int intalreves = 1;
+
+		if (alreves) {
+			intalreves = -1;
+		}
 		Transform parent_transform = transform.parent;
 		if (parent_transform != null) {
 			parent = parent_transform.gameObject;		
@@ -316,13 +339,13 @@ public class PlayerController : MonoBehaviour
         if (IsGoingRight())
         {
             rb2d.velocity = new Vector3(moveSpeed, rb2d.velocity.y, 0f);
-            transform.localScale = new Vector3(1f, 1f, 1f);
+			transform.localScale = new Vector3(1f, intalreves, 1f);
             direction = 1;
         }
         else if (IsGoingLeft())
         {
             rb2d.velocity = new Vector3(-moveSpeed, rb2d.velocity.y, 0f);
-            transform.localScale = new Vector3(-1f, 1f, 1f);
+			transform.localScale = new Vector3(-1f, intalreves, 1f);
             direction = -1;
         }
         else // it's not moving
@@ -333,7 +356,8 @@ public class PlayerController : MonoBehaviour
         isGrounded = IsItGrounded();
         if (IsJumping(isGrounded))
         {
-            rb2d.velocity = new Vector2(0, 8f);
+
+			rb2d.velocity = new Vector2(0, 8 * intalreves);
         }
         previous_transform = transform.position;
         SetAnimVariables();

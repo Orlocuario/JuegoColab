@@ -33,6 +33,7 @@ public class CameraController : MonoBehaviour {
     void Start () {
 		holiwix = this.gameObject.GetComponent<Camera> ();
 		ChangeState (CameraState.Normal, 10, 0, 0);
+		Client.instance.GetLocalPlayer ().SetGravedad (false);
 	}
 
     // Update is called once per frame
