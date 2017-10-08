@@ -18,22 +18,19 @@ public class Roca : MonoBehaviour {
 
         caidaOn = false;
         isReady = false;
-		roca = this.gameObject;
+		roca = gameObject;
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-
-        if (isReady == true)
-        {
-            animRoca.SetBool("IsReady", true);
-        }
-
-        if (caidaOn == true && isReady == true)
-		{	
+        
+        if (caidaOn == true)
+		{
+            Debug.Log("me fui a la chucha");
 			animRoca.SetBool("caidaOn", true);
-			Destroy (gameObject, 5.5f);
+			Destroy (roca, 5.5f);
+            Debug.Log("La Mateeeeee");
         }
 	}
 

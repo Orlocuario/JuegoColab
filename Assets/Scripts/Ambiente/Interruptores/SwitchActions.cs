@@ -63,13 +63,14 @@ public class SwitchActions : MonoBehaviour {
 		
 		case 2:
 			
-			Roca rocaGigante = GameObject.FindGameObjectWithTag ("rocaCaida").GetComponent <Roca> ();
+			Roca rocaGigante = GameObject.FindGameObjectWithTag ("rocaCaida").GetComponent <Roca> (); 
 			GameObject sujetaRoca = GameObject.FindGameObjectWithTag ("SujetaRoca"); //identificaplataformarocaGigante
 			Animator sujetaRocaAnim = sujetaRoca.GetComponent<Animator> ();	//animador
 			sujetaRocaAnim.SetBool ("isSwitch", true);//bool
-			GameObject rocaCaida = GameObject.FindGameObjectWithTag ("rocaCaida");
-			rocaCaida.GetComponent<Animator> ().SetBool ("caidaOn", true);
-			GameObject arbolGigante = GameObject.FindGameObjectWithTag ("ArbolCaida");
+            rocaGigante.caidaOn = true;
+			/*GameObject rocaCaida = GameObject.FindGameObjectWithTag ("rocaCaida");
+			rocaCaida.GetComponent<Animator> ().SetBool ("caidaOn", true);*/
+			GameObject arbolGigante = GameObject.FindGameObjectWithTag ("ArbolCaida");  //arbol
 			Animator arbolQl = arbolGigante.GetComponent<Animator> ();
 			arbolQl.SetBool ("RockBottom", true); //activa camino arbol
 			GameObject particulasCaminosub = (GameObject)Instantiate (Resources.Load ("Prefabs/ParticulasWarriorMaleta"));
