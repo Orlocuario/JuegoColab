@@ -26,6 +26,7 @@ public class CameraController : MonoBehaviour {
 	private float initialSize = 1.42f;
 	float wea = 200; //Iteraciones hasta llegar al target
 	float wea2 = 202; //Tiempo en que espera volver
+	public float startTime;
 
 
 
@@ -124,7 +125,8 @@ public class CameraController : MonoBehaviour {
 
 	private void SetZoomedValues(float size, float x, float y){
 		currentState = CameraState.Zoomed;
-		holiwix.orthographicSize = size;
+		//float i = (Time.time - startTime);
+		holiwix.orthographicSize =  size;
         transform.position = new Vector3(x, y, transform.position.z);
     }
 
