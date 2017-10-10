@@ -201,9 +201,9 @@ public class Client : MonoBehaviour {
 		return script;
 	}
 
-    public EngineerController GetEngineer()
+    public EngineerController GetEngineer() 
     {
-        GameObject player = GameObject.FindGameObjectsWithTag("Player2")[0];
+        GameObject player = GameObject.FindGameObjectsWithTag("Player3")[0];
         EngineerController script = player.GetComponent<EngineerController>();
         return script;
     }
