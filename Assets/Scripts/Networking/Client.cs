@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -21,6 +22,8 @@ public class Client : MonoBehaviour {
     int bufferSize = 100;
     int bigBufferSize = 64000;
     ClientMessageHandler handler;
+    string serverIp;
+    bool connected = false;
 
 	void Start () {
         DontDestroyOnLoad(this);
@@ -37,7 +40,21 @@ public class Client : MonoBehaviour {
     public void Connect(string ip)
     {
         byte error;
+        serverIp = ip;
         connectionId = NetworkTransport.Connect(socketId, ip, port, 0, out error);
+    }
+
+    public void Connect()
+    {
+        try
+        {
+            byte error;
+            connectionId = NetworkTransport.Connect(socketId, serverIp, port, 0, out error);
+        }
+        catch
+        {
+            Debug.Log("Connection to server failed");
+        }
     }
 
     public void SendMessageToServer(string message)
@@ -83,6 +100,7 @@ public class Client : MonoBehaviour {
             case NetworkEventType.Nothing:
                 break;
             case NetworkEventType.ConnectEvent:
+                connected = true;
                 Debug.Log("connection succesfull");
                 break;
             case NetworkEventType.DataEvent:
@@ -100,8 +118,40 @@ public class Client : MonoBehaviour {
                 Debug.Log("incoming message event received: " + message);
                 break;
             case NetworkEventType.DisconnectEvent:
+                if(connectionId == recConnectionId) //Detectamos que fuimos nosotros los que nos desconectamos
+                {
+                    connected = false;
+                    Reconnect();
+                }
                 Debug.Log("disconnected from server");
                 break;
+        }
+    }
+
+    private void Reconnect()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if(! (currentScene.name == "ClientScene"))
+        {
+            //Asumo que si no estoy en la ClientScene, existe un LevelManager
+            LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
+            lm.MostrarReconectando(true);
+            Thread reconectThread = new Thread(TryToReconnect);
+            reconectThread.Start();
+        }
+    }
+
+    private void TryToReconnect()
+    {
+        if (!connected)
+        {
+            Connect();
+            Thread.Sleep(3000); //Intenta reconectar cada 3 segundos
+            if (!connected)
+            {
+                TryToReconnect();
+            }
+
         }
     }
 

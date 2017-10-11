@@ -432,6 +432,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1166188371781408
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 224289310335065050}
+  - component: {fileID: 222338842853832872}
+  - component: {fileID: 114195975214908940}
+  m_Layer: 5
+  m_Name: ReconnectingText
+  m_TagString: MainCamera
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1169330800601104
 GameObject:
   m_ObjectHideFlags: 1
@@ -4292,8 +4309,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114579013721892520}
   m_HandleRect: {fileID: 224811670867218486}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 1
+  m_Size: 0.99999994
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -4327,6 +4344,39 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114195975214908940
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1166188371781408}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 10102, guid: 0000000000000000e000000000000000, type: 0}
+    m_FontSize: 20
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 0
+    m_MaxSize: 120
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: Reconectando....
 --- !u!114 &114203334533120170
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -8959,8 +9009,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114651242922042756}
   m_HandleRect: {fileID: 224299188758478346}
   m_Direction: 2
-  m_Value: 0
-  m_Size: 1
+  m_Value: 0.0000022438053
+  m_Size: 0.6644536
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11660,6 +11710,12 @@ CanvasRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1556051244793732}
+--- !u!222 &222338842853832872
+CanvasRenderer:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1166188371781408}
 --- !u!222 &222354865409922242
 CanvasRenderer:
   m_ObjectHideFlags: 1
@@ -12914,7 +12970,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.006641231, y: 0.027}
   m_AnchorMax: {x: 1, y: 0.96800005}
-  m_AnchoredPosition: {x: -1.4792356, y: -3.3956833}
+  m_AnchoredPosition: {x: -1.2263454, y: -1.7953521}
   m_SizeDelta: {x: 0.5, y: 0}
   m_Pivot: {x: 0.5, y: -0.00000020861626}
 --- !u!224 &224174989240449976
@@ -13309,6 +13365,24 @@ RectTransform:
   m_AnchoredPosition: {x: 0.5, y: 155.4}
   m_SizeDelta: {x: 454.5, y: 102.3}
   m_Pivot: {x: 1, y: 0.5}
+--- !u!224 &224289310335065050
+RectTransform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1166188371781408}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 224471103159430160}
+  m_RootOrder: 8
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 160, y: 30}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!224 &224299188758478346
 RectTransform:
   m_ObjectHideFlags: 1
@@ -13932,6 +14006,7 @@ RectTransform:
   - {fileID: 224435055547817946}
   - {fileID: 224241316317807380}
   - {fileID: 224289045016107878}
+  - {fileID: 224289310335065050}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14224,7 +14299,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0014862372, y: -0.000006556511}
+  m_AnchoredPosition: {x: -0.0014862372, y: -0.0000065565114}
   m_SizeDelta: {x: -8.600006, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224535432330403300

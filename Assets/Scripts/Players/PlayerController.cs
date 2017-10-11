@@ -43,7 +43,7 @@ public class PlayerController : MonoBehaviour
 	private bool puedoMoverme;
 	public GameObject parent;
 	bool alreves = false;
-
+    bool conectado = true;
 	public PlannerPlayer playerObj;
 
 
@@ -65,6 +65,11 @@ public class PlayerController : MonoBehaviour
         controlOverEnemies = false;
         saltarDoble = 0;
         IgnoreCollisionStar2puntoCero();
+    }
+
+    public void conectar(bool valor)
+    {
+        conectado = valor;
     }
 
     public void IgnoreCollisionStar2puntoCero()
@@ -321,6 +326,11 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (!conectado)
+        {
+            return;
+        }
+
 		int intalreves = 1;
 
 		if (alreves) {

@@ -18,7 +18,7 @@ public class Jugador
     public bool pressingRight;
     public bool pressingLeft;
     public bool attacking;
-	  public bool power;
+	public bool power;
     public bool controlOverEnemies;
     public string[] inventory = new string[8];
 
@@ -37,7 +37,7 @@ public class Jugador
         pressingRight = false;
         pressingLeft = false;
         attacking = false;
-		    power = false;
+		power = false;
         controlOverEnemies = false;
     }
 

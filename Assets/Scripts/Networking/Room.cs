@@ -20,6 +20,7 @@ public class Room
     string numeroPartidas;
     string historial;
     public List<Enemy> enemigos;
+    public List<int> activatedGroups; //guarda los numeros de los grupos de switchs activados
     //Inicialización
     public Room(int id, Server server, ServerMessageHandler sender, int maxJugadores)
     {
@@ -34,6 +35,7 @@ public class Room
         historial = "";
         hpManaGer = new HpAndManaHUD(this);
         enemigos = new List<Enemy>();
+        activatedGroups = new List<int>();
         sceneToLoad = Server.instance.sceneToLoad;
     }
 
