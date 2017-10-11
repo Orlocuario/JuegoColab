@@ -2627,11 +2627,12 @@ MonoBehaviour:
   maxConnections: 10
   maxJugadores: 0
   sceneToLoad: 
-  templateFileName: 
-  problemFileName: 
-  batchFileName: 
-  outputFileName: 
-  startLinePerLevel: 
+  NPCsLastMessage: 
+  templateFileName: /Users/Ou/Documents/FastDownward/misc/tests/benchmarks/gripper/template
+  problemFileName: /Users/Ou/Documents/FastDownward/misc/tests/benchmarks/gripper/prob
+  batchFileName: /Users/Ou/Documents/FastDownward/misc/tests/benchmarks/gripper/batch
+  outputFileName: /Users/Ou/Documents/FastDownward/output
+  startLinePerLevel: 030000000300000003000000
 --- !u!4 &1958641102
 Transform:
   m_ObjectHideFlags: 0

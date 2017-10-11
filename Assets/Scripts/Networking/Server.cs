@@ -29,7 +29,11 @@ public class Server : MonoBehaviour {
     	//Planner Thread
 	Thread planner;
 	//Cola de mensajes a procesar
-	private List<string> messageStack;
+	private List<string> messageStack = new List<string>();
+	//Cola de conections id del output del planner
+	private List<int> connectionIdStack = new List<int>();
+	//Cola de mensajes procesados por el planner
+	private List<string> outputStack = new List<string>();
 	//Ruta y nombre del template del archivo problema
 	public string templateFileName;
 	//Ruta y nombre del archivo problema nuevo
@@ -220,27 +224,35 @@ public class Server : MonoBehaviour {
 
     private void SendMessagToPlanner(string message, int connectionId)
     {
-        //Algo
+		messageStack.Add (connectionId + "/" + message);
     }
     
-    private void Plan()
+	private void Plan()
 	{
 		while (true) 
 		{
 			if (messageStack != null && messageStack.Count > 0) {
+				UnityEngine.Debug.Log ("stack enter count:" + messageStack.Count);
 				string message = messageStack [0];
 				messageStack.RemoveAt (0);
 				List<string> parameters = new List<string> (message.Split ('/'));
-				int room = int.Parse (parameters [0]);
+				int connectionId = int.Parse (parameters [0]);
 				parameters.RemoveAt (0);
 				int level = int.Parse (parameters [0]);
 				parameters.RemoveAt (0);
+				string def = parameters [0];
+				string init = parameters [1];
+				List<string> data = new List<string> ();
+				data.Add (def);
+				data.Add (")");
+				data.Add ("(:init");
+				data.Add (init);
 				string tempFileName = templateFileName + level + ".txt";
 				string probFileName = problemFileName + level + ".pddl";
 				string batFileName = batchFileName + level + ".bat";
 				string outFileName = outputFileName + level + ".txt";
 				List<string> lines = new List<string> (System.IO.File.ReadAllLines (tempFileName));
-				lines.InsertRange (startLinePerLevel [level - 1], parameters);
+				lines.InsertRange (startLinePerLevel [level - 1], data);
 				using (StreamWriter writer = new StreamWriter (probFileName, false)) {
 					foreach (string line in lines) {
 						writer.WriteLine (line);
@@ -251,32 +263,38 @@ public class Server : MonoBehaviour {
 				batchProcess.StartInfo.RedirectStandardOutput = true;
 				batchProcess.StartInfo.CreateNoWindow = true;
 				batchProcess.StartInfo.FileName = batFileName;
-				int exitCode = -1;
 				string output = null;
 				try {
 					batchProcess.Start ();
+					UnityEngine.Debug.Log ("batch star");
+					output = batchProcess.StandardOutput.ReadToEnd();
+					UnityEngine.Debug.Log (output);
 					batchProcess.WaitForExit ();
+					UnityEngine.Debug.Log ("batch ended");
+					batchProcess.Close();
+					UnityEngine.Debug.Log ("batch close");
 					List<string> linesOutput = new List<string> (System.IO.File.ReadAllLines (outFileName));
 					if(linesOutput.Count>0){
 						output = linesOutput[0];
+						linesOutput.RemoveAt(0);
 						foreach(string line in linesOutput)
 						{
 							output += "/" + line;
 						}
-							
+
 					}
 				} catch (FileNotFoundException e) {
 					output = "ERROR";
+					UnityEngine.Debug.Log (output);
 				}
 				catch (Exception e){
-					UnityEngine.Debug.Log (e.ToString ());
+					output = e.ToString ();
+					UnityEngine.Debug.Log (output);
 				}
 				//Send output
+				connectionIdStack.Add (connectionId);
+				outputStack.Add (output);
 			}
 		}
-	}
-
-	public void AddPlanMessage(string message){
-		messageStack.Add (message);
 	}
 }
