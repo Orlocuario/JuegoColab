@@ -17,6 +17,8 @@ public class EngranajeSystem : MonoBehaviour
     private string[] engranajesThatMaquinaHasArray = new string[3];
     private bool lockValue;
     private bool engranajeHasBeenChecked;
+	public PlannerSwitch switchObj = null;
+
 
     private void Start()
     {
@@ -118,6 +120,9 @@ public class EngranajeSystem : MonoBehaviour
             GameObject viga2 = GameObject.Find("GiantBlocker (1)");
             viga.SetActive(false);
             viga2.SetActive(false);
+			if (switchObj !=null) {
+				switchObj.ActivateSwitch ();
+			}
         }
     }
 }

@@ -19,6 +19,8 @@ public class Switch : MonoBehaviour
     private SwitchManager manager;
     private bool jobDone = false; //true si es que su grupo de botones ya terminó su función
 
+	public PlannerSwitch switchObj = null;
+
     private void Start()
     {
         /*if (activation == TypeOfActivation.Disparando)
@@ -184,7 +186,8 @@ public class Switch : MonoBehaviour
             }
             SetSprite();
             SendOnDataToServer(on);
-            switchGroup.CheckIfReady();      
+
+			switchGroup.CheckIfReady(switchObj);;      
         }
     }
 
@@ -197,6 +200,9 @@ public class Switch : MonoBehaviour
         on = false;
         SetSprite();
         SendOnDataToServer(on);
+		if (switchObj != null) {
+			switchObj.DeactivateSwitch ();
+		}
     }
 
     public void SetJobDone()
@@ -353,6 +359,6 @@ public class Switch : MonoBehaviour
             on = true;
         }
         SetSprite();
-        switchGroup.CheckIfReady();
+		switchGroup.CheckIfReady(switchObj);
     }
 }

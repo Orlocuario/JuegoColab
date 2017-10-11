@@ -34,17 +34,20 @@ public class GroupOfSwitchs{
         return null;
     }
 
-    public void CheckIfReady()
-    {
-        foreach(Switch switchi in switchs)
-        {
-            if (!switchi.on)
-            {
-                return;
-            }
-        }
-        CallAction();
-    }
+	public void CheckIfReady(PlannerSwitch switchObj)
+	{
+		foreach(Switch switchi in switchs)
+		{
+			if (!switchi.on)
+			{
+				return;
+			}
+		}
+		CallAction();
+		if (switchObj != null) {
+			switchObj.ActivateSwitch ();
+		}
+	}
 
     public List<Switch> GetSwitchs()
     {

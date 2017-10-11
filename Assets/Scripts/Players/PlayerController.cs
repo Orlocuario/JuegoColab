@@ -44,6 +44,8 @@ public class PlayerController : MonoBehaviour
 	public GameObject parent;
 	bool alreves = false;
 
+	public PlannerPlayer playerObj;
+
 
     protected virtual void Start()
     {
@@ -404,10 +406,25 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+	protected void OnTriggerStay2D(Collider2D other)
+	{
+		if(other.tag == "Poi")
+		{
+			PlannerPoi newPoi = other.GetComponent<PlannerPoi> ();
+			if (!playerObj.playerAt.name.Equals (newPoi.name)) {
+				Debug.Log ("Change OK: " + newPoi.name);
+				playerObj.playerAt = newPoi;
+				Planner planner = FindObjectOfType<Planner> ();
+				planner.Monitor ();
+			}
+		}
+	}
+
     protected void OnCollisionEnter2D(Collision2D other)
     {
         if(other.gameObject.tag == "MovingPlatform")
-        {
+		{
+			Debug.Log (other.transform.position);
             transform.parent = other.transform;
         }
     }

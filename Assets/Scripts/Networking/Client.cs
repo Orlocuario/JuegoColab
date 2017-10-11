@@ -104,7 +104,8 @@ public class Client : MonoBehaviour {
 
     private void ReceiveMessageFromPlanner(string message, int connectionId)
     {
-        //Algo
+		Planner planner = FindObjectOfType<Planner> ();
+		planner.SetPlanFromServer (message);
     }
 
     public PlayerController GetPlayerController(int charId)

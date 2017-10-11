@@ -5,6 +5,10 @@ using UnityEngine.UI;
 
 public class PickUpItem : MonoBehaviour
 { 
+
+	public PlannerItem itemObj = null;
+
+
     public void OnCollisionEnter2D(Collision2D other)
     {
         if (this.gameObject.tag == "ExperienceItem" && (other.collider.tag == "Player1" || other.collider.tag == "Player2" || other.collider.tag == "Player3"))
@@ -37,6 +41,9 @@ public class PickUpItem : MonoBehaviour
         string itemName = this.gameObject.name;
         Client.instance.SendMessageToServer("DestroyObject/" + itemName);
         Inventory.instance.AddItemToInventory(this.gameObject);
+		if (itemObj != null) {
+			itemObj.PickUp (Client.instance.GetLocalPlayer ().playerObj);
+		}
     }
 
     public void PickUpExp(string item_name)
