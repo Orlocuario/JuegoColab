@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     public int characterId;
 	private bool puedoMoverme;
 	public GameObject parent;
-	bool alreves = false;
+	int directionY = 1;
 
 	public PlannerPlayer playerObj;
 
@@ -277,18 +277,16 @@ public class PlayerController : MonoBehaviour
     {
         if (!localPlayer)
         {
-			int escalaVertical = 1;
-			if (alreves) {
-				escalaVertical = -1;
-			}
-            if(direction == 1)
+
+            if (direction == 1)
             {
-				transform.localScale = new Vector3(1f, escalaVertical, 1f);
+                transform.localScale = new Vector3(1f, directionY, 1f);
             }
-            if(direction == -1)
+            if (direction == -1)
             {
-				transform.localScale = new Vector3(-1f, escalaVertical, 1f);
+                transform.localScale = new Vector3(-1f, directionY, 1f);
             }
+        
             SetAnimVariables();
         }
 
@@ -306,12 +304,10 @@ public class PlayerController : MonoBehaviour
 	}
 
 	public void SetGravedad(bool normal){
-		if(normal){
-			alreves = false;
-			rb2d.gravityScale = 2.5f;
-		}
-		else{
-			alreves = true;
+        rb2d.gravityScale = 2.5f;
+
+        if (!normal) {
+			directionY = -1;
 			rb2d.gravityScale = -2.5f;
 		}
 
@@ -321,11 +317,7 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void Update()
     {
-		int intalreves = 1;
 
-		if (alreves) {
-			intalreves = -1;
-		}
 		Transform parent_transform = transform.parent;
 		if (parent_transform != null) {
 			parent = parent_transform.gameObject;		
@@ -341,13 +333,13 @@ public class PlayerController : MonoBehaviour
         if (IsGoingRight())
         {
             rb2d.velocity = new Vector3(moveSpeed, rb2d.velocity.y, 0f);
-			transform.localScale = new Vector3(1f, intalreves, 1f);
+			transform.localScale = new Vector3(1f, directionY, 1f);
             direction = 1;
         }
         else if (IsGoingLeft())
         {
             rb2d.velocity = new Vector3(-moveSpeed, rb2d.velocity.y, 0f);
-			transform.localScale = new Vector3(-1f, intalreves, 1f);
+			transform.localScale = new Vector3(-1f, directionY, 1f);
             direction = -1;
         }
         else // it's not moving
@@ -359,7 +351,7 @@ public class PlayerController : MonoBehaviour
         if (IsJumping(isGrounded))
         {
 
-			rb2d.velocity = new Vector2(0, 8 * intalreves);
+			rb2d.velocity = new Vector2(0, 8 * directionY);
         }
         previous_transform = transform.position;
         SetAnimVariables();
