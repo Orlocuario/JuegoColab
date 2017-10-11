@@ -117,9 +117,9 @@ public class PlayerController : MonoBehaviour
             {
                 if ((up && axisHorizontal >= axisVertical) || (!up && axisHorizontal >= -axisVertical))
                 { 
-                  remoteRight = true;
-                  remoteLeft = false;
-                  SendObjectDataToServer();
+                    remoteRight = true;
+                    remoteLeft = false;
+                    SendObjectDataToServer();
                 }
             }
             
@@ -147,41 +147,31 @@ public class PlayerController : MonoBehaviour
     {
         if (localPlayer)
         {
-            bool up;
             float axisHorizontal = CnInputManager.GetAxisRaw("Horizontal");
             float axisVertical = CnInputManager.GetAxisRaw("Vertical");
 
-            if (axisVertical > 0f)
-            {
-                up = true;
-            }
-            else
-            {
-                up = false;
-            }
+            bool up = axisVertical > 0f;
+
             // si el wn esta apuntando hacia arriba/abajo con menor inclinacion que hacia la izquierda, start moving
-            if ((!remoteLeft && axisHorizontal < 0f) && ((up && -axisHorizontal >= axisVertical) || (!up && axisHorizontal <= axisVertical)))
+            if ((!remoteLeft && axisHorizontal < 0f))
             {
-                remoteLeft = true;
-                remoteRight = false;
-                SendObjectDataToServer();
+                if ((up && -axisHorizontal >= axisVertical) || (!up && axisHorizontal <= axisVertical))
+                {
+                    remoteLeft = true;
+                    remoteRight = false;
+                    SendObjectDataToServer();
+                }
             }
-            // si el wn esta apuntando hacia arriba/abajo con mayor inclinacion que hacia la izquierda, stop moving
-           /* else if ((up && -axisHorizontal < axisVertical)  || (!up && axisHorizontal > axisVertical))
-            {
-                remoteLeft = false;
-                remoteRight = false;
-                Debug.Log("4");
-                SendObjectDataToServer();
-            }*/
+
             // si no se esta apretando el joystick
             else if (remoteLeft && axisHorizontal == 0)
             {
                 remoteLeft = false;
                 SendObjectDataToServer();
             }
-            return remoteLeft;
+
         }
+
         return remoteLeft;
     }
 
@@ -291,18 +281,19 @@ public class PlayerController : MonoBehaviour
 
     }
 
-	public virtual void DejaDeMoverte(){
+	public virtual void StopMoving(){
 		canMove = false;
 		myAnim.SetFloat("Speed", 0);
 		myAnim.SetBool("IsGrounded", true);
 		myAnim.SetBool("IsAttacking", false);
 	}
 
-	public virtual void VuelveAMoverte(){
+	public virtual void ResumeMoving(){
 		canMove = true;
 	}
 
-	public void SetGravedad(bool normal){
+	public void SetGravity(bool normal){
+
         rb2d.gravityScale = 2.5f;
 
         if (!normal) {
@@ -310,9 +301,7 @@ public class PlayerController : MonoBehaviour
 			rb2d.gravityScale = -2.5f;
 		}
 
-	}
-
-    protected int updateFrames = 0;
+    }
 
     protected virtual void Update()
     {
