@@ -65,7 +65,7 @@ public class Room
     //Retorna true si no cabe más gente.
     public bool IsFull()
     {
-        return numJugadores == maxJugadores)
+        return numJugadores == maxJugadores;
     }
 
     //Agrega a un jugador a la sala. Retorna true si lo consigue, false si está llena.
