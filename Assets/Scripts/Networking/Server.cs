@@ -23,7 +23,7 @@ public class Server : MonoBehaviour {
     public string sceneToLoad;
     public string NPCsLastMessage;
 
-    	//Planner Thread
+    //Planner Thread
 	Thread planner;
 	//Cola de mensajes a procesar
 	private List<string> messageStack = new List<string>();

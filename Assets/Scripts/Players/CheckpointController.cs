@@ -24,21 +24,11 @@ public class CheckpointController : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "Player1")
+        if(other.tag == "Player1" || other.tag == "Player2" || other.tag == "Player3")
         {
             theSpriteRenderer.sprite = flagOpen;
             checkpointActive = true;
         }
-		else if(other.tag == "Player2")
-		{
-			theSpriteRenderer.sprite = flagOpen;
-			checkpointActive = true;
-		}
-		else if(other.tag == "Player3")
-		{
-			theSpriteRenderer.sprite = flagOpen;
-			checkpointActive = true;
-		}
     }
     
 }

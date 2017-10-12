@@ -6,34 +6,40 @@ using System.IO;
 
 public class Room
 {
-    List<Jugador> players;
-    List<ServerSwitch> switchs;
-    Server server;
-    ServerMessageHandler sender;
+    public ServerMessageHandler sender;
+    public List<Enemy> enemigos;
+    public List<ServerSwitch> switchs;
+    public List<Jugador> players;
+    public Server server;
+
     public HpAndManaHUD hpManaGer;
+    public string sceneToLoad;
     public int numJugadores;
     public int maxJugadores;
     public int id;
-    public string sceneToLoad;
 
     public bool started;
     string numeroPartidas;
     string historial;
-    public List<Enemy> enemigos;
+    
     //Inicialización
     public Room(int id, Server server, ServerMessageHandler sender, int maxJugadores)
     {
         numJugadores = 0;
-        this.id = id;
+
         this.maxJugadores = maxJugadores;
-        players = new List<Jugador>();
+        this.id = id;
+
+        hpManaGer = new HpAndManaHUD(this);
         switchs = new List<ServerSwitch>();
+        players = new List<Jugador>();
+        enemigos = new List<Enemy>();
+
         this.server = server;
         this.sender = sender;
+
         started = false;
         historial = "";
-        hpManaGer = new HpAndManaHUD(this);
-        enemigos = new List<Enemy>();
         sceneToLoad = Server.instance.sceneToLoad;
     }
 
@@ -59,11 +65,7 @@ public class Room
     //Retorna true si no cabe más gente.
     public bool IsFull()
     {
-        if(numJugadores == maxJugadores)
-        {
-            return true;
-        }
-        return false;
+        return numJugadores == maxJugadores)
     }
 
     //Agrega a un jugador a la sala. Retorna true si lo consigue, false si está llena.
@@ -73,10 +75,12 @@ public class Room
         {
             return false;
         }
+
         Jugador newPlayer = new Jugador(connectionId, GetCharId(numJugadores), this);
         players.Add(newPlayer);
         numJugadores++;
         SetControlEnemies(newPlayer);
+
         if (IsFull())
         {
             Debug.Log("Full room");
