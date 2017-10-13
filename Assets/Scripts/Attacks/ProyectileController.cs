@@ -72,8 +72,8 @@ public class ProyectileController : MonoBehaviour {
         return caster.localPlayer;
     }
 
-	private void OnCollisionEnter2D (Collider other)
-	{
-		Destroy (this.gameObject, 0.5f);
-	}	
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        Destroy(this.gameObject, 0.5f);
+    }
 }

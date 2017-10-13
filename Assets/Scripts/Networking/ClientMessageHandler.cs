@@ -99,9 +99,18 @@ public class ClientMessageHandler {
             case "ActivateNPCLog":
                 HandleActivationNpcLog(arreglo);
                 break;
+            case "IgnoreBoxCircleCollision":
+                HandleIgnoreCollision(arreglo);
+                break;
             default:
                 break;
         }
+    }
+
+    private void HandleIgnoreCollision(string[] arreglo)
+    {
+        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+        scriptLevel.IgnoreBoxCircleCollision(arreglo);
     }
 
     private void HandleActivationNpcLog(string[] arreglo)
