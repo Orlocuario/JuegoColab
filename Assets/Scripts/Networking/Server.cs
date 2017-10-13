@@ -67,7 +67,15 @@ public class Server : MonoBehaviour {
 
     // Update is called once per frame
     void LateUpdate ()
-    {
+    {	
+		if (connectionIdStack.Count > 0) 
+		{
+			int connectionId = connectionIdStack [0];
+			string output = outputStack [0];
+			SendPlannerInfoToClient (connectionId, output);
+			connectionIdStack.RemoveAt (0);
+			outputStack.RemoveAt (0);
+		}
         int recSocketId;
         int recConnectionId; // Reconoce la ID del jugador
         int recChannelId;
