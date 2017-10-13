@@ -101,12 +101,10 @@ public class EngineerController : PlayerController {
             {
                 saltarDoble++;
                 remoteJumping = true;
-				Debug.Log ("GGGGGGGGGGGG");
-
                 SendObjectDataToServer();
             }
            
-            else if (saltarDoble == 0 && dobleSalto)
+            else if (saltarDoble == 1 && dobleSalto)
             {
                 remoteJumping = true;
 				Debug.Log ("KKKKKKKKKKKKKKKKKKKKKK");
@@ -115,9 +113,11 @@ public class EngineerController : PlayerController {
                 return true;
             }
 
-            if (isGrounded)
+            if (isGrounded &&  0 < saltarDoble  )
             {
                 saltarDoble = 0;
+                remoteJumping = false;
+                SendObjectDataToServer();
             }
             return voySaltar;
         }
