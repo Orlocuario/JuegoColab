@@ -81,6 +81,9 @@ public class ClientMessageHandler {
             case "DestroyObject":
                 HandleDestroyObject(arreglo);
                 break;
+			case "OthersDestroyObject": 
+				HandleDestroyObject(arreglo);
+				break;
             case "ChangeSwitchStatus":
                 HandleChangeSwitchStatus(arreglo);
                 break;

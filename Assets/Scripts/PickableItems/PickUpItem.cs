@@ -16,7 +16,7 @@ public class PickUpItem : MonoBehaviour
             PlayerController localPlayer = Client.instance.GetLocalPlayer();
             if (localPlayer.gameObject.tag == other.collider.tag)
             {
-                PickUpExp(this.gameObject.name);
+                PickUpExp();
             }
         }
         else if (other.collider.tag == "Player1" || other.collider.tag == "Player2" || other.collider.tag == "Player3")
@@ -38,18 +38,18 @@ public class PickUpItem : MonoBehaviour
 
     public void PickUp()
     {
-        string itemName = this.gameObject.name;
-        Client.instance.SendMessageToServer("DestroyObject/" + itemName);
+		Destroy (this.gameObject);
+		Client.instance.SendMessageToServer("OthersDestroyObject/" + this.gameObject.name);
         Inventory.instance.AddItemToInventory(this.gameObject);
 		if (itemObj != null) {
 			itemObj.PickUp (Client.instance.GetLocalPlayer ().playerObj);
 		}
     }
 
-    public void PickUpExp(string item_name)
+    public void PickUpExp()
     {
-        string itemName = this.gameObject.name;
-        Client.instance.SendMessageToServer("DestroyItem/" + itemName);
+		Destroy (this.gameObject);
+		Client.instance.SendMessageToServer("DestroyItem/" + this.gameObject.name);
         Client.instance.SendMessageToServer("GainExp/" + "50");
     }
 }

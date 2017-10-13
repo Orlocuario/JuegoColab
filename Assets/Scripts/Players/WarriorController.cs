@@ -86,7 +86,7 @@ public class WarriorController : PlayerController {
             else if (buttonState && !primeraVez) 
 			{
 				primeraVez = true;
-				remotePower = contadorPar%2 == 0;
+				remotePower = contadorPar % 2 == 0;
                 if (remotePower)
                 {
                     changeMpRate = "-5";
@@ -179,8 +179,8 @@ public class WarriorController : PlayerController {
 		if ((myPosition - posicionPiedra).magnitude < 3f) 
 		{
             hits++;
-			if (hits > 6) {
-				hits = 6;
+			if (hits > 7) {
+				hits = 7;
 			}
             force = Math.Pow(hits, damage)/50;
             rigidez.AddForce(Vector2.right * (float)force);

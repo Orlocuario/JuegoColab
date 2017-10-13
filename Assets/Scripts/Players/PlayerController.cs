@@ -22,6 +22,8 @@ public class PlayerController : MonoBehaviour
     public float jumpSpeed;
     public float speed; //For animation nonlocal purposes
     public float groundCheckRadius;
+	public float jumpingRate;
+	public float countJumpRate;
 
     public bool isGrounded;
     public bool leftPressed;
@@ -64,6 +66,8 @@ public class PlayerController : MonoBehaviour
         direction = 1;
         controlOverEnemies = false;
         saltarDoble = 0;
+		jumpingRate = 50;
+		countJumpRate = 0;
         IgnoreCollisionStar2puntoCero();
     }
 
@@ -237,10 +241,13 @@ public class PlayerController : MonoBehaviour
     {
         if (localPlayer)
         {
+			countJumpRate++;
             bool pressedJump = CnInputManager.GetButtonDown("Jump Button");
             bool saltando = pressedJump && isGrounded;
-            if(saltando && !remoteJumping)
+
+            if(saltando && !remoteJumping && countJumpRate == jumpingRate)
             {
+				countJumpRate = 0;
                 remoteJumping = true;
                 SendObjectDataToServer();
             }

@@ -74,6 +74,9 @@ public class ServerMessageHandler
             case "DestroyObject":
                 SendDestroyObject(message, connectionId);
                 break;
+			case "OthersDestroyObject":
+				SendOthersDestroyObject (message, connectionId);
+				break;
             case "InventoryUpdate":
                 SendInventoryUpdate(message, connectionId);
                 break;
@@ -190,6 +193,13 @@ public class ServerMessageHandler
         Room room = player.room;
         room.SendMessageToAllPlayers(message);
     }
+
+	private void SendOthersDestroyObject (string message, int connectionId)
+	{
+		Jugador player = server.GetPlayer(connectionId);
+		Room room = player.room;
+		room.SendMessageToAllPlayersExceptOne (message, connectionId);
+	}
 
     private void SendHpHUDToRoom(string[] arreglo, int connectionId)
     {
