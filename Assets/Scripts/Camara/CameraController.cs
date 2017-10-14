@@ -34,7 +34,7 @@ public class CameraController : MonoBehaviour {
     void Start () {
 		holiwix = this.gameObject.GetComponent<Camera> ();
 		ChangeState (CameraState.Normal, 10, 0, 0);
-		Client.instance.GetLocalPlayer ().SetGravedad (false);
+		Client.instance.GetLocalPlayer ().SetGravity (false);
 	}
 
     // Update is called once per frame
@@ -93,7 +93,7 @@ public class CameraController : MonoBehaviour {
 				holiwix.orthographicSize = holiwix.orthographicSize - cameraRate;
 				zoomIt++;
 			} else {
-				Client.instance.GetLocalPlayer ().VuelveAMoverte ();
+				Client.instance.GetLocalPlayer ().ResumeMoving ();
 				SetDefaultValues ();
 			}
 
@@ -131,7 +131,7 @@ public class CameraController : MonoBehaviour {
     }
 
     private void TargetedZoom(float size, float x, float y){
-		Client.instance.GetLocalPlayer ().DejaDeMoverte ();
+		Client.instance.GetLocalPlayer ().StopMoving ();
 		currentState = CameraState.TargetZoom;
 		Vector3 targetPosition = new Vector3 (x, y,0);
 		float distance = (targetPosition - transform.position).magnitude;
