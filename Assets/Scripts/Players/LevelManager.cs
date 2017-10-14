@@ -82,15 +82,11 @@ public class LevelManager : MonoBehaviour {
     {
         GameObject obj = GameObject.Find(itemName);
         Transform gameObjectToMove;
-        if (gameObject)
-        {
-            gameObjectToMove = obj.GetComponent<Transform>();
-        }
-        else
+        if (!gameObject)
         {
             return;
         }
-
+        gameObjectToMove = obj.GetComponent<Transform>();
         gameObjectToMove.position = new Vector3(float.Parse(posX), float.Parse(posY), gameObjectToMove.position.z);
         Quaternion gORotation = gameObjectToMove.rotation;
         gORotation = new Quaternion(gameObjectToMove.rotation.x, gameObjectToMove.rotation.y, float.Parse(rotZ), gameObjectToMove.rotation.w);
@@ -121,6 +117,22 @@ public class LevelManager : MonoBehaviour {
         Text npcLogText = GameObject.Find("NPCLogText").GetComponent<Text>();
         npcLogText.text = message;
         StartCoroutine("WaitToKillNPC");
+    }
+
+    public void IgnoreBoxCircleCollision(string[] array)
+    {
+        if (array[1] == "true")
+        {
+            GameObject boxObject = GameObject.Find(array[2]);
+            GameObject circleObject = GameObject.Find(array[3]);
+            Physics2D.IgnoreCollision(boxObject.GetComponent<BoxCollider2D>(), circleObject.GetComponent<CircleCollider2D>());
+        }
+        else
+        {
+            GameObject boxObject = GameObject.Find(array[2]);
+            GameObject circleObject = GameObject.Find(array[3]);
+            Physics2D.IgnoreCollision(boxObject.GetComponent<BoxCollider2D>(), circleObject.GetComponent<CircleCollider2D>(), false);
+        }
     }
 
     public void ActivateMachine(string machineName)

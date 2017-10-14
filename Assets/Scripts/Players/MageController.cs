@@ -13,10 +13,12 @@ public class MageController : PlayerController {
 	GameObject particulas1;
 	GameObject particulas2;
     DisplayHUD hpAndMp;
+    bool powerOn;
 
 	protected override void Start()
 	{
 		base.Start();
+        powerOn = false;
         changeMpRate = "0";
         rate = 150;
         contadorPar = 0;
@@ -62,12 +64,12 @@ public class MageController : PlayerController {
                 contadorHpAndMp = 0;
             }
             bool primeraVez = false;
-			bool buttonState = CnInputManager.GetButtonDown ("Power Button");
-            InShield();
+			bool buttonState = CnInputManager.GetButtonDown ("Power Button");   
             if (float.Parse(hpAndMp.mpCurrentPercentage) == 0f)
             {
                 changeMpRate = "0";
                 remotePower = false;
+                powerOn = remotePower;
                 contadorPar = 0;
                 SendPowerDataToServer();
                 SetAnimacion(remotePower);
@@ -76,6 +78,7 @@ public class MageController : PlayerController {
 			{
                 primeraVez = true;
                 remotePower = contadorPar % 2 == 0;
+                powerOn = remotePower;
                 if (remotePower)
                 {
                     changeMpRate = "-5";
@@ -96,23 +99,19 @@ public class MageController : PlayerController {
 		return remotePower;
 	}
 
-    public bool[] InShield()
+    public bool InShield(GameObject player)
     {
-        List<bool> shieldInPlayers = new List<bool>();
-        GameObject[] players = GameObject.Find("LevelManager").GetComponent<LevelManager>().players;
-        for (int i = 0; i < players.Length; i++)
+        if (powerOn)
         {
-            Vector3 distance = (players[i].GetComponent<Transform>().position - this.gameObject.GetComponent<Transform>().position);
+            Vector3 distance = (player.GetComponent<Transform>().position - this.gameObject.GetComponent<Transform>().position);
             if (distance.magnitude <= 0.77f)
             {
-                shieldInPlayers.Add(true);
+                return true;
             }
-            else
-            {
-                shieldInPlayers.Add(false);
-            }
+            return false;
         }
-        return shieldInPlayers.ToArray();
+        return false;
+        
     }
 
 	private void SetAnimacion(bool activo)

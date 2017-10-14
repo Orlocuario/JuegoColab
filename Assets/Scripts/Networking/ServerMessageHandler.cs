@@ -74,6 +74,9 @@ public class ServerMessageHandler
             case "DestroyObject":
                 SendDestroyObject(message, connectionId);
                 break;
+			case "OthersDestroyObject":
+				SendOthersDestroyObject (message, connectionId);
+				break;
             case "InventoryUpdate":
                 SendInventoryUpdate(message, connectionId);
                 break;
@@ -92,9 +95,19 @@ public class ServerMessageHandler
             case "ActivateNPCLog": // No se si es necesario o no, ya que puedes llamar el metodo desde afuera (start o script)
                 SendActivationNPC(message, connectionId);
                 break;
+            case "IgnoreBoxCircleCollision":
+                SendIgnoreBoxCircleCollision(message, connectionId);
+                break;
             default:
                 break;
         }
+    }
+
+    private void SendIgnoreBoxCircleCollision(string message, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.SendMessageToAllPlayers(message);
     }
 
     public void SendActivationNPC(string message, int connectionId) // Manda un mensaje a un solo jugador
@@ -190,6 +203,13 @@ public class ServerMessageHandler
         Room room = player.room;
         room.SendMessageToAllPlayers(message);
     }
+
+	private void SendOthersDestroyObject (string message, int connectionId)
+	{
+		Jugador player = server.GetPlayer(connectionId);
+		Room room = player.room;
+		room.SendMessageToAllPlayersExceptOne (message, connectionId);
+	}
 
     private void SendHpHUDToRoom(string[] arreglo, int connectionId)
     {
