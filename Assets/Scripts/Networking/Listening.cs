@@ -16,9 +16,7 @@ public class Listening : NetworkDiscovery
     public void InitializeListening()
     {
         StartAsClient();
-
         GameObject.Find("ConnectText").GetComponent<Text>().text = "Conectando2...";
-
     }
 
     public override void OnReceivedBroadcast(string fromAddress, string data)

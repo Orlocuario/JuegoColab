@@ -4,13 +4,15 @@ using UnityEngine;
 
 public class Enemy {
 
-    public Room room;
-    public float hp;
     public float posX;
     public float posY;
-    public int enemyId;
+    public float hp;
+
     public bool fromEditor;
+    public int enemyId;
+
     public LevelManager levelManager;
+    public Room room;
 
     public Enemy(int enemyId, Room room)
     {
@@ -34,11 +36,7 @@ public class Enemy {
 
     private bool IsDead()
     {
-        if (hp <= 0)
-        {
-            return true;
-        }
-        return false;
+        return hp <= 0;
     }
 
 }
