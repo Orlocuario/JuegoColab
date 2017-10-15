@@ -6,11 +6,14 @@ public class SpiderScene2 : MonoBehaviour {
 
     LevelManager levelManagerScript;
     Vector3 posInicial;
-    Vector3 auxPosition;
+	Vector3 auxPosition;
+	private string Situacion;
     private static float minimunDistance = 3.8f;
 
 	void Start ()
     {
+
+		Situacion = "con colision";
         levelManagerScript = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         posInicial = new Vector3(73.38f, 0.73f);
         Physics2D.IgnoreCollision(GameObject.Find("RocaGiganteAraña").GetComponents<CircleCollider2D>()[0], this.gameObject.GetComponent<CircleCollider2D>());
@@ -25,26 +28,29 @@ public class SpiderScene2 : MonoBehaviour {
         Transform player0Transform = levelManagerScript.players[0].GetComponent<Transform>();
         Transform player1Transform = levelManagerScript.players[1].GetComponent<Transform>();
         Transform player2Transform = levelManagerScript.players[2].GetComponent<Transform>();
-
+		GameObject[] players = levelManagerScript.players;
         if (Mathf.Abs(transform.position.x - player0Transform.position.x) < minimunDistance || 
             Mathf.Abs(transform.position.x - player1Transform.position.x) < minimunDistance ||
             Mathf.Abs(transform.position.x - player2Transform.position.x) < minimunDistance)
         {
-            if (Mathf.Abs(player0Transform.position.x - posInicial.x) < minimunDistance)
-            {
-                GameObject[] players = levelManagerScript.players;
-                foreach (GameObject player in players)
-                {
-                    if (Client.instance.GetMage().InShield(player))
-                    {
-                        Client.instance.SendMessageToServer("IgnoreBoxCircleCollision/true/" + player.name + "/" + this.gameObject.name);
-                    }
-                    else
-                    {
-                        Client.instance.SendMessageToServer("IgnoreBoxCircleCollision/false/" + player.name + "/" + this.gameObject.name);
-                        Physics2D.IgnoreCollision(player.GetComponent<BoxCollider2D>(), this.gameObject.GetComponent<CircleCollider2D>(), false);
-                    }
-                }
+			if (Mathf.Abs (player0Transform.position.x - posInicial.x) < minimunDistance && Client.instance.GetMage ().InShield (players [0]) && Situacion == "con colision") {
+				foreach (GameObject player in players) 
+				{
+					Debug.Log ("holaaaaaaaa");
+					Physics2D.IgnoreCollision (player.GetComponent<BoxCollider2D> (), this.gameObject.GetComponent<CircleCollider2D> ());
+					Client.instance.SendMessageToServer ("IgnoreBoxCircleCollision/true/" + player.name + "/" + this.gameObject.name);
+					Situacion = "sin colision";
+				}
+			}
+			else if ((!Client.instance.GetMage ().InShield (players [0]) || Mathf.Abs (player0Transform.position.x - posInicial.x) > minimunDistance) && Situacion == "sin colision")
+			{
+				foreach (GameObject player in players) 
+				{
+					Debug.Log ("CHAAAAAOOOOOO");
+					Physics2D.IgnoreCollision (player.GetComponent<BoxCollider2D> (), this.gameObject.GetComponent<CircleCollider2D> (), false);
+					Client.instance.SendMessageToServer ("IgnoreBoxCircleCollision/false/" + player.name + "/" + this.gameObject.name);
+					Situacion = "con colision";
+				}
             }
 
             if ((Mathf.Abs(player0Transform.position.x - posInicial.x) < minimunDistance && player0Transform.position.y <= 0f) ||
