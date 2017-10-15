@@ -17,22 +17,22 @@ public class CameraController : MonoBehaviour {
     public float followAhead;
 	public float followUp;
 	public CameraState currentState;
-	private Camera holiwix; 
+	private Camera laCamara; 
 
 
 	private Vector3 saltitos;
 	private float cameraRate;
 	private int zoomIt;
 	private float initialSize = 1.42f;
-	float wea = 200; //Iteraciones hasta llegar al target
-	float wea2 = 202; //Tiempo en que espera volver
+	float iteracionesTarget = 200; //Iteraciones hasta llegar al target
+	float freezeTime = 202; //Tiempo en que espera volver
 	public float startTime;
 
 
 
     // Use this for initialization
     void Start () {
-		holiwix = this.gameObject.GetComponent<Camera> ();
+		laCamara = this.gameObject.GetComponent<Camera> ();
 		ChangeState (CameraState.Normal, 10, 0, 0);
 		Client.instance.GetLocalPlayer ().SetGravity (false);
 	}
@@ -82,15 +82,15 @@ public class CameraController : MonoBehaviour {
 			transform.position = new Vector3 (targetPosition.x, transform.position.y, targetPosition.z);
 			break;
 		case CameraState.TargetZoom:
-			if (zoomIt < wea) {
+			if (zoomIt < iteracionesTarget) {
 				transform.position = new Vector3(transform.position.x + saltitos.x, transform.position.y + saltitos.y, transform.position.z);
-				holiwix.orthographicSize = holiwix.orthographicSize + cameraRate;
+				laCamara.orthographicSize = laCamara.orthographicSize + cameraRate;
 				zoomIt++;
-			} else if (zoomIt < wea + wea2) {
+			} else if (zoomIt < iteracionesTarget + freezeTime) {
 				zoomIt++;
-			} else if (zoomIt < wea + wea2 + wea) {
+			} else if (zoomIt < iteracionesTarget + freezeTime + iteracionesTarget) {
 				transform.position = new Vector3(transform.position.x - saltitos.x, transform.position.y - saltitos.y, transform.position.z);
-				holiwix.orthographicSize = holiwix.orthographicSize - cameraRate;
+				laCamara.orthographicSize = laCamara.orthographicSize - cameraRate;
 				zoomIt++;
 			} else {
 				Client.instance.GetLocalPlayer ().ResumeMoving ();
@@ -126,7 +126,7 @@ public class CameraController : MonoBehaviour {
 	private void SetZoomedValues(float size, float x, float y){
 		currentState = CameraState.Zoomed;
 		//float i = (Time.time - startTime);
-		holiwix.orthographicSize =  size;
+		laCamara.orthographicSize =  size;
         transform.position = new Vector3(x, y, transform.position.z);
     }
 
@@ -135,8 +135,8 @@ public class CameraController : MonoBehaviour {
 		currentState = CameraState.TargetZoom;
 		Vector3 targetPosition = new Vector3 (x, y,0);
 		float distance = (targetPosition - transform.position).magnitude;
-		saltitos = (targetPosition - transform.position) / wea;
-		cameraRate = (size - initialSize)/wea;
+		saltitos = (targetPosition - transform.position) / iteracionesTarget;
+		cameraRate = (size - initialSize)/iteracionesTarget;
 		zoomIt = 0;
 
 	}
@@ -153,8 +153,8 @@ public class CameraController : MonoBehaviour {
 	{
 		smoothCamera = 2;
 		followAhead = 1;
-		followUp = 0.7f;
-		holiwix.orthographicSize = initialSize;
+		followUp = 0.8f;
+		laCamara.orthographicSize = initialSize;
 		currentState = CameraState.Normal;
 	}
 		
