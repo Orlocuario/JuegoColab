@@ -8,14 +8,14 @@ public class SpiderScene2 : MonoBehaviour {
     Vector3 posInicial;
 	Vector3 posFinal;
 	Vector3 auxPosition;
-	private string Situacion;
+	private bool conColision;
     private static float minimunDistance = 3.8f;
 	private Animator animAraña;
 
 	void Start ()
     {
 		animAraña = this.gameObject.GetComponent <Animator> ();
-		Situacion = "con colision";
+		conColision =  true;
         levelManagerScript = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         posInicial = new Vector3(73.38f, 0.73f);
 		posFinal = new Vector3 (posInicial.x, -3.14f);
@@ -45,21 +45,21 @@ public class SpiderScene2 : MonoBehaviour {
 			}
 
 
-			if (Mathf.Abs (player0Transform.position.x - posInicial.x) < minimunDistance && Client.instance.GetMage ().InShield (players [0]) && Situacion == "con colision") {
+			if (Mathf.Abs (player0Transform.position.x - posInicial.x) < minimunDistance && Client.instance.GetMage ().InShield (players [0]) && conColision) {
 				foreach (GameObject player in players) 
 				{
 					Physics2D.IgnoreCollision (player.GetComponent<BoxCollider2D> (), this.gameObject.GetComponent<CircleCollider2D> ());
 					Client.instance.SendMessageToServer ("IgnoreBoxCircleCollision/true/" + player.name + "/" + this.gameObject.name);
-					Situacion = "sin colision";
+					conColision = false;
 				}
 			}
-			else if ((!Client.instance.GetMage ().InShield (players [0]) || Mathf.Abs (player0Transform.position.x - posInicial.x) > minimunDistance) && Situacion == "sin colision")
+			else if ((!Client.instance.GetMage ().InShield (players [0]) || Mathf.Abs (player0Transform.position.x - posInicial.x) > minimunDistance) && !conColision)
 			{
 				foreach (GameObject player in players) 
 				{
 					Physics2D.IgnoreCollision (player.GetComponent<BoxCollider2D> (), this.gameObject.GetComponent<CircleCollider2D> (), false);
 					Client.instance.SendMessageToServer ("IgnoreBoxCircleCollision/false/" + player.name + "/" + this.gameObject.name);
-					Situacion = "con colision";
+					conColision = true;
 				}
             }
 
@@ -109,9 +109,11 @@ public class SpiderScene2 : MonoBehaviour {
             Client.instance.SendMessageToServer("ChangeHpHUDToRoom/-5");
         }
     }
+
 	public void onAttackEnd (string s)
 	{
 		Debug.Log (s);
 		animAraña.SetBool ("llegóPlayer", false);
 	}
+
 }
