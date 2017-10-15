@@ -11,6 +11,7 @@ public class SpiderScene2 : MonoBehaviour {
 	private bool conColision;
     private static float minimunDistance = 3.8f;
 	private Animator animAraña;
+    int counter = 0; //Lleva un contador de las iteraciones sobre el Update, con el fin de hacer ciertas acciones cada X updates.
 
 	void Start ()
     {
@@ -21,6 +22,14 @@ public class SpiderScene2 : MonoBehaviour {
 		posFinal = new Vector3 (posInicial.x, -3.14f);
         Physics2D.IgnoreCollision(GameObject.Find("RocaGiganteAraña").GetComponents<CircleCollider2D>()[0], this.gameObject.GetComponent<CircleCollider2D>());
         Physics2D.IgnoreCollision(GameObject.Find("RocaGiganteAraña").GetComponents<CircleCollider2D>()[1], this.gameObject.GetComponent<CircleCollider2D>());
+    }
+
+    void SendMessageToServer(string message)
+    {
+        if (Client.instance.GetLocalPlayer().controlOverEnemies)
+        {
+            Client.instance.SendMessageToServer(message);
+        }
     }
 
     // Update is called once per frame
@@ -49,7 +58,7 @@ public class SpiderScene2 : MonoBehaviour {
 				foreach (GameObject player in players) 
 				{
 					Physics2D.IgnoreCollision (player.GetComponent<BoxCollider2D> (), this.gameObject.GetComponent<CircleCollider2D> ());
-					Client.instance.SendMessageToServer ("IgnoreBoxCircleCollision/true/" + player.name + "/" + this.gameObject.name);
+					SendMessageToServer("IgnoreBoxCircleCollision/true/" + player.name + "/" + this.gameObject.name);
 					conColision = false;
 				}
 			}
@@ -58,7 +67,7 @@ public class SpiderScene2 : MonoBehaviour {
 				foreach (GameObject player in players) 
 				{
 					Physics2D.IgnoreCollision (player.GetComponent<BoxCollider2D> (), this.gameObject.GetComponent<CircleCollider2D> (), false);
-					Client.instance.SendMessageToServer ("IgnoreBoxCircleCollision/false/" + player.name + "/" + this.gameObject.name);
+					SendMessageToServer ("IgnoreBoxCircleCollision/false/" + player.name + "/" + this.gameObject.name);
 					conColision = true;
 				}
             }
@@ -85,8 +94,13 @@ public class SpiderScene2 : MonoBehaviour {
 
         if (auxPosition != transform.position)
         {
-            Client.instance.SendMessageToServer("ChangeObjectPosition/" + this.gameObject.name + "/" +
+            counter++;
+            if(counter == 15)
+            {
+                SendMessageToServer("ChangeObjectPosition/" + this.gameObject.name + "/" +
                 this.gameObject.transform.position.x.ToString() + "/" + this.gameObject.transform.position.y.ToString() + "/" + this.gameObject.transform.rotation.z.ToString());
+                counter = 0;
+            }
         }
     }
 
@@ -106,7 +120,7 @@ public class SpiderScene2 : MonoBehaviour {
             {
                 rgbd.AddForce(new Vector2(-3500f, 150f));
             }
-            Client.instance.SendMessageToServer("ChangeHpHUDToRoom/-5");
+            SendMessageToServer("ChangeHpHUDToRoom/-5");
         }
     }
 
