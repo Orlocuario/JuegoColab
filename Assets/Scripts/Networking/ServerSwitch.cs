@@ -15,4 +15,9 @@ public class ServerSwitch {
         this.room = room;
     }
 
+    public string GetReconnectData()
+    {
+        return "ChangeSwitchStatus/" + groupId + "/" + individualId + "/" + on;
+    }
+
 }

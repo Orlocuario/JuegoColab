@@ -18,12 +18,14 @@ public class Jugador
     public bool pressingRight;
     public bool pressingLeft;
     public bool attacking;
-	  public bool power;
+	public bool power;
     public bool controlOverEnemies;
     public string[] inventory = new string[8];
+    public string ipAddress;
 
-    public Jugador(int connectionId, int charId, Room room)
+    public Jugador(int connectionId, int charId, Room room, string address)
     {
+        this.ipAddress = address;
         this.connectionId = connectionId;
         this.room = room;
         this.charId = charId;
@@ -37,7 +39,7 @@ public class Jugador
         pressingRight = false;
         pressingLeft = false;
         attacking = false;
-		    power = false;
+		power = false;
         controlOverEnemies = false;
     }
 
@@ -80,5 +82,10 @@ public class Jugador
                 return;
             }
         }
+    }
+
+    public string GetReconnectData()
+    {
+        return "ChangePosition/" + charId + "/" + positionX + "/" + positionY + "/" + isGrounded + "/" + speed + "/" + direction + "/" + pressingJump + "/" + pressingLeft + "/" + pressingRight; 
     }
 }

@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour {
@@ -20,6 +21,7 @@ public class LevelManager : MonoBehaviour {
     private float waitToGrabItem;
     private float waitToKillNPCCountdown;
     private float waitToResetItemPos;
+    private GameObject reconectando;
 
     void Start ()
     {
@@ -30,9 +32,15 @@ public class LevelManager : MonoBehaviour {
         npcLog.SetActive(false);
         client = GameObject.Find("ClientObject").GetComponent<Client>();
         client.RequestCharIdToServer();
-
+        reconectando = GameObject.Find("ReconnectingText");
+        reconectando.SetActive(false);
         //SetHpAndManaToMax();
 	}
+
+    public void MostrarReconectando(bool valor)
+    {
+        reconectando.SetActive(valor);
+    }
 
     public void SetCharAsLocal(int id)
     {
@@ -82,15 +90,11 @@ public class LevelManager : MonoBehaviour {
     {
         GameObject obj = GameObject.Find(itemName);
         Transform gameObjectToMove;
-        if (gameObject)
-        {
-            gameObjectToMove = obj.GetComponent<Transform>();
-        }
-        else
+        if (!gameObject)
         {
             return;
         }
-
+        gameObjectToMove = obj.GetComponent<Transform>();
         gameObjectToMove.position = new Vector3(float.Parse(posX), float.Parse(posY), gameObjectToMove.position.z);
         Quaternion gORotation = gameObjectToMove.rotation;
         gORotation = new Quaternion(gameObjectToMove.rotation.x, gameObjectToMove.rotation.y, float.Parse(rotZ), gameObjectToMove.rotation.w);
@@ -123,11 +127,27 @@ public class LevelManager : MonoBehaviour {
         StartCoroutine("WaitToKillNPC");
     }
 
+    public void IgnoreBoxCircleCollision(string[] array)
+    {
+        if (array[1] == "true")
+        {
+            GameObject boxObject = GameObject.Find(array[2]);
+            GameObject circleObject = GameObject.Find(array[3]);
+            Physics2D.IgnoreCollision(boxObject.GetComponent<BoxCollider2D>(), circleObject.GetComponent<CircleCollider2D>());
+        }
+        else
+        {
+            GameObject boxObject = GameObject.Find(array[2]);
+            GameObject circleObject = GameObject.Find(array[3]);
+            Physics2D.IgnoreCollision(boxObject.GetComponent<BoxCollider2D>(), circleObject.GetComponent<CircleCollider2D>(), false);
+        }
+    }
+
     public void ActivateMachine(string machineName)
     {
         GameObject machine = GameObject.Find(machineName);
-        SpriteRenderer maquinaSpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
-        SpriteRenderer[] maquinaSlotSpriteRenderer = this.gameObject.GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer maquinaSpriteRenderer = machine.gameObject.GetComponent<SpriteRenderer>();
+        SpriteRenderer[] maquinaSlotSpriteRenderer = machine.gameObject.GetComponentsInChildren<SpriteRenderer>();
         for (int i = 0; i < maquinaSlotSpriteRenderer.Length; i++)
         {
             maquinaSlotSpriteRenderer[i].sprite = null;
@@ -196,8 +216,8 @@ public class LevelManager : MonoBehaviour {
         npcLog.SetActive(false);
     }
 
-    public void ReloadLevel()
+    public void ReloadLevel(string sceneName)
     {
-        Debug.Log("PLAYERS ARE DEAD MUAJAJAJA");
+        SceneManager.LoadScene(sceneName);
     }
 }

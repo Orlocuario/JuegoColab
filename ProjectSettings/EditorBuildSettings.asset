@@ -10,4 +10,10 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Escenas/ClientScene.unity
   - enabled: 1
+    path: Assets/Escenas/Escena1.unity
+  - enabled: 1
     path: Assets/Escenas/Escena2.unity
+  - enabled: 1
+    path: Assets/Escenas/Prueba.unity
+  - enabled: 1
+    path: Assets/Escenas/Escena3.unity

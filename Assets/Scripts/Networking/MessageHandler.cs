@@ -53,14 +53,16 @@ public class MessageHandler
         bool pressingJump = bool.Parse(data[7]);
         bool pressingLeft = bool.Parse(data[8]);
         bool pressingRight = bool.Parse(data[9]);
-        player.positionX = positionX;
-        player.positionY = positionY;
-        player.isGrounded = isGrounded;
-        player.speed = speed;
-        player.direction = direction;
-        player.pressingJump = pressingJump;
-        player.pressingLeft = pressingLeft;
+
         player.pressingRight = pressingRight;
+        player.pressingLeft = pressingLeft;
+        player.pressingJump = pressingJump;
+        player.isGrounded = isGrounded;
+        player.direction = direction;
+        player.positionY = positionY;
+        player.positionX = positionX;
+        player.speed = speed;
+
         room.SendMessageToAllPlayersExceptOne(message, connectionID);
     }
 

@@ -41,7 +41,7 @@ public class ServerMessageHandler
             case "ChangeMpHUDToRoom":
                 SendMpHUDToRoom(arreglo, connectionId);
                 break;
-            case "ChangeHpAndManaHUDToRoom": //Necessary coz' ChatZone changes both at the same rate
+			case "ChangeHpAndManaHUDToRoom": //Necessary coz' ChatZone changes both at the same rate
                 SendHpHAndMpHUDToRoom(arreglo, connectionId);
                 break;
             case "GainExp":
@@ -74,6 +74,9 @@ public class ServerMessageHandler
             case "DestroyObject":
                 SendDestroyObject(message, connectionId);
                 break;
+			case "OthersDestroyObject":
+				SendOthersDestroyObject (message, connectionId);
+				break;
             case "InventoryUpdate":
                 SendInventoryUpdate(message, connectionId);
                 break;
@@ -81,7 +84,7 @@ public class ServerMessageHandler
                 SendChangeSwitchStatus(message, arreglo, connectionId);
                 break;
             case "SwitchGroupReady":
-                SendSwitchGroupAction(message, connectionId);
+                SendSwitchGroupAction(message,arreglo, connectionId);
                 break;
             case "ActivateRuneDoor":
                 SendActivationDoor(message, connectionId);
@@ -92,12 +95,37 @@ public class ServerMessageHandler
             case "ActivateNPCLog": // No se si es necesario o no, ya que puedes llamar el metodo desde afuera (start o script)
 			SendActivationNPC(arreglo, connectionId);
                 break;
+            case "IgnoreBoxCircleCollision":
+                SendIgnoreBoxCircleCollision(message, connectionId);
+                break;
             default:
                 break;
         }
     }
 
-	public void SendActivationNPC(string[] arreglo, int connectionId) // Manda un mensaje a un solo jugador
+    public void SendAllData(int connectionId, Room room)
+    {
+
+        foreach (Jugador player in room.players)
+        {
+            room.SendMessageToPlayer(player.GetReconnectData(), connectionId);
+        }
+
+        foreach(ServerSwitch switchi in room.switchs)
+        {
+            room.SendMessageToPlayer(switchi.GetReconnectData(), connectionId);
+        }
+    }
+
+
+    private void SendIgnoreBoxCircleCollision(string message, int connectionId)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.SendMessageToAllPlayers(message);
+    }
+
+    public void SendActivationNPC(string[] arreglo, int connectionId) // Manda un mensaje a un solo jugador
     {
 		string message = arreglo [1];
 		int playerId = int.Parse (arreglo [2]);
@@ -121,7 +149,7 @@ public class ServerMessageHandler
     {
         Jugador player = server.GetPlayer(connectionId);
         Room room = player.room;
-        room.SendMessageToAllPlayers(message);
+        room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 
     private void SendActivationDoor(string message, int connectionId)
@@ -131,13 +159,15 @@ public class ServerMessageHandler
         room.SendMessageToAllPlayers(message);
     }
 
-    private void SendSwitchGroupAction(string message, int connectionId)
+    private void SendSwitchGroupAction(string message, string[] arreglo,int connectionId)
     {
-        Debug.Log("Desactivado para probar algo, si todo sale mal habilitar todo en SendSwitchGroupAction en el ServerMessageHandler");
-        return;
         Jugador player = server.GetPlayer(connectionId);
         Room room = player.room;
-        room.SendMessageToAllPlayersExceptOne(message, connectionId);
+        int groupId = Int32.Parse(arreglo[1]);
+        if (!room.activatedGroups.Contains(groupId))
+        {
+            room.activatedGroups.Add(groupId);
+        }
     }
 
     private void SendChangeSwitchStatus(string message, string[] arreglo, int connectionId)
@@ -198,6 +228,13 @@ public class ServerMessageHandler
         Room room = player.room;
         room.SendMessageToAllPlayers(message);
     }
+
+	private void SendOthersDestroyObject (string message, int connectionId)
+	{
+		Jugador player = server.GetPlayer(connectionId);
+		Room room = player.room;
+		room.SendMessageToAllPlayersExceptOne (message, connectionId);
+	}
 
     private void SendHpHUDToRoom(string[] arreglo, int connectionId)
     {
@@ -286,6 +323,7 @@ public class ServerMessageHandler
         int charId = player.charId;
         string message = "SetCharId/" + charId + "/" + player.controlOverEnemies;
         server.SendMessageToClient(connectionId, message);
+        SendAllData(connectionId, player.room);
     }
 
     public void SendChangeScene(string sceneName, Room room)

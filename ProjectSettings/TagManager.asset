@@ -40,6 +40,8 @@ TagManager:
   - CajaSwitchFierro
   - KillPlaneSpikes
   - SwitchEnginPart
+  - Poi
+  - ExperienceItem
   layers:
   - Default
   - TransparentFX
