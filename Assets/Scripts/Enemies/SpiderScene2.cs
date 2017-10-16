@@ -7,16 +7,16 @@ public class SpiderScene2 : MonoBehaviour {
     LevelManager levelManagerScript;
     Vector3 posInicial;
 	Vector3 posFinal;
-	Vector3 auxPosition;
-	private bool conColision;
+	Vector3 auxPosition; 
+    private bool[] conColision;
     private static float minimunDistance = 3.8f;
 	private Animator animAraña;
     int counter = 0; //Lleva un contador de las iteraciones sobre el Update, con el fin de hacer ciertas acciones cada X updates.
 
 	void Start ()
     {
-		animAraña = this.gameObject.GetComponent <Animator> ();
-		conColision =  true;
+        conColision = new bool[3] { true, true, true };
+        animAraña = this.gameObject.GetComponent <Animator> ();
         levelManagerScript = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         posInicial = new Vector3(73.38f, 0.73f);
 		posFinal = new Vector3 (posInicial.x, -3.14f);
@@ -53,23 +53,28 @@ public class SpiderScene2 : MonoBehaviour {
 				animAraña.SetBool ("llegóPlayer", true);
 			}
 
-
-			if (Mathf.Abs (player0Transform.position.x - posInicial.x) < minimunDistance && Client.instance.GetMage ().InShield (players [0]) && conColision) {
-				foreach (GameObject player in players) 
-				{
-					Physics2D.IgnoreCollision (player.GetComponent<BoxCollider2D> (), this.gameObject.GetComponent<CircleCollider2D> ());
-					SendMessageToServer("IgnoreBoxCircleCollision/true/" + player.name + "/" + this.gameObject.name);
-					conColision = false;
-				}
-			}
-			else if ((!Client.instance.GetMage ().InShield (players [0]) || Mathf.Abs (player0Transform.position.x - posInicial.x) > minimunDistance) && !conColision)
+			if (Mathf.Abs (player0Transform.position.x - posInicial.x) < minimunDistance && Client.instance.GetMage ().InShield (players [0])) {
+                for (int i = 0; i < players.Length; i++)
+                {
+                    if (Client.instance.GetMage().InShield(players[i]) && conColision[i])
+                    {
+					  Physics2D.IgnoreCollision (players[i].GetComponent<BoxCollider2D> (), this.gameObject.GetComponent<CircleCollider2D> ());
+					  SendMessageToServer("IgnoreBoxCircleCollision/true/" + players[i].name + "/" + this.gameObject.name);
+                      conColision[i] = false;
+                    }
+                }
+            }
+            else if (!conColision[0] || !conColision[1] || !conColision[2])
 			{
-				foreach (GameObject player in players) 
-				{
-					Physics2D.IgnoreCollision (player.GetComponent<BoxCollider2D> (), this.gameObject.GetComponent<CircleCollider2D> (), false);
-					SendMessageToServer ("IgnoreBoxCircleCollision/false/" + player.name + "/" + this.gameObject.name);
-					conColision = true;
-				}
+                for (int i = 0; i < players.Length; i++)
+                {
+                    if (!Client.instance.GetMage().InShield(players[i]))
+                    {
+                        Physics2D.IgnoreCollision(players[i].GetComponent<BoxCollider2D>(), this.gameObject.GetComponent<CircleCollider2D>(), false);
+                        SendMessageToServer("IgnoreBoxCircleCollision/false/" + players[i].name + "/" + this.gameObject.name);
+                        conColision[i] = true;
+                    }
+                }
             }
 
             if ((Mathf.Abs(player0Transform.position.x - posInicial.x) < minimunDistance && player0Transform.position.y <= 0f) ||
@@ -112,7 +117,7 @@ public class SpiderScene2 : MonoBehaviour {
         {
             GameObject player = other.collider.gameObject;
             Rigidbody2D rgbd = player.GetComponent<Rigidbody2D>();
-            if (player.GetComponent<PlayerController>().direction == -1)
+            if (player.GetComponent<PlayerController>().direction == -1f)
             {
                 rgbd.AddForce(new Vector2(3500f, 150f));
             }
