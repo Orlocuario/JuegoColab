@@ -245,9 +245,16 @@ public class Room
 
     public ServerSwitch AddSwitch(int groupId, int individualId)
     {
-            ServerSwitch switchi = new ServerSwitch(groupId, individualId, this);
-            switchs.Add(switchi);
-            return switchi;
+        foreach(ServerSwitch switchu in switchs)
+        {
+            if(switchu.groupId == groupId && switchu.individualId == individualId)
+            {
+                return switchu;
+            }
+        }
+        ServerSwitch switchi = new ServerSwitch(groupId, individualId, this);
+        switchs.Add(switchi);
+        return switchi;
     }
 
     public ServerSwitch GetSwitch(int groupId, int individualId)

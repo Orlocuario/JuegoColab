@@ -65,6 +65,7 @@ public class PlayerController : MonoBehaviour
         controlOverEnemies = false;
         saltarDoble = 0;
         IgnoreCollisionStar2puntoCero();
+        SendObjectDataToServer();
     }
 
     public void conectar(bool valor)

@@ -7,12 +7,14 @@ public class GroupOfSwitchs{
     public int size;
     private List<Switch> switchs;
     public int groupId;
+    bool activated;
 
     public GroupOfSwitchs(int groupId)
     {
         switchs = new List<Switch>();
         size = 0;
         this.groupId = groupId;
+        activated = false;
     }
 
     public void AddSwitch(Switch switchi)
@@ -62,6 +64,11 @@ public class GroupOfSwitchs{
 
     public void CallAction()
     {
+        if (activated)
+        {
+            return;
+        }
+        activated = true;
         SwitchActions handler = new SwitchActions(this);
         handler.DoSomething();
         SendNewEventToServer();
