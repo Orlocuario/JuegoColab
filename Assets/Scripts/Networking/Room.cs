@@ -6,7 +6,7 @@ using System.IO;
 
 public class Room
 {
-    List<Jugador> players;
+    public List<Jugador> players;
     List<ServerSwitch> switchs;
     Server server;
     ServerMessageHandler sender;

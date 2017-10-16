@@ -68,6 +68,13 @@ public class Server : MonoBehaviour {
     // Update is called once per frame
     void LateUpdate ()
     {
+		if (connectionIdStack.Count > 0) {
+			int connectionId = connectionIdStack [0];
+			string output = outputStack [0];
+			SendPlannerInfoToClient (connectionId, output);
+			connectionIdStack.RemoveAt (0);
+			outputStack.RemoveAt (0);
+		}
         int recSocketId;
         int recConnectionId; // Reconoce la ID del jugador
         int recChannelId;
@@ -242,11 +249,15 @@ public class Server : MonoBehaviour {
 				parameters.RemoveAt (0);
 				string def = parameters [0];
 				string init = parameters [1];
+				string goal = parameters [2];
 				List<string> data = new List<string> ();
 				data.Add (def);
 				data.Add (")");
 				data.Add ("(:init");
 				data.Add (init);
+				data.Add (")");
+				data.Add ("(:goal (and");
+				data.Add (goal);
 				string tempFileName = templateFileName + level + ".txt";
 				string probFileName = problemFileName + level + ".pddl";
 				string batFileName = batchFileName + level + ".bat";

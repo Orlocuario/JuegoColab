@@ -187,7 +187,7 @@ public class Switch : MonoBehaviour
             SetSprite();
             SendOnDataToServer(on);
 
-			switchGroup.CheckIfReady(switchObj);;      
+			switchGroup.CheckIfReady (switchObj, FindObjectOfType<Planner> ());
         }
     }
 
@@ -202,6 +202,8 @@ public class Switch : MonoBehaviour
         SendOnDataToServer(on);
 		if (switchObj != null) {
 			switchObj.DeactivateSwitch ();
+			Planner planner = FindObjectOfType<Planner> ();
+			planner.Monitor ();
 		}
     }
 
@@ -359,6 +361,6 @@ public class Switch : MonoBehaviour
             on = true;
         }
         SetSprite();
-		switchGroup.CheckIfReady(switchObj);
+		switchGroup.CheckIfReady (switchObj, FindObjectOfType<Planner> ());
     }
 }

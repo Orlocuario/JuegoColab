@@ -43,6 +43,8 @@ public class PickUpItem : MonoBehaviour
         Inventory.instance.AddItemToInventory(this.gameObject);
 		if (itemObj != null) {
 			itemObj.PickUp (Client.instance.GetLocalPlayer ().playerObj);
+			Planner planner = FindObjectOfType<Planner> ();
+			planner.Monitor ();
 		}
     }
 

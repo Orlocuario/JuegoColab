@@ -90,23 +90,31 @@ public class ServerMessageHandler
                 SendActivationMachine(message, connectionId);
                 break;
             case "ActivateNPCLog": // No se si es necesario o no, ya que puedes llamar el metodo desde afuera (start o script)
-                SendActivationNPC(message, connectionId);
+			SendActivationNPC(arreglo, connectionId);
                 break;
             default:
                 break;
         }
     }
 
-    public void SendActivationNPC(string message, int connectionId) // Manda un mensaje a un solo jugador
+	public void SendActivationNPC(string[] arreglo, int connectionId) // Manda un mensaje a un solo jugador
     {
-        Jugador player = server.GetPlayer(connectionId);
-        Room room = player.room;
+		string message = arreglo [1];
+		int playerId = int.Parse (arreglo [2]);
+		int newConnectionId = 0;
+		Room room = server.GetPlayer (connectionId).room;
+		foreach (Jugador jugador in room.players) {
+			if (playerId == jugador.charId) {
+				newConnectionId = jugador.connectionId;
+				break;
+			}
+		}
         if (!message.Contains("ActivateNPCLog"))
         {
             message = "ActivateNPCLog/" + message;
         }
         server.NPCsLastMessage = message;
-        room.SendMessageToPlayer(message, connectionId); // Message es el texto a mostrar en el NPC Log
+        room.SendMessageToPlayer(message, newConnectionId); // Message es el texto a mostrar en el NPC Log
     }
 
     private void SendActivationMachine(string message, int connectionId)

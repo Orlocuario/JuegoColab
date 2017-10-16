@@ -111,6 +111,12 @@ public class Client : MonoBehaviour {
 		planner.SetPlanFromServer (message);
     }
 
+	public void StartFirstPlan()
+	{
+		Planner planner = FindObjectOfType<Planner> ();
+		planner.FirstPlan ();
+	}
+
     public PlayerController GetPlayerController(int charId)
     {
         GameObject player;

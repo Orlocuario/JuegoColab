@@ -31,15 +31,15 @@ public class PlannerPoi : MonoBehaviour {
 		foreach (PlannerPoi item in routeTo) {
 			def.Add("(route-to " + name + " " + item.name + ")");
 		}
-		foreach (PlannerPoi itemOut in routeBlockPoi) {
-			PlannerObstacle itemIn = routeBlockObstacle [routeBlockPoi.IndexOf (itemOut)];
+		for (int i = 0; i < routeBlockPoi.Count; i++) {
+			PlannerPoi itemOut = routeBlockPoi [i];
+			PlannerObstacle itemIn = routeBlockObstacle [i];
 			def.Add("(route-block " + name + " " + itemOut.name + " " + itemIn.name + ")");
 		}
-		foreach (PlannerPoi itemOut in doorRoutePoi) {
-			PlannerObstacle itemIn = doorRouteObstacle [doorRoutePoi.IndexOf (itemOut)];
-			if (itemIn.type == ObstacleType.door) {
-				def.Add ("(door-route " + name + " " + itemOut.name + " " + itemIn.name + ")");
-			}
+		for (int i = 0; i < doorRoutePoi.Count; i++) {
+			PlannerPoi itemOut = doorRoutePoi [i];
+			PlannerObstacle itemIn = doorRouteObstacle [i];
+			def.Add ("(door-route " + name + " " + itemOut.name + " " + itemIn.name + ")");
 		}
 		return def;
 	}
