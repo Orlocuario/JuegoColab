@@ -11,15 +11,7 @@ public class PickUpItem : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D other)
     {
-        if (this.gameObject.tag == "ExperienceItem" && (other.collider.tag == "Player1" || other.collider.tag == "Player2" || other.collider.tag == "Player3"))
-        {
-            PlayerController localPlayer = Client.instance.GetLocalPlayer();
-            if (localPlayer.gameObject.tag == other.collider.tag)
-            {
-                PickUpExp();
-            }
-        }
-        else if (other.collider.tag == "Player1" || other.collider.tag == "Player2" || other.collider.tag == "Player3")
+        if (other.collider.tag == "Player1" || other.collider.tag == "Player2" || other.collider.tag == "Player3")
         {
             PlayerController localPlayer = Client.instance.GetLocalPlayer();
             if (localPlayer.gameObject.tag == other.collider.tag)
@@ -32,6 +24,18 @@ public class PickUpItem : MonoBehaviour
             if (Client.instance.GetLocalPlayer().tag == "Player3")
             {
                 PickUp();
+            }
+        }
+    }
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (this.gameObject.tag == "ExperienceItem" && (other.tag == "Player1" || other.tag == "Player2" || other.tag == "Player3"))
+        {
+            PlayerController localPlayer = Client.instance.GetLocalPlayer();
+            if (localPlayer.gameObject.tag == other.tag)
+            {
+                PickUpExp();
             }
         }
     }

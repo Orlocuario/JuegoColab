@@ -126,7 +126,7 @@ public class ServerMessageHandler
     {
         Jugador player = server.GetPlayer(connectionId);
         Room room = player.room;
-        room.SendMessageToAllPlayers(message);
+        room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 
     private void SendActivationDoor(string message, int connectionId)

@@ -73,7 +73,7 @@ public class ClientMessageHandler {
                 HandleCastProyectile(arreglo);
                 break;
             case "PlayersAreDead":
-                HandlePlayersAreDead();
+                HandlePlayersAreDead(arreglo);
                 break;
             case "CreateGameObject":
                 HandleCreateGameObject(arreglo);
@@ -222,7 +222,6 @@ public class ClientMessageHandler {
     {
         string scene = arreglo[1];
         SceneManager.LoadScene(scene);
-        //falta settear su vida/mana real al 100%
     }
 
     private void HandleSetCharId(string[] arreglo)
@@ -301,9 +300,9 @@ public class ClientMessageHandler {
         script.CastLocalProyectile(direction, positionX, positionY, script);
     }
 
-    private void HandlePlayersAreDead()
+    private void HandlePlayersAreDead(string[] array)
     {
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.ReloadLevel();
+        scriptLevel.ReloadLevel(array[1]);
     }
 }
