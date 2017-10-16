@@ -36,7 +36,7 @@ public class GroupOfSwitchs{
         return null;
     }
 
-	public void CheckIfReady(PlannerSwitch switchObj)
+	public void CheckIfReady(PlannerSwitch switchObj, Planner planner)
 	{
 		foreach(Switch switchi in switchs)
 		{
@@ -48,6 +48,7 @@ public class GroupOfSwitchs{
 		CallAction();
 		if (switchObj != null) {
 			switchObj.ActivateSwitch ();
+			planner.Monitor ();
 		}
 	}
 

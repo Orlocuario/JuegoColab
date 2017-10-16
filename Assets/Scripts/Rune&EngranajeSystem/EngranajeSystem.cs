@@ -120,8 +120,10 @@ public class EngranajeSystem : MonoBehaviour
             GameObject viga2 = GameObject.Find("GiantBlocker (1)");
             viga.SetActive(false);
             viga2.SetActive(false);
-			if (switchObj !=null) {
+			if (switchObj != null) {
 				switchObj.ActivateSwitch ();
+				Planner planner = FindObjectOfType<Planner> ();
+				planner.Monitor ();
 			}
         }
     }

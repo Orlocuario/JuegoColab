@@ -2628,10 +2628,10 @@ MonoBehaviour:
   maxJugadores: 0
   sceneToLoad: 
   NPCsLastMessage: 
-  templateFileName: /Users/Ou/Documents/FastDownward/misc/tests/benchmarks/gripper/template
-  problemFileName: /Users/Ou/Documents/FastDownward/misc/tests/benchmarks/gripper/prob
-  batchFileName: /Users/Ou/Documents/FastDownward/misc/tests/benchmarks/gripper/batch
-  outputFileName: /Users/Ou/Documents/FastDownward/output
+  templateFileName: C:\Users\cnsae\Downloads\FastDownward\misc\tests\benchmarks\gripper\template
+  problemFileName: C:\Users\cnsae\Downloads\FastDownward\misc\tests\benchmarks\gripper\prob
+  batchFileName: C:\Users\cnsae\Downloads\FastDownward\batch
+  outputFileName: C:\Users\cnsae\Downloads\FastDownward\output
   startLinePerLevel: 030000000300000003000000
 --- !u!4 &1958641102
 Transform:

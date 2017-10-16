@@ -61,11 +61,13 @@ public class PlannerSwitch : MonoBehaviour {
 		if (type == SwitchType.machine) {
 			foreach (PlannerObstacle obstacle in linkedSwitch) {
 				obstacle.rollableLocked = false;
+				obstacle.rollableOpen = true;
 			}
 		}
 		else {
 			foreach (PlannerObstacle obstacle in linkedSwitch) {
 				obstacle.blocked = false;
+				obstacle.open = true;
 			}
 		}
 	}
@@ -75,6 +77,7 @@ public class PlannerSwitch : MonoBehaviour {
 		if (type == SwitchType.lever) {
 			foreach (PlannerObstacle obstacle in linkedSwitch) {
 				obstacle.blocked = true;
+				obstacle.open = false;
 			}
 		}
 	}

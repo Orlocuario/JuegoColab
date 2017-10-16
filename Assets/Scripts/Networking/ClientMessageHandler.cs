@@ -317,6 +317,9 @@ public class ClientMessageHandler {
         scriptLevel.SetCharAsLocal(charIdint);
         PlayerController scriptPlayer = Client.instance.GetLocalPlayer();
         scriptPlayer.controlOverEnemies = controlOverEnemies;
+		if (controlOverEnemies) {
+			client.StartFirstPlan ();
+		}
     }
 
     private void HandleChangePosition(string[] data)

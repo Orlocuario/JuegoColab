@@ -10,7 +10,7 @@ using System;
 using System.Threading;
 
 public class Server : MonoBehaviour {
-   
+
     public int maxConnections;
     int socketId;
     int channelId;
@@ -66,8 +66,8 @@ public class Server : MonoBehaviour {
 
     // Update is called once per frame
     void LateUpdate ()
-    {	
-		if (connectionIdStack.Count > 0) 
+    {
+		if (connectionIdStack.Count > 0)
 		{
 			int connectionId = connectionIdStack [0];
 			string output = outputStack [0];
@@ -176,7 +176,7 @@ public class Server : MonoBehaviour {
             room = new Room(rooms.Count, this, messageHandler, maxJugadores);
             rooms.Add(room);
         }
-        
+
         room.AddPlayer(connectionId, recAddress);
     }
 
@@ -202,7 +202,7 @@ public class Server : MonoBehaviour {
             {
                 role = "Engineer: Has Disconnected";
             }
-            player.room.SendMessageToAllPlayers("NewChatMessage/" + role);   
+            player.room.SendMessageToAllPlayers("NewChatMessage/" + role);
             if(player.controlOverEnemies == true)
             {
                 player.room.ChangeControlEnemies();
@@ -258,10 +258,10 @@ public class Server : MonoBehaviour {
     {
 		messageStack.Add (connectionId + "/" + message);
     }
-    
+
 	private void Plan()
 	{
-		while (true) 
+		while (true)
 		{
 			if (messageStack != null && messageStack.Count > 0) {
 				UnityEngine.Debug.Log ("stack enter count:" + messageStack.Count);
@@ -274,11 +274,15 @@ public class Server : MonoBehaviour {
 				parameters.RemoveAt (0);
 				string def = parameters [0];
 				string init = parameters [1];
+				string goal = parameters [2];
 				List<string> data = new List<string> ();
 				data.Add (def);
 				data.Add (")");
 				data.Add ("(:init");
 				data.Add (init);
+				data.Add (")");
+				data.Add ("(:goal (and");
+				data.Add (goal);
 				string tempFileName = templateFileName + level + ".txt";
 				string probFileName = problemFileName + level + ".pddl";
 				string batFileName = batchFileName + level + ".bat";

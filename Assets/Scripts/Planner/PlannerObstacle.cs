@@ -7,12 +7,18 @@ public class PlannerObstacle : MonoBehaviour {
 	public string name;
 	public ObstacleType type;
 	public List<PlannerPoi> enemyAt;
+	public List<PlannerPoi> enemyEdgeStart;
+	public List<PlannerPoi> enemyEdgeEnd;
 	public bool blocked;
+	public bool open;
 	public List<PlannerItem> doorRune;
 	public bool rollableLocked;
+	public bool rollableOpen;
 
 	public PlannerObstacle(){
 		this.enemyAt = new List<PlannerPoi> ();
+		this.enemyEdgeStart = new List<PlannerPoi> ();
+		this.enemyEdgeEnd = new List<PlannerPoi> ();
 		this.doorRune = new List<PlannerItem> ();
 	}
 
@@ -28,9 +34,17 @@ public class PlannerObstacle : MonoBehaviour {
 			foreach (PlannerPoi item in enemyAt) {
 				def.Add ("(enemy-at " + name + " " + item.name + ")");
 			}
+			for (int i = 0; i < enemyEdgeStart.Count; i++) {
+				PlannerPoi edgeStart = enemyEdgeStart [i];
+				PlannerPoi edgeEnd = enemyEdgeEnd [i];
+				def.Add ("(enemy-edge " + name + " " + edgeStart.name + " " + edgeEnd.name + ")");
+			}
 		}
 		if (blocked) {
 			def.Add("(blocked " + name + ")");
+		}
+		if (open) {
+			def.Add("(open " + name + ")");
 		}
 		if(type == ObstacleType.door){
 			foreach (PlannerItem item in doorRune) {
@@ -39,8 +53,13 @@ public class PlannerObstacle : MonoBehaviour {
 				}
 			}
 		}
-		if(rollableLocked && type == ObstacleType.rollable){
-			def.Add("(rollable-locked " + name + ")");
+		if (type == ObstacleType.rollable) {
+			if (rollableLocked) {
+				def.Add ("(rollable-locked " + name + ")");
+			}
+			if (rollableOpen) {
+				def.Add ("(rollable-open " + name + ")");
+			}
 		}
 		return def;
 	}

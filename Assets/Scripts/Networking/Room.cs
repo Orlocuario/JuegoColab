@@ -23,7 +23,7 @@ public class Room
     string historial;
     public List<int> activatedGroups; //guarda los numeros de los grupos de switchs activados
     public string actualChat;
-    
+
     //Inicialización
     public Room(int id, Server server, ServerMessageHandler sender, int maxJugadores)
     {
@@ -224,7 +224,7 @@ public class Room
     }
 
     //Set current controller to False, and find a new one that is connected
-    public void ChangeControlEnemies() 
+    public void ChangeControlEnemies()
     {
         foreach(Jugador player in players)
         {
