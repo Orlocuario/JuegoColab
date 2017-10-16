@@ -62,7 +62,7 @@ public class Server : MonoBehaviour {
         messageHandler = new ServerMessageHandler(this);
         planner = new Thread(new ThreadStart(this.Plan));
 	     	planner.Start ();
-        this.sceneToLoad = "Escena1";
+        this.sceneToLoad = "Escena2";
     }
 
     // Update is called once per frame
