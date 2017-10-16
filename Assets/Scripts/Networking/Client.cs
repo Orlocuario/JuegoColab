@@ -128,7 +128,11 @@ public class Client : MonoBehaviour {
             case NetworkEventType.DisconnectEvent:
                 if(connectionId == recConnectionId) //Detectamos que fuimos nosotros los que nos desconectamos
                 {
-                    GetLocalPlayer().conectar(false);
+                    currentScene = SceneManager.GetActiveScene();
+                    if (!(currentScene.name == "ClientScene"))
+                    {
+                        GetLocalPlayer().conectar(false);
+                    }
                     Reconnect();
                 }
                 Debug.Log("disconnected from server");
@@ -144,8 +148,9 @@ public class Client : MonoBehaviour {
             //Asumo que si no estoy en la ClientScene, existe un LevelManager
             LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
             lm.MostrarReconectando(true);
-            Connect();
         }
+        Connect();
+
     }
 
     private void ReceiveMessageFromPlanner(string message, int connectionId)
