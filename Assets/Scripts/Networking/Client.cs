@@ -153,6 +153,7 @@ public class Client : MonoBehaviour {
 
     public PlayerController GetPlayerController(int charId)
     {
+        
         GameObject player;
         PlayerController script;
         switch (charId)
