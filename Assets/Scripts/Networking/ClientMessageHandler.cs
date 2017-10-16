@@ -283,8 +283,8 @@ public class ClientMessageHandler {
 
     private void HandleChangeScene(string[] arreglo)
     {
-        string scene = arreglo[1];
-        SceneManager.LoadScene(scene);
+            string scene = arreglo[1];
+            SceneManager.LoadScene(scene);
         //falta settear su vida/mana real al 100%
     }
 
