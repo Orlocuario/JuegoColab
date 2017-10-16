@@ -144,13 +144,20 @@ public class Server : MonoBehaviour {
     private void AddConnection(int connectionId)
     {
         //Jugador existía y se reconecta.
-        Jugador player = GetPlayer(connectionId);
+        string recAddress;
+        int port;
+        UnityEngine.Networking.Types.NetworkID recNetId;
+        UnityEngine.Networking.Types.NodeID recNodeId;
+        byte recError;
+        NetworkTransport.GetConnectionInfo(socketId, connectionId, out recAddress, out port, out recNetId, out recNodeId, out recError);
+        Jugador player = GetPlayer(recAddress);
         if (player != null)
         {
             player.connected = true;
             //SendMessageToClient(connectionId, "ChangeScene/" + sceneToLoad);
             //timesScene1IsLoaded += 1;
             messageHandler.SendAllData(connectionId, player.room);
+            UnityEngine.Debug.Log("Player reconnected");
             return;
         }
 
@@ -161,7 +168,8 @@ public class Server : MonoBehaviour {
             room = new Room(rooms.Count, this, messageHandler, maxJugadores);
             rooms.Add(room);
         }
-        room.AddPlayer(connectionId);
+        
+        room.AddPlayer(connectionId, recAddress);
     }
 
 
@@ -202,6 +210,19 @@ public class Server : MonoBehaviour {
             if (player != null)
             {
                 return room.FindPlayerInRoom(connectionId);
+            }
+        }
+        return null;
+    }
+
+    public Jugador GetPlayer(string address)
+    {
+        foreach (Room room in rooms)
+        {
+            Jugador player = room.FindPlayerInRoom(address);
+            if (player != null)
+            {
+                return room.FindPlayerInRoom(address);
             }
         }
         return null;

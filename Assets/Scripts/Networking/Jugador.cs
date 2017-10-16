@@ -21,9 +21,11 @@ public class Jugador
 	public bool power;
     public bool controlOverEnemies;
     public string[] inventory = new string[8];
+    public string ipAddress;
 
-    public Jugador(int connectionId, int charId, Room room)
+    public Jugador(int connectionId, int charId, Room room, string address)
     {
+        this.ipAddress = address;
         this.connectionId = connectionId;
         this.room = room;
         this.charId = charId;

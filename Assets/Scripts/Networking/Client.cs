@@ -23,7 +23,6 @@ public class Client : MonoBehaviour {
     int bigBufferSize = 64000;
     ClientMessageHandler handler;
     string serverIp;
-    bool connected = false;
 
 	void Start () {
         DontDestroyOnLoad(this);
@@ -100,7 +99,13 @@ public class Client : MonoBehaviour {
             case NetworkEventType.Nothing:
                 break;
             case NetworkEventType.ConnectEvent:
-                connected = true;
+                Scene currentScene = SceneManager.GetActiveScene();
+               if (GetLocalPlayer() && !(currentScene.name == "ClientScene"))
+                {
+                    GetLocalPlayer().conectar(true);
+                    LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
+                    lm.MostrarReconectando(false);
+                }
                 Debug.Log("connection succesfull");
                 break;
             case NetworkEventType.DataEvent:
@@ -120,7 +125,7 @@ public class Client : MonoBehaviour {
             case NetworkEventType.DisconnectEvent:
                 if(connectionId == recConnectionId) //Detectamos que fuimos nosotros los que nos desconectamos
                 {
-                    connected = false;
+                    GetLocalPlayer().conectar(false);
                     Reconnect();
                 }
                 Debug.Log("disconnected from server");
@@ -136,22 +141,7 @@ public class Client : MonoBehaviour {
             //Asumo que si no estoy en la ClientScene, existe un LevelManager
             LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
             lm.MostrarReconectando(true);
-            Thread reconectThread = new Thread(TryToReconnect);
-            reconectThread.Start();
-        }
-    }
-
-    private void TryToReconnect()
-    {
-        if (!connected)
-        {
             Connect();
-            Thread.Sleep(3000); //Intenta reconectar cada 3 segundos
-            if (!connected)
-            {
-                TryToReconnect();
-            }
-
         }
     }
 

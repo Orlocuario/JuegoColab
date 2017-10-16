@@ -295,6 +295,7 @@ public class ServerMessageHandler
         int charId = player.charId;
         string message = "SetCharId/" + charId + "/" + player.controlOverEnemies;
         server.SendMessageToClient(connectionId, message);
+        SendAllData(connectionId, player.room);
     }
 
     public void SendChangeScene(string sceneName, Room room)

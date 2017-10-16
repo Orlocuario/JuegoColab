@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.IO;
+using UnityEngine.Networking;
 
 public class Room
 {
@@ -69,13 +70,13 @@ public class Room
     }
 
     //Agrega a un jugador a la sala. Retorna true si lo consigue, false si está llena.
-    public bool AddPlayer(int connectionId)
+    public bool AddPlayer(int connectionId, string address)
     {
         if (IsFull())
         {
             return false;
         }
-        Jugador newPlayer = new Jugador(connectionId, GetCharId(numJugadores), this);
+        Jugador newPlayer = new Jugador(connectionId, GetCharId(numJugadores), this, address);
         players.Add(newPlayer);
         numJugadores++;
         SetControlEnemies(newPlayer);
@@ -113,6 +114,18 @@ public class Room
         foreach(Jugador player in players)
         {
             if (player.connectionId == id)
+            {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public Jugador FindPlayerInRoom(string address)
+    {
+        foreach (Jugador player in players)
+        {
+            if (player.ipAddress == address)
             {
                 return player;
             }
