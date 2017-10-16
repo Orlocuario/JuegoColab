@@ -148,8 +148,9 @@ public class Server : MonoBehaviour {
         if (player != null)
         {
             player.connected = true;
-            SendMessageToClient(connectionId, "ChangeScene/" + sceneToLoad);
-            timesScene1IsLoaded += 1;
+            //SendMessageToClient(connectionId, "ChangeScene/" + sceneToLoad);
+            //timesScene1IsLoaded += 1;
+            messageHandler.SendAllData(connectionId, player.room);
             return;
         }
 
@@ -162,6 +163,8 @@ public class Server : MonoBehaviour {
         }
         room.AddPlayer(connectionId);
     }
+
+
 
     private void DeleteConnection(int connectionId)
     {

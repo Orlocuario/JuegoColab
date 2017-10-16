@@ -97,6 +97,21 @@ public class ServerMessageHandler
         }
     }
 
+    public void SendAllData(int connectionId, Room room)
+    {
+
+        foreach (Jugador player in room.players)
+        {
+            room.SendMessageToPlayer(player.GetReconnectData(), connectionId);
+        }
+        
+        foreach(ServerSwitch switchi in room.switchs)
+        {
+            room.SendMessageToPlayer(switchi.GetReconnectData(), connectionId);
+        }
+    }
+
+
     public void SendActivationNPC(string message, int connectionId) // Manda un mensaje a un solo jugador
     {
         Jugador player = server.GetPlayer(connectionId);

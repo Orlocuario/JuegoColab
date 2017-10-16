@@ -81,4 +81,9 @@ public class Jugador
             }
         }
     }
+
+    public string GetReconnectData()
+    {
+        return "ChangePosition/" + charId + "/" + positionX + "/" + positionY + "/" + isGrounded + "/" + speed + "/" + direction + "/" + pressingJump + "/" + pressingLeft + "/" + pressingRight; 
+    }
 }
