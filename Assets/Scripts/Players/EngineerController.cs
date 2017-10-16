@@ -13,6 +13,8 @@ public class EngineerController : PlayerController {
     int contadorPar;
     GameObject particulas;
     DisplayHUD hpAndMp;
+    bool jumpedInAir = false;
+
 
     protected override void Start()
 	{
@@ -93,36 +95,39 @@ public class EngineerController : PlayerController {
     {
         if (localPlayer)
         {
-            bool pressedJump = CnInputManager.GetButtonDown("Jump Button");
-            bool voySaltar = pressedJump && isGrounded;
-            bool dobleSalto = pressedJump && !isGrounded;
-
-            if (voySaltar)
-            {
-                saltarDoble++;
-                remoteJumping = true;
-				Debug.Log ("GGGGGGGGGGGG");
-
-                SendObjectDataToServer();
+            if (isGrounded) {
+                jumpedInAir = false;
             }
-           
-            else if (saltarDoble == 0 && dobleSalto)
+
+            bool pressedJump = CnInputManager.GetButtonDown("Jump Button");
+
+            if (pressedJump && isGrounded && !remoteJumping)
             {
                 remoteJumping = true;
-				Debug.Log ("KKKKKKKKKKKKKKKKKKKKKK");
                 SendObjectDataToServer();
-                saltarDoble++;
                 return true;
             }
 
-            if (isGrounded)
+            if (pressedJump && !isGrounded && !jumpedInAir && !remoteJumping)
             {
-                saltarDoble = 0;
+                remoteJumping = true;
+                jumpedInAir = true;
+                SendObjectDataToServer();
+                return true;
             }
-            return voySaltar;
+
+             if(remoteJumping)
+             {
+                 remoteJumping = false;
+                 SendObjectDataToServer();
+             }
+
+            return  false;
         }
+
         return remoteJumping;
     }
+
     /*public int GetLevel()
      {
 

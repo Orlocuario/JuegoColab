@@ -2,19 +2,19 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public enum CameraState{Normal,FixedX,FixedY,Zoomed, TargetZoom};
+public enum CameraState{Normal,FixedX,FixedY,Zoomed, TargetZoom, NoFollowUp, NoFollowAhead};
 
 public class CameraController : MonoBehaviour {
 
-    private Vector3 targetPosition;
-    public GameObject target;
+	private Vector3 targetPosition;
+	public GameObject target;
 
-    private float limitForUpperY = 100;
-    public float limitForBottomY = 0;
+	private float limitForUpperY = 100;
+	public float limitForBottomY = 0;
 	public float limitForleftX = -1;
-	
+
 	public float smoothCamera;
-    public float followAhead;
+	public float followAhead;
 	public float followUp;
 	public CameraState currentState;
 	private Camera holiwix; 
@@ -24,23 +24,23 @@ public class CameraController : MonoBehaviour {
 	private float cameraRate;
 	private int zoomIt;
 	private float initialSize = 1.42f;
-	float wea = 200; //Iteraciones hasta llegar al target
-	float wea2 = 202; //Tiempo en que espera volver
+	float wea = 100; //Iteraciones hasta llegar al target
+	float wea2 = 150; //Tiempo en que espera volver
 	public float startTime;
 
 
 
-    // Use this for initialization
-    void Start () {
+	// Use this for initialization
+	void Start () {
 		holiwix = this.gameObject.GetComponent<Camera> ();
 		ChangeState (CameraState.Normal, 10, 0, 0);
-		Client.instance.GetLocalPlayer ().SetGravedad (false);
+		Client.instance.GetLocalPlayer ().SetGravity (false);
 	}
 
-    // Update is called once per frame
-    void Update() {
+	// Update is called once per frame
+	void Update() {
 
-        /*float y;
+		/*float y;
 
         // Keep camera higher than bottom limit
         y = (target.transform.position.y >= limitForBottomY) ? target.transform.position.y : limitForBottomY;
@@ -55,12 +55,12 @@ public class CameraController : MonoBehaviour {
 		x = (target.transform.position.x >= limitForleftX) ? target.transform.position.x : limitForleftX; 
 
 		// Keep camera in the */
-        
-		targetPosition = new Vector3(target.transform.position.x, target.transform.position.y, transform.position.z);
-       
-        // esto es para adelantar la cámara al personaje
 
-   
+		targetPosition = new Vector3(target.transform.position.x, target.transform.position.y, transform.position.z);
+
+		// esto es para adelantar la cámara al personaje
+
+
 		switch (currentState) {
 		case CameraState.Normal:
 			if (target.transform.localScale.x > 0f)
@@ -77,7 +77,7 @@ public class CameraController : MonoBehaviour {
 			break;
 		case CameraState.FixedX:
 			transform.position = new Vector3(transform.position.x,targetPosition.y,targetPosition.z);
-				break;
+			break;
 		case CameraState.FixedY:
 			transform.position = new Vector3 (targetPosition.x, transform.position.y, targetPosition.z);
 			break;
@@ -93,13 +93,38 @@ public class CameraController : MonoBehaviour {
 				holiwix.orthographicSize = holiwix.orthographicSize - cameraRate;
 				zoomIt++;
 			} else {
-				Client.instance.GetLocalPlayer ().VuelveAMoverte ();
+				Client.instance.GetLocalPlayer ().ResumeMoving ();
 				SetDefaultValues ();
 			}
 
 			break;
+		case CameraState.NoFollowUp:
+			{
+				if (target.transform.localScale.x > 0f)
+				{
+					targetPosition = new Vector3(targetPosition.x + followAhead, targetPosition.y, targetPosition.z);
 				}
-
+				else
+				{
+					targetPosition = new Vector3(targetPosition.x - followAhead, targetPosition.y, targetPosition.z);
+				}
+				transform.position = Vector3.Lerp (transform.position, targetPosition, smoothCamera * Time.deltaTime);
+				break;
+			}
+			break;
+		case CameraState.NoFollowAhead:
+			{
+				if (target.transform.localScale.x > 0f) 
+				{
+					targetPosition = new Vector3 (targetPosition.x, targetPosition.y + followUp, targetPosition.z);
+				} else 
+				{
+					targetPosition = new Vector3 (targetPosition.x, targetPosition.y + followUp, targetPosition.z);
+				}
+				transform.position = Vector3.Lerp (transform.position, targetPosition, smoothCamera * Time.deltaTime);
+				break;
+			}
+		}
 	}
 
 
@@ -120,6 +145,12 @@ public class CameraController : MonoBehaviour {
 		case CameraState.TargetZoom:
 			TargetedZoom (ortographicsize, x, y);
 			break;
+		case CameraState.NoFollowAhead:
+			SetNoFollowAhead ();
+			break;
+		case CameraState.NoFollowUp:
+			SetNofollowUp ();
+			break;
 		}
 	}
 
@@ -127,11 +158,11 @@ public class CameraController : MonoBehaviour {
 		currentState = CameraState.Zoomed;
 		//float i = (Time.time - startTime);
 		holiwix.orthographicSize =  size;
-        transform.position = new Vector3(x, y, transform.position.z);
-    }
+		transform.position = new Vector3(x, y, transform.position.z);
+	}
 
-    private void TargetedZoom(float size, float x, float y){
-		Client.instance.GetLocalPlayer ().DejaDeMoverte ();
+	private void TargetedZoom(float size, float x, float y){
+		Client.instance.GetLocalPlayer ().StopMoving ();
 		currentState = CameraState.TargetZoom;
 		Vector3 targetPosition = new Vector3 (x, y,0);
 		float distance = (targetPosition - transform.position).magnitude;
@@ -139,6 +170,14 @@ public class CameraController : MonoBehaviour {
 		cameraRate = (size - initialSize)/wea;
 		zoomIt = 0;
 
+	}
+	private void SetNofollowUp(){
+		currentState = CameraState.NoFollowUp;
+	}
+
+	private void SetNoFollowAhead(){
+		currentState = CameraState.NoFollowAhead;
+		followAhead = 0.5f;
 	}
 
 	private void SetFixedX(){
@@ -151,11 +190,11 @@ public class CameraController : MonoBehaviour {
 
 	private void SetDefaultValues ()
 	{
-		smoothCamera = 2;
-		followAhead = 1;
+		smoothCamera = 3.9f;
+		followAhead = 1f;
 		followUp = 0.7f;
 		holiwix.orthographicSize = initialSize;
 		currentState = CameraState.Normal;
 	}
-		
+
 }

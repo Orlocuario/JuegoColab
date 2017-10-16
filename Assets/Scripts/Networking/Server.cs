@@ -10,9 +10,8 @@ using System;
 using System.Threading;
 
 public class Server : MonoBehaviour {
-
+   
     public int maxConnections;
-    int port = 7777;
     int socketId;
     int channelId;
     int bigChannelId;
@@ -20,13 +19,11 @@ public class Server : MonoBehaviour {
     public List<Room> rooms;
     public ServerMessageHandler messageHandler;
     public static Server instance;
-    int bufferSize = 100;
-    int bigBufferSize = 64000;
     public int maxJugadores;
     public string sceneToLoad;
     public string NPCsLastMessage;
 
-    	//Planner Thread
+    //Planner Thread
 	Thread planner;
 	//Cola de mensajes a procesar
 	private List<string> messageStack = new List<string>();
@@ -44,10 +41,12 @@ public class Server : MonoBehaviour {
 	public string outputFileName;
 	//Donde se debe escribir para cada template
 	public List<int> startLinePerLevel;
-    
+
+
     // Use this for initialization
     void Start()
     {
+
         NPCsLastMessage = "";
         maxJugadores = 1;
         instance = this;
@@ -57,30 +56,38 @@ public class Server : MonoBehaviour {
         channelId = config.AddChannel(QosType.Unreliable);
         bigChannelId = config.AddChannel(QosType.ReliableFragmented);
         HostTopology topology = new HostTopology(config, maxConnections);
-        socketId = NetworkTransport.AddHost(topology, port);
+        socketId = NetworkTransport.AddHost(topology, NetConsts.port);
         rooms = new List<Room>();
         messageHandler = new ServerMessageHandler(this);
         planner = new Thread(new ThreadStart(this.Plan));
-	     	planner.Start ();
+	    planner.Start ();
         this.sceneToLoad = "Escena2";
     }
 
     // Update is called once per frame
     void LateUpdate ()
-    {
+    {	
+		if (connectionIdStack.Count > 0) 
+		{
+			int connectionId = connectionIdStack [0];
+			string output = outputStack [0];
+			SendPlannerInfoToClient (connectionId, output);
+			connectionIdStack.RemoveAt (0);
+			outputStack.RemoveAt (0);
+		}
         int recSocketId;
         int recConnectionId; // Reconoce la ID del jugador
         int recChannelId;
-        byte[] recBuffer = new byte[bufferSize];
+        byte[] recBuffer = new byte[NetConsts.bufferSize];
         int dataSize;
         byte error;
-        NetworkEventType recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, bufferSize, out dataSize, out error);
+        NetworkEventType recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, NetConsts.bufferSize, out dataSize, out error);
         NetworkError Error = (NetworkError)error;
         if (Error == NetworkError.MessageToLong)
         {
             //Trata de capturar el mensaje denuevo, pero asumiendo buffer más grande.
-            recBuffer = new byte[bigBufferSize];
-            recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, bigBufferSize, out dataSize, out error);
+            recBuffer = new byte[NetConsts.bigBufferSize];
+            recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, NetConsts.bigBufferSize, out dataSize, out error);
         }
         switch (recNetworkEvent)
         {
@@ -118,22 +125,22 @@ public class Server : MonoBehaviour {
     {
         byte error;
         //int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
-        byte[] buffer = new byte[bufferSize];
+        byte[] buffer = new byte[NetConsts.bufferSize];
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, message);
-        NetworkTransport.Send(socketId, clientId, channelId, buffer, bufferSize, out error);
+        NetworkTransport.Send(socketId, clientId, channelId, buffer, NetConsts.bufferSize, out error);
     }
 
     public void SendPlannerInfoToClient(int clientId, string message)
     {
         byte error;
         //int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
-        byte[] buffer = new byte[bigBufferSize];
+        byte[] buffer = new byte[NetConsts.bigBufferSize];
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, message);
-        NetworkTransport.Send(socketId, clientId, bigChannelId, buffer, bigBufferSize, out error);
+        NetworkTransport.Send(socketId, clientId, bigChannelId, buffer, NetConsts.bigBufferSize, out error);
     }
 
     public void SendMessageToClient(Jugador player, string message)

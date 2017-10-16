@@ -7,31 +7,39 @@ using UnityEngine.Networking;
 
 public class Room
 {
-    public List<Jugador> players;
+    public ServerMessageHandler sender;
+    public List<Enemy> enemigos;
     public List<ServerSwitch> switchs;
-    Server server;
-    ServerMessageHandler sender;
+    public List<Jugador> players;
+    public Server server;
     public HpAndManaHUD hpManaGer;
+    public string sceneToLoad;
     public int numJugadores;
     public int maxJugadores;
     public int id;
-    public string sceneToLoad;
 
     public bool started;
     string numeroPartidas;
     string historial;
-    public List<Enemy> enemigos;
     public List<int> activatedGroups; //guarda los numeros de los grupos de switchs activados
+    public string actualChat;
+    
     //Inicialización
     public Room(int id, Server server, ServerMessageHandler sender, int maxJugadores)
     {
         numJugadores = 0;
-        this.id = id;
+
         this.maxJugadores = maxJugadores;
-        players = new List<Jugador>();
+        this.id = id;
+
+        hpManaGer = new HpAndManaHUD(this);
         switchs = new List<ServerSwitch>();
+        players = new List<Jugador>();
+        enemigos = new List<Enemy>();
+
         this.server = server;
         this.sender = sender;
+
         started = false;
         historial = "";
         hpManaGer = new HpAndManaHUD(this);
@@ -62,11 +70,7 @@ public class Room
     //Retorna true si no cabe más gente.
     public bool IsFull()
     {
-        if(numJugadores == maxJugadores)
-        {
-            return true;
-        }
-        return false;
+        return numJugadores == maxJugadores;
     }
 
     //Agrega a un jugador a la sala. Retorna true si lo consigue, false si está llena.
@@ -80,6 +84,7 @@ public class Room
         players.Add(newPlayer);
         numJugadores++;
         SetControlEnemies(newPlayer);
+
         if (IsFull())
         {
             Debug.Log("Full room");
@@ -140,7 +145,8 @@ public class Room
         string[] arreglo = message.Split(separator);
         if (arreglo[0] == "NewChatMessage")
         {
-            historial += "\r\n" + arreglo[1] + HoraMinuto();
+            actualChat += arreglo[1];
+            historial += "\r\n" + actualChat + HoraMinuto();
         }
 
         foreach (Jugador player in players)

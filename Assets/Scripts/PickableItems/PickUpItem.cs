@@ -11,15 +11,7 @@ public class PickUpItem : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D other)
     {
-        if (this.gameObject.tag == "ExperienceItem" && (other.collider.tag == "Player1" || other.collider.tag == "Player2" || other.collider.tag == "Player3"))
-        {
-            PlayerController localPlayer = Client.instance.GetLocalPlayer();
-            if (localPlayer.gameObject.tag == other.collider.tag)
-            {
-                PickUpExp(this.gameObject.name);
-            }
-        }
-        else if (other.collider.tag == "Player1" || other.collider.tag == "Player2" || other.collider.tag == "Player3")
+        if (other.collider.tag == "Player1" || other.collider.tag == "Player2" || other.collider.tag == "Player3")
         {
             PlayerController localPlayer = Client.instance.GetLocalPlayer();
             if (localPlayer.gameObject.tag == other.collider.tag)
@@ -36,20 +28,32 @@ public class PickUpItem : MonoBehaviour
         }
     }
 
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (this.gameObject.tag == "ExperienceItem" && (other.tag == "Player1" || other.tag == "Player2" || other.tag == "Player3"))
+        {
+            PlayerController localPlayer = Client.instance.GetLocalPlayer();
+            if (localPlayer.gameObject.tag == other.tag)
+            {
+                PickUpExp();
+            }
+        }
+    }
+
     public void PickUp()
     {
-        string itemName = this.gameObject.name;
-        Client.instance.SendMessageToServer("DestroyObject/" + itemName);
+		Destroy (this.gameObject);
+		Client.instance.SendMessageToServer("OthersDestroyObject/" + this.gameObject.name);
         Inventory.instance.AddItemToInventory(this.gameObject);
 		if (itemObj != null) {
 			itemObj.PickUp (Client.instance.GetLocalPlayer ().playerObj);
 		}
     }
 
-    public void PickUpExp(string item_name)
+    public void PickUpExp()
     {
-        string itemName = this.gameObject.name;
-        Client.instance.SendMessageToServer("DestroyItem/" + itemName);
+		Destroy (this.gameObject);
+		Client.instance.SendMessageToServer("DestroyItem/" + this.gameObject.name);
         Client.instance.SendMessageToServer("GainExp/" + "50");
     }
 }

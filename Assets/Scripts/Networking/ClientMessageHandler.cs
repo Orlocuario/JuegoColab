@@ -73,7 +73,7 @@ public class ClientMessageHandler {
                 HandleCastProyectile(arreglo);
                 break;
             case "PlayersAreDead":
-                HandlePlayersAreDead();
+                HandlePlayersAreDead(arreglo);
                 break;
             case "CreateGameObject":
                 HandleCreateGameObject(arreglo);
@@ -81,6 +81,9 @@ public class ClientMessageHandler {
             case "DestroyObject":
                 HandleDestroyObject(arreglo);
                 break;
+			case "OthersDestroyObject": 
+				HandleDestroyObject(arreglo);
+				break;
             case "ChangeSwitchStatus":
                 HandleChangeSwitchStatus(arreglo);
                 break;
@@ -96,9 +99,18 @@ public class ClientMessageHandler {
             case "ActivateNPCLog":
                 HandleActivationNpcLog(arreglo);
                 break;
+            case "IgnoreBoxCircleCollision":
+                HandleIgnoreCollision(arreglo);
+                break;
             default:
                 break;
         }
+    }
+
+    private void HandleIgnoreCollision(string[] arreglo)
+    {
+        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+        scriptLevel.IgnoreBoxCircleCollision(arreglo);
     }
 
     private void HandleActivationNpcLog(string[] arreglo)
@@ -289,8 +301,6 @@ public class ClientMessageHandler {
         {
             SceneManager.LoadScene(scene);
         }
-
-        //falta settear su vida/mana real al 100%
     }
 
     private void HandleSetCharId(string[] arreglo)
@@ -409,7 +419,7 @@ public class ClientMessageHandler {
         script.CastLocalProyectile(direction, positionX, positionY, script);
     }
 
-    private void HandlePlayersAreDead()
+    private void HandlePlayersAreDead(string[] array)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
@@ -417,6 +427,6 @@ public class ClientMessageHandler {
             return;
         }
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.ReloadLevel();
+        scriptLevel.ReloadLevel(array[1]);
     }
 }
