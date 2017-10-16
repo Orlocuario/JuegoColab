@@ -21,6 +21,7 @@ public class LevelManager : MonoBehaviour {
     private float waitToGrabItem;
     private float waitToKillNPCCountdown;
     private float waitToResetItemPos;
+    private GameObject reconectando;
 
     void Start ()
     {
@@ -31,9 +32,15 @@ public class LevelManager : MonoBehaviour {
         npcLog.SetActive(false);
         client = GameObject.Find("ClientObject").GetComponent<Client>();
         client.RequestCharIdToServer();
-
+        reconectando = GameObject.Find("ReconnectingText");
+        reconectando.SetActive(false);
         //SetHpAndManaToMax();
 	}
+
+    public void MostrarReconectando(bool valor)
+    {
+        reconectando.SetActive(valor);
+    }
 
     public void SetCharAsLocal(int id)
     {

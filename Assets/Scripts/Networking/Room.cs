@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.IO;
+using UnityEngine.Networking;
 
 public class Room
 {
@@ -11,7 +12,6 @@ public class Room
     public List<ServerSwitch> switchs;
     public List<Jugador> players;
     public Server server;
-
     public HpAndManaHUD hpManaGer;
     public string sceneToLoad;
     public int numJugadores;
@@ -21,6 +21,7 @@ public class Room
     public bool started;
     string numeroPartidas;
     string historial;
+    public List<int> activatedGroups; //guarda los numeros de los grupos de switchs activados
     public string actualChat;
     
     //Inicialización
@@ -41,6 +42,9 @@ public class Room
 
         started = false;
         historial = "";
+        hpManaGer = new HpAndManaHUD(this);
+        enemigos = new List<Enemy>();
+        activatedGroups = new List<int>();
         sceneToLoad = Server.instance.sceneToLoad;
     }
 
@@ -70,14 +74,13 @@ public class Room
     }
 
     //Agrega a un jugador a la sala. Retorna true si lo consigue, false si está llena.
-    public bool AddPlayer(int connectionId)
+    public bool AddPlayer(int connectionId, string address)
     {
         if (IsFull())
         {
             return false;
         }
-
-        Jugador newPlayer = new Jugador(connectionId, GetCharId(numJugadores), this);
+        Jugador newPlayer = new Jugador(connectionId, GetCharId(numJugadores), this, address);
         players.Add(newPlayer);
         numJugadores++;
         SetControlEnemies(newPlayer);
@@ -116,6 +119,18 @@ public class Room
         foreach(Jugador player in players)
         {
             if (player.connectionId == id)
+            {
+                return player;
+            }
+        }
+        return null;
+    }
+
+    public Jugador FindPlayerInRoom(string address)
+    {
+        foreach (Jugador player in players)
+        {
+            if (player.ipAddress == address)
             {
                 return player;
             }
@@ -236,9 +251,16 @@ public class Room
 
     public ServerSwitch AddSwitch(int groupId, int individualId)
     {
-            ServerSwitch switchi = new ServerSwitch(groupId, individualId, this);
-            switchs.Add(switchi);
-            return switchi;
+        foreach(ServerSwitch switchu in switchs)
+        {
+            if(switchu.groupId == groupId && switchu.individualId == individualId)
+            {
+                return switchu;
+            }
+        }
+        ServerSwitch switchi = new ServerSwitch(groupId, individualId, this);
+        switchs.Add(switchi);
+        return switchi;
     }
 
     public ServerSwitch GetSwitch(int groupId, int individualId)

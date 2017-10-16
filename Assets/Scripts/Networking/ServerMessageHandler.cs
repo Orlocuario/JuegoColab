@@ -84,7 +84,7 @@ public class ServerMessageHandler
                 SendChangeSwitchStatus(message, arreglo, connectionId);
                 break;
             case "SwitchGroupReady":
-                SendSwitchGroupAction(message, connectionId);
+                SendSwitchGroupAction(message,arreglo, connectionId);
                 break;
             case "ActivateRuneDoor":
                 SendActivationDoor(message, connectionId);
@@ -102,6 +102,21 @@ public class ServerMessageHandler
                 break;
         }
     }
+
+    public void SendAllData(int connectionId, Room room)
+    {
+
+        foreach (Jugador player in room.players)
+        {
+            room.SendMessageToPlayer(player.GetReconnectData(), connectionId);
+        }
+        
+        foreach(ServerSwitch switchi in room.switchs)
+        {
+            room.SendMessageToPlayer(switchi.GetReconnectData(), connectionId);
+        }
+    }
+
 
     private void SendIgnoreBoxCircleCollision(string message, int connectionId)
     {
@@ -136,13 +151,15 @@ public class ServerMessageHandler
         room.SendMessageToAllPlayers(message);
     }
 
-    private void SendSwitchGroupAction(string message, int connectionId)
+    private void SendSwitchGroupAction(string message, string[] arreglo,int connectionId)
     {
-        Debug.Log("Desactivado para probar algo, si todo sale mal habilitar todo en SendSwitchGroupAction en el ServerMessageHandler");
-        return;
         Jugador player = server.GetPlayer(connectionId);
         Room room = player.room;
-        room.SendMessageToAllPlayersExceptOne(message, connectionId);
+        int groupId = Int32.Parse(arreglo[1]);
+        if (!room.activatedGroups.Contains(groupId))
+        {
+            room.activatedGroups.Add(groupId);
+        }
     }
 
     private void SendChangeSwitchStatus(string message, string[] arreglo, int connectionId)
@@ -298,6 +315,7 @@ public class ServerMessageHandler
         int charId = player.charId;
         string message = "SetCharId/" + charId + "/" + player.controlOverEnemies;
         server.SendMessageToClient(connectionId, message);
+        SendAllData(connectionId, player.room);
     }
 
     public void SendChangeScene(string sceneName, Room room)

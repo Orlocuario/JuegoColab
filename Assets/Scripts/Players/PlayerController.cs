@@ -45,6 +45,8 @@ public class PlayerController : MonoBehaviour
     public int sortingOrder = 0;
     public int saltarDoble;
     public int characterId;
+	bool alreves = false;
+    bool conectado = true;
     public int direction;  //1 = derecha, -1 = izquierda
 	private bool canMove;
 
@@ -67,6 +69,12 @@ public class PlayerController : MonoBehaviour
         controlOverEnemies = false;
         saltarDoble = 0;
         IgnoreCollisionStar2puntoCero();
+        SendObjectDataToServer();
+    }
+
+    public void conectar(bool valor)
+    {
+        conectado = valor;
     }
 
     public void IgnoreCollisionStar2puntoCero()
@@ -305,7 +313,10 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void Update()
     {
-
+        if (!conectado)
+        {
+            return;
+        }
 		Transform parentTransform = transform.parent;
 
 		if (parentTransform != null) {

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.IO;
 using System.Runtime.Serialization.Formatters.Binary;
+using System.Threading;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.SceneManagement;
@@ -18,6 +19,7 @@ public class Client : MonoBehaviour {
     int channelId;
     public static Client instance;
     ClientMessageHandler handler;
+    string serverIp;
 
 	void Start () {
         DontDestroyOnLoad(this);
@@ -34,7 +36,21 @@ public class Client : MonoBehaviour {
     public void Connect(string ip)
     {
         byte error;
+        serverIp = ip;
         connectionId = NetworkTransport.Connect(socketId, ip, NetConsts.port, 0, out error);
+    }
+
+    public void Connect()
+    {
+        try
+        {
+            byte error;
+            connectionId = NetworkTransport.Connect(socketId, serverIp, NetConsts.port, 0, out error);
+        }
+        catch
+        {
+            Debug.Log("Connection to server failed");
+        }
     }
 
     public void SendMessageToServer(string message)
@@ -80,6 +96,16 @@ public class Client : MonoBehaviour {
             case NetworkEventType.Nothing:
                 break;
             case NetworkEventType.ConnectEvent:
+                Scene currentScene = SceneManager.GetActiveScene();
+               if (!(currentScene.name == "ClientScene"))
+                {
+                    if (GetLocalPlayer())
+                    {
+                        GetLocalPlayer().conectar(true);
+                        LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
+                        lm.MostrarReconectando(false);
+                    }
+                }
                 Debug.Log("connection succesfull");
                 break;
             case NetworkEventType.DataEvent:
@@ -97,9 +123,31 @@ public class Client : MonoBehaviour {
                 Debug.Log("incoming message event received: " + message);
                 break;
             case NetworkEventType.DisconnectEvent:
+                if(connectionId == recConnectionId) //Detectamos que fuimos nosotros los que nos desconectamos
+                {
+                    currentScene = SceneManager.GetActiveScene();
+                    if (!(currentScene.name == "ClientScene"))
+                    {
+                        GetLocalPlayer().conectar(false);
+                    }
+                    Reconnect();
+                }
                 Debug.Log("disconnected from server");
                 break;
         }
+    }
+
+    private void Reconnect()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if(! (currentScene.name == "ClientScene"))
+        {
+            //Asumo que si no estoy en la ClientScene, existe un LevelManager
+            LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
+            lm.MostrarReconectando(true);
+        }
+        Connect();
+
     }
 
     private void ReceiveMessageFromPlanner(string message, int connectionId)
@@ -110,6 +158,7 @@ public class Client : MonoBehaviour {
 
     public PlayerController GetPlayerController(int charId)
     {
+        
         GameObject player;
         PlayerController script;
         switch (charId)
