@@ -24,8 +24,8 @@ public class CameraController : MonoBehaviour {
 	private float cameraRate;
 	private int zoomIt;
 	private float initialSize = 1.42f;
-	float wea = 200; //Iteraciones hasta llegar al target
-	float wea2 = 100; //Tiempo en que espera volver
+	float wea = 100; //Iteraciones hasta llegar al target
+	float wea2 = 150; //Tiempo en que espera volver
 	public float startTime;
 
 
