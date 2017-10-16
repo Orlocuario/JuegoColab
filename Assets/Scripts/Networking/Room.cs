@@ -21,6 +21,7 @@ public class Room
     public bool started;
     string numeroPartidas;
     string historial;
+    public string actualChat;
     
     //Inicialización
     public Room(int id, Server server, ServerMessageHandler sender, int maxJugadores)
@@ -129,7 +130,8 @@ public class Room
         string[] arreglo = message.Split(separator);
         if (arreglo[0] == "NewChatMessage")
         {
-            historial += "\r\n" + arreglo[1] + HoraMinuto();
+            actualChat += arreglo[1];
+            historial += "\r\n" + actualChat + HoraMinuto();
         }
 
         foreach (Jugador player in players)

@@ -41,7 +41,7 @@ public class ServerMessageHandler
             case "ChangeMpHUDToRoom":
                 SendMpHUDToRoom(arreglo, connectionId);
                 break;
-            case "ChangeHpAndManaHUDToRoom": //Necessary coz' ChatZone changes both at the same rate
+			case "ChangeHpAndManaHUDToRoom": //Necessary coz' ChatZone changes both at the same rate
                 SendHpHAndMpHUDToRoom(arreglo, connectionId);
                 break;
             case "GainExp":
@@ -126,7 +126,7 @@ public class ServerMessageHandler
     {
         Jugador player = server.GetPlayer(connectionId);
         Room room = player.room;
-        room.SendMessageToAllPlayers(message);
+        room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 
     private void SendActivationDoor(string message, int connectionId)

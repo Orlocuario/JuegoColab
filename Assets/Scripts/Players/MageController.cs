@@ -103,12 +103,8 @@ public class MageController : PlayerController {
     {
         if (powerOn)
         {
-            Vector3 distance = (player.GetComponent<Transform>().position - this.gameObject.GetComponent<Transform>().position);
-            if (distance.magnitude <= 0.77f)
-            {
-                return true;
-            }
-            return false;
+            float distance = Mathf.Abs(player.GetComponent<Transform>().position.magnitude - this.gameObject.GetComponent<Transform>().position.magnitude);
+            return distance <= 0.77f;
         }
         return false;
         

@@ -86,15 +86,15 @@ public class PlayerController : MonoBehaviour
 		sprite = GetComponent<SpriteRenderer>();
         if (this.characterId == 0)
         {
-            Chat.instance.EnterFunction("Mage: Has Connected");
+            Chat.instance.EnterFunction("Mage: Ha Aparecido!");
         }
         if (this.characterId == 1)
         {
-            Chat.instance.EnterFunction("Warrior: Has Connected");
+            Chat.instance.EnterFunction("Warrior: Ha Aparecido!");
         }
         else if (this.characterId == 2)
         {
-            Chat.instance.EnterFunction("Engineer: Has Connected");
+            Chat.instance.EnterFunction("Engineer: Ha Aparecido!");
         }
 
         if (sprite)

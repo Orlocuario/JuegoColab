@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class HpAndManaHUD {
 
@@ -52,7 +53,10 @@ public class HpAndManaHUD {
         else if (currentHP <= 0)
         {
             currentHP = 0;
-            room.SendMessageToAllPlayers("PlayersAreDead");
+            room.SendMessageToAllPlayers("PlayersAreDead/" + Server.instance.sceneToLoad);
+            currentHP = maxHP;
+            currentMP = maxMP;
+            room.SendMessageToAllPlayers("NewChatMessage/" + room.actualChat);
         }
 
         percentageHP = currentHP / maxHP;

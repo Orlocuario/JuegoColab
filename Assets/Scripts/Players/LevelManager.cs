@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class LevelManager : MonoBehaviour {
@@ -138,8 +139,8 @@ public class LevelManager : MonoBehaviour {
     public void ActivateMachine(string machineName)
     {
         GameObject machine = GameObject.Find(machineName);
-        SpriteRenderer maquinaSpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
-        SpriteRenderer[] maquinaSlotSpriteRenderer = this.gameObject.GetComponentsInChildren<SpriteRenderer>();
+        SpriteRenderer maquinaSpriteRenderer = machine.gameObject.GetComponent<SpriteRenderer>();
+        SpriteRenderer[] maquinaSlotSpriteRenderer = machine.gameObject.GetComponentsInChildren<SpriteRenderer>();
         for (int i = 0; i < maquinaSlotSpriteRenderer.Length; i++)
         {
             maquinaSlotSpriteRenderer[i].sprite = null;
@@ -208,8 +209,8 @@ public class LevelManager : MonoBehaviour {
         npcLog.SetActive(false);
     }
 
-    public void ReloadLevel()
+    public void ReloadLevel(string sceneName)
     {
-        Debug.Log("PLAYERS ARE DEAD MUAJAJAJA");
+        SceneManager.LoadScene(sceneName);
     }
 }
