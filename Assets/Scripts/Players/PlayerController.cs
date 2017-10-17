@@ -44,13 +44,13 @@ public class PlayerController : MonoBehaviour
     public bool remoteLeft;
     public bool remoteUp;
 
+    public bool gravity = true; // true = normal, false = invertida
 	private int directionY = 1; //1 = de pie, -1 = de cabeza
     public int directionX = 1;  //1 = derecha, -1 = izquierda
     public bool controlOverEnemies;
     public int sortingOrder = 0;
     public int saltarDoble;
     public int characterId;
-	bool alreves = false;
     bool conectado = true;
 	private bool canMove;
 
@@ -73,6 +73,8 @@ public class PlayerController : MonoBehaviour
         controlOverEnemies = false;
         localPlayer = false;
         saltarDoble = 0;
+
+        this.SetGravity(gravity);
 
         IgnoreCollisionStar2puntoCero();
         SendObjectDataToServer();
