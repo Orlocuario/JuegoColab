@@ -7,6 +7,11 @@ public class SwitchActions : MonoBehaviour {
     int groupId;
 	bool meActive = false;
 
+	public GameObject exp;
+	public float gridX = 5f;
+	public float gridY = 5f;
+	public float spacing = 2f;
+
     public SwitchActions(GroupOfSwitchs group)
     {
         this.groupId = group.groupId;
@@ -82,38 +87,51 @@ public class SwitchActions : MonoBehaviour {
 			break; 
 
 		case 3:
-                GameObject platescalera = (GameObject)Instantiate(Resources.Load("Prefabs/MagePlath"));
-                platescalera.GetComponent<Transform>().position = new Vector2(43f, -16f);
-                GameObject feedbackswitch = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
-                feedbackswitch.GetComponent<Transform>().position = new Vector2(41.4f, -16.3f);
-                break;
+            GameObject platescalera = (GameObject)Instantiate(Resources.Load("Prefabs/MagePlath"));
+            platescalera.GetComponent<Transform>().position = new Vector2(43f, -16f);
+            GameObject feedbackswitch = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
+            feedbackswitch.GetComponent<Transform>().position = new Vector2(41.4f, -16.3f);
+            break;
 		
 		case 4:
-                GameObject platparaMage = (GameObject)Instantiate(Resources.Load("Prefabs/plathParaMageWarrior"));
-                platparaMage.GetComponent<Transform>().position = new Vector2(61f, -9.5f);
-                GameObject feedbackswitchwarr = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
-                feedbackswitchwarr.GetComponent<Transform>().position = new Vector2(72.86f, -19.3f);
+            GameObject platparaMage = (GameObject)Instantiate(Resources.Load("Prefabs/plathParaMageWarrior"));
+            platparaMage.GetComponent<Transform>().position = new Vector2(61f, -9.5f);
+            GameObject feedbackswitchwarr = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
+            feedbackswitchwarr.GetComponent<Transform>().position = new Vector2(72.86f, -19.3f);
 			Destroy (feedbackswitchwarr, 4f);
-                break;
+            break;
                 
 		case 5:
 			GameObject platEnginUp = (GameObject)Instantiate (Resources.Load ("Prefabs/PlataformaPastVoladora"));
 			platEnginUp.GetComponent<Transform> ().position = new Vector2 (39f, 7.5f);
 			GameObject platEnginUp2 = (GameObject)Instantiate (Resources.Load ("Prefabs/PlataformaPastVoladora"));
 			platEnginUp2.GetComponent<Transform> ().position = new Vector2 (36f, 7.5f);
-
-
 			break;
-            case 87:
-                //Caso de prueba para switchs de test
-                Debug.Log("UwU");
-                break;
-            
-            case 6:
+
+        case 6:
 			GameObject platescaleraPrueba = (GameObject)Instantiate(Resources.Load("Prefabs/MagePlath"));
 			platescaleraPrueba.GetComponent<Transform>().position = new Vector2(15f, -6.5f);
 			GameObject feedbackswitchPrueba = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
 			feedbackswitchPrueba.GetComponent<Transform>().position = new Vector2(15f, -6.5f);
+			break;
+
+		case 7: 
+			GameObject exp = (GameObject)Instantiate (Resources.Load ("Prefabs/Ambientales/Exp"));
+			exp.GetComponent <Transform>().position = new Vector2 (62f,-14.23f) ;
+			GameObject exp1 = (GameObject)Instantiate (Resources.Load ("Prefabs/Ambientales/Exp"));
+			exp.GetComponent <Transform>().position = new Vector2 (62.5f,-14.23f) ;
+			GameObject exp2 = (GameObject)Instantiate (Resources.Load ("Prefabs/Ambientales/Exp"));
+			exp.GetComponent <Transform>().position = new Vector2 (64f,-14.23f) ;
+			GameObject exp3 = (GameObject)Instantiate (Resources.Load ("Prefabs/Ambientales/Exp"));
+			exp.GetComponent <Transform>().position = new Vector2 (61.5f,-14.23f) ;
+			GameObject exp4 = (GameObject)Instantiate (Resources.Load ("Prefabs/Ambientales/Exp"));
+			exp.GetComponent <Transform>().position = new Vector2 (63f,-14.23f) ;
+			GameObject exp5 = (GameObject)Instantiate (Resources.Load ("Prefabs/Ambientales/Exp"));
+			exp.GetComponent <Transform>().position = new Vector2 (63.5f,-14.23f) ;
+			break;
+		
+		case 8:
+
 			break;
 
 		default:
