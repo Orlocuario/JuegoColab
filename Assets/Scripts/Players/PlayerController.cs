@@ -80,7 +80,7 @@ public class PlayerController : MonoBehaviour
         SendObjectDataToServer();
     }
 
-    public void conectar(bool valor)
+    public void Conectar(bool valor)
     {
         conectado = valor;
     }
