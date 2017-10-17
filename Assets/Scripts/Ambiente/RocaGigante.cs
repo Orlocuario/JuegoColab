@@ -9,6 +9,8 @@ public class RocaGigante : MonoBehaviour {
 	Vector3 myPosition;
 	Vector3 aux;
 
+	public PlannerObstacle obstacleObj = null;
+
     private void Start()
     {
         aux = this.gameObject.GetComponent<Transform>().position;
@@ -30,6 +32,10 @@ public class RocaGigante : MonoBehaviour {
 	{
 		if (other.gameObject.name == "TriggerRocaGigante") 
 		{
+			if (obstacleObj != null) {
+				obstacleObj.blocked = false;
+				obstacleObj.open = true;
+			}
             Client.instance.SendMessageToServer("InstantiateObject/Prefabs/Ambientales/SueloRoca");
             Client.instance.SendMessageToServer("DestroyObject/" + this.gameObject.name);
 		}

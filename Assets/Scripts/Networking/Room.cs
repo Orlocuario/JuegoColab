@@ -290,4 +290,9 @@ public class Room
         ServerSwitch switchi = GetSwitch(groupId, individualId);
         switchi.on = on;
     }
+
+	public void WriteFeedbackHistorial(string message)
+	{
+		historial += "\r\n" + message + HoraMinuto ();
+	}
 }

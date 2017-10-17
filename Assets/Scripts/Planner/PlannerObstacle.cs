@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlannerObstacle : MonoBehaviour {
 
 	public string name;
+	public string nameFeedback;
 	public ObstacleType type;
 	public List<PlannerPoi> enemyAt;
 	public List<PlannerPoi> enemyEdgeStart;
@@ -62,6 +63,17 @@ public class PlannerObstacle : MonoBehaviour {
 			}
 		}
 		return def;
+	}
+
+	public void OpenDoor(){
+		if (this.type == ObstacleType.door) {
+			blocked = false;
+			open = true;
+			foreach (PlannerItem itemObj in this.doorRune) {
+				itemObj.Use ();
+			}
+
+		}
 	}
 }
 

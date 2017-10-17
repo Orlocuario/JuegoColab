@@ -19,6 +19,8 @@ public class RuneSystem : MonoBehaviour
     private bool doorHasBeenChecked;
 	private bool messageSent;
 
+	public PlannerObstacle obstacleObj = null;
+
     private void Start()
     {
         lockValue = false;
@@ -131,6 +133,11 @@ public class RuneSystem : MonoBehaviour
 		if (!messageSent) {
 			messageSent = true;
 			Client.instance.SendMessageToServer("ActivateRuneDoor/" + this.gameObject.name);
+			if (obstacleObj != null) {
+				obstacleObj.OpenDoor ();
+			}
+			Planner planner = FindObjectOfType<Planner> ();
+			planner.Monitor ();
 		}
 
     }

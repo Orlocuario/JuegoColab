@@ -1539,8 +1539,8 @@ PolygonCollider2D:
     - - {x: 6.9529266, y: 2.2168303}
       - {x: 5.6097946, y: 0.15177119}
       - {x: 4.944687, y: -0.87098765}
-      - {x: -4.1843033, y: -0.748728}
-      - {x: -4.1215515, y: 2.2863865}
+      - {x: -4.661148, y: -1.3745929}
+      - {x: -4.5983963, y: 1.9585525}
 --- !u!60 &60077656067713684
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -1703,8 +1703,8 @@ PolygonCollider2D:
       - {x: 14.212257, y: -2.3421369}
       - {x: 9.971977, y: -3.081736}
       - {x: 7.4155807, y: -0.9014921}
-      - {x: -4.123291, y: -1.7553859}
-      - {x: -4.4130783, y: 3.92672}
+      - {x: -2.275505, y: -1.4871583}
+      - {x: -2.1480408, y: 3.658492}
 --- !u!60 &60626691385669710
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -1766,10 +1766,10 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 1.0770035, y: 2.5972614}
-      - {x: 4.75103, y: 2.8706903}
-      - {x: 4.895653, y: -0.3480941}
-      - {x: -3.4687958, y: -0.24771476}
-      - {x: -3.5643234, y: 2.6653805}
+      - {x: 3.94635, y: 2.6322658}
+      - {x: 3.882347, y: -0.6163219}
+      - {x: -0.78652954, y: -0.60535187}
+      - {x: -0.88204956, y: 2.546168}
 --- !u!60 &60713451364987016
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -1965,6 +1965,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: gear1
+  nameFeedback: el engranaje
   type: 1
   itemAt: {fileID: 114643426731667950}
   itemAssign:
@@ -1981,6 +1982,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: door1
+  nameFeedback: la puerta despes de la estatua
   type: 2
   enemyAt: []
   enemyEdgeStart: []
@@ -2003,6 +2005,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi5
+  nameFeedback: el camino sobre la rama caida
   type: 0
   routeTo:
   - {fileID: 114274021910169922}
@@ -2011,6 +2014,7 @@ MonoBehaviour:
   routeBlockObstacle: []
   doorRoutePoi: []
   doorRouteObstacle: []
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114040700517264502
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2023,6 +2027,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: door2
+  nameFeedback: la puerta de la casa
   type: 2
   enemyAt: []
   enemyEdgeStart: []
@@ -2045,8 +2050,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: rune1
+  nameFeedback: la runa verde
   type: 2
-  itemAt: {fileID: 114857345128419536}
+  itemAt: {fileID: 114979282056907616}
   itemAssign:
   - {fileID: 114501717156571940}
 --- !u!114 &114233618674234338
@@ -2061,6 +2067,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: jump3
+  nameFeedback: "el salto sobre la ara\xF1a"
   type: 3
   enemyAt: []
   enemyEdgeStart: []
@@ -2082,6 +2089,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi15
+  nameFeedback: "el tunel superior de la ara\xF1a"
   type: 0
   routeTo:
   - {fileID: 114522505774348660}
@@ -2094,6 +2102,7 @@ MonoBehaviour:
   - {fileID: 114335070363222160}
   doorRoutePoi: []
   doorRouteObstacle: []
+  "ara\xF1a": {fileID: 114335070363222160}
 --- !u!114 &114255292619767468
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2106,6 +2115,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi3
+  nameFeedback: "la cima del arbol del peque\xF1o lago"
   type: 0
   routeTo:
   - {fileID: 114315051730995106}
@@ -2113,6 +2123,7 @@ MonoBehaviour:
   routeBlockObstacle: []
   doorRoutePoi: []
   doorRouteObstacle: []
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114264597451667784
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2125,6 +2136,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi21
+  nameFeedback: el camino secreto desde los tuneles
   type: 0
   routeTo:
   - {fileID: 114647847052490356}
@@ -2132,6 +2144,7 @@ MonoBehaviour:
   routeBlockObstacle: []
   doorRoutePoi: []
   doorRouteObstacle: []
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114274021910169922
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2144,6 +2157,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi4
+  nameFeedback: la torre del lago
   type: 0
   routeTo:
   - {fileID: 114315051730995106}
@@ -2162,6 +2176,7 @@ MonoBehaviour:
   - {fileID: 114008556712467444}
   doorRoutePoi: []
   doorRouteObstacle: []
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114307120831410100
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2174,6 +2189,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: step1
+  nameFeedback: el switch sobre el arbol
   type: 1
   switchAt: {fileID: 114255292619767468}
   linkedSwitch:
@@ -2195,6 +2211,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi7
+  nameFeedback: el camino bajo tierra
   type: 0
   routeTo:
   - {fileID: 114274021910169922}
@@ -2208,6 +2225,7 @@ MonoBehaviour:
   - {fileID: 114709745157323616}
   doorRoutePoi: []
   doorRouteObstacle: []
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114315051730995106
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2220,6 +2238,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi2
+  nameFeedback: "el arbol del peque\xF1o lago"
   type: 0
   routeTo:
   - {fileID: 114799918722071410}
@@ -2233,6 +2252,7 @@ MonoBehaviour:
   - {fileID: 114710845168756034}
   doorRoutePoi: []
   doorRouteObstacle: []
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114316470432769046
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2245,6 +2265,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: step2
+  nameFeedback: el switch verde subterraneo
   type: 1
   switchAt: {fileID: 114313641638157780}
   linkedSwitch:
@@ -2266,6 +2287,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: enemy1
+  nameFeedback: "la ara\xF1a gigante"
   type: 4
   enemyAt:
   - {fileID: 114241592430235798}
@@ -2296,7 +2318,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e73da8b69cc2c04288b105f3c861e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Inventor
+  name: pj3
+  nameFeedback: Ingeniero
   type: 3
   luring: 0
   playerAt: {fileID: 114799918722071410}
@@ -2313,6 +2336,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: jump1
+  nameFeedback: el salto del arbol
   type: 3
   enemyAt: []
   enemyEdgeStart: []
@@ -2334,6 +2358,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi19
+  nameFeedback: la casa al final del camino
   type: 0
   routeTo:
   - {fileID: 114603401989433934}
@@ -2343,6 +2368,7 @@ MonoBehaviour:
   - {fileID: 114040700517264502}
   doorRoutePoi: []
   doorRouteObstacle: []
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114435763402312390
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2355,6 +2381,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: triple1
+  nameFeedback: el switch encerrado sobre el lago
   type: 4
   switchAt: {fileID: 114274021910169922}
   linkedSwitch:
@@ -2375,6 +2402,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi8
+  nameFeedback: las plataformas sobre la lava
   type: 0
   routeTo:
   - {fileID: 114313641638157780}
@@ -2383,6 +2411,7 @@ MonoBehaviour:
   routeBlockObstacle: []
   doorRoutePoi: []
   doorRouteObstacle: []
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114459936891898022
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2395,6 +2424,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: rune2
+  nameFeedback: la runa amarilla
   type: 2
   itemAt: {fileID: 114505108964151748}
   itemAssign:
@@ -2411,6 +2441,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: rollable1
+  nameFeedback: el bloqueo de la roca
   type: 1
   enemyAt: []
   enemyEdgeStart: []
@@ -2431,7 +2462,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e73da8b69cc2c04288b105f3c861e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Mago
+  name: pj1
+  nameFeedback: Mago
   type: 1
   luring: 0
   playerAt: {fileID: 114799918722071410}
@@ -2448,6 +2480,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi16
+  nameFeedback: "el tunel superior despues de la ara\xF1a"
   type: 0
   routeTo:
   - {fileID: 114241592430235798}
@@ -2458,6 +2491,7 @@ MonoBehaviour:
   - {fileID: 114335070363222160}
   doorRoutePoi: []
   doorRouteObstacle: []
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114522505774348660
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2470,6 +2504,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi13
+  nameFeedback: las plataformas sobre la puerta
   type: 0
   routeTo:
   - {fileID: 114779551528022520}
@@ -2481,6 +2516,7 @@ MonoBehaviour:
   - {fileID: 114335070363222160}
   doorRoutePoi: []
   doorRouteObstacle: []
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114588538076422258
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2493,6 +2529,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: obstacle2
+  nameFeedback: el bloqueo subterraneo
   type: 0
   enemyAt: []
   enemyEdgeStart: []
@@ -2514,6 +2551,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi18
+  nameFeedback: el terreno frente a la casa
   type: 0
   routeTo:
   - {fileID: 114979282056907616}
@@ -2530,6 +2568,7 @@ MonoBehaviour:
   - {fileID: 114379722738042936}
   doorRouteObstacle:
   - {fileID: 114040700517264502}
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114643426731667950
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2542,6 +2581,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi6
+  nameFeedback: encima de la torre del lago
   type: 0
   routeTo:
   - {fileID: 114274021910169922}
@@ -2550,6 +2590,7 @@ MonoBehaviour:
   routeBlockObstacle: []
   doorRoutePoi: []
   doorRouteObstacle: []
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114647847052490356
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2562,6 +2603,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi10
+  nameFeedback: los tuneles sobre la lava
   type: 0
   routeTo:
   - {fileID: 114313641638157780}
@@ -2573,6 +2615,7 @@ MonoBehaviour:
   - {fileID: 114709745157323616}
   doorRoutePoi: []
   doorRouteObstacle: []
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114709745157323616
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2585,6 +2628,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: obstacle3
+  nameFeedback: la plataforma sobre la lava
   type: 0
   enemyAt: []
   enemyEdgeStart: []
@@ -2606,6 +2650,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: obstacle1
+  nameFeedback: "la plataforma movil del peque\xF1o lago"
   type: 0
   enemyAt: []
   enemyEdgeStart: []
@@ -2627,6 +2672,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: obstacle4
+  nameFeedback: la plataforma en los tuneles subterraneos
   type: 0
   enemyAt: []
   enemyEdgeStart: []
@@ -2648,6 +2694,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi14
+  nameFeedback: la plataforma con la maquina
   type: 0
   routeTo:
   - {fileID: 114522505774348660}
@@ -2655,6 +2702,7 @@ MonoBehaviour:
   routeBlockObstacle: []
   doorRoutePoi: []
   doorRouteObstacle: []
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114779551528022520
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2667,6 +2715,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi12
+  nameFeedback: el camino desde la puerta
   type: 0
   routeTo:
   - {fileID: 114274021910169922}
@@ -2686,6 +2735,7 @@ MonoBehaviour:
   - {fileID: 114274021910169922}
   doorRouteObstacle:
   - {fileID: 114008556712467444}
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114799918722071410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2698,6 +2748,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi1
+  nameFeedback: el inicio del nivel
   type: 0
   routeTo:
   - {fileID: 114315051730995106}
@@ -2705,6 +2756,7 @@ MonoBehaviour:
   routeBlockObstacle: []
   doorRoutePoi: []
   doorRouteObstacle: []
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114806187719539802
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2717,6 +2769,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi9
+  nameFeedback: la estatua despues de la lava
   type: 0
   routeTo:
   - {fileID: 114446601884533982}
@@ -2725,6 +2778,7 @@ MonoBehaviour:
   routeBlockObstacle: []
   doorRoutePoi: []
   doorRouteObstacle: []
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114809113894498194
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2737,6 +2791,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: jump2
+  nameFeedback: el salto a las ramas
   type: 3
   enemyAt: []
   enemyEdgeStart: []
@@ -2758,6 +2813,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: machine1
+  nameFeedback: la maquina sobre la puerta
   type: 3
   switchAt: {fileID: 114744557833014352}
   linkedSwitch:
@@ -2780,6 +2836,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi11
+  nameFeedback: la estatua sobre los tuneles
   type: 0
   routeTo:
   - {fileID: 114647847052490356}
@@ -2790,6 +2847,7 @@ MonoBehaviour:
   - {fileID: 114722708986692618}
   doorRoutePoi: []
   doorRouteObstacle: []
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114862383975113942
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2801,7 +2859,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42b5583f443938147a51bf5a4f7d236a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  control: 0
+  control: 1
   level: 2
   playerList:
   - {fileID: 114501717156571940}
@@ -2852,9 +2910,9 @@ MonoBehaviour:
   - {fileID: 114834996829911208}
   - {fileID: 114435763402312390}
   goalDef:
-  - (player-at pj1 poi18)
-  - (player-at pj2 poi18)
-  - (player-at pj3 poi18)
+  - (player-at pj1 poi19)
+  - (player-at pj2 poi19)
+  - (player-at pj3 poi19)
   coeficienteMaximo: 40
 --- !u!114 &114895010132307596
 MonoBehaviour:
@@ -2867,7 +2925,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e73da8b69cc2c04288b105f3c861e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: Guerrero
+  name: pj2
+  nameFeedback: Guerrero
   type: 2
   luring: 0
   playerAt: {fileID: 114799918722071410}
@@ -2884,6 +2943,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi20
+  nameFeedback: el camino secreto despues de la lava
   type: 0
   routeTo:
   - {fileID: 114806187719539802}
@@ -2891,6 +2951,7 @@ MonoBehaviour:
   routeBlockObstacle: []
   doorRoutePoi: []
   doorRouteObstacle: []
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114979282056907616
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2903,6 +2964,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: poi17
+  nameFeedback: "el tunel inferior de la ara\xF1a"
   type: 0
   routeTo:
   - {fileID: 114779551528022520}
@@ -2917,6 +2979,7 @@ MonoBehaviour:
   - {fileID: 114484311782544056}
   doorRoutePoi: []
   doorRouteObstacle: []
+  "ara\xF1a": {fileID: 114335070363222160}
 --- !u!114 &114992506836923416
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2929,6 +2992,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: lever1
+  nameFeedback: el switch despues de la lava
   type: 2
   switchAt: {fileID: 114806187719539802}
   linkedSwitch:

@@ -17,6 +17,7 @@ public class Planner : MonoBehaviour {
 	private List<string> objDef;
 	private List<string> initDef;
 	public List<string> goalDef = new List<string> ();
+	private Dictionary<string, string> feedbackNames = new Dictionary<string, string> ();
 	private List<string> EstadoInicial;
 	//Plan completo
 	private List<string> Plan;
@@ -30,7 +31,9 @@ public class Planner : MonoBehaviour {
 	private int distanciaObjetiva = -1;
 	private double timer;
 	private int feedbackLevel = 0;
+	private int feedbackPlayer = 0;
 	private int etapaCumplida = 0;
+	private string lastAction = "";
 
 	// Use this for initialization
 	void Start () {
@@ -40,6 +43,22 @@ public class Planner : MonoBehaviour {
 		EstadoInicial = new List<string> ();
 		Plan = new List<string>();
 		EstadoPorAccion = new List<List<string>> ();
+
+		foreach (PlannerPlayer item in playerList) {
+			feedbackNames.Add (item.name, item.nameFeedback);
+		}
+		foreach (PlannerPoi item in poiList) {
+			feedbackNames.Add (item.name, item.nameFeedback);
+		}
+		foreach (PlannerObstacle item in obstacleList) {
+			feedbackNames.Add (item.name, item.nameFeedback);
+		}
+		foreach (PlannerItem item in itemList) {
+			feedbackNames.Add (item.name, item.nameFeedback);
+		}
+		foreach (PlannerSwitch item in switchList) {
+			feedbackNames.Add (item.name, item.nameFeedback);
+		}
 	}
 
 	void Update(){
@@ -47,7 +66,7 @@ public class Planner : MonoBehaviour {
 			timer += Time.deltaTime;
 			coeficienteActual = distanciaObjetiva * timer / 60.0;
 			if (coeficienteActual > coeficienteMaximo) {
-				Debug.Log ("Feedback");
+				Debug.Log ("Feedback: " + feedbackPlayer);
 				timer = 0;
 				if (etapaCumplida != Plan.Count) {
 					this.RequestActivateNPCLog (GetFeedback (Plan [etapaCumplida]));
@@ -73,6 +92,10 @@ public class Planner : MonoBehaviour {
 			List<string> parameters = new List<string> (message.Split ('/'));
 			parameters.RemoveAt (parameters.Count - 1);
 			this.Plan = new List<string> (parameters);
+			etapaCumplida = 0;
+			if (!(this.Plan.Count > 0 && this.Plan.First ().Equals (lastAction))) {
+				feedbackLevel = 0;
+			}
 			distanciaObjetiva = this.Plan.Count;
 			Debug.Log ("distancia objetiva: " + distanciaObjetiva);
 			switch (tipoPlanificacion) {
@@ -214,8 +237,6 @@ public class Planner : MonoBehaviour {
 			if (!cumple) {
 				Debug.Log ("no cumple estados");
 				this.Replanificar ();
-				etapaCumplida = 0;
-				feedbackLevel = 0;
 			}
 		}
 	}
@@ -636,13 +657,15 @@ public class Planner : MonoBehaviour {
 
 	string GetFeedback(string accion){
 		string feedback = "";
+		List<string> parametros = new List<string> (accion.Split (new char[]{ '(', ')', ' ' }));
+		parametros.RemoveAt (0);
+		string nombre = parametros [0];
+		parametros.RemoveAt (0);
 		if (feedbackLevel == 0) {
+			int targetPlayer = int.Parse (parametros [0].Substring (2)) - 1;
+			feedbackPlayer = (targetPlayer + Random.Range (1, 2)) % 3;
 			feedback = "Aun no han llegado, ¿Está todo bien?";
 		} else {
-			List<string> parametros = new List<string> (accion.Split (new char[]{ '(', ')', ' ' }));
-			parametros.RemoveAt (0);
-			string nombre = parametros [0];
-			parametros.RemoveAt (0);
 			switch (nombre) {
 			case "move":
 				switch (feedbackLevel) {
@@ -650,206 +673,206 @@ public class Planner : MonoBehaviour {
 					feedback = "¿Creo que no han pasado por aqui aún?";
 					break;
 				case 2:
-					feedback = "Esperaba ver a " + parametros [0] + " por aquí, ¿sabes que le pasa?";
+					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 3:
-					feedback = "¿Probaron ir hasta " + parametros [2] + "?";
+					feedback = "¿Probaron ir hasta " + feedbackNames [parametros [2]] + "?";
 					break;
 				default:
-					feedback = parametros [0] + ", debe ir desde " + parametros [1] + " hasta " + parametros [2];
+					feedback = feedbackNames [parametros [0]] + ", debe ir desde " + feedbackNames [parametros [1]] + " hasta " + feedbackNames [parametros [2]];
 					break;
 				}
 				break;
 			case "move-jump":
 				switch (feedbackLevel) {
 				case 1:
-					feedback = "Esperaba ver a " + parametros [0] + " por aquí, ¿sabes que le pasa?";
+					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 2:
 					feedback = "No olviden sus habilidades...";
 					break;
 				case 3:
-					feedback = "¿Probaron ir a " + parametros [2] + "?";
+					feedback = "¿Probaron ir a " + feedbackNames [parametros [2]] + "?";
 					break;
 				case 4:
-					feedback = "¿Probaron usar la habilidad especial de " + parametros [0] + "?";
+					feedback = "¿Probaron usar la habilidad especial de " + feedbackNames [parametros [0]] + "?";
 					break;
 				default:
-					feedback = parametros [0] + " debería usar su salto alto para llegar a " + parametros [2];
+					feedback = feedbackNames [parametros [0]] + " debería usar su salto alto para llegar a " + feedbackNames [parametros [2]];
 					break;
 				}
 				break;
 			case "move-distract":
 				switch (feedbackLevel) {
 				case 1:
-					feedback = "Esperaba ver a " + parametros [0] + " por aquí, ¿sabes que le pasa?";
+					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 2:
-					feedback = "¿Probaron ir a " + parametros [2] + "?";
+					feedback = "¿Probaron ir a " + feedbackNames [parametros [2]] + "?";
 					break;
 				case 3:
 					feedback = "No olviden sus habilidades...";
 					break;
 				case 4:
-					feedback = "¿Probaron usar la habilidad especial de " + parametros [0] + "?";
+					feedback = "¿Probaron usar la habilidad especial de " + feedbackNames [parametros [0]] + "?";
 					break;
 				default:
-					feedback = parametros [0] + " debería usar su campo magico para pasar " + parametros [3];
+					feedback = feedbackNames [parametros [0]] + " debería usar su campo magico para pasar " + feedbackNames [parametros [3]];
 					break;
 				}
 				break;
 			case "lever-on":
 				switch (feedbackLevel) {
 				case 1:
-					feedback = "Esperaba ver a " + parametros [0] + " por aquí, ¿sabes que le pasa?";
+					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 2:
 					feedback = "Creo que falta activar algo";
 					break;
 				case 3:
-					feedback = "¿Probaron ir a " + parametros [2] + "?";
+					feedback = "¿Probaron ir a " + feedbackNames [parametros [2]] + "?";
 					break;
 				case 4:
-					feedback = "¿No han visto el " + parametros [1] + "?";
+					feedback = "¿No han visto el " + feedbackNames [parametros [1]] + "?";
 					break;
 				case 5:
-					feedback = "Solo " + parametros [0] + " puede usar el " + parametros [1];
+					feedback = "Solo " + feedbackNames [parametros [0]] + " puede usar el " + feedbackNames [parametros [1]];
 					break;
 				default:
-					feedback = parametros [0] + " debería activar el " + parametros [1] + " en " + parametros [2];
+					feedback = feedbackNames [parametros [0]] + " debería activar el " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [2]];
 					break;
 				}
 				break;
 			case "lever-off":
 				switch (feedbackLevel) {
 				case 1:
-					feedback = "Esperaba ver a " + parametros [0] + " por aquí, ¿sabes que le pasa?";
+					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 2:
 					feedback = "Creo que falta desactivar algo";
 					break;
 				case 3:
-					feedback = "¿Probaron ir a " + parametros [2] + "?";
+					feedback = "¿Probaron ir a " + feedbackNames [parametros [2]] + "?";
 					break;
 				case 4:
-					feedback = "¿No han visto el " + parametros [1] + "?";
+					feedback = "¿No han visto el " + feedbackNames [parametros [1]] + "?";
 					break;
 				case 5:
-					feedback = "Solo " + parametros [0] + " puede usar el " + parametros [1];
+					feedback = "Solo " + feedbackNames [parametros [0]] + " puede usar el " + feedbackNames [parametros [1]];
 					break;
 				default:
-					feedback = parametros [0] + " debería desactivar el " + parametros [1] + " en " + parametros [2];
+					feedback = feedbackNames [parametros [0]] + " debería desactivar el " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [2]];
 					break;
 				}
 				break;
 			case "machine-on":
 				switch (feedbackLevel) {
 				case 1:
-					feedback = "Esperaba ver a " + parametros [0] + " por aquí, ¿sabes que le pasa?";
+					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 2:
 					feedback = "Creo que falta activar algo";
 					break;
 				case 3:
-					feedback = "¿Probaron ir a " + parametros [2] + "?";
+					feedback = "¿Probaron ir a " + feedbackNames [parametros [2]] + "?";
 					break;
 				case 4:
-					feedback = "¿No han visto la " + parametros [1] + "?";
+					feedback = "¿No han visto la " + feedbackNames [parametros [1]] + "?";
 					break;
 				case 5:
-					feedback = "Solo " + parametros [0] + " puede usar la " + parametros [1];
+					feedback = "Solo " + feedbackNames [parametros [0]] + " puede usar la " + feedbackNames [parametros [1]];
 					break;
 				default:
-					feedback = parametros [0] + " debería activar la " + parametros [1] + " en " + parametros [2];
+					feedback = feedbackNames [parametros [0]] + " debería activar la " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [2]];
 					break;
 				}
 				break;
 			case "item-pick":
 				switch (feedbackLevel) {
 				case 1:
-					feedback = "Esperaba ver a " + parametros [0] + " por aquí, ¿sabes que le pasa?";
+					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 2:
 					feedback = "Creo que se les olvido recoger algo...";
 					break;
 				case 3:
-					feedback = "Necesitan encontrar " + parametros [1];
+					feedback = "Necesitan encontrar " + feedbackNames [parametros [1]];
 					break;
 				case 4:
-					feedback = "Creo que vi algo en " + parametros [2];
+					feedback = "Creo que vi algo en " + feedbackNames [parametros [2]];
 					break;
 				default:
-					feedback = parametros [0] + " debería tomar " + parametros [1] + " que esta en " + parametros [2];
+					feedback = feedbackNames [parametros [0]] + " debería tomar " + feedbackNames [parametros [1]] + " que esta en " + feedbackNames [parametros [2]];
 					break;
 				}
 				break;
 			case "item-drop":
 				switch (feedbackLevel) {
 				case 1:
-					feedback = "Esperaba ver a " + parametros [0] + " por aquí, ¿sabes que le pasa?";
+					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 2:
 					feedback = "Creo que tienen muchos items...";
 					break;
 				case 3:
-					feedback = "Quizas otro debería probar " + parametros [1];
+					feedback = "Quizas otro debería probar " + feedbackNames [parametros [1]];
 					break;
 				default:
-					feedback = parametros [0] + " debería botar " + parametros [1] + " en " + parametros [2];
+					feedback = feedbackNames [parametros [0]] + " debería botar " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [2]];
 					break;
 				}
 				break;
 			case "rune-use":
 				switch (feedbackLevel) {
 				case 1:
-					feedback = "Esperaba ver a " + parametros [0] + " por aquí, ¿sabes que le pasa?";
+					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 2:
-					feedback = "¿" + parametros [4] + " se ve extraño, no crees?";
+					feedback = "¿" + feedbackNames [parametros [4]] + " se ve extraño, no crees?";
 					break;
 				case 3:
-					feedback = "Necesitan tener " + parametros [1] + " para llegar hasta aquí";
+					feedback = "Necesitan tener " + feedbackNames [parametros [1]] + " para llegar hasta aquí";
 					break;
 				default:
-					feedback = parametros [0] + " debería usar " + parametros [1] + " en " + parametros [4];
+					feedback = feedbackNames [parametros [0]] + " debería usar " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [4]];
 					break;
 				}
 				break;
 			case "gear-use":
 				switch (feedbackLevel) {
 				case 1:
-					feedback = "Esperaba ver a " + parametros [0] + " por aquí, ¿sabes que le pasa?";
+					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 2:
-					feedback = "¿" + parametros [4] + " se ve extraño, no crees?";
+					feedback = "¿" + feedbackNames [parametros [4]] + " se ve extraño, no crees?";
 					break;
 				case 3:
-					feedback = "Necesitan tener " + parametros [1] + " para llegar hasta aquí";
+					feedback = "Necesitan tener " + feedbackNames [parametros [1]] + " para llegar hasta aquí";
 					break;
 				default:
-					feedback = parametros [0] + " debería usar " + parametros [1] + " en " + parametros [4];
+					feedback = feedbackNames [parametros [0]] + " debería usar " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [4]];
 					break;
 				}
 				break;
 			case "step-on":
 				switch (feedbackLevel) {
 				case 1:
-					feedback = "Esperaba ver a " + parametros [0] + " por aquí, ¿sabes que le pasa?";
+					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 2:
 					feedback = "Creo que falta activar algo";
 					break;
 				case 3:
-					feedback = "¿Probaron ir a " + parametros [2] + "?";
+					feedback = "¿Probaron ir a " + feedbackNames [parametros [2]] + "?";
 					break;
 				case 4:
-					feedback = "¿No han visto el " + parametros [1] + "?";
+					feedback = "¿No han visto el " + feedbackNames [parametros [1]] + "?";
 					break;
 				case 5:
-					feedback = "Solo " + parametros [0] + " puede usar el " + parametros [1];
+					feedback = "Solo " + feedbackNames [parametros [0]] + " puede usar el " + feedbackNames [parametros [1]];
 					break;
 				default:
-					feedback = parametros [0] + " debería activar el " + parametros [1] + " en " + parametros [2];
+					feedback = feedbackNames [parametros [0]] + " debería activar el " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [2]];
 					break;
 				}
 				break;
@@ -862,43 +885,44 @@ public class Planner : MonoBehaviour {
 					feedback = "Creo que falta activar algo";
 					break;
 				case 3:
-					feedback = "¿Probaron ir a " + parametros [4] + "?";
+					feedback = "¿Probaron ir a " + feedbackNames [parametros [4]] + "?";
 					break;
 				case 4:
-					feedback = "¿No han visto el " + parametros [3] + "?";
+					feedback = "¿No han visto el " + feedbackNames [parametros [3]] + "?";
 					break;
 				default:
-					feedback = parametros [2] + " debería activar el " + parametros [3] + " en " + parametros [4];
+					feedback = feedbackNames [parametros [2]] + " debería activar el " + feedbackNames [parametros [3]] + " en " + feedbackNames [parametros [4]];
 					break;
 				}
 				break;
 			case "push-boulder":
 				switch (feedbackLevel) {
 				case 1:
-					feedback = "Esperaba ver a" + parametros [0] + " por aquí, ¿pasa algo?";
+					feedback = "Esperaba ver a" + feedbackNames [parametros [0]] + " por aquí, ¿pasa algo?";
 					break;
 					feedback = "No olviden sus habilidades...";
 					break;
 				case 3:
-					feedback = "¿Probaron ir a " + parametros [2] + "?";
+					feedback = "¿Probaron ir a " + feedbackNames [parametros [2]] + "?";
 					break;
 				case 4:
-					feedback = "¿Probaron usar la habilidad especial de " + parametros [0] + "?";
+					feedback = "¿Probaron usar la habilidad especial de " + feedbackNames [parametros [0]] + "?";
 					break;
 				default:
-					feedback = parametros [0] + " debería usar su golpe en " + parametros [1];
+					feedback = feedbackNames [parametros [0]] + " debería usar su golpe en " + feedbackNames [parametros [1]];
 					break;
 				}
 				break;
 			}
 		}
 		feedbackLevel++;
+		lastAction = accion;
 		return feedback;
 	}
 
 	void RequestActivateNPCLog(string feedbackMessage)
 	{
-		Client.instance.SendMessageToServer ("ActivateNPCLog/" + feedbackMessage + "/" + 1);
+		Client.instance.SendMessageToServer ("ActivateNPCLog/" + feedbackMessage + "/" + feedbackPlayer);
 	}
 
 	public void FirstPlan(){

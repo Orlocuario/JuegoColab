@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlannerPlayer : MonoBehaviour {
 
 	public string name;
+	public string nameFeedback;
 	public PlayerType type;
 	public bool luring;
 	public PlannerPoi playerAt;

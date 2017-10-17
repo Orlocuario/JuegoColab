@@ -5,12 +5,15 @@ using UnityEngine;
 public class PlannerPoi : MonoBehaviour {
 
 	public string name;
+	public string nameFeedback;
 	public PoiType type;
 	public List<PlannerPoi> routeTo;
 	public List<PlannerPoi> routeBlockPoi;
 	public List<PlannerObstacle> routeBlockObstacle;
 	public List<PlannerPoi> doorRoutePoi;
 	public List<PlannerObstacle> doorRouteObstacle;
+
+	public PlannerObstacle araña = null;
 
 	public PlannerPoi(){
 		this.routeTo = new List<PlannerPoi> ();

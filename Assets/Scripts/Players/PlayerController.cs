@@ -408,6 +408,12 @@ public class PlayerController : MonoBehaviour
 			if (!playerObj.playerAt.name.Equals (newPoi.name)) {
 				Debug.Log ("Change OK: " + newPoi.name);
 				playerObj.playerAt = newPoi;
+				playerObj.luring = false;
+				if (newPoi.araña != null && this.characterId == 0) {
+					playerObj.luring = true;
+					newPoi.araña.blocked = false;
+					newPoi.araña.open = true;
+				}
 				Planner planner = FindObjectOfType<Planner> ();
 				planner.Monitor ();
 			}

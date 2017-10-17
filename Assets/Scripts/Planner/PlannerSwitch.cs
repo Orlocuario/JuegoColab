@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlannerSwitch : MonoBehaviour {
 
 	public string name;
+	public string nameFeedback;
 	public SwitchType type;
 	public PlannerPoi switchAt;
 	public List<PlannerObstacle> linkedSwitch;

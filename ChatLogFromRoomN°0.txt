@@ -1,37 +1,29 @@
 Partida N°: Por Resolver
 
-Engineer: Has Connected (11:12)
-Warrior: Has Connected (11:12)
-Mage: Has Connected (11:12)
-Engineer: kfjidruueur (11:13)
-Engineer: ujdlwjd (11:13)
+Engineer: Ha Aparecido! (13:27)
+Engineer: Ha Aparecido!Mage: Ha Aparecido! (13:27)
+Engineer: Ha Aparecido!Mage: Ha Aparecido!Warrior: Ha Aparecido! (13:27)
+Aun no han llegado, ¿Está todo bien?/0 (13:27)
+Esperaba ver a Ingeniero por aquí, ¿sabes que le pasa?/0 (13:28)
+Aun no han llegado, ¿Está todo bien?/2 (13:29)
 
 ____________________________________
 Generando Nuevo Historial...
 Partida N°: Por Resolver
 
-Engineer: Has Connected (11:12)
-Warrior: Has Connected (11:12)
-Mage: Has Connected (11:12)
-Engineer: kfjidruueur (11:13)
-Engineer: ujdlwjd (11:13)
-
-____________________________________
-Generando Nuevo Historial...
-Partida N°: Por Resolver
-
-Engineer: Has Connected (11:12)
-Warrior: Has Connected (11:12)
-Mage: Has Connected (11:12)
-Engineer: kfjidruueur (11:13)
-Engineer: ujdlwjd (11:13)
-
-____________________________________
-Generando Nuevo Historial...
-Partida N°: Por Resolver
-
-Engineer: Has Connected (11:12)
-Warrior: Has Connected (11:12)
-Mage: Has Connected (11:12)
-Engineer: kfjidruueur (11:13)
-Engineer: ujdlwjd (11:13)
+Engineer: Ha Aparecido! (13:27)
+Engineer: Ha Aparecido!Mage: Ha Aparecido! (13:27)
+Engineer: Ha Aparecido!Mage: Ha Aparecido!Warrior: Ha Aparecido! (13:27)
+Aun no han llegado, ¿Está todo bien?/0 (13:27)
+Esperaba ver a Ingeniero por aquí, ¿sabes que le pasa?/0 (13:28)
+Aun no han llegado, ¿Está todo bien?/2 (13:29)
+Aun no han llegado, ¿Está todo bien?/1 (13:30)
+Aun no han llegado, ¿Está todo bien?/0 (13:31)
+Aun no han llegado, ¿Está todo bien?/1 (13:32)
+¿Probaron ir a la torre del lago?/1 (13:38)
+Engineer: Ha Aparecido!Mage: Ha Aparecido!Warrior: Ha Aparecido!Warrior: Has Disconnected (13:39)
+Engineer: Ha Aparecido!Mage: Ha Aparecido!Warrior: Ha Aparecido!Warrior: Has DisconnectedEngineer: Has Disconnected (13:40)
+Engineer: Ha Aparecido!Mage: Ha Aparecido!Warrior: Ha Aparecido!Warrior: Has DisconnectedEngineer: Has DisconnectedMage: Has Disconnected (13:40)
+Engineer: Ha Aparecido!Mage: Ha Aparecido!Warrior: Ha Aparecido!Warrior: Has DisconnectedEngineer: Has DisconnectedMage: Has DisconnectedWarrior: Has Disconnected (13:40)
+Engineer: Ha Aparecido!Mage: Ha Aparecido!Warrior: Ha Aparecido!Warrior: Has DisconnectedEngineer: Has DisconnectedMage: Has DisconnectedWarrior: Has DisconnectedEngineer: Has Disconnected (13:40)
+Engineer: Ha Aparecido!Mage: Ha Aparecido!Warrior: Ha Aparecido!Warrior: Has DisconnectedEngineer: Has DisconnectedMage: Has DisconnectedWarrior: Has DisconnectedEngineer: Has DisconnectedMage: Has Disconnected (13:40)

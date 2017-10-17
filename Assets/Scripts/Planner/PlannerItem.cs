@@ -5,9 +5,12 @@ using UnityEngine;
 public class PlannerItem : MonoBehaviour {
 
 	public string name;
+	public string nameFeedback;
 	public ItemType type;
 	public PlannerPoi itemAt;
 	public List<PlannerPlayer> itemAssign;
+
+	private PlannerPlayer onInventory = null;
 	
 	public PlannerItem(){
 		this.itemAssign = new List<PlannerPlayer> ();
@@ -34,12 +37,14 @@ public class PlannerItem : MonoBehaviour {
 		if (itemAt != null) {
 			itemAt = null;
 			playerObj.playerInventory.Add (this);
+			onInventory = playerObj;
 		}
 	}
 
 	public void Drop(PlannerPlayer playerObj, PlannerPoi poiObj){
 		if (itemAt == null) {
 			itemAt = poiObj;
+			onInventory = null;
 			for (int i = 0; i < playerObj.playerInventory.Count; i++) {
 				if (this.name.Equals (playerObj.playerInventory [i].name)) {
 					playerObj.playerInventory.RemoveAt (i);
@@ -47,6 +52,10 @@ public class PlannerItem : MonoBehaviour {
 				}
 			}
 		}
+	}
+
+	public void Use(){
+		onInventory = null;
 	}
 }
 

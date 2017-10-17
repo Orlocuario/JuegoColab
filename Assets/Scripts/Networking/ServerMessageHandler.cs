@@ -131,6 +131,7 @@ public class ServerMessageHandler
 		int playerId = int.Parse (arreglo [2]);
 		int newConnectionId = 0;
 		Room room = server.GetPlayer (connectionId).room;
+		room.WriteFeedbackHistorial (message + "/" + playerId);
 		foreach (Jugador jugador in room.players) {
 			if (playerId == jugador.charId) {
 				newConnectionId = jugador.connectionId;
