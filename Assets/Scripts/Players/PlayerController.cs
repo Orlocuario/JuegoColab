@@ -18,12 +18,16 @@ public class PlayerController : MonoBehaviour
 
     private LevelManager theLevelManager;
     private SpriteRenderer sprite;
+        
+    public static float maxAcceleration = 1; //100% del speed
+    private static float maxYSpeed = 8f;
+    public static float maxXSpeed = 6f;
+    public float acceleration = 0f;
+    public bool canAccelerate = false; //Limita la aceleración a la mitad de los frames
 
-    private static float jumpSpeed = 8;
-    public float moveSpeed;
-    public float maxSpeed;
-    public float speed; //For animation nonlocal purposes
     public float groundCheckRadius;
+    public float actualSpeed;
+    public float speed; //For animation nonlocal purposes
 
     public bool isGrounded;
     public bool leftPressed;
@@ -41,7 +45,7 @@ public class PlayerController : MonoBehaviour
     public bool remoteUp;
 
 	private int directionY = 1; //1 = de pie, -1 = de cabeza
-    public int directionX;  //1 = derecha, -1 = izquierda
+    public int directionX = 1;  //1 = derecha, -1 = izquierda
     public bool controlOverEnemies;
     public int sortingOrder = 0;
     public int saltarDoble;
@@ -59,15 +63,17 @@ public class PlayerController : MonoBehaviour
         remoteLeft = false;
 		canMove = true;
 
+        theLevelManager = FindObjectOfType<LevelManager>();
         transform = GetComponent<Transform>();
         rb2d = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
+
         respawnPosition = transform.position;
-        theLevelManager = FindObjectOfType<LevelManager>();
-        localPlayer = false;
-        directionX = 1;
+
         controlOverEnemies = false;
+        localPlayer = false;
         saltarDoble = 0;
+
         IgnoreCollisionStar2puntoCero();
         SendObjectDataToServer();
     }
@@ -291,38 +297,86 @@ public class PlayerController : MonoBehaviour
 
         Transform parentTransform = transform.parent;
 
-		if (parentTransform != null) {
+        isGrounded = IsItGrounded();
+
+        float speedY = rb2d.velocity.y;
+        float speedX;
+        
+        if (parentTransform != null) {
 			parent = parentTransform.gameObject;		
 		}
 
-        if (rb2d.velocity.y > maxSpeed)
-        {
-            rb2d.velocity = new Vector2(rb2d.velocity.x, maxSpeed);
-        }
-
         if (IsGoingRight())
         {
-            rb2d.velocity = new Vector3(moveSpeed, rb2d.velocity.y, 0f);
-			transform.localScale = new Vector3(1f, directionY, 1f);
-            directionX = 1;
-        }
-        else if (IsGoingLeft())
-        {
-            rb2d.velocity = new Vector3(-moveSpeed, rb2d.velocity.y, 0f);
-			transform.localScale = new Vector3(-1f, directionY, 1f);
-            directionX = -1;
-        }
-        else // it's not moving
-        {
-            rb2d.velocity = new Vector3(0f, rb2d.velocity.y, 0f);
+            // Si estaba yendo a la izquierda resetea la aceleración
+            if (directionX == -1)
+            {
+                transform.localScale = new Vector3(1f, directionY, 1f);
+                acceleration = .1f;
+                directionX = 1;
+            }
+
+            // sino acelera
+            else if (acceleration < maxAcceleration)
+            {
+                if (canAccelerate)
+                {
+                    acceleration += .1f;
+                    canAccelerate = false;
+                }
+
+                else
+                {
+                    canAccelerate = true;
+                }
+            }
+
+            actualSpeed = maxXSpeed * acceleration;
+            speedX = actualSpeed; 
         }
 
-        isGrounded = IsItGrounded();
+        else if (IsGoingLeft())
+        {
+
+            // Si estaba yendo a la derecha resetea la aceleración
+            if (directionX == 1)
+            {
+                transform.localScale = new Vector3(-1f, directionY, 1f);
+                acceleration = .1f;
+                directionX = -1;
+            }
+
+            // sino acelera
+            else if (acceleration < maxAcceleration)
+            {
+                if (canAccelerate)
+                {
+                    acceleration += .1f;
+                    canAccelerate = false;
+                }
+
+                else
+                {
+                    canAccelerate = true;
+                }
+            }
+
+            actualSpeed = maxXSpeed * acceleration;
+            speedX = -actualSpeed;
+        }
+
+        else
+        {
+            speedX = 0f;
+            acceleration = 0;
+        }
 
         if (IsJumping(isGrounded))
         {
-			rb2d.velocity = new Vector2(0, jumpSpeed * directionY);
+            speedY = maxYSpeed  * directionY;
         }
+
+        rb2d.velocity = new Vector2(speedX, speedY);
 
         previousTransform = transform.position;
         SetAnimVariables();

@@ -45,7 +45,6 @@ public class WarriorController : PlayerController {
                 remoteAttacking = true;
                 numHits++;
                 SendAttackDataToServer();
-                //CastOnePunchMan(Client.instance.GetAllEnemies(), this.GetComponent<RectTransform>().position);
 				if (SceneManager.GetActiveScene ().name == "Escena2") 
 				{
 					RemoveRockMass ();
