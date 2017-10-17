@@ -43,7 +43,7 @@ public class Planner : MonoBehaviour {
 	}
 
 	void Update(){
-		if (Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
+		if (control && Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
 			timer += Time.deltaTime;
 			coeficienteActual = distanciaObjetiva * timer / 60.0;
 			if (coeficienteActual > coeficienteMaximo) {
@@ -58,7 +58,7 @@ public class Planner : MonoBehaviour {
 
 	//Metodo de replanificacion, toma el estado actual y lo envía al servidor.
 	void Replanificar(){
-		if (Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
+		if (control && Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
 			Debug.Log ("Inicio replanificacion");
 			//send message (estado actual) al server para planificar
 			EstadoInicial = new List<string> (initDef);
@@ -67,7 +67,7 @@ public class Planner : MonoBehaviour {
 	}
 	//Metodo de recepcion del plan
 	public void SetPlanFromServer(string message){
-		if (Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
+		if (control && Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
 			Debug.Log ("Recibido mensaje Server");
 			Debug.Log (message);
 			List<string> parameters = new List<string> (message.Split ('/'));
@@ -90,7 +90,7 @@ public class Planner : MonoBehaviour {
 	}
 	//Metodo de calculo estado por accion Estandar
 	void GetEstadosDesdePlanEstandar(){
-		if (Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
+		if (control && Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
 			List<string> estadoActual = new List<string> (EstadoInicial);
 			this.EstadoPorAccion = new List<List<string>> ();
 			this.EstadoPorAccion.Add (new List<string> (estadoActual));
@@ -102,7 +102,7 @@ public class Planner : MonoBehaviour {
 	}
 	//Metodo de calculo estado por accion Regresion
 	void GetEstadosDesdePlanRegresion(){
-		if (Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
+		if (control && Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
 			List<string> estadoActual = new List<string> (goalDef);
 			this.EstadoPorAccion = new List<List<string>> ();
 			this.EstadoPorAccion.Add (new List<string> (estadoActual));
@@ -114,7 +114,7 @@ public class Planner : MonoBehaviour {
 	}
 	//Metodo de escaneo, revisa el estado actual y lo guarda en las variables correspondientes
 	void Escaneo(){
-		if (Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
+		if (control && Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
 			objDef = new List<string> ();
 			initDef = new List<string> ();
 			message = level + "/";
@@ -166,7 +166,7 @@ public class Planner : MonoBehaviour {
 	}
 	//Metodo monitor (con cada cambio de accion se llama y decide si sse debe replanificar o no
 	public void Monitor(){
-		if (Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
+		if (control && Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
 			bool cumple = false;
 			Escaneo ();
 			Debug.Log ("comienzo de monitoreo");
@@ -221,7 +221,7 @@ public class Planner : MonoBehaviour {
 	}
 	//Mapeo estado por accion, guarda el estado para la accion i del plan segun metodo estandar
 	List<string> GetEstadoPorAccionEstandar(List<string> estadoActual, string accion){
-		if (Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
+		if (control && Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
 			List<string> parametros = new List<string> (accion.Split (new char[]{ '(', ')', ' ' }));
 			parametros.RemoveAt (0);
 			string nombre = parametros [0];
@@ -330,7 +330,7 @@ public class Planner : MonoBehaviour {
 
 	//Mapeo estado por accion, guarda el estado para la accion i del plan segun metodo regresivo
 	List<string> GetEstadoPorAccionRegresion(List<string> estadoActual, string accion){
-		if (Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
+		if (control && Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
 			List<string> parametros = new List<string> (accion.Split (new char[]{ '(', ')', ' ' }));
 			parametros.RemoveAt (0);
 			string nombre = parametros [0];
@@ -902,7 +902,7 @@ public class Planner : MonoBehaviour {
 	}
 
 	public void FirstPlan(){
-		if (Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
+		if (control && Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
 			Escaneo ();
 			Replanificar ();
 		}

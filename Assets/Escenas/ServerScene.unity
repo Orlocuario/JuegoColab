@@ -2624,7 +2624,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6313c3c64f83efb4e835c0b88a0eb80e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxConnections: 10
+  maxConnections: 29
   maxJugadores: 0
   sceneToLoad: 
   NPCsLastMessage: 

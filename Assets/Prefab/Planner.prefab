@@ -1555,13 +1555,13 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: -12.5751915, y: 0.9842162}
+    - - {x: -12.250446, y: 0.7677188}
       - {x: -12.400753, y: 3.2425914}
       - {x: -12.614471, y: 7.508941}
       - {x: 4.682541, y: 7.6097503}
       - {x: 0.18218994, y: -7.2174387}
       - {x: -6.286293, y: -7.2061224}
-      - {x: -6.597828, y: 0.907464}
+      - {x: -11.685505, y: -7.968917}
 --- !u!60 &60081970670122190
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -1576,11 +1576,11 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: 1.6148586, y: 3.048861}
-      - {x: 1.9483624, y: 3.0136995}
-      - {x: 2.2018795, y: -1.8434498}
-      - {x: -3.2448177, y: -1.7358965}
-      - {x: -3.3168812, y: 2.8508356}
+    - - {x: 0.10665989, y: 0.68182594}
+      - {x: 0.83816147, y: 0.14393216}
+      - {x: 0.31663036, y: -1.3197694}
+      - {x: -0.77304745, y: -1.3378994}
+      - {x: -1.2431078, y: 0.37906486}
 --- !u!60 &60119725209734850
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -1653,12 +1653,14 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: 2.7382126, y: 1.3346727}
-      - {x: 5.90007, y: 4.5829954}
-      - {x: 9.530823, y: 4.751031}
+    - - {x: -3.3962326, y: 0.19740248}
+      - {x: -1.0444336, y: 1.4544382}
+      - {x: 2.1868362, y: 1.4195001}
+      - {x: 5.8152466, y: 4.5405817}
+      - {x: 9.530823, y: 4.4117217}
       - {x: 9.9281845, y: -1.1741147}
       - {x: -4.786396, y: -1.3566628}
-      - {x: -4.875847, y: 1.313034}
+      - {x: -4.4941254, y: 0.21027803}
 --- !u!60 &60467127243130118
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -1673,16 +1675,16 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: -3.525772, y: 9.911285}
+    - - {x: -3.1678581, y: 8.142762}
       - {x: -2.7684364, y: 2.0137863}
       - {x: 2.834877, y: 1.7972345}
-      - {x: 2.7471313, y: 4.9124556}
-      - {x: 5.3033447, y: 4.910452}
+      - {x: 3.0016136, y: 1.307292}
+      - {x: 5.2185173, y: 1.0083942}
       - {x: 5.1379128, y: 1.6831436}
-      - {x: 8.199875, y: 1.8111353}
-      - {x: 8.182388, y: -1.5064201}
+      - {x: 6.8850517, y: 1.7687216}
+      - {x: 6.782734, y: -1.5064201}
       - {x: -6.2832565, y: -0.88650703}
-      - {x: -6.2203407, y: 9.956454}
+      - {x: -6.178234, y: 8.187931}
 --- !u!60 &60500452953925564
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -1697,12 +1699,12 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: 12.413277, y: 4.199641}
+    - - {x: 12.309288, y: 3.7836776}
       - {x: 14.212257, y: -2.3421369}
       - {x: 9.971977, y: -3.081736}
       - {x: 7.4155807, y: -0.9014921}
       - {x: -4.123291, y: -1.7553859}
-      - {x: -4.335083, y: 4.2386928}
+      - {x: -4.4130783, y: 3.92672}
 --- !u!60 &60626691385669710
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -1718,8 +1720,8 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: -4.341011, y: 1.2357368}
-      - {x: 12.906738, y: 1.4630508}
-      - {x: 12.862404, y: -2.5808544}
+      - {x: 11.96563, y: 1.413517}
+      - {x: 11.87175, y: -2.9771118}
       - {x: -7.3187256, y: -3.0329056}
       - {x: -7.6664467, y: -0.66420746}
       - {x: -9.662617, y: 0.54255104}
@@ -1738,14 +1740,16 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: -6.977379, y: 1.7504972}
-      - {x: -1.8559151, y: 1.6389202}
+    - - {x: -6.850136, y: 1.4536017}
+      - {x: -1.7710876, y: 1.4692653}
       - {x: 0.7261658, y: 4.3841825}
       - {x: 9.044037, y: 4.3250847}
       - {x: 9.229515, y: 1.4887213}
       - {x: 5.8807755, y: 1.4842107}
       - {x: 2.717514, y: -1.3566632}
-      - {x: -5.090641, y: -1.4175122}
+      - {x: -1.5054932, y: -1.4634423}
+      - {x: -3.5093613, y: -2.5264902}
+      - {x: -4.4120255, y: -2.6475089}
       - {x: -6.914303, y: 0.096043944}
 --- !u!60 &60683071296695040
 PolygonCollider2D:
@@ -1784,7 +1788,7 @@ PolygonCollider2D:
       - {x: 15.6938, y: 6.159562}
       - {x: 15.634851, y: 2.1473103}
       - {x: 15.240575, y: 1.6530706}
-      - {x: 15.232731, y: -0.85923326}
+      - {x: 14.711315, y: -1.1720828}
       - {x: -6.7205687, y: -0.8529607}
       - {x: -6.768056, y: 6.141083}
 --- !u!60 &60775438549038060
@@ -1802,9 +1806,9 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 1.1682014, y: 1.9156199}
-      - {x: 1.1720695, y: 0.08800411}
-      - {x: 1.0929489, y: -0.9668827}
-      - {x: -1.9770012, y: -1.0931749}
+      - {x: 1.0364265, y: 0.115133286}
+      - {x: 0.79452133, y: -0.8583646}
+      - {x: -1.1359863, y: -1.0117865}
       - {x: -2.056118, y: 1.9823914}
 --- !u!60 &60803167290105030
 PolygonCollider2D:
@@ -1839,17 +1843,24 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: -16.472267, y: -1.9164014}
+    - - {x: -15.192528, y: -2.3415928}
+      - {x: -20.345493, y: -2.3957615}
+      - {x: -20.36276, y: -0.9833479}
+      - {x: -16.237957, y: -0.91890144}
       - {x: -15.912394, y: 0.06102228}
       - {x: -11.940468, y: -0.04417658}
       - {x: -12.211433, y: 5.729415}
       - {x: -16.74636, y: 5.525171}
-      - {x: -16.598211, y: 11.09938}
-      - {x: 1.5276756, y: 10.913572}
-      - {x: 7.5394936, y: 10.73466}
-      - {x: 7.556885, y: 2.5794537}
-      - {x: 23.00449, y: 1.0290015}
-      - {x: 23.148113, y: -1.1491828}
+      - {x: -16.706459, y: 9.042658}
+      - {x: 1.852417, y: 9.073347}
+      - {x: 1.7632141, y: 0.52098274}
+      - {x: 8.321953, y: 0.5520196}
+      - {x: 22.430687, y: 1.0290015}
+      - {x: 22.344788, y: -1.1491828}
+      - {x: 6.3619995, y: -1.2208371}
+      - {x: 6.6643524, y: -2.145471}
+      - {x: 1.1351242, y: -2.1315513}
+      - {x: 1.644455, y: -1.1438046}
       - {x: -0.9244232, y: -1.1330619}
       - {x: -4.2316666, y: -5.0486794}
       - {x: -13.080151, y: -4.9460993}
@@ -1908,23 +1919,26 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: -2.314989, y: 7.9114194}
+    - - {x: -2.597293, y: 3.4687028}
       - {x: -2.236247, y: 1.8523436}
-      - {x: 3.3697367, y: 1.7789023}
+      - {x: 2.7917376, y: 2.1790547}
+      - {x: 3.4171228, y: 4.4886637}
       - {x: 3.3266191, y: 7.347144}
-      - {x: 6.774884, y: 7.3656015}
-      - {x: 6.7368994, y: 4.431939}
-      - {x: 11.034715, y: 4.3840303}
+      - {x: 6.552577, y: 7.4545245}
+      - {x: 6.5590544, y: 3.8094802}
+      - {x: 10.990254, y: 3.850494}
       - {x: 11.079122, y: 2.3845088}
       - {x: 8.439315, y: 2.239427}
       - {x: 8.512216, y: -0.18584418}
       - {x: 6.5466623, y: -0.10645652}
-      - {x: 6.610841, y: -3.0745625}
-      - {x: 3.4614801, y: -3.0061498}
-      - {x: -6.8105593, y: -2.9209347}
+      - {x: 6.477456, y: -1.785183}
+      - {x: 2.9565058, y: -1.7530499}
+      - {x: 2.9724054, y: -3.0950723}
+      - {x: -7.227691, y: -3.2859259}
+      - {x: -7.154192, y: 0.22754574}
       - {x: -6.903274, y: 3.2206414}
-      - {x: -6.388401, y: 3.9858284}
-      - {x: -6.410787, y: 7.9351797}
+      - {x: -5.1525154, y: 3.4412007}
+      - {x: -3.3524952, y: 3.46236}
 --- !u!61 &61314510383339596
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -1953,7 +1967,8 @@ MonoBehaviour:
   name: gear1
   type: 1
   itemAt: {fileID: 114643426731667950}
-  itemAssign: []
+  itemAssign:
+  - {fileID: 114344570309123552}
 --- !u!114 &114008556712467444
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -1968,10 +1983,14 @@ MonoBehaviour:
   name: door1
   type: 2
   enemyAt: []
+  enemyEdgeStart: []
+  enemyEdgeEnd: []
   blocked: 1
+  open: 0
   doorRune:
   - {fileID: 114095493267500540}
   rollableLocked: 0
+  rollableOpen: 0
 --- !u!114 &114009844825178694
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2006,10 +2025,14 @@ MonoBehaviour:
   name: door2
   type: 2
   enemyAt: []
+  enemyEdgeStart: []
+  enemyEdgeEnd: []
   blocked: 1
+  open: 0
   doorRune:
   - {fileID: 114459936891898022}
   rollableLocked: 0
+  rollableOpen: 0
 --- !u!114 &114095493267500540
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2024,7 +2047,8 @@ MonoBehaviour:
   name: rune1
   type: 2
   itemAt: {fileID: 114857345128419536}
-  itemAssign: []
+  itemAssign:
+  - {fileID: 114501717156571940}
 --- !u!114 &114233618674234338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2039,9 +2063,13 @@ MonoBehaviour:
   name: jump3
   type: 3
   enemyAt: []
+  enemyEdgeStart: []
+  enemyEdgeEnd: []
   blocked: 1
+  open: 0
   doorRune: []
   rollableLocked: 0
+  rollableOpen: 0
 --- !u!114 &114241592430235798
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2242,9 +2270,21 @@ MonoBehaviour:
   enemyAt:
   - {fileID: 114241592430235798}
   - {fileID: 114979282056907616}
+  enemyEdgeStart:
+  - {fileID: 114241592430235798}
+  - {fileID: 114241592430235798}
+  - {fileID: 114979282056907616}
+  - {fileID: 114979282056907616}
+  enemyEdgeEnd:
+  - {fileID: 114522505774348660}
+  - {fileID: 114505108964151748}
+  - {fileID: 114779551528022520}
+  - {fileID: 114603401989433934}
   blocked: 1
+  open: 0
   doorRune: []
   rollableLocked: 0
+  rollableOpen: 0
 --- !u!114 &114344570309123552
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2256,7 +2296,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e73da8b69cc2c04288b105f3c861e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: pj3
+  name: Inventor
   type: 3
   luring: 0
   playerAt: {fileID: 114799918722071410}
@@ -2275,9 +2315,13 @@ MonoBehaviour:
   name: jump1
   type: 3
   enemyAt: []
+  enemyEdgeStart: []
+  enemyEdgeEnd: []
   blocked: 1
+  open: 0
   doorRune: []
   rollableLocked: 0
+  rollableOpen: 0
 --- !u!114 &114379722738042936
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2353,7 +2397,8 @@ MonoBehaviour:
   name: rune2
   type: 2
   itemAt: {fileID: 114505108964151748}
-  itemAssign: []
+  itemAssign:
+  - {fileID: 114344570309123552}
 --- !u!114 &114484311782544056
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2368,9 +2413,13 @@ MonoBehaviour:
   name: rollable1
   type: 1
   enemyAt: []
+  enemyEdgeStart: []
+  enemyEdgeEnd: []
   blocked: 1
+  open: 0
   doorRune: []
   rollableLocked: 1
+  rollableOpen: 0
 --- !u!114 &114501717156571940
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2382,7 +2431,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e73da8b69cc2c04288b105f3c861e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: pj1
+  name: Mago
   type: 1
   luring: 0
   playerAt: {fileID: 114799918722071410}
@@ -2446,9 +2495,13 @@ MonoBehaviour:
   name: obstacle2
   type: 0
   enemyAt: []
+  enemyEdgeStart: []
+  enemyEdgeEnd: []
   blocked: 1
+  open: 0
   doorRune: []
   rollableLocked: 0
+  rollableOpen: 0
 --- !u!114 &114603401989433934
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2534,9 +2587,13 @@ MonoBehaviour:
   name: obstacle3
   type: 0
   enemyAt: []
+  enemyEdgeStart: []
+  enemyEdgeEnd: []
   blocked: 1
+  open: 0
   doorRune: []
   rollableLocked: 0
+  rollableOpen: 0
 --- !u!114 &114710845168756034
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2551,9 +2608,13 @@ MonoBehaviour:
   name: obstacle1
   type: 0
   enemyAt: []
+  enemyEdgeStart: []
+  enemyEdgeEnd: []
   blocked: 1
+  open: 0
   doorRune: []
   rollableLocked: 0
+  rollableOpen: 0
 --- !u!114 &114722708986692618
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2568,9 +2629,13 @@ MonoBehaviour:
   name: obstacle4
   type: 0
   enemyAt: []
+  enemyEdgeStart: []
+  enemyEdgeEnd: []
   blocked: 1
+  open: 0
   doorRune: []
   rollableLocked: 0
+  rollableOpen: 0
 --- !u!114 &114744557833014352
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2674,9 +2739,13 @@ MonoBehaviour:
   name: jump2
   type: 3
   enemyAt: []
+  enemyEdgeStart: []
+  enemyEdgeEnd: []
   blocked: 1
+  open: 0
   doorRune: []
   rollableLocked: 0
+  rollableOpen: 0
 --- !u!114 &114834996829911208
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2732,6 +2801,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42b5583f443938147a51bf5a4f7d236a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  control: 0
   level: 2
   playerList:
   - {fileID: 114501717156571940}
@@ -2781,6 +2851,11 @@ MonoBehaviour:
   - {fileID: 114992506836923416}
   - {fileID: 114834996829911208}
   - {fileID: 114435763402312390}
+  goalDef:
+  - (player-at pj1 poi18)
+  - (player-at pj2 poi18)
+  - (player-at pj3 poi18)
+  coeficienteMaximo: 40
 --- !u!114 &114895010132307596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2792,7 +2867,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2e73da8b69cc2c04288b105f3c861e13, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: pj2
+  name: Guerrero
   type: 2
   luring: 0
   playerAt: {fileID: 114799918722071410}

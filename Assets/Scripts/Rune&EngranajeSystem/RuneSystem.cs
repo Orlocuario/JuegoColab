@@ -17,10 +17,12 @@ public class RuneSystem : MonoBehaviour
     private string[] runesThatTheDoorHasArray = new string[3];
     private bool lockValue;
     private bool doorHasBeenChecked;
+	private bool messageSent;
 
     private void Start()
     {
         lockValue = false;
+		messageSent = false;
         doorHasBeenChecked = false;
         myPosition = gameObject.transform.position;
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
@@ -126,6 +128,10 @@ public class RuneSystem : MonoBehaviour
 
     public void ActionToDo(string doorName)
     {
-        Client.instance.SendMessageToServer("ActivateRuneDoor/" + this.gameObject.name);
+		if (!messageSent) {
+			messageSent = true;
+			Client.instance.SendMessageToServer("ActivateRuneDoor/" + this.gameObject.name);
+		}
+
     }
 }
