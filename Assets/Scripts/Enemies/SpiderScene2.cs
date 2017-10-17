@@ -117,7 +117,7 @@ public class SpiderScene2 : MonoBehaviour {
         {
             GameObject player = other.collider.gameObject;
             Rigidbody2D rgbd = player.GetComponent<Rigidbody2D>();
-            if (player.GetComponent<PlayerController>().direction == -1f)
+            if (player.GetComponent<PlayerController>().directionX == -1f)
             {
                 rgbd.AddForce(new Vector2(3500f, 150f));
             }

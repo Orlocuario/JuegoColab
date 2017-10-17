@@ -40,14 +40,14 @@ public class PlayerController : MonoBehaviour
     public bool remoteLeft;
     public bool remoteUp;
 
-	private static int directionY = 1; //1 = de pie, -1 = de cabeza
+	private int directionY = 1; //1 = de pie, -1 = de cabeza
+    public int directionX;  //1 = derecha, -1 = izquierda
     public bool controlOverEnemies;
     public int sortingOrder = 0;
     public int saltarDoble;
     public int characterId;
 	bool alreves = false;
     bool conectado = true;
-    public int direction;  //1 = derecha, -1 = izquierda
 	private bool canMove;
 
     protected virtual void Start()
@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
         respawnPosition = transform.position;
         theLevelManager = FindObjectOfType<LevelManager>();
         localPlayer = false;
-        direction = 1;
+        directionX = 1;
         controlOverEnemies = false;
         saltarDoble = 0;
         IgnoreCollisionStar2puntoCero();
@@ -92,6 +92,7 @@ public class PlayerController : MonoBehaviour
         localPlayer = true;
         this.characterId = charId;
 		sprite = GetComponent<SpriteRenderer>();
+
         if (this.characterId == 0)
         {
             Chat.instance.EnterFunction("Mage: Ha Aparecido!");
@@ -109,6 +110,7 @@ public class PlayerController : MonoBehaviour
 		{
 			sprite.sortingOrder = sortingOrder + 1;
 		}
+
     }
 
     protected bool IsGoingRight()
@@ -171,6 +173,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
 
+
             // si no se esta apretando el joystick
             else if (remoteLeft && axisHorizontal == 0)
             {
@@ -186,43 +189,6 @@ public class PlayerController : MonoBehaviour
     public bool IsGoingUp()
     {
         return false;
-
-   //     if (localPlayer)
-   //     {
-   //         bool right;
-   //         float axisHorizontal = CnInputManager.GetAxisRaw("Horizontal");
-   //         float axisVertical = CnInputManager.GetAxisRaw("Vertical");
-
-   //         if (axisHorizontal > 0f)
-   //         {
-   //             right = true;
-   //         }
-   //         else
-   //         {
-   //             right = false;
-   //         }
-   //         // si el wn esta apuntando hacia izq/der con menor inclinacion que hacia arriba, return true
-			//if ((!remoteUp && axisVertical > 0f) && ((right && axisHorizontal <= axisVertical) || ( !right && -axisHorizontal <= axisVertical)))
-   //         {
-   //             remoteUp = true;
-   //             SendObjectDataToServer();
-   //         }
-   //         // si el wn esta apuntando hacia izq/der con mayor inclinacion que hacia arriba, o bien, esta apuntando hacia abajo, return false
-   //         else if ((remoteUp && axisVertical > 0f) && ((right && axisHorizontal > axisVertical) || (!right && -axisHorizontal > axisVertical)) || axisVertical <= 0f)
-   //         {
-   //             remoteUp = false;
-   //             SendObjectDataToServer();
-   //         }
-   //         // si no se esta apretando el joystick
-   //         else if (remoteUp && axisVertical <= 0.5)
-   //         {
-   //             remoteUp = false;
-   //             SendObjectDataToServer();
-   //         }
-   //         return remoteUp;
-   //     }
-   //     return remoteUp;
-
     }
 
     protected bool IsItGrounded()
@@ -282,14 +248,14 @@ public class PlayerController : MonoBehaviour
         if (!localPlayer)
         {
 
-                transform.localScale = new Vector3(direction * 1f, directionY, 1f);
-        
+            transform.localScale = new Vector3(directionX * 1f, directionY, 1f);
             SetAnimVariables();
         }
 
     }
 
-	public virtual void StopMoving(){
+	public virtual void StopMoving()
+    {
 		canMove = false;
 		myAnim.SetFloat("Speed", 0);
 		myAnim.SetBool("IsGrounded", true);
@@ -317,7 +283,13 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-		Transform parentTransform = transform.parent;
+
+        if (!canMove)
+        {
+            return;
+        }
+
+        Transform parentTransform = transform.parent;
 
 		if (parentTransform != null) {
 			parent = parentTransform.gameObject;		
@@ -328,20 +300,17 @@ public class PlayerController : MonoBehaviour
             rb2d.velocity = new Vector2(rb2d.velocity.x, maxSpeed);
         }
 
-		if (!canMove) {
-			return;
-		}
         if (IsGoingRight())
         {
             rb2d.velocity = new Vector3(moveSpeed, rb2d.velocity.y, 0f);
 			transform.localScale = new Vector3(1f, directionY, 1f);
-            direction = 1;
+            directionX = 1;
         }
         else if (IsGoingLeft())
         {
             rb2d.velocity = new Vector3(-moveSpeed, rb2d.velocity.y, 0f);
 			transform.localScale = new Vector3(-1f, directionY, 1f);
-            direction = -1;
+            directionX = -1;
         }
         else // it's not moving
         {
@@ -444,7 +413,7 @@ public class PlayerController : MonoBehaviour
         this.remoteRight = remoteRight;
         this.remoteLeft = remoteLeft;
         this.isGrounded = isGrounded;
-        this.direction = direction;
+        this.directionX = direction;
         this.speed = speed;
 
         SynchronizeNonLocalPlayer();
@@ -460,7 +429,7 @@ public class PlayerController : MonoBehaviour
         float positionX = transform.position.x;
         float positionY = transform.position.y;
         float speed = Mathf.Abs(rb2d.velocity.x);
-        string message = "ChangePosition/" + characterId + "/" + positionX + "/" + positionY + "/" + isGrounded + "/" + speed + "/" + direction + "/" + remoteJumping + "/" + remoteLeft + "/" + remoteRight;
+        string message = "ChangePosition/" + characterId + "/" + positionX + "/" + positionY + "/" + isGrounded + "/" + speed + "/" + directionX + "/" + remoteJumping + "/" + remoteLeft + "/" + remoteRight;
         Client.instance.SendMessageToServer(message);
     }
 

@@ -39,7 +39,7 @@ public class MageController : PlayerController {
             {
                 remoteAttacking = true;
                 SendAttackDataToServer();
-                CastFireball(this.direction, 4);
+                CastFireball(this.directionX, 4);
             }
             else if(!buttonState && remoteAttacking)
             {
@@ -58,13 +58,16 @@ public class MageController : PlayerController {
             {
                 contadorHpAndMp++;
             }
+
             else if (float.Parse(hpAndMp.mpCurrentPercentage) > 0f)
             {
                 Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + changeMpRate);
                 contadorHpAndMp = 0;
             }
+
+			bool powerButtonPressed = CnInputManager.GetButtonDown ("Power Button");
             bool primeraVez = false;
-			bool buttonState = CnInputManager.GetButtonDown ("Power Button");   
+
             if (float.Parse(hpAndMp.mpCurrentPercentage) == 0f)
             {
                 changeMpRate = "0";
@@ -74,11 +77,13 @@ public class MageController : PlayerController {
                 SendPowerDataToServer();
                 SetAnimacion(remotePower);
             }
-            else if (buttonState && !primeraVez) 
+
+            else if (powerButtonPressed && !primeraVez) 
 			{
                 primeraVez = true;
                 remotePower = contadorPar % 2 == 0;
                 powerOn = remotePower;
+
                 if (remotePower)
                 {
                     changeMpRate = "-5";
@@ -87,11 +92,12 @@ public class MageController : PlayerController {
                 {
                     changeMpRate = "0";
                 }
+
                 contadorPar++;
                 SendPowerDataToServer();
                 SetAnimacion(remotePower);
             }
-			else if (!buttonState && primeraVez)
+			else if (!powerButtonPressed && primeraVez)
 			{
 				primeraVez = false;
 			}

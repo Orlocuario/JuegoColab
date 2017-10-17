@@ -37,7 +37,7 @@ public class EngineerController : PlayerController {
             {
                 remoteAttacking = true;
                 SendAttackDataToServer();
-                CastProyectile(this.direction, this.IsGoingUp());
+                CastProyectile(this.directionX, this.IsGoingUp());
             }
             else if (!buttonState && remoteAttacking)
             {
