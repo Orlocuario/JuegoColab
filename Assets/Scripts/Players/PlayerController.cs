@@ -57,6 +57,7 @@ public class PlayerController : MonoBehaviour
     public int characterId;
     bool conectado = true;
     public bool isPowerOn;
+    public bool mpDepleted;
     private bool canMove;
 
     DisplayHUD hpAndMp;
@@ -72,6 +73,7 @@ public class PlayerController : MonoBehaviour
         canMove = true;
 
         hpAndMpUpdateFrame = 0;
+        mpDepleted = false;
 
         hpAndMp = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
         theLevelManager = FindObjectOfType<LevelManager>();
@@ -405,26 +407,36 @@ public class PlayerController : MonoBehaviour
     {
         if (localPlayer)
         {
-            float mpCurrentPercentage = hpAndMp.mpCurrentPercentage;
 
             bool powerButtonPressed = CnInputManager.GetButtonDown("Power Button");
+            float mpCurrentPercentage = hpAndMp.mpCurrentPercentage;
 
             // Se acabó el maná
             if (mpCurrentPercentage <= 0f)
             {
+                // Si no he avisado que se acabó el maná, aviso
+                if (!mpDepleted)
+                {
+                    hpAndMpUpdateFrame = 0;
+                    remotePower = false;
+                    isPowerOn = false;
+                    mpDepleted = true;
 
-                hpAndMpUpdateFrame = 0;
-                remotePower = false;
-                isPowerOn = false;
-
-                SendPowerDataToServer();
-                SetAnimacion(remotePower);
+                    SendPowerDataToServer();
+                    SetAnimacion(remotePower);
+                }
             }
 
             // Hay maná
             else
             {
+                // Reseteo la variable para avisar que el maná se acabó
+                if (mpDepleted)
+                {
+                    mpDepleted = false;
+                }
 
+                // Toogle power button
                 if (powerButtonPressed)
                 {
                     isPowerOn = !isPowerOn;
