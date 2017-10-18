@@ -101,7 +101,7 @@ public class Client : MonoBehaviour {
                 {
                     if (GetLocalPlayer())
                     {
-                        GetLocalPlayer().conectar(true);
+                        GetLocalPlayer().Conectar(true);
                         LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
                         lm.MostrarReconectando(false);
                     }
@@ -128,7 +128,7 @@ public class Client : MonoBehaviour {
                     currentScene = SceneManager.GetActiveScene();
                     if (!(currentScene.name == "ClientScene"))
                     {
-                        GetLocalPlayer().conectar(false);
+                        GetLocalPlayer().Conectar(false);
                     }
                     Reconnect();
                 }

@@ -4,28 +4,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class ChatZone : MonoBehaviour {
+public class ChatZone : MonoBehaviour
+{
 
-    public GameObject chatButtonOn;
+    private DisplayHUD displayHudScript;
     public GameObject chatButtonOff;
-    Vector2 myPosition;
-    private bool lockValue;
-    public string HUDRate;
-    int rate;
-    int countTillRate;
-    DisplayHUD displayHudScript;
+    public GameObject chatButtonOn;
+    private Vector2 myPosition;
 
+    private static string regenerationUnits = "1";
+    private static int regenerationFrameRate = 50;
+    private static float activationDistance = 2f;
+
+    private int regenerationFrame;
+    private bool activated;
 
     private void Start()
     {
-        lockValue = false;
-        HUDRate = "25";
-        rate = 300;
-        countTillRate = 0;
+        activated = false;
+        regenerationFrame = 0;
+
         chatButtonOn.SetActive(false);
         chatButtonOff.SetActive(false);
-        displayHudScript = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
+
         myPosition = gameObject.transform.position;
+
         displayHudScript = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
     }
 
@@ -33,33 +36,42 @@ public class ChatZone : MonoBehaviour {
     {
         PlayerController player = Client.instance.GetLocalPlayer();
         Vector2 playerPosition = player.gameObject.transform.position;
-        float distance = (playerPosition - myPosition).magnitude;
+        float playerDistance = (playerPosition - myPosition).magnitude;
 
-        if (distance <= 2f)
+        if (playerDistance <= activationDistance)
         {
-            lockValue = true;
-            chatButtonOn.SetActive(true);
-            chatButtonOff.SetActive(true);
-            countTillRate ++;
-            if (countTillRate == rate)
+            if (activated)
             {
-                countTillRate = 0;
-				if(!(float.Parse(displayHudScript.hpCurrentPercentage) == 1f || float.Parse(displayHudScript.mpCurrentPercentage) == 1f))
+                if (displayHudScript.hpCurrentPercentage < 1f || displayHudScript.mpCurrentPercentage < 1f)
                 {
-                    Client.instance.SendMessageToServer("ChangeHpAndManaHUDToRoom/" + HUDRate);
-                }
+                    regenerationFrame++;
+
+                    if (regenerationFrame == regenerationFrameRate)
+                    {
+                        regenerationFrame = 0;
+                        Client.instance.SendMessageToServer("ChangeHpAndMpHUDToRoom/" + regenerationUnits);
+                    }
+                } 
             }
-            //Client.instance.SendMessageToServer("ActivateNPCLog/Pickle Rick! :D");
-        }
-        else
-        {
-            countTillRate = 0;
-            if(lockValue)
+            else
             {
-                chatButtonOn.SetActive(false);
-                chatButtonOff.SetActive(false);
-                lockValue = false;
+                activated = true;
+                ToogleChatButtons(true);
             }
+
         }
+        else if (activated)
+        {
+            regenerationFrame = 0;
+            ToogleChatButtons(false);
+            activated = false;
+        }
+
+    }
+
+    private void ToogleChatButtons(bool activate)
+    {
+        chatButtonOn.SetActive(activate);
+        chatButtonOff.SetActive(activate);
     }
 }

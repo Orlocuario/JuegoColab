@@ -6,10 +6,7 @@ using UnityEngine;
 
 public class MageController : PlayerController {
 
-    string changeMpRate;
 	int contadorPar;
-    int contadorHpAndMp;
-    int rate;
 	GameObject particulas1;
 	GameObject particulas2;
     DisplayHUD hpAndMp;
@@ -19,10 +16,7 @@ public class MageController : PlayerController {
 	{
 		base.Start();
         powerOn = false;
-        changeMpRate = "0";
-        rate = 150;
         contadorPar = 0;
-        contadorHpAndMp = 0;
         particulas1 = GameObject.Find ("ParticulasMage");
 		particulas1.SetActive(false);
 		particulas2 = GameObject.Find ("ParticulasMage2");
@@ -39,7 +33,7 @@ public class MageController : PlayerController {
             {
                 remoteAttacking = true;
                 SendAttackDataToServer();
-                CastFireball(this.direction, 4);
+                CastFireball(this.directionX, 4);
             }
             else if(!buttonState && remoteAttacking)
             {
@@ -49,55 +43,6 @@ public class MageController : PlayerController {
         }
         return remoteAttacking;
     }
-
-	protected override bool IsPower()
-	{
-		if (localPlayer) 
-		{
-            if (contadorHpAndMp < rate)
-            {
-                contadorHpAndMp++;
-            }
-            else if (float.Parse(hpAndMp.mpCurrentPercentage) > 0f)
-            {
-                Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + changeMpRate);
-                contadorHpAndMp = 0;
-            }
-            bool primeraVez = false;
-			bool buttonState = CnInputManager.GetButtonDown ("Power Button");   
-            if (float.Parse(hpAndMp.mpCurrentPercentage) == 0f)
-            {
-                changeMpRate = "0";
-                remotePower = false;
-                powerOn = remotePower;
-                contadorPar = 0;
-                SendPowerDataToServer();
-                SetAnimacion(remotePower);
-            }
-            else if (buttonState && !primeraVez) 
-			{
-                primeraVez = true;
-                remotePower = contadorPar % 2 == 0;
-                powerOn = remotePower;
-                if (remotePower)
-                {
-                    changeMpRate = "-5";
-                }
-                else
-                {
-                    changeMpRate = "0";
-                }
-                contadorPar++;
-                SendPowerDataToServer();
-                SetAnimacion(remotePower);
-            }
-			else if (!buttonState && primeraVez)
-			{
-				primeraVez = false;
-			}
-		}
-		return remotePower;
-	}
 
     public bool InShield(GameObject player)
     {
@@ -110,9 +55,9 @@ public class MageController : PlayerController {
         
     }
 
-	private void SetAnimacion(bool activo)
-	{
-		particulas1.SetActive (activo);
+    protected override void SetAnimacion(bool activo)
+    {
+        particulas1.SetActive (activo);
 		particulas2.SetActive (activo);
 	}
 

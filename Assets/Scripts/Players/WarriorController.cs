@@ -7,27 +7,23 @@ using UnityEngine.SceneManagement;
 
 public class WarriorController : PlayerController {
 
-    string changeMpRate;
     public int numHits = 0;
     private int prevNumHits = 0;
     bool par;
 	int contadorPar;
-    int contadorHpAndMp;
-    int rate;
 	float damage;
     double force = 0;
     GameObject particulas;
     DisplayHUD hpAndMp;
     private int hits = 0;
+    bool powerOn;
+
 
     protected override void Start()
 	{
 		base.Start();
 		damage = 3;
-        changeMpRate = "0";
-        rate = 150;
         contadorPar = 0;
-        contadorHpAndMp = 0;
         particulas = GameObject.Find ("ParticulasWarrior");
 		particulas.SetActive(false);
         hpAndMp = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
@@ -45,7 +41,6 @@ public class WarriorController : PlayerController {
                 remoteAttacking = true;
                 numHits++;
                 SendAttackDataToServer();
-                //CastOnePunchMan(Client.instance.GetAllEnemies(), this.GetComponent<RectTransform>().position);
 				if (SceneManager.GetActiveScene ().name == "Escena2") 
 				{
 					RemoveRockMass ();
@@ -59,55 +54,6 @@ public class WarriorController : PlayerController {
         }
         return remoteAttacking;
     }
-
-	protected override bool IsPower()
-	{
-		if (localPlayer) 
-		{
-            if (contadorHpAndMp < rate)
-            {
-                contadorHpAndMp++;
-            }
-            else if (float.Parse(hpAndMp.mpCurrentPercentage) > 0f)
-            {
-                Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + changeMpRate);
-                contadorHpAndMp = 0;
-            }
-            bool primeraVez = false;
-            bool buttonState = CnInputManager.GetButtonDown("Power Button");
-            if (float.Parse(hpAndMp.mpCurrentPercentage) == 0f)
-            {
-                changeMpRate = "0";
-                remotePower = false;
-                contadorPar = 0;
-                SendPowerDataToServer();
-                SetAnimacion(remotePower);
-            }
-            else if (buttonState && !primeraVez) 
-			{
-				primeraVez = true;
-				remotePower = contadorPar % 2 == 0;
-                if (remotePower)
-                {
-                    changeMpRate = "-5";
-					damage = 8;
-                }
-                else
-                {
-                    changeMpRate = "0";
-					damage = 3;
-                }
-                contadorPar++;
-                SetAnimacion(remotePower);
-                SendPowerDataToServer();
-			}
-			else if (!buttonState && primeraVez)
-			{
-				primeraVez = false;
-			}
-		}
-		return remotePower;
-	}
 
     protected override void SetAnimVariables()
     {
@@ -145,9 +91,9 @@ public class WarriorController : PlayerController {
         }
     }
 
-	private void SetAnimacion(bool activo)
-	{
-		particulas.SetActive (activo);
+    protected override void SetAnimacion(bool activo)
+    {
+        particulas.SetActive(activo);
 	}
     
 	public override void RemoteSetter(bool power)
