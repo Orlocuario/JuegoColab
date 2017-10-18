@@ -14,8 +14,9 @@ public class HpAndManaHUD {
     public float percentageHP;
     public float percentageMP;
     public float percentageExp;
-    Room room;
     private bool previuslyMax = false;
+
+    Room room;
 
     public HpAndManaHUD(Room room)
     {                         
@@ -84,7 +85,7 @@ public class HpAndManaHUD {
             currentMP = maxMP;
             return;
         }
-        else if (currentMP < 0)
+        else if (currentMP <= 0)
         {
             currentMP = 0;
             return;

@@ -19,6 +19,8 @@ public class WarriorController : PlayerController {
     GameObject particulas;
     DisplayHUD hpAndMp;
     private int hits = 0;
+    bool powerOn;
+
 
     protected override void Start()
 	{
@@ -63,29 +65,39 @@ public class WarriorController : PlayerController {
 	{
 		if (localPlayer) 
 		{
+            float mpCurrentPercentage = hpAndMp.mpCurrentPercentage;
+
+            bool powerButtonPressed = CnInputManager.GetButtonDown("Power Button");
+            bool primeraVez = false;
+
             if (contadorHpAndMp < rate)
             {
                 contadorHpAndMp++;
             }
-            else if (float.Parse(hpAndMp.mpCurrentPercentage) > 0f)
+
+            else if (mpCurrentPercentage > 0f)
             {
                 Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + changeMpRate);
                 contadorHpAndMp = 0;
             }
-            bool primeraVez = false;
-            bool buttonState = CnInputManager.GetButtonDown("Power Button");
-            if (float.Parse(hpAndMp.mpCurrentPercentage) == 0f)
+
+            if (mpCurrentPercentage == 0f)
             {
                 changeMpRate = "0";
                 remotePower = false;
+                powerOn = false;
                 contadorPar = 0;
+
                 SendPowerDataToServer();
                 SetAnimacion(remotePower);
             }
-            else if (buttonState && !primeraVez) 
+
+            else if (powerButtonPressed && !primeraVez) 
 			{
 				primeraVez = true;
 				remotePower = contadorPar % 2 == 0;
+                powerOn = remotePower;
+
                 if (remotePower)
                 {
                     changeMpRate = "-5";
@@ -96,11 +108,12 @@ public class WarriorController : PlayerController {
                     changeMpRate = "0";
 					damage = 3;
                 }
+
                 contadorPar++;
                 SetAnimacion(remotePower);
                 SendPowerDataToServer();
 			}
-			else if (!buttonState && primeraVez)
+			else if (!powerButtonPressed && primeraVez)
 			{
 				primeraVez = false;
 			}

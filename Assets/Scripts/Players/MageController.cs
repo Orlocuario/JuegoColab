@@ -54,26 +54,29 @@ public class MageController : PlayerController {
 	{
 		if (localPlayer) 
 		{
+            float mpCurrentPercentage = hpAndMp.mpCurrentPercentage;
+
+            bool powerButtonPressed = CnInputManager.GetButtonDown ("Power Button");
+            bool primeraVez = false;
+
             if (contadorHpAndMp < rate)
             {
                 contadorHpAndMp++;
             }
 
-            else if (float.Parse(hpAndMp.mpCurrentPercentage) > 0f)
+            else if (mpCurrentPercentage > 0f)
             {
                 Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + changeMpRate);
                 contadorHpAndMp = 0;
             }
 
-			bool powerButtonPressed = CnInputManager.GetButtonDown ("Power Button");
-            bool primeraVez = false;
-
-            if (float.Parse(hpAndMp.mpCurrentPercentage) == 0f)
+            if (mpCurrentPercentage == 0f)
             {
                 changeMpRate = "0";
                 remotePower = false;
-                powerOn = remotePower;
+                powerOn = false;
                 contadorPar = 0;
+
                 SendPowerDataToServer();
                 SetAnimacion(remotePower);
             }

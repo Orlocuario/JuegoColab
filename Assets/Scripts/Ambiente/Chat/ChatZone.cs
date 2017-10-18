@@ -44,7 +44,7 @@ public class ChatZone : MonoBehaviour {
             if (countTillRate == rate)
             {
                 countTillRate = 0;
-				if(!(float.Parse(displayHudScript.hpCurrentPercentage) == 1f || float.Parse(displayHudScript.mpCurrentPercentage) == 1f))
+				if(!(displayHudScript.hpCurrentPercentage == 1f ||displayHudScript.mpCurrentPercentage == 1f))
                 {
                     Client.instance.SendMessageToServer("ChangeHpAndManaHUDToRoom/" + HUDRate);
                 }
