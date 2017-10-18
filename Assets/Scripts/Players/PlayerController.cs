@@ -9,7 +9,7 @@ public class PlayerController : MonoBehaviour
     public PlannerPlayer playerObj;
     protected Transform transform;
     protected Rigidbody2D rb2d;
-	public GameObject parent;
+    public GameObject parent;
 
     public Transform groundCheck;
     public Animator myAnim;
@@ -18,7 +18,7 @@ public class PlayerController : MonoBehaviour
 
     private LevelManager theLevelManager;
     private SpriteRenderer sprite;
-        
+
     public static float maxAcceleration = 1; //100% del speed
     private static float maxYSpeed = 8f;
     public static float maxXSpeed = 6f;
@@ -39,35 +39,47 @@ public class PlayerController : MonoBehaviour
     //Used to synchronize data from the server
     public bool remoteAttacking;
     public bool remoteJumping;
-    public bool remoteRight; 
+    public bool remoteRight;
     public bool remotePower;
     public bool remoteLeft;
     public bool remoteUp;
 
+
+    public int hpAndMpUpdateRate = 30; // Cada cuantos frames se actualiza el HP y MP display
+    public int hpAndMpUpdateFrame;
+    public string mpSpendRate = "-1";
     public bool gravity = true; // true = normal, false = invertida
-	private int directionY = 1; //1 = de pie, -1 = de cabeza
-    public int directionX = 1;  //1 = derecha, -1 = izquierda
+    private int directionY = 1; // 1 = de pie, -1 = de cabeza
+    public int directionX = 1;  // 1 = derecha, -1 = izquierda
     public bool controlOverEnemies;
     public int sortingOrder = 0;
     public int saltarDoble;
     public int characterId;
     bool conectado = true;
-	private bool canMove;
+    public bool isPowerOn;
+    private bool canMove;
+
+    DisplayHUD hpAndMp;
+
 
     protected virtual void Start()
     {
         remoteAttacking = false;
         remoteJumping = false;
-		remotePower = false;
+        remotePower = false;
         remoteRight = false;
         remoteLeft = false;
-		canMove = true;
+        canMove = true;
 
+        hpAndMpUpdateFrame = 0;
+
+        hpAndMp = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
         theLevelManager = FindObjectOfType<LevelManager>();
         transform = GetComponent<Transform>();
         rb2d = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
 
+        isPowerOn = false;
         respawnPosition = transform.position;
 
         controlOverEnemies = false;
@@ -99,7 +111,7 @@ public class PlayerController : MonoBehaviour
     {
         localPlayer = true;
         this.characterId = charId;
-		sprite = GetComponent<SpriteRenderer>();
+        sprite = GetComponent<SpriteRenderer>();
 
         if (this.characterId == 0)
         {
@@ -115,9 +127,9 @@ public class PlayerController : MonoBehaviour
         }
 
         if (sprite)
-		{
-			sprite.sortingOrder = sortingOrder + 1;
-		}
+        {
+            sprite.sortingOrder = sortingOrder + 1;
+        }
 
     }
 
@@ -129,20 +141,20 @@ public class PlayerController : MonoBehaviour
             float axisVertical = CnInputManager.GetAxisRaw("Vertical");
 
             bool up = axisVertical > 0f;
-     
+
             // si el wn esta apuntando hacia arriba/abajo con menor inclinacion que hacia la derecha, start moving
             if ((!remoteRight && axisHorizontal > 0f))
             {
                 if ((up && axisHorizontal >= axisVertical) || (!up && axisHorizontal >= -axisVertical))
-                { 
+                {
                     remoteRight = true;
                     remoteLeft = false;
                     SendObjectDataToServer();
                 }
             }
-            
+
             // si el wn esta apuntando hacia arriba/abajo con mayor inclinacion que hacia la derecha, stop moving
-			else if (Mathf.Abs(axisVertical) > Mathf.Abs(axisHorizontal) && (remoteRight || remoteLeft))
+            else if (Mathf.Abs(axisVertical) > Mathf.Abs(axisHorizontal) && (remoteRight || remoteLeft))
             {
                 remoteRight = false;
                 remoteLeft = false;
@@ -209,15 +221,15 @@ public class PlayerController : MonoBehaviour
         if (localPlayer)
         {
             bool pressedJump = CnInputManager.GetButtonDown("Jump Button");
-            bool isJumping = pressedJump && isGrounded; 
+            bool isJumping = pressedJump && isGrounded;
 
-            if(isJumping && !remoteJumping)
+            if (isJumping && !remoteJumping)
             {
                 remoteJumping = true;
                 SendObjectDataToServer();
             }
 
-            else if(!isJumping && remoteJumping)
+            else if (!isJumping && remoteJumping)
             {
                 remoteJumping = false;
                 SendObjectDataToServer();
@@ -262,26 +274,29 @@ public class PlayerController : MonoBehaviour
 
     }
 
-	public virtual void StopMoving()
+    public virtual void StopMoving()
     {
-		canMove = false;
-		myAnim.SetFloat("Speed", 0);
-		myAnim.SetBool("IsGrounded", true);
-		myAnim.SetBool("IsAttacking", false);
-	}
+        canMove = false;
+        myAnim.SetFloat("Speed", 0);
+        myAnim.SetBool("IsGrounded", true);
+        myAnim.SetBool("IsAttacking", false);
+    }
 
-	public virtual void ResumeMoving(){
-		canMove = true;
-	}
+    public virtual void ResumeMoving()
+    {
+        canMove = true;
+    }
 
-	public void SetGravity(bool normal){
+    public void SetGravity(bool normal)
+    {
 
         rb2d.gravityScale = 2.5f;
 
-        if (!normal) {
-			directionY = -1;
-			rb2d.gravityScale = -2.5f;
-		}
+        if (!normal)
+        {
+            directionY = -1;
+            rb2d.gravityScale = -2.5f;
+        }
 
     }
 
@@ -303,10 +318,11 @@ public class PlayerController : MonoBehaviour
 
         float speedY = rb2d.velocity.y;
         float speedX;
-        
-        if (parentTransform != null) {
-			parent = parentTransform.gameObject;		
-		}
+
+        if (parentTransform != null)
+        {
+            parent = parentTransform.gameObject;
+        }
 
         if (IsGoingRight())
         {
@@ -334,7 +350,7 @@ public class PlayerController : MonoBehaviour
             }
 
             actualSpeed = maxXSpeed * acceleration;
-            speedX = actualSpeed; 
+            speedX = actualSpeed;
         }
 
         else if (IsGoingLeft())
@@ -375,20 +391,72 @@ public class PlayerController : MonoBehaviour
 
         if (IsJumping(isGrounded))
         {
-            speedY = maxYSpeed  * directionY;
+            speedY = maxYSpeed * directionY;
         }
 
         rb2d.velocity = new Vector2(speedX, speedY);
 
         previousTransform = transform.position;
         SetAnimVariables();
-		IsPower();
+        UpdatePowerState();
     }
 
-	protected virtual bool IsPower()
-	{
-		return false; // :O
-	}
+    public bool UpdatePowerState()
+    {
+        if (localPlayer)
+        {
+            float mpCurrentPercentage = hpAndMp.mpCurrentPercentage;
+
+            bool powerButtonPressed = CnInputManager.GetButtonDown("Power Button");
+
+            // Se acabó el maná
+            if (mpCurrentPercentage <= 0f)
+            {
+
+                hpAndMpUpdateFrame = 0;
+                remotePower = false;
+                isPowerOn = false;
+
+                SendPowerDataToServer();
+                SetAnimacion(remotePower);
+            }
+
+            // Hay maná
+            else
+            {
+
+                if (powerButtonPressed)
+                {
+                    isPowerOn = !isPowerOn;
+                    remotePower = isPowerOn;
+
+                    SendPowerDataToServer();
+                    SetAnimacion(remotePower);
+                }
+
+                if (isPowerOn)
+                {
+
+                    if (hpAndMpUpdateFrame == hpAndMpUpdateRate)
+                    {
+                        SpendMP();
+                        hpAndMpUpdateFrame = 0;
+                    }
+
+                    hpAndMpUpdateFrame++;
+
+                }
+
+            }
+
+        }
+        return remotePower;
+    }
+
+    protected virtual void SetAnimacion(bool activo)
+    {
+
+    }
 
     protected virtual void SetAnimVariables()
     {
@@ -400,7 +468,7 @@ public class PlayerController : MonoBehaviour
 
     protected void OnTriggerEnter2D(Collider2D other)
     {
-        if(other.tag == "KillPlane")
+        if (other.tag == "KillPlane")
         {
             if (localPlayer)
             {
@@ -409,15 +477,15 @@ public class PlayerController : MonoBehaviour
                 theLevelManager.Respawn();
             }
         }
-		if(other.tag == "KillPlaneSpike")
-		{
-			if (localPlayer)
-			{
-				string daño = other.gameObject.GetComponent<KillPlane>().killPlaneDamage;
-				Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);
-				theLevelManager.Respawn();
-			}
-		}
+        if (other.tag == "KillPlaneSpike")
+        {
+            if (localPlayer)
+            {
+                string daño = other.gameObject.GetComponent<KillPlane>().killPlaneDamage;
+                Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);
+                theLevelManager.Respawn();
+            }
+        }
 
         if (other.tag == "Checkpoint")
         {
@@ -425,32 +493,33 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-	protected void OnTriggerStay2D(Collider2D other)
-	{
-		if(other.tag == "Poi")
-		{
-			PlannerPoi newPoi = other.GetComponent<PlannerPoi> ();
-			if (!playerObj.playerAt.name.Equals (newPoi.name)) {
-				Debug.Log ("Change OK: " + newPoi.name);
-				playerObj.playerAt = newPoi;
-				Planner planner = FindObjectOfType<Planner> ();
-				planner.Monitor ();
-			}
-		}
-	}
+    protected void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.tag == "Poi")
+        {
+            PlannerPoi newPoi = other.GetComponent<PlannerPoi>();
+            if (!playerObj.playerAt.name.Equals(newPoi.name))
+            {
+                Debug.Log("Change OK: " + newPoi.name);
+                playerObj.playerAt = newPoi;
+                Planner planner = FindObjectOfType<Planner>();
+                planner.Monitor();
+            }
+        }
+    }
 
     protected void OnCollisionEnter2D(Collision2D other)
     {
-        if(other.gameObject.tag == "MovingPlatform")
-		{
-			Debug.Log (other.transform.position);
+        if (other.gameObject.tag == "MovingPlatform")
+        {
+            Debug.Log(other.transform.position);
             transform.parent = other.transform;
         }
     }
 
     protected void OnCollisionExit2D(Collision2D other)
     {
-        if(other.gameObject.tag == "MovingPlatform")
+        if (other.gameObject.tag == "MovingPlatform")
         {
             transform.parent = null;
         }
@@ -495,14 +564,19 @@ public class PlayerController : MonoBehaviour
         Client.instance.SendMessageToServer(message);
     }
 
-	protected void SendPowerDataToServer()
-	{
-		string message = "Power/" + characterId + "/" + remotePower;
-		Client.instance.SendMessageToServer(message);
-	}
+    protected void SendPowerDataToServer()
+    {
+        string message = "Power/" + characterId + "/" + remotePower;
+        Client.instance.SendMessageToServer(message);
+    }
 
-	public virtual void RemoteSetter (bool power) {
+    public virtual void RemoteSetter(bool power)
+    {
 
-	}
+    }
 
+    public void SpendMP()
+    {
+        Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + mpSpendRate);
+    }
 }

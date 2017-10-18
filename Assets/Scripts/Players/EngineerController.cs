@@ -6,26 +6,14 @@ using UnityEngine;
 public class EngineerController : PlayerController {
 
     private float skillSpeed;
-    private bool salte;
-    string changeMpRate;
-    int contadorHpAndMp;
-    int rate;
-    int contadorPar;
     GameObject particulas;
-    DisplayHUD hpAndMp;
     bool jumpedInAir = false;
-    bool powerOn;
 
     protected override void Start()
 	{
 		base.Start();
-        changeMpRate = "0";
-        rate = 150;
-        contadorPar = 0;
-        contadorHpAndMp = 0;
 		particulas = GameObject.FindGameObjectWithTag ("ParticulasEngin");
 		particulas.SetActive(false);
-        hpAndMp = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
     }
 
     protected override bool IsAttacking()
@@ -128,70 +116,7 @@ public class EngineerController : PlayerController {
         return remoteJumping;
     }
 
-    /*public int GetLevel()
-     {
-
-     }*/
-	protected override bool IsPower()
-	{
-		if (localPlayer) 
-		{
-            float mpCurrentPercentage = hpAndMp.mpCurrentPercentage;
-
-            bool powerButtonPressed = CnInputManager.GetButtonDown("Power Button");
-            bool primeraVez = false;
-
-            if (contadorHpAndMp < rate)
-            {
-                contadorHpAndMp++;
-            }
-
-            else if (mpCurrentPercentage > 0f)
-            {
-                Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + changeMpRate);
-                contadorHpAndMp = 0;
-            }
-   
-            if (mpCurrentPercentage == 0f)
-            {
-                changeMpRate = "0";
-                remotePower = false;
-                powerOn = false;
-                contadorPar = 0;
-
-                SendPowerDataToServer();
-                SetAnimacion(remotePower);
-            }
-
-            else if (powerButtonPressed && !primeraVez) 
-			{
-                primeraVez = true;
-				remotePower = contadorPar%2 == 0;
-                powerOn = remotePower;
-                
-                if (remotePower)
-                {
-                    changeMpRate = "-5";
-                }
-                else
-                {
-                    changeMpRate = "0";
-                }
-
-                contadorPar++;
-				SetAnimacion (remotePower);
-				SendPowerDataToServer();
-			}
-
-			else if (!powerButtonPressed && primeraVez)
-			{
-				primeraVez = false;
-			}
-		}
-		return remotePower;
-	}
-
-	private void SetAnimacion(bool activo)
+	protected override void SetAnimacion(bool activo)
 	{
 		particulas.SetActive (activo);
 	}
