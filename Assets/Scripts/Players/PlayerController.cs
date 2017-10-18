@@ -45,8 +45,8 @@ public class PlayerController : MonoBehaviour
     public bool remoteUp;
 
 
-    public int hpAndMpUpdateRate = 30; // Cada cuantos frames se actualiza el HP y MP display
-    public int hpAndMpUpdateFrame;
+    public int mpUpdateRate = 30; // Cada cuantos frames se actualiza el HP y MP display
+    public int mpUpdateFrame;
     public string mpSpendRate = "-1";
     public bool gravity = true; // true = normal, false = invertida
     private int directionY = 1; // 1 = de pie, -1 = de cabeza
@@ -72,7 +72,7 @@ public class PlayerController : MonoBehaviour
         remoteLeft = false;
         canMove = true;
 
-        hpAndMpUpdateFrame = 0;
+        mpUpdateFrame = 0;
         mpDepleted = false;
 
         hpAndMp = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
@@ -417,7 +417,7 @@ public class PlayerController : MonoBehaviour
                 // Si no he avisado que se acabó el maná, aviso
                 if (!mpDepleted)
                 {
-                    hpAndMpUpdateFrame = 0;
+                    mpUpdateFrame = 0;
                     remotePower = false;
                     isPowerOn = false;
                     mpDepleted = true;
@@ -449,13 +449,13 @@ public class PlayerController : MonoBehaviour
                 if (isPowerOn)
                 {
 
-                    if (hpAndMpUpdateFrame == hpAndMpUpdateRate)
+                    if (mpUpdateFrame == mpUpdateRate)
                     {
                         SpendMP();
-                        hpAndMpUpdateFrame = 0;
+                        mpUpdateFrame = 0;
                     }
 
-                    hpAndMpUpdateFrame++;
+                    mpUpdateFrame++;
 
                 }
 
