@@ -314,7 +314,7 @@ public class ClientMessageHandler {
         bool controlOverEnemies = bool.Parse(arreglo[2]);
         int charIdint = Convert.ToInt32(charId);
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.SetCharAsLocal(charIdint);
+        scriptLevel.SetLocalPlayer(charIdint);
         PlayerController scriptPlayer = Client.instance.GetLocalPlayer();
         scriptPlayer.controlOverEnemies = controlOverEnemies;
 		if (controlOverEnemies) {

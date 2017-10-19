@@ -8,7 +8,6 @@ using UnityEngine.UI;
 public class LevelManager : MonoBehaviour {
 
     public PlayerController thePlayer;
-    public float waitToRespawn;
     public GameObject[] players;
     public GameObject canvas;
     public GameObject npcLog;
@@ -18,23 +17,28 @@ public class LevelManager : MonoBehaviour {
     private GameObject player;
     private GameObject[] itemsInLevel;
     private List<Vector3> itemsOriginalPositions = new List<Vector3>();
-    private float waitToGrabItem;
+    private GameObject reconectando;
+
     private float waitToKillNPCCountdown;
     private float waitToResetItemPos;
-    private GameObject reconectando;
+    private float waitToGrabItem;
+    public float waitToRespawn;
 
     void Start ()
     {
         canvas.SetActive(true);
-        waitToGrabItem = 5f;
+
         waitToKillNPCCountdown = 10f;
+        waitToGrabItem = 5f;
+
         npcLog = GameObject.Find("NPCLog");
         npcLog.SetActive(false);
+
         client = GameObject.Find("ClientObject").GetComponent<Client>();
         client.RequestCharIdToServer();
+
         reconectando = GameObject.Find("ReconnectingText");
         reconectando.SetActive(false);
-        //SetHpAndManaToMax();
 	}
 
     public void MostrarReconectando(bool valor)
@@ -42,31 +46,29 @@ public class LevelManager : MonoBehaviour {
         reconectando.SetActive(valor);
     }
 
-    public void SetCharAsLocal(int id)
+    public void SetLocalPlayer(int id)
     {
-        PlayerController player = null;
         players = new GameObject[3];
+
         players[0] = GameObject.FindGameObjectsWithTag("Player1")[0];
         players[1] = GameObject.FindGameObjectsWithTag("Player2")[0];
         players[2] = GameObject.FindGameObjectsWithTag("Player3")[0];
+
         switch (id)
         {
             case 0:
-                player = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<MageController>();
+                thePlayer = players[0].GetComponent<MageController>();
                 break;
             case 1:
-                player = GameObject.FindGameObjectsWithTag("Player2")[0].GetComponent<WarriorController>();
+                thePlayer = players[1].GetComponent<WarriorController>();
                 break;
             case 2:
-                player = GameObject.FindGameObjectsWithTag("Player3")[0].GetComponent<EngineerController>();
-                break;
-            default:
+                thePlayer = players[2].GetComponent<EngineerController>();
                 break;
         }
 
-        player.Activate(id);
-        thePlayer = player; 
-        Camera.main.GetComponent<CameraController>().target = player.gameObject;
+        thePlayer.Activate(id);
+        Camera.main.GetComponent<CameraController>().SetTarget(thePlayer.gameObject) ;
     }
 
     public void Respawn()
@@ -112,10 +114,12 @@ public class LevelManager : MonoBehaviour {
         door.GetComponent<BoxCollider2D>().isTrigger = true;
         SpriteRenderer doorSpriteRenderer = door.GetComponent<SpriteRenderer>();
         SpriteRenderer[] doorSlotSpriteRenderer = door.GetComponentsInChildren<SpriteRenderer>();
+
         for (int i = 0; i < doorSlotSpriteRenderer.Length; i++)
         {
             doorSlotSpriteRenderer[i].sprite = null;
         }
+
         doorSpriteRenderer.sprite = door.GetComponent<RuneSystem>().doorIsOpen;
     }
 
@@ -148,10 +152,12 @@ public class LevelManager : MonoBehaviour {
         GameObject machine = GameObject.Find(machineName);
         SpriteRenderer maquinaSpriteRenderer = machine.gameObject.GetComponent<SpriteRenderer>();
         SpriteRenderer[] maquinaSlotSpriteRenderer = machine.gameObject.GetComponentsInChildren<SpriteRenderer>();
+
         for (int i = 0; i < maquinaSlotSpriteRenderer.Length; i++)
         {
             maquinaSlotSpriteRenderer[i].sprite = null;
         }
+
         maquinaSpriteRenderer.sprite = machine.GetComponent<EngranajeSystem>().maquinaIsOpen;
 
         if (machineName == "MaquinaEngranajeA")
