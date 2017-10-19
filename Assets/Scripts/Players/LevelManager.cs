@@ -84,7 +84,7 @@ public class LevelManager : MonoBehaviour {
 
         thePlayer.transform.position = thePlayer.respawnPosition + Vector3.up*0.1f;
         thePlayer.gameObject.SetActive(true);
-        thePlayer.IgnoreCollisionStar2puntoCero();
+        thePlayer.IgnoreCollisionBetweenPlayers();
         thePlayer.SendObjectDataToServer();
     }
 

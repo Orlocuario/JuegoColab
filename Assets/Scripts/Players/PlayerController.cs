@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     public PlannerPlayer playerObj;
     protected Transform transform;
     protected Rigidbody2D rb2d;
+    public Collider2D collider;
     public GameObject parent;
 
     public Transform groundCheck;
@@ -21,7 +22,7 @@ public class PlayerController : MonoBehaviour
 
     public static float maxAcceleration = 1; //100% del speed
     private static float maxYSpeed = 8f;
-    public static float maxXSpeed = 6f;
+    public static float maxXSpeed = 4.5f;
     public float acceleration = 0f;
     public bool canAccelerate = false; //Limita la aceleración a la mitad de los frames
 
@@ -76,7 +77,9 @@ public class PlayerController : MonoBehaviour
         mpDepleted = false;
 
         hpAndMp = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
+
         theLevelManager = FindObjectOfType<LevelManager>();
+        collider = gameObject.GetComponent<Collider2D>();
         transform = GetComponent<Transform>();
         rb2d = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
@@ -90,7 +93,7 @@ public class PlayerController : MonoBehaviour
 
         this.SetGravity(gravity);
 
-        IgnoreCollisionStar2puntoCero();
+        IgnoreCollisionBetweenPlayers();
         SendObjectDataToServer();
     }
 
@@ -99,14 +102,14 @@ public class PlayerController : MonoBehaviour
         conectado = valor;
     }
 
-    public void IgnoreCollisionStar2puntoCero()
+    public void IgnoreCollisionBetweenPlayers()
     {
         GameObject player1 = Client.instance.GetPlayerController(0).gameObject;
         GameObject player2 = Client.instance.GetPlayerController(1).gameObject;
         GameObject player3 = Client.instance.GetPlayerController(2).gameObject;
-        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), player1.GetComponent<Collider2D>());
-        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), player2.GetComponent<Collider2D>());
-        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), player3.GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(collider, player1.GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(collider, player2.GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(collider, player3.GetComponent<Collider2D>());
     }
 
     public void Activate(int charId)
@@ -215,7 +218,13 @@ public class PlayerController : MonoBehaviour
 
     protected bool IsItGrounded()
     {
+
         return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+
+        /*Debug.DrawLine(transform.position - new Vector3(0, collider.bounds.extents.y, 0), transform.position - new Vector3(0, collider.bounds.extents.y + 1f, 0), Color.green);
+        Debug.DrawLine(transform.position - new Vector3(0, collider.bounds.extents.y, 0), transform.position - new Vector3(0, collider.bounds.extents.y + .1f, 0), Color.red);
+
+        return Physics2D.Raycast(transform.position - new Vector3(0, collider.bounds.extents.y, 0), Vector3.down, .1f);*/
     }
 
     protected virtual bool IsJumping(bool isGrounded)
@@ -505,25 +514,27 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-	protected void OnTriggerStay2D(Collider2D other)
-	{
-		if(other.tag == "Poi")
-		{
-			PlannerPoi newPoi = other.GetComponent<PlannerPoi> ();
-			if (!playerObj.playerAt.name.Equals (newPoi.name)) {
-				Debug.Log ("Change OK: " + newPoi.name);
-				playerObj.playerAt = newPoi;
-				playerObj.luring = false;
-				if (newPoi.araña != null && this.characterId == 0) {
-					playerObj.luring = true;
-					newPoi.araña.blocked = false;
-					newPoi.araña.open = true;
-				}
-				Planner planner = FindObjectOfType<Planner> ();
-				planner.Monitor ();
-			}
-		}
-	}
+    protected void OnTriggerStay2D(Collider2D other)
+    {
+        if (other.tag == "Poi")
+        {
+            PlannerPoi newPoi = other.GetComponent<PlannerPoi>();
+            if (!playerObj.playerAt.name.Equals(newPoi.name))
+            {
+                Debug.Log("Change OK: " + newPoi.name);
+                playerObj.playerAt = newPoi;
+                playerObj.luring = false;
+                if (newPoi.araña != null && this.characterId == 0)
+                {
+                    playerObj.luring = true;
+                    newPoi.araña.blocked = false;
+                    newPoi.araña.open = true;
+                }
+                Planner planner = FindObjectOfType<Planner>();
+                planner.Monitor();
+            }
+        }
+    }
 
     protected void OnCollisionEnter2D(Collision2D other)
     {
