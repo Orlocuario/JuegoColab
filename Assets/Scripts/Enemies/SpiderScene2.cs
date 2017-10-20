@@ -40,12 +40,18 @@ public class SpiderScene2 : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if (levelManager.players == null  || levelManager.players.Length == 0)
+        {
+            return;
+        }
+
 
         lastPosition = this.gameObject.transform.position;
 
         Transform player0Transform = levelManager.players[0].GetComponent<Transform>();
         Transform player1Transform = levelManager.players[1].GetComponent<Transform>();
         Transform player2Transform = levelManager.players[2].GetComponent<Transform>();
+
         GameObject[] players = levelManager.players;
 
         // Algun player está cerca de la araña
