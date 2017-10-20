@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class MovingObject : MonoBehaviour {
+public class MovingObject : MonoBehaviour
+{
 
     public GameObject objectToMove;
 
@@ -12,19 +13,22 @@ public class MovingObject : MonoBehaviour {
     public float moveSpeed;
 
     private Vector3 currentTarget;
-    
 
-	// Use this for initialization
-	void Start () {
 
-        currentTarget = endPoint.position;
+    // Use this for initialization
+    void Start()
+    {
+        if (endPoint != null)
+        {
+            currentTarget = endPoint.position;
+        }
 
-		
-	}
+    }
 
     // Update is called once per frame
-    void Update() {
-        if(objectToMove == null)
+    void Update()
+    {
+        if (objectToMove == null)
         {
             return;
         }
@@ -32,16 +36,16 @@ public class MovingObject : MonoBehaviour {
         objectToMove.transform.position = Vector3.MoveTowards(objectToMove.transform.position, currentTarget, moveSpeed * Time.deltaTime);
 
 
-        if(objectToMove.transform.position == endPoint.position)
+        if (objectToMove.transform.position == endPoint.position)
         {
             currentTarget = startPoint.position;
         }
 
-        if(objectToMove.transform.position == startPoint.position)
+        if (objectToMove.transform.position == startPoint.position)
         {
             currentTarget = endPoint.position;
         }
-        
-		
-	}
+
+
+    }
 }

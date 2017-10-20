@@ -13,23 +13,33 @@ using UnityEngine.UI;
 
 public class Client : MonoBehaviour {
 
-    int socketId; // Host ID
-    int connectionId;
-    int bigChannelId;
-    int channelId;
     public static Client instance;
     ClientMessageHandler handler;
+
+    private static int maxConnections = 12;
+
+    int connectionId;
+    int bigChannelId;
     string serverIp;
+    int channelId;
+    int socketId; // Host ID
 
 	void Start () {
+
         DontDestroyOnLoad(this);
         instance = this;
+
         NetworkTransport.Init();
+
         ConnectionConfig config = new ConnectionConfig();
+
         channelId = config.AddChannel(QosType.Unreliable);
         bigChannelId = config.AddChannel(QosType.ReliableFragmented);
-        HostTopology topology = new HostTopology(config, 10);
+
+        HostTopology topology = new HostTopology(config, maxConnections);
+
         socketId = NetworkTransport.AddHost(topology, NetConsts.port);
+
         handler = new ClientMessageHandler();
     }
 
@@ -56,7 +66,6 @@ public class Client : MonoBehaviour {
     public void SendMessageToServer(string message)
     {
         byte error;
-        //int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
         byte[] buffer = new byte[NetConsts.bufferSize];
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
@@ -67,7 +76,6 @@ public class Client : MonoBehaviour {
     public void SendMessageToPlanner(string message)
     {
         byte error;
-        //int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
         byte[] buffer = new byte[NetConsts.bigBufferSize];
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
@@ -95,6 +103,7 @@ public class Client : MonoBehaviour {
         {
             case NetworkEventType.Nothing:
                 break;
+
             case NetworkEventType.ConnectEvent:
                 Scene currentScene = SceneManager.GetActiveScene();
                if (!(currentScene.name == "ClientScene"))
@@ -108,6 +117,7 @@ public class Client : MonoBehaviour {
                 }
                 Debug.Log("connection succesfull");
                 break;
+
             case NetworkEventType.DataEvent:
                 Stream stream = new MemoryStream(recBuffer);
                 BinaryFormatter formatter = new BinaryFormatter();
@@ -122,6 +132,7 @@ public class Client : MonoBehaviour {
                 }
                 Debug.Log("incoming message event received: " + message);
                 break;
+
             case NetworkEventType.DisconnectEvent:
                 if(connectionId == recConnectionId) //Detectamos que fuimos nosotros los que nos desconectamos
                 {
@@ -165,8 +176,9 @@ public class Client : MonoBehaviour {
     public PlayerController GetPlayerController(int charId)
     {
         
-        GameObject player;
         PlayerController script;
+        GameObject player;
+
         switch (charId)
         {
             case 0:
@@ -205,9 +217,10 @@ public class Client : MonoBehaviour {
 
   public PlayerController GetLocalPlayer()
     {
-        MageController player1 = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<MageController>();
-        WarriorController player2 = GameObject.FindGameObjectsWithTag("Player2")[0].GetComponent<WarriorController>();
         EngineerController player3 = GameObject.FindGameObjectsWithTag("Player3")[0].GetComponent<EngineerController>();
+        WarriorController player2 = GameObject.FindGameObjectsWithTag("Player2")[0].GetComponent<WarriorController>();
+        MageController player1 = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<MageController>();
+
         if (player1.localPlayer)
         {
             return player1;
