@@ -19,9 +19,9 @@ public class Client : MonoBehaviour {
     private static int maxConnections = 12;
 
     int connectionId;
-    int bigChannelId;
+    int reliableChannelId;
     string serverIp;
-    int channelId;
+    int unreliableChannelId;
     int socketId; // Host ID
 
 	void Start () {
@@ -33,8 +33,8 @@ public class Client : MonoBehaviour {
 
         ConnectionConfig config = new ConnectionConfig();
 
-        channelId = config.AddChannel(QosType.Unreliable);
-        bigChannelId = config.AddChannel(QosType.ReliableFragmented);
+        unreliableChannelId = config.AddChannel(QosType.Unreliable);
+        reliableChannelId = config.AddChannel(QosType.ReliableFragmented);
 
         HostTopology topology = new HostTopology(config, maxConnections);
 
@@ -70,7 +70,7 @@ public class Client : MonoBehaviour {
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, message);
-        NetworkTransport.Send(socketId, connectionId, channelId, buffer, NetConsts.bufferSize, out error);
+        NetworkTransport.Send(socketId, connectionId, unreliableChannelId, buffer, NetConsts.bufferSize, out error);
     }
 
     public void SendMessageToPlanner(string message)
@@ -80,7 +80,7 @@ public class Client : MonoBehaviour {
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, message);
-        NetworkTransport.Send(socketId, connectionId, bigChannelId, buffer, NetConsts.bigBufferSize, out error);
+        NetworkTransport.Send(socketId, connectionId, reliableChannelId, buffer, NetConsts.bigBufferSize, out error);
     }
 
     void LateUpdate()
@@ -122,11 +122,11 @@ public class Client : MonoBehaviour {
                 Stream stream = new MemoryStream(recBuffer);
                 BinaryFormatter formatter = new BinaryFormatter();
                 string message = formatter.Deserialize(stream) as string;
-                if(recChannelId == channelId)
+                if(recChannelId == unreliableChannelId)
                 {
                     handler.HandleMessage(message);
                 }
-                if(recChannelId == bigChannelId)
+                if(recChannelId == reliableChannelId)
                 {
                     ReceiveMessageFromPlanner(message, recConnectionId);
                 }

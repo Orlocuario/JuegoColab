@@ -7,7 +7,10 @@ using UnityEngine.SceneManagement;
 
 public class ClientMessageHandler {
 
+    private static char[] separator = new char[1] { '/' };
     Client client;
+
+
     public ClientMessageHandler()
     {
         client = Client.instance;
@@ -15,92 +18,90 @@ public class ClientMessageHandler {
 
     public void HandleMessage(string message)
     {
-        char[] separator = new char[1];
-        separator[0] = '/';
-        string[] arreglo = message.Split(separator);
+        string[] msg = message.Split(separator);
 
-        switch (arreglo[0])
+        switch (msg[0])
         {
             case "ChangeScene":
-                HandleChangeScene(arreglo);
+                HandleChangeScene(msg);
                 break;
             case "SetCharId":
-                HandleSetCharId(arreglo);
+                HandleSetCharId(msg);
                 break;
             case "ChangePosition":
-                HandleChangePosition(arreglo);
+                HandleChangePosition(msg);
                 break;
             case "ChangeObjectPosition":
-                HandleChangeObjectPosition(arreglo);
+                HandleChangeObjectPosition(msg);
                 break;
             case "InstantiateObject":
-                HandleInstantiateObject(arreglo);
+                HandleInstantiateObject(msg);
                 break;
             case "NewChatMessage":
-                HandleNewChatMessage(arreglo);
+                HandleNewChatMessage(msg);
                 break;
             case "DisplayChangeHPToClient":
-                HandleChangeHpHUDToClient(arreglo);
+                HandleChangeHpHUDToClient(msg);
                 break;
             case "DisplayChangeMPToClient":
-                HandleChangeMpHUDToClient(arreglo);
+                HandleChangeMpHUDToClient(msg);
                 break;
             case "DisplayChangeExpToClient":
-                HandleChangeExpHUDToClient(arreglo);
+                HandleChangeExpHUDToClient(msg);
                 break;
             case "Attack":
-                HandleUpdatedAttackState(arreglo);
+                HandleUpdatedAttackState(msg);
                 break;
             case "AttackWarrior":
-                HandleUpdatedAttackStateWarrior(arreglo);
+                HandleUpdatedAttackStateWarrior(msg);
                 break;
             case "CastFireball":
-                HandleCastFireball(arreglo);
+                HandleCastFireball(msg);
                 break;
 		    case "Power":
-			    HandleUpdatedPowerState (arreglo);
+			    HandleUpdatedPowerState (msg);
 			    break;
             case "Die":
-                KillEnemy(arreglo);
+                KillEnemy(msg);
                 break;
             case "EnemyChangePosition":
-                ChangeEnemyPosition(arreglo);
+                ChangeEnemyPosition(msg);
                 break;
             case "SetControlOverEnemies":
                 SetControlOverEnemies();
                 break;
             case "CastProyectile":
-                HandleCastProyectile(arreglo);
+                HandleCastProyectile(msg);
                 break;
             case "PlayersAreDead":
-                HandlePlayersAreDead(arreglo);
+                HandlePlayersAreDead(msg);
                 break;
             case "CreateGameObject":
-                HandleCreateGameObject(arreglo);
+                HandleCreateGameObject(msg);
                 break;
             case "DestroyObject":
-                HandleDestroyObject(arreglo);
+                HandleDestroyObject(msg);
                 break;
 			case "OthersDestroyObject": 
-				HandleDestroyObject(arreglo);
+				HandleDestroyObject(msg);
 				break;
             case "ChangeSwitchStatus":
-                HandleChangeSwitchStatus(arreglo);
+                HandleChangeSwitchStatus(msg);
                 break;
             case "SwitchGroupReady":
-                HandleSwitchGroupReady(arreglo);
+                HandleSwitchGroupReady(msg);
                 break;
             case "ActivateRuneDoor":
-                HandleActivationDoor(arreglo);
+                HandleActivationDoor(msg);
                 break;
             case "ActivateMachine":
-                HandleActivationMachine(arreglo);
+                HandleActivationMachine(msg);
                 break;
             case "ActivateNPCLog":
-                HandleActivationNpcLog(arreglo);
+                HandleActivationNpcLog(msg);
                 break;
             case "IgnoreBoxCircleCollision":
-                HandleIgnoreCollision(arreglo);
+                HandleIgnoreCollision(msg);
                 break;
             default:
                 break;
