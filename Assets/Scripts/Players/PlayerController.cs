@@ -218,13 +218,22 @@ public class PlayerController : MonoBehaviour
 
     protected bool IsItGrounded()
     {
-
+        // El radio del groundChecker debe ser menor a la medida del collider del player/2 para que no haga contactos laterales.
+        groundCheckRadius = collider.bounds.extents.x * .9f;
         return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+    }
 
-        /*Debug.DrawLine(transform.position - new Vector3(0, collider.bounds.extents.y, 0), transform.position - new Vector3(0, collider.bounds.extents.y + 1f, 0), Color.green);
-        Debug.DrawLine(transform.position - new Vector3(0, collider.bounds.extents.y, 0), transform.position - new Vector3(0, collider.bounds.extents.y + .1f, 0), Color.red);
+    protected void DrawGroundCheckerRadius()
+    {
+        Vector3 right = new Vector3(groundCheckRadius, 0, 0);
+        Vector3 left = new Vector3(-groundCheckRadius, 0, 0);
+        Vector3 up = new Vector3(0, groundCheckRadius, 0);
+        Vector3 down = new Vector3(0, -groundCheckRadius, 0);
 
-        return Physics2D.Raycast(transform.position - new Vector3(0, collider.bounds.extents.y, 0), Vector3.down, .1f);*/
+        Debug.DrawLine(groundCheck.position, groundCheck.position + right, Color.green);
+        Debug.DrawLine(groundCheck.position, groundCheck.position + left, Color.green);
+        Debug.DrawLine(groundCheck.position, groundCheck.position + up, Color.green);
+        Debug.DrawLine(groundCheck.position, groundCheck.position + down, Color.green);
     }
 
     protected virtual bool IsJumping(bool isGrounded)
