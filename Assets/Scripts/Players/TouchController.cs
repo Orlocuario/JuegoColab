@@ -11,7 +11,7 @@ public class TouchController : MonoBehaviour {
     {
         GameObject client = GameObject.Find("ClientObject");
         Listening listen = client.GetComponent<Listening>();
-        GameObject.Find("ConnectText").GetComponent<Text>().text = "Conectando...";
+        GameObject.Find("ConnectText").GetComponent<Text>().text = "Conectar";
         listen.InitializeListening();
 
     }
