@@ -79,7 +79,7 @@ public class AttackController: MonoBehaviour {
     }
 
     // Este método debe ser sobreescrito para calcular el daño en cada caso
-    protected int GetDamage()
+    protected virtual int GetDamage()
     {
         return damage;
     }
