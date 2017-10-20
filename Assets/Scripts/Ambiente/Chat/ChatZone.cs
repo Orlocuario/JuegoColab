@@ -34,6 +34,11 @@ public class ChatZone : MonoBehaviour
 
     private void Update()
     {
+        if(Client.instance == null || Client.instance.GetLocalPlayer() == null)
+        {
+            return;
+        }
+
         PlayerController player = Client.instance.GetLocalPlayer();
         Vector2 playerPosition = player.gameObject.transform.position;
         float playerDistance = (playerPosition - myPosition).magnitude;
