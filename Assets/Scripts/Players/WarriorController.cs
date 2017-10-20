@@ -10,23 +10,18 @@ public class WarriorController : PlayerController {
     public int numHits = 0;
     private int prevNumHits = 0;
     bool par;
-	int contadorPar;
 	float damage;
     double force = 0;
     GameObject particulas;
-    DisplayHUD hpAndMp;
     private int hits = 0;
-    bool powerOn;
 
 
     protected override void Start()
 	{
 		base.Start();
 		damage = 3;
-        contadorPar = 0;
         particulas = GameObject.Find ("ParticulasWarrior");
 		particulas.SetActive(false);
-        hpAndMp = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
     }
 
     protected override bool IsAttacking()

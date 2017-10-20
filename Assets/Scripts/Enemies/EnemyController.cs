@@ -2,23 +2,46 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyController : MonoBehaviour {
+public class EnemyController : MonoBehaviour
+{
 
-    private float hp;
+    private LevelManager levelManager;
+    private Animator animator;
+
+    private static float maxHp;
+
+    public bool fromEditor;
     private float posX;
     private float posY;
     public int enemyId;
-    public bool fromEditor;
-    private LevelManager levelManager;
+    private float hp;
 
-    protected void Start () {
+    protected virtual void Start()
+    {
+
+        animator = this.gameObject.GetComponent<Animator>();
         levelManager = FindObjectOfType<LevelManager>();
-        PlayerController localPlayer = Client.instance.GetLocalPlayer();
-        if (fromEditor && localPlayer.controlOverEnemies)
+        enemyId = Random.Range(0, 100);
+
+        hp = maxHp;
+
+        if (Client.instance != null)
         {
-            OnEditorStart();
+            PlayerController localPlayer = Client.instance.GetLocalPlayer();
+
+            if (localPlayer != null)
+            {
+
+                //if (fromEditor && localPlayer.controlOverEnemies)
+                if (localPlayer.controlOverEnemies)
+                {
+                    OnEditorStart();
+                }
+            }
+
         }
-	}
+
+    }
 
     public void SetPosition(float x, float y)
     {
@@ -29,16 +52,19 @@ public class EnemyController : MonoBehaviour {
     //Se llama si el objecto fue creado desde el editor (en vez de spawn desde el server)
     private void OnEditorStart()
     {
-        SendIdToRegister();     
+        SendIdToRegister();
     }
 
     // Update is called once per frame
-    protected void Update () {
-		
-	}
-
-    public virtual void DealDamage(float damage)
+    protected virtual void Update()
     {
+
+    }
+
+    public virtual void TakeDamage(float damage)
+    {
+        animator.SetBool("isDamaged", true);
+
         hp -= damage;
         if (hp <= 0)
         {
@@ -48,7 +74,8 @@ public class EnemyController : MonoBehaviour {
 
     public virtual void Die()
     {
-        gameObject.SetActive(false);
+        animator.SetBool("isDead", true);
+        //gameObject.SetActive(false);
     }
 
     public virtual void SendEnemyDataToServer()
@@ -65,13 +92,19 @@ public class EnemyController : MonoBehaviour {
 
     protected virtual void SendHpDataToServer()
     {
-        string message = "EnemyHpChange/" + enemyId.ToString() + "/" +hp.ToString();
+        string message = "EnemyHpChange/" + enemyId.ToString() + "/" + hp.ToString();
         Client.instance.SendMessageToServer(message);
     }
 
     protected virtual void SendPositionToServer()
     {
-        string message = "EnemyChangePosition/" + enemyId.ToString()+"/" + posX + "/" + posY;
+        string message = "EnemyChangePosition/" + enemyId.ToString() + "/" + posX + "/" + posY;
         Client.instance.SendMessageToServer(message);
+    }
+
+    public void OnDamageEnd(string s)
+    {
+        Debug.Log(s);
+        animator.SetBool("isDamaged", true);
     }
 }

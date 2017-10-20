@@ -6,22 +6,19 @@ using UnityEngine;
 
 public class MageController : PlayerController {
 
-	int contadorPar;
 	GameObject particulas1;
 	GameObject particulas2;
-    DisplayHUD hpAndMp;
+
     bool powerOn;
 
 	protected override void Start()
 	{
 		base.Start();
         powerOn = false;
-        contadorPar = 0;
         particulas1 = GameObject.Find ("ParticulasMage");
 		particulas1.SetActive(false);
 		particulas2 = GameObject.Find ("ParticulasMage2");
 		particulas2.SetActive(false);
-        hpAndMp = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
 	}
 
     protected override bool IsAttacking()

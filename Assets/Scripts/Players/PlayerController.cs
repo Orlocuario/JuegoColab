@@ -1,11 +1,11 @@
 ﻿using CnControls;
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
+
 
 public class PlayerController : MonoBehaviour
 {
-    protected Vector3 previousTransform;
+    protected Vector3 previousPosition;
     public PlannerPlayer playerObj;
     protected Transform transform;
     protected Rigidbody2D rb2d;
@@ -79,7 +79,7 @@ public class PlayerController : MonoBehaviour
         hpAndMp = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
 
         theLevelManager = FindObjectOfType<LevelManager>();
-        collider = gameObject.GetComponent<Collider2D>();
+        collider = GetComponent<Collider2D>();
         transform = GetComponent<Transform>();
         rb2d = GetComponent<Rigidbody2D>();
         myAnim = GetComponent<Animator>();
@@ -270,12 +270,12 @@ public class PlayerController : MonoBehaviour
     {
         Vector3 newPosition = transform.position;
 
-        if (previousTransform.x != newPosition.x)
+        if (previousPosition.x != newPosition.x)
         {
             return true;
         }
 
-        if (previousTransform.y != newPosition.y)
+        if (previousPosition.y != newPosition.y)
         {
             return true;
         }
@@ -332,17 +332,15 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        Transform parentTransform = transform.parent;
+        if (transform.parent != null)
+        {
+            parent = transform.parent.gameObject;
+        }
 
         isGrounded = IsItGrounded();
 
         float speedY = rb2d.velocity.y;
         float speedX;
-
-        if (parentTransform != null)
-        {
-            parent = parentTransform.gameObject;
-        }
 
         if (IsGoingRight())
         {
@@ -416,7 +414,7 @@ public class PlayerController : MonoBehaviour
 
         rb2d.velocity = new Vector2(speedX, speedY);
 
-        previousTransform = transform.position;
+        previousPosition = transform.position;
         SetAnimVariables();
         UpdatePowerState();
     }
