@@ -6,6 +6,8 @@ public class AttackController: MonoBehaviour {
 
     protected Collider2D gameObjectCollider;
 
+    protected static float destroyDelayTime = .04f;
+
     protected float currentDistance;
     protected float maxDistance;
     protected int direction;
@@ -68,12 +70,14 @@ public class AttackController: MonoBehaviour {
     //Hacer que reciba un enemigo
     protected void DealDamage(GameObject enemy)
     {
-
         if (IsCasterLocal())
         {
             float dealtDamage = GetDamage();
             Debug.Log(caster.name + " le hizo " + dealtDamage + " a " + enemy.name);
-            //Hace daño o algo
+
+            EnemyController enemyController = enemy.GetComponent<EnemyController>();
+            enemyController.TakeDamage(dealtDamage);
+
         }
 
     }
@@ -102,6 +106,6 @@ public class AttackController: MonoBehaviour {
             DealDamage(collision.gameObject);
         }
 
-        Destroy(this.gameObject, .25f);
+        Destroy(this.gameObject, destroyDelayTime);
     }
 }

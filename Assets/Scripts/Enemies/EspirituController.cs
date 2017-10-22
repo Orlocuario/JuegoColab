@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class EspirituController : EnemyController
 {
-    private static float maxHp = 10;
 
     // Use this for initialization
     protected override void Start () {
+        this.maxHp = 20f;
         base.Start();
 	}
 

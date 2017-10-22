@@ -5,16 +5,17 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
 
-    private LevelManager levelManager;
-    private Animator animator;
+    protected LevelManager levelManager;
+    protected Animator animator;
 
-    private static float maxHp;
+    protected float maxHp = 100f;
+
+    protected float posX;
+    protected float posY;
+    protected float hp;
 
     public bool fromEditor;
-    private float posX;
-    private float posY;
     public int enemyId;
-    private float hp;
 
     protected virtual void Start()
     {
@@ -75,7 +76,6 @@ public class EnemyController : MonoBehaviour
     public virtual void Die()
     {
         animator.SetBool("isDead", true);
-        //gameObject.SetActive(false);
     }
 
     public virtual void SendEnemyDataToServer()
@@ -105,6 +105,13 @@ public class EnemyController : MonoBehaviour
     public void OnDamageEnd(string s)
     {
         Debug.Log(s);
-        animator.SetBool("isDamaged", true);
+        animator.SetBool("isDamaged", false);
+    }
+
+    public void OnDiedEnd(string s)
+    {
+        Debug.Log(s);
+        this.gameObject.SetActive(false);
+        Destroy(this.gameObject);
     }
 }
