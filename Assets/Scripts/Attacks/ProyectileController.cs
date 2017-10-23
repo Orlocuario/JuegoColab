@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class ProyectileController : AttackController
 {
-    EngineerController caster;
 
     protected override void Start()
     {

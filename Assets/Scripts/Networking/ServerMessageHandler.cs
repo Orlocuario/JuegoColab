@@ -56,6 +56,9 @@ public class ServerMessageHandler
             case "CastFireball":
                 SendNewFireball(message, connectionId, arreglo);
                 break;
+            case "CastProyectile":
+                SendNewProjectile(message, connectionId, arreglo);
+                break;
             case "Power":
                 SendPowerState(message, connectionId, arreglo);
                 break;
@@ -272,7 +275,14 @@ public class ServerMessageHandler
         room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 
-   private void SendNewChatMessage(string chatMessage, int connectionID)
+    private void SendNewProjectile(string message, int connectionId, string[] data)
+    {
+        Jugador player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.SendMessageToAllPlayersExceptOne(message, connectionId);
+    }
+
+    private void SendNewChatMessage(string chatMessage, int connectionID)
     {
         Jugador player = server.GetPlayer(connectionID);
         Room room = player.room;

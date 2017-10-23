@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class FireballController : AttackController
 {
-    MageController caster;
 
     protected override void Start()
     {
