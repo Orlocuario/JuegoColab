@@ -5,6 +5,7 @@ using UnityEngine;
 public class ActivateNPC : MonoBehaviour {
 
 	private LevelManager theLevelManager;
+	public string mensajeNPC;
 
 	// Use this for initialization
 	void Start () {
@@ -46,7 +47,7 @@ public class ActivateNPC : MonoBehaviour {
 
 	private void OnEnter ()
 	{
-		theLevelManager.ActivateNPCLog ("Para saltar, presiona el botón inferior de tu derecha"); 
+		theLevelManager.ActivateNPCLog (mensajeNPC); 
 	}
 
 	private void OnExit()

@@ -134,6 +134,18 @@ public class SwitchActions : MonoBehaviour {
 
 			break;
 
+		/* Acciones Escena Tutorial*/
+		
+		case 9:
+			GameObject primerPlat = (GameObject)Instantiate (Resources.Load ("Prefabs/SueloMetalFlotante"));
+			primerPlat.transform.position = new Vector2 (21.8f, 1.1f);
+			GameObject primerPlat2 = (GameObject)Instantiate (Resources.Load ("Prefabs/SueloMetalFlotante"));
+			primerPlat2.transform.position = new Vector2 (20.1f, 1.9f);
+			GameObject primerPlat3 = (GameObject)Instantiate (Resources.Load ("Prefabs/SueloMetalFlotante"));
+			primerPlat3.transform.position = new Vector2 (18.7f, 2.9f);
+
+			break;
+
 		default:
 			break;
 
