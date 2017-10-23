@@ -123,7 +123,7 @@ public class LevelManager : MonoBehaviour {
         doorSpriteRenderer.sprite = door.GetComponent<RuneSystem>().doorIsOpen;
     }
 
-    internal void ActivateNPCLog(string message)
+	public void ActivateNPCLog(string message)
     {
         npcLog.SetActive(true);
         Text npcLogText = GameObject.Find("NPCLogText").GetComponent<Text>();
