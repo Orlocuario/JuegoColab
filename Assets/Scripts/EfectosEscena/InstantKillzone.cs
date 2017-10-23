@@ -39,13 +39,13 @@ public class InstantKillzone : MonoBehaviour {
 		return false;
 	}
 
-	private void OnEnter (Collider2D other)
+	private void OnEnter ()
 	{
 		killiZone = (GameObject)Instantiate (Resources.Load ("Prefabs/KillZones/KillZoneEnginAir"));
 		killiZone.transform.position = new Vector2 (37.3f, 5.4f);
 	}
 		
-	private void OnExit(Collider2D other)
+	private void OnExit()
 	{
 		Destroy (killiZone); 
 	}

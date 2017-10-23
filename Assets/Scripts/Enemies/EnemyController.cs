@@ -22,7 +22,7 @@ public class EnemyController : MonoBehaviour
 
         animator = this.gameObject.GetComponent<Animator>();
         levelManager = FindObjectOfType<LevelManager>();
-        enemyId = Random.Range(0, 100);
+        enemyId = Random.Range(0, 100);       		//pq random???
 
         hp = maxHp;
 

@@ -44,12 +44,12 @@ public class ActivateNPC : MonoBehaviour {
 		return false;
 	}
 
-	private void OnEnter (Collider2D other)
+	private void OnEnter ()
 	{
 		theLevelManager.ActivateNPCLog ("Para saltar, presiona el botón inferior de tu derecha"); 
 	}
 
-	private void OnExit(Collider2D other)
+	private void OnExit()
 	{
 		
 	}
