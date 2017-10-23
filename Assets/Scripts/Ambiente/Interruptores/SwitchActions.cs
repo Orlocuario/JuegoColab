@@ -137,6 +137,9 @@ public class SwitchActions : MonoBehaviour {
 		/* Acciones Escena Tutorial*/
 		
 		case 9:
+
+			GameObject particleFeedback = (GameObject)Instantiate (Resources.Load("Prefabs/FeedbackParticles/FBMageButt");
+			particleFeedback.transform.position = new Vector2 (25.72f, 0.1f); 
 			GameObject primerPlat = (GameObject)Instantiate (Resources.Load ("Prefabs/SueloMetalFlotante"));
 			primerPlat.transform.position = new Vector2 (21.8f, 1.1f);
 			GameObject primerPlat2 = (GameObject)Instantiate (Resources.Load ("Prefabs/SueloMetalFlotante"));
