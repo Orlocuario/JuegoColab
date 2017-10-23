@@ -26,7 +26,12 @@ public class LevelManager : MonoBehaviour {
 
     void Start ()
     {
-        canvas.SetActive(true);
+        if (canvas == null)
+        {
+            canvas = GameObject.Find("Canvas");
+        }
+
+        canvas.SetActive(true); // 8=D
 
         waitToKillNPCCountdown = 10f;
         waitToGrabItem = 5f;
@@ -58,11 +63,14 @@ public class LevelManager : MonoBehaviour {
         {
             case 0:
                 thePlayer = players[0].GetComponent<MageController>();
+                Debug.Log("Activating Mage local player");
                 break;
             case 1:
+                Debug.Log("Activating Warrior local player");
                 thePlayer = players[1].GetComponent<WarriorController>();
                 break;
             case 2:
+                Debug.Log("Activating Engineer local player");
                 thePlayer = players[2].GetComponent<EngineerController>();
                 break;
         }

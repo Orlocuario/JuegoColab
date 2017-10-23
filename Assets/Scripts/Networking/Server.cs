@@ -95,7 +95,7 @@ public class Server : MonoBehaviour {
                 break;
             case NetworkEventType.ConnectEvent:
                 AddConnection(recConnectionId);
-                UnityEngine.Debug.Log("incoming connection event received " + recConnectionId);
+                UnityEngine.Debug.Log("Client " + recConnectionId + " connected");
                 break;
             case NetworkEventType.DataEvent:
                 Stream stream = new MemoryStream(recBuffer);
@@ -112,11 +112,11 @@ public class Server : MonoBehaviour {
                     //Mensaje largo. Planner
                     SendMessagToPlanner(message, recConnectionId);
                 }
-                UnityEngine.Debug.Log("incoming message event received: " + message);
+                UnityEngine.Debug.Log("Handling: " + message);
                 break;
             case NetworkEventType.DisconnectEvent:
                 DeleteConnection(recConnectionId);
-                UnityEngine.Debug.Log("remote client event disconnected " + recConnectionId);
+                UnityEngine.Debug.Log("Client " + recConnectionId + " disconnected");
                 break;
         }
     }
@@ -165,7 +165,7 @@ public class Server : MonoBehaviour {
             SendMessageToClient(connectionId, "ChangeScene/" + sceneToLoad);
             timesScene1IsLoaded += 1;
             messageHandler.SendAllData(connectionId, player.room);
-            UnityEngine.Debug.Log("Player reconnected");
+            UnityEngine.Debug.Log("Client "  + connectionId + " reconnected");
             return;
         }
 

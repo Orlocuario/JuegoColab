@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AttackController: MonoBehaviour {
+public class AttackController : MonoBehaviour
+{
 
     protected Collider2D gameObjectCollider;
 
@@ -16,7 +17,8 @@ public class AttackController: MonoBehaviour {
 
     PlayerController caster;
 
-    protected virtual void Start() {  
+    protected virtual void Start()
+    {
         currentDistance = 0;
         damage = 5;
 
@@ -39,12 +41,12 @@ public class AttackController: MonoBehaviour {
     }
 
     public void SetMovement(int direction, float speed, float x, float y, PlayerController caster)
-    { 
+    {
         this.direction = direction;
         this.caster = caster;
         this.speed = speed;
 
-        transform.position = new Vector2(x + (direction*0.0001f), y - 0.02f);
+        transform.position = new Vector2(x + (direction * 0.0001f), y - 0.02f);
 
         if (direction == -1)
         {
@@ -52,7 +54,8 @@ public class AttackController: MonoBehaviour {
         }
     }
 
-    protected virtual void Update() {
+    protected virtual void Update()
+    {
 
         float distance = speed * direction * Time.deltaTime;
 
@@ -70,15 +73,11 @@ public class AttackController: MonoBehaviour {
     //Hacer que reciba un enemigo
     protected void DealDamage(GameObject enemy)
     {
-        if (IsCasterLocal())
-        {
-            float dealtDamage = GetDamage();
-            Debug.Log(caster.name + " le hizo " + dealtDamage + " a " + enemy.name);
 
-            EnemyController enemyController = enemy.GetComponent<EnemyController>();
-            enemyController.TakeDamage(dealtDamage);
+        float dealtDamage = GetDamage();
 
-        }
+        EnemyController enemyController = enemy.GetComponent<EnemyController>();
+        enemyController.TakeDamage(dealtDamage);
 
     }
 
@@ -99,7 +98,7 @@ public class AttackController: MonoBehaviour {
     }
 
     protected void OnCollisionEnter2D(Collision2D collision)
-    {   
+    {
 
         if (CollidedWithEnemy(collision.gameObject))
         {

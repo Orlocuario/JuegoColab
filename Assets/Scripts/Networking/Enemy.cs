@@ -16,6 +16,8 @@ public class Enemy {
 
     public Enemy(int enemyId, Room room)
     {
+        Debug.Log("New enemy " + enemyId + " with " + hp  + " hp");
+
         this.enemyId = enemyId;
         this.room = room;
     }

@@ -307,7 +307,7 @@ public class ClientMessageHandler {
     private void HandleSetCharId(string[] arreglo)
     {
         Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (currentScene.name == "ClientScene") // ??
         {
             return;
         }

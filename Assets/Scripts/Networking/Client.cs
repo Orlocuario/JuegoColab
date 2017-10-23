@@ -115,7 +115,7 @@ public class Client : MonoBehaviour {
                         lm.MostrarReconectando(false);
                     }
                 }
-                Debug.Log("connection succesfull");
+                Debug.Log("Connection succesfull");
                 break;
 
             case NetworkEventType.DataEvent:
@@ -130,7 +130,7 @@ public class Client : MonoBehaviour {
                 {
                     ReceiveMessageFromPlanner(message, recConnectionId);
                 }
-                Debug.Log("incoming message event received: " + message);
+                Debug.Log("Handling: " + message);
                 break;
 
             case NetworkEventType.DisconnectEvent:
@@ -143,7 +143,7 @@ public class Client : MonoBehaviour {
                     }
                     Reconnect();
                 }
-                Debug.Log("disconnected from server");
+                Debug.Log("Disconnected from server");
                 break;
         }
     }

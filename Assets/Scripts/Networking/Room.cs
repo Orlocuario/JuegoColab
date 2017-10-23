@@ -50,7 +50,8 @@ public class Room
 
     public void AddEnemy(int enemyId)
     {
-        enemigos.Add(new Enemy(enemyId, this));
+        Enemy enemy = new Enemy(enemyId, this);
+        enemigos.Add(enemy);
     }
 
     public string HoraMinuto()

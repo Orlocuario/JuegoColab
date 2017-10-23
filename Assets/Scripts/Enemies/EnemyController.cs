@@ -19,12 +19,23 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Start()
     {
-
         animator = this.gameObject.GetComponent<Animator>();
         levelManager = FindObjectOfType<LevelManager>();
-        enemyId = Random.Range(0, 100);       		//pq random???
 
         hp = maxHp;
+
+        /*while(Client.instance == null)
+        {
+            //
+        }
+
+        while (Client.instance.GetLocalPlayer() == null)
+        {
+            //
+        }
+        */
+
+        Debug.Log("Enemy " + enemyId + " initializing...");
 
         if (Client.instance != null)
         {
@@ -32,9 +43,9 @@ public class EnemyController : MonoBehaviour
 
             if (localPlayer != null)
             {
+                Debug.Log("Enemy " + enemyId + " fue creado desde el editor: " + fromEditor + " y " + localPlayer.name + " tiene el control sobre los enemigos " + localPlayer.controlOverEnemies);
 
-                //if (fromEditor && localPlayer.controlOverEnemies)
-                if (localPlayer.controlOverEnemies)
+                if (fromEditor && localPlayer.controlOverEnemies)
                 {
                     OnEditorStart();
                 }
@@ -64,13 +75,26 @@ public class EnemyController : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
+
         animator.SetBool("isDamaged", true);
 
-        hp -= damage;
-        if (hp <= 0)
+        if (Client.instance != null)
         {
-            Die();
+            PlayerController localPlayer = Client.instance.GetLocalPlayer();
+
+            if (localPlayer != null)
+            {
+
+                if (localPlayer.controlOverEnemies)
+                {
+                    Debug.Log( this.gameObject.name + " took " + damage);
+
+                    //hp -= damage;
+                    SendHpDataToServer(damage);
+                }
+            }
         }
+
     }
 
     public virtual void Die()
@@ -80,7 +104,7 @@ public class EnemyController : MonoBehaviour
 
     public virtual void SendEnemyDataToServer()
     {
-        SendHpDataToServer();
+        SendHpDataToServer(0f);
         SendPositionToServer();
     }
 
@@ -90,9 +114,10 @@ public class EnemyController : MonoBehaviour
         Client.instance.SendMessageToServer(message);
     }
 
-    protected virtual void SendHpDataToServer()
+    protected virtual void SendHpDataToServer(float damage)
     {
-        string message = "EnemyHpChange/" + enemyId.ToString() + "/" + hp.ToString();
+        //string message = "EnemyHpChange/" + enemyId.ToString() + "/" + hp.ToString();
+        string message = "EnemyHpChange/" + enemyId.ToString() + "/" + damage.ToString();
         Client.instance.SendMessageToServer(message);
     }
 
