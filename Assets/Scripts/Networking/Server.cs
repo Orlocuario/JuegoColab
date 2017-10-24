@@ -103,7 +103,7 @@ public class Server : MonoBehaviour {
                 string message = formatter.Deserialize(stream) as string;
                 string hora = HoraMinuto();
 
-                UnityEngine.Debug.Log("At: " + hora + "From: " + recConnectionId + " Handling: " + message);
+                UnityEngine.Debug.Log(hora + " - From: " + recConnectionId + " Handling: " + message);
 
                 if (recChannelId == channelId)
                 {

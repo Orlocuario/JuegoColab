@@ -19,8 +19,6 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Start()
     {
-        Debug.Log("Enemy " + this.gameObject.name + " has " + this.gameObject.tag + " tag");
-
         animator = this.gameObject.GetComponent<Animator>();
         levelManager = FindObjectOfType<LevelManager>();
 
