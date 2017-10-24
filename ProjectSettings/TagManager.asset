@@ -42,8 +42,8 @@ TagManager:
   - SwitchEnginPart
   - Poi
   - ExperienceItem
-  - Enemy
   - Test
+  - Enemy
   layers:
   - Default
   - TransparentFX
