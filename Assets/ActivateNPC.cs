@@ -52,6 +52,6 @@ public class ActivateNPC : MonoBehaviour {
 
 	private void OnExit()
 	{
-		
+		Destroy (this.gameObject);
 	}
 }
