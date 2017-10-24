@@ -48,9 +48,9 @@ public class Room
         sceneToLoad = Server.instance.sceneToLoad;
     }
 
-    public void AddEnemy(int enemyId)
+    public void AddEnemy(int enemyId, float hp)
     {
-        Enemy enemy = new Enemy(enemyId, this);
+        Enemy enemy = new Enemy(enemyId, hp,  this);
         enemigos.Add(enemy);
     }
 
@@ -81,6 +81,7 @@ public class Room
         {
             return false;
         }
+
         Jugador newPlayer = new Jugador(connectionId, GetCharId(numJugadores), this, address);
         players.Add(newPlayer);
         numJugadores++;
@@ -94,6 +95,7 @@ public class Room
             SendMessageToAllPlayers("Mago: Conectado");
             SendMessageToAllPlayers("Guerrero: Conectado");
             SendMessageToAllPlayers("Ingeniero: Conectado");
+
         }
         return true;
     }
@@ -221,6 +223,24 @@ public class Room
         if (!check)
         {
             targetPlayer.controlOverEnemies = true;
+        }
+    }
+
+    public void TellEnemiesToRegisterThemselves()
+    {
+        // Agregar al enemigo local al networking
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Test");
+
+        Debug.Log("Activating " + enemies.Length + " enemies");
+
+        foreach (GameObject enemy in enemies)
+        {
+            EnemyController enemyController = enemy.GetComponent<EnemyController>();
+
+            if (enemyController.fromEditor)
+            {
+                enemyController.SendIdToRegister();
+            }
         }
     }
 

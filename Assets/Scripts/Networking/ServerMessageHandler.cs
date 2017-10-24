@@ -62,6 +62,9 @@ public class ServerMessageHandler
             case "Power":
                 SendPowerState(message, connectionId, arreglo);
                 break;
+            case "ActivateEnemies":
+                ActivateEnemies(connectionId);
+                break;
             case "NewEnemyId":
                 NewEnemy(arreglo, connectionId);
                 break;
@@ -105,6 +108,13 @@ public class ServerMessageHandler
                 break;
         }
     }
+
+    public void ActivateEnemies(int connectionId)
+    {
+        Room room = server.GetPlayer(connectionId).room;
+        room.TellEnemiesToRegisterThemselves();
+    }
+
 
     public void SendAllData(int connectionId, Room room)
     {
@@ -210,7 +220,8 @@ public class ServerMessageHandler
     {
         Jugador player = server.GetPlayer(connectionId);
         int id = Int32.Parse(arreglo[1]);
-        player.room.AddEnemy(id);
+        float hp = float.Parse(arreglo[2]);
+        player.room.AddEnemy(id, hp);
     }
     private void SendNewGameObject(string message, int connectionId)
     {

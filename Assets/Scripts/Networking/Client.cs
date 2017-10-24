@@ -11,7 +11,8 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 
-public class Client : MonoBehaviour {
+public class Client : MonoBehaviour
+{
 
     public static Client instance;
     ClientMessageHandler handler;
@@ -24,7 +25,8 @@ public class Client : MonoBehaviour {
     int unreliableChannelId;
     int socketId; // Host ID
 
-	void Start () {
+    void Start()
+    {
 
         DontDestroyOnLoad(this);
         instance = this;
@@ -90,7 +92,7 @@ public class Client : MonoBehaviour {
         int recChannelId;
         byte[] recBuffer = new byte[NetConsts.bufferSize];
         int dataSize;
-        byte error;        
+        byte error;
         NetworkEventType recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, NetConsts.bufferSize, out dataSize, out error);
         NetworkError Error = (NetworkError)error;
         if (Error == NetworkError.MessageToLong)
@@ -106,7 +108,7 @@ public class Client : MonoBehaviour {
 
             case NetworkEventType.ConnectEvent:
                 Scene currentScene = SceneManager.GetActiveScene();
-               if (!(currentScene.name == "ClientScene"))
+                if (!(currentScene.name == "ClientScene"))
                 {
                     if (GetLocalPlayer())
                     {
@@ -122,19 +124,19 @@ public class Client : MonoBehaviour {
                 Stream stream = new MemoryStream(recBuffer);
                 BinaryFormatter formatter = new BinaryFormatter();
                 string message = formatter.Deserialize(stream) as string;
-                if(recChannelId == unreliableChannelId)
+                if (recChannelId == unreliableChannelId)
                 {
                     handler.HandleMessage(message);
                 }
-                if(recChannelId == reliableChannelId)
+                if (recChannelId == reliableChannelId)
                 {
                     ReceiveMessageFromPlanner(message, recConnectionId);
                 }
-                Debug.Log("Handling: " + message);
+                Debug.Log("From: " + connectionId +" Handling: " + message);
                 break;
 
             case NetworkEventType.DisconnectEvent:
-                if(connectionId == recConnectionId) //Detectamos que fuimos nosotros los que nos desconectamos
+                if (connectionId == recConnectionId) //Detectamos que fuimos nosotros los que nos desconectamos
                 {
                     currentScene = SceneManager.GetActiveScene();
                     if (!(currentScene.name == "ClientScene"))
@@ -151,7 +153,7 @@ public class Client : MonoBehaviour {
     private void Reconnect()
     {
         Scene currentScene = SceneManager.GetActiveScene();
-        if(! (currentScene.name == "ClientScene"))
+        if (!(currentScene.name == "ClientScene"))
         {
             //Asumo que si no estoy en la ClientScene, existe un LevelManager
             LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
@@ -163,19 +165,19 @@ public class Client : MonoBehaviour {
 
     private void ReceiveMessageFromPlanner(string message, int connectionId)
     {
-		Planner planner = FindObjectOfType<Planner> ();
-		planner.SetPlanFromServer (message);
+        Planner planner = FindObjectOfType<Planner>();
+        planner.SetPlanFromServer(message);
     }
 
-	public void StartFirstPlan()
-	{
-		Planner planner = FindObjectOfType<Planner> ();
-		planner.FirstPlan ();
-	}
+    public void StartFirstPlan()
+    {
+        Planner planner = FindObjectOfType<Planner>();
+        planner.FirstPlan();
+    }
 
     public PlayerController GetPlayerController(int charId)
     {
-        
+
         PlayerController script;
         GameObject player;
 
@@ -215,43 +217,59 @@ public class Client : MonoBehaviour {
         return null;
     }
 
-  public PlayerController GetLocalPlayer()
+    public PlayerController GetLocalPlayer()
     {
-        EngineerController player3 = GameObject.FindGameObjectsWithTag("Player3")[0].GetComponent<EngineerController>();
-        WarriorController player2 = GameObject.FindGameObjectsWithTag("Player2")[0].GetComponent<WarriorController>();
-        MageController player1 = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<MageController>();
 
-        if (player1.localPlayer)
+        GameObject[] player1 = GameObject.FindGameObjectsWithTag("Player1");
+        GameObject[] player2 = GameObject.FindGameObjectsWithTag("Player2");
+        GameObject[] player3 = GameObject.FindGameObjectsWithTag("Player3");
+
+        if (player1.Length > 0)
         {
-            return player1;
+            MageController player1Controller = player1[0].GetComponent<MageController>();
+            if (player1Controller.localPlayer)
+            {
+                return player1Controller;
+            }
         }
-        if (player2.localPlayer)
+
+        if (player2.Length > 0)
         {
-            return player2;
+            WarriorController player2Controller = player2[0].GetComponent<WarriorController>();
+            if (player2Controller.localPlayer)
+            {
+                return player2Controller;
+            }
         }
-        if (player3.localPlayer)
+
+        if (player3.Length > 0)
         {
-            return player3;
+            EngineerController player3Controller = player3[0].GetComponent<EngineerController>();
+            if (player3Controller.localPlayer)
+            {
+                return player3Controller;
+            }
         }
+
         return null;
     }
-	public PlayerController GetById(int playerId)
-	{
-		if (playerId == 0) 
-		{
-			return GetMage ();
-		} 
+    public PlayerController GetById(int playerId)
+    {
+        if (playerId == 0)
+        {
+            return GetMage();
+        }
 
-		else if (playerId == 1) 
-		{
-			return GetWarrior ();
-		}
+        else if (playerId == 1)
+        {
+            return GetWarrior();
+        }
 
-		else 
-		{
-			return GetEngineer ();
-		}
-	}
+        else
+        {
+            return GetEngineer();
+        }
+    }
 
     public MageController GetMage()
     {
@@ -260,14 +278,14 @@ public class Client : MonoBehaviour {
         return script;
     }
 
-	public WarriorController GetWarrior()
-	{
-		GameObject player = GameObject.FindGameObjectsWithTag("Player2")[0];
-		WarriorController script = player.GetComponent<WarriorController>();
-		return script;
-	}
+    public WarriorController GetWarrior()
+    {
+        GameObject player = GameObject.FindGameObjectsWithTag("Player2")[0];
+        WarriorController script = player.GetComponent<WarriorController>();
+        return script;
+    }
 
-    public EngineerController GetEngineer() 
+    public EngineerController GetEngineer()
     {
         GameObject player = GameObject.FindGameObjectsWithTag("Player3")[0];
         EngineerController script = player.GetComponent<EngineerController>();

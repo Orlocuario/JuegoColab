@@ -14,17 +14,18 @@ public class Enemy {
     public LevelManager levelManager;
     public Room room;
 
-    public Enemy(int enemyId, Room room)
+    public Enemy(int enemyId, float hp, Room room)
     {
         Debug.Log("New enemy " + enemyId + " with " + hp  + " hp");
 
         this.enemyId = enemyId;
         this.room = room;
+        this.hp = hp;
     }
 
-    public void ReduceHp(float hp)
+    public void ReduceHp(float damage)
     {
-        this.hp -= hp;
+        this.hp -= damage;
         if (IsDead())
         {
             Die();

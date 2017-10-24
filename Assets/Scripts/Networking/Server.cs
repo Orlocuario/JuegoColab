@@ -101,7 +101,11 @@ public class Server : MonoBehaviour {
                 Stream stream = new MemoryStream(recBuffer);
                 BinaryFormatter formatter = new BinaryFormatter();
                 string message = formatter.Deserialize(stream) as string;
-                if(recChannelId == channelId)
+                string hora = HoraMinuto();
+
+                UnityEngine.Debug.Log("At: " + hora + "From: " + recConnectionId + " Handling: " + message);
+
+                if (recChannelId == channelId)
                 {
                     //Mensaje corto normal
                     messageHandler.HandleMessage(message, recConnectionId);
@@ -112,13 +116,27 @@ public class Server : MonoBehaviour {
                     //Mensaje largo. Planner
                     SendMessagToPlanner(message, recConnectionId);
                 }
-                UnityEngine.Debug.Log("Handling: " + message);
+
                 break;
             case NetworkEventType.DisconnectEvent:
                 DeleteConnection(recConnectionId);
                 UnityEngine.Debug.Log("Client " + recConnectionId + " disconnected");
                 break;
         }
+    }
+
+    private string HoraMinuto()
+    {
+        string hora = DateTime.Now.Hour.ToString();
+        string minutos = DateTime.Now.Minute.ToString();
+
+        if (minutos.Length == 1)
+        {
+            minutos = "0" + minutos;
+        }
+
+        string tiempo = " (" + hora + ":" + minutos + ")";
+        return tiempo;
     }
 
     public void SendMessageToClient(int clientId, string message)

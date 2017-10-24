@@ -43,6 +43,7 @@ TagManager:
   - Poi
   - ExperienceItem
   - Enemy
+  - Test
   layers:
   - Default
   - TransparentFX
