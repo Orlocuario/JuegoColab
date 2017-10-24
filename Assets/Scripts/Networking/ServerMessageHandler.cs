@@ -62,9 +62,6 @@ public class ServerMessageHandler
             case "Power":
                 SendPowerState(message, connectionId, arreglo);
                 break;
-            case "ActivateEnemies":
-                ActivateEnemies(connectionId);
-                break;
             case "NewEnemyId":
                 NewEnemy(arreglo, connectionId);
                 break;
@@ -108,13 +105,6 @@ public class ServerMessageHandler
                 break;
         }
     }
-
-    public void ActivateEnemies(int connectionId)
-    {
-        Room room = server.GetPlayer(connectionId).room;
-        room.TellEnemiesToRegisterThemselves();
-    }
-
 
     public void SendAllData(int connectionId, Room room)
     {

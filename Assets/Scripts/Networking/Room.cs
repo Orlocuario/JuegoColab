@@ -226,24 +226,6 @@ public class Room
         }
     }
 
-    public void TellEnemiesToRegisterThemselves()
-    {
-        // Agregar al enemigo local al networking
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Test");
-
-        Debug.Log("Activating " + enemies.Length + " enemies");
-
-        foreach (GameObject enemy in enemies)
-        {
-            EnemyController enemyController = enemy.GetComponent<EnemyController>();
-
-            if (enemyController.fromEditor)
-            {
-                enemyController.SendIdToRegister();
-            }
-        }
-    }
-
     //Set current controller to False, and find a new one that is connected
     public void ChangeControlEnemies()
     {
