@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
 
     public static float maxAcceleration = 1; //100% del speed
     private static float maxYSpeed = 8f;
-    public static float maxXSpeed = 4.5f;
+    public static float maxXSpeed = 3.5f;
     public float acceleration = 0f;
     public bool canAccelerate = false; //Limita la aceleración a la mitad de los frames
 
