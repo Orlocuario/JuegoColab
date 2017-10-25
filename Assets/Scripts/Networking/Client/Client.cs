@@ -16,6 +16,7 @@ public class Client : MonoBehaviour
 
     public static Client instance;
     ClientMessageHandler handler;
+    HostTopology topology;
 
     private static int maxConnections = 12;
 
@@ -24,6 +25,7 @@ public class Client : MonoBehaviour
     string serverIp;
     int unreliableChannelId;
     int socketId; // Host ID
+    int port;
 
     void Start()
     {
@@ -38,18 +40,30 @@ public class Client : MonoBehaviour
         unreliableChannelId = config.AddChannel(QosType.Unreliable);
         reliableChannelId = config.AddChannel(QosType.ReliableFragmented);
 
-        HostTopology topology = new HostTopology(config, maxConnections);
-
-        socketId = NetworkTransport.AddHost(topology, NetworkConsts.port);
+        topology = new HostTopology(config, maxConnections);
 
         handler = new ClientMessageHandler();
     }
 
-    public void Connect(string ip)
+    public bool Connect(string ip, int port)
     {
-        byte error;
-        serverIp = ip;
-        connectionId = NetworkTransport.Connect(socketId, ip, NetworkConsts.port, 0, out error);
+        try
+        {
+
+            this.port = port;
+            socketId = NetworkTransport.AddHost(topology, port);
+
+            byte error;
+            serverIp = ip;
+            connectionId = NetworkTransport.Connect(socketId, ip, port, 0, out error);
+            return true;
+        }
+        catch
+        {
+            Debug.Log("Connection to server failed");
+            return false;
+        }
+
     }
 
     public void Connect()
@@ -57,7 +71,7 @@ public class Client : MonoBehaviour
         try
         {
             byte error;
-            connectionId = NetworkTransport.Connect(socketId, serverIp, NetworkConsts.port, 0, out error);
+            connectionId = NetworkTransport.Connect(socketId, serverIp, port, 0, out error);
         }
         catch
         {
@@ -250,7 +264,7 @@ public class Client : MonoBehaviour
 
         GameObject player1 = GameObject.Find("Mage");
         GameObject player2 = GameObject.Find("Warrior");
-        GameObject player3 = GameObject.Find("Engineer"); 
+        GameObject player3 = GameObject.Find("Engineer");
 
         if (player1 != null)
         {

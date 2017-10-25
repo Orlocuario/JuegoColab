@@ -16,15 +16,35 @@ public class ClientNetworkDiscovery : NetworkDiscovery
 
     public void InitializeListening()
     {
-        StartAsClient();
-        GameObject.Find("ConnectText").GetComponent<Text>().text = "Conectando...";
+
+        if (StartAsClient())
+        {
+            Debug.Log("Client started listenting locally");
+            GameObject.Find("ConnectText").GetComponent<Text>().text = "Conectando...";
+        }
+
     }
 
     public override void OnReceivedBroadcast(string fromAddress, string data)
     {
-        StopBroadcast();
-        scriptClient.Connect(fromAddress);
+        char[] separator = new char[1] { '/' };
+        string[] parsedData = data.Split(separator);
+
+        if (parsedData.Length > 0 && parsedData[0] == "port")
+        {
+            Debug.Log("Client received broadcast from " + fromAddress + ":" + parsedData[1]);
+        }
+
+        bool connected = false;
+
+        while (!connected)
+        {
+            connected = scriptClient.Connect(fromAddress, int.Parse(parsedData[1]));
+        }
+
         GameObject.Find("ConnectText").GetComponent<Text>().text = "Esperando...";
+        StopBroadcast();
 
     }
+
 }

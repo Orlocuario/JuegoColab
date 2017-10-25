@@ -11,11 +11,15 @@ using System.Threading;
 
 public class Server : MonoBehaviour {
 
+    public int port;
+
     public int maxConnections;
+
     int socketId;
     int channelId;
     int bigChannelId;
     int timesScene1IsLoaded;
+
     public List<Room> rooms;
     public ServerMessageHandler messageHandler;
     public static Server instance;
@@ -48,19 +52,30 @@ public class Server : MonoBehaviour {
     {
 
         NPCsLastMessage = "";
-        maxJugadores = 1;
+        maxJugadores = 3;
         instance = this;
         timesScene1IsLoaded = 0;
+
         NetworkTransport.Init();
+
         ConnectionConfig config = new ConnectionConfig();
+
         channelId = config.AddChannel(QosType.Unreliable);
         bigChannelId = config.AddChannel(QosType.ReliableFragmented);
+
         HostTopology topology = new HostTopology(config, maxConnections);
-        socketId = NetworkTransport.AddHost(topology, NetworkConsts.port);
+
+        port = NetworkConsts.port;
+
+        socketId = NetworkTransport.AddHost(topology, port);
+
         rooms = new List<Room>();
+
         messageHandler = new ServerMessageHandler(this);
+
         planner = new Thread(new ThreadStart(this.Plan));
 	    planner.Start ();
+
         this.sceneToLoad = "Escena2";
     }
 
