@@ -7,7 +7,7 @@ public class EspirituController : EnemyController
 
     protected override void Start()
     {
-        force = new Vector2(1500f, 500f);
+        force = new Vector2(1500f, 200f);
         damage = 2;
         maxHp = 20f;
         base.Start();
@@ -15,10 +15,12 @@ public class EspirituController : EnemyController
 
     protected override void Update()
     {
+        base.Update();
         if (patrolling)
         {
             Patroll();
         }
+
     }
 
 }

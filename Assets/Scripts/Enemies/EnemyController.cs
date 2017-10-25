@@ -17,15 +17,19 @@ public class EnemyController : MonoBehaviour
 
     protected static Vector2 initialPosition;
     protected static float patrollingDistance = .75f;
+    protected static float alertDistanceFactor = 1.5f;
     private static float maxYSpeed = 0f;
     public static float maxXSpeed = .5f;
 
     public int directionX = -1;  // 1 = derecha, -1 = izquierda
 
-    protected Vector2 force = new Vector2(0,0);
-    protected int damage = 0; 
+    protected Vector2 force = new Vector2(0, 0);
+    protected int damage = 0;
 
+    protected float alertDistance;
     protected bool patrolling;
+    protected bool attacking;
+
     public bool fromEditor;
     public int enemyId;
 
@@ -35,7 +39,10 @@ public class EnemyController : MonoBehaviour
         levelManager = FindObjectOfType<LevelManager>();
         rb2d = GetComponent<Rigidbody2D>();
 
+        Collider2D collider = GetComponent<Collider2D>();
+
         initialPosition = transform.position;
+        alertDistance = collider.bounds.size.x * alertDistanceFactor;
 
         hp = maxHp;
     }
@@ -49,7 +56,31 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
+        Attack();
+    }
 
+    protected void Attack()
+    {
+        DrawAlertDistance(); //  Only works on editor mode
+
+        foreach (GameObject player in levelManager.players)
+        {
+            if (Vector3.Distance(transform.position, player.transform.position) < alertDistance)
+            {
+                DealDamage(player);
+                return;
+            }
+        }
+
+    }
+
+    protected void DrawAlertDistance()
+    {
+        Vector3 left = new Vector3(transform.position.x - alertDistance, transform.position.y, transform.position.z);
+        Vector3 right = new Vector3(transform.position.x + alertDistance, transform.position.y, transform.position.z);
+
+        Debug.DrawLine(left, transform.position, Color.blue);
+        Debug.DrawLine(transform.position, right, Color.red);
     }
 
     protected virtual void Patroll()
@@ -73,7 +104,6 @@ public class EnemyController : MonoBehaviour
             transform.localScale = new Vector3(-directionX, 1f, 1f);
         }
 
-
         float speedX = maxXSpeed * directionX;
         float speedY = maxYSpeed;
 
@@ -91,12 +121,9 @@ public class EnemyController : MonoBehaviour
 
             if (localPlayer != null)
             {
-
                 if (localPlayer.controlOverEnemies)
                 {
                     Debug.Log(this.gameObject.name + " took " + damage);
-
-                    //hp -= damage;
                     SendHpDataToServer(damage);
                 }
             }
@@ -134,19 +161,6 @@ public class EnemyController : MonoBehaviour
         Client.instance.SendMessageToServer(message);
     }
 
-    public void OnDamageEnd(string s)
-    {
-        Debug.Log(s);
-        animator.SetBool("isDamaged", false);
-    }
-
-    public void OnDiedEnd(string s)
-    {
-        Debug.Log(s);
-        this.gameObject.SetActive(false);
-        Destroy(this.gameObject);
-    }
-
     public void StartPatrolling()
     {
         patrolling = true;
@@ -160,6 +174,17 @@ public class EnemyController : MonoBehaviour
     protected void DealDamage(GameObject player)
     {
 
+        if (!animator.GetBool("isAttacking"))
+        {
+            animator.SetBool("isAttacking", true);
+        }
+
+        if (!attacking)
+        {
+            return;
+        }
+
+
         Vector2 playerPosition = player.transform.position;
         PlayerController playerController = player.GetComponent<PlayerController>();
 
@@ -172,6 +197,9 @@ public class EnemyController : MonoBehaviour
         }
 
         playerController.TakeDamage(damage, attackForce);
+
+        attacking = false;
+
     }
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -181,4 +209,27 @@ public class EnemyController : MonoBehaviour
             DealDamage(collision.gameObject);
         }
     }
+
+    public void OnAttackEnd(string s)
+    {
+        animator.SetBool("isAttacking", false);
+    }
+
+    public void OnDamageEnd(string s)
+    {
+        animator.SetBool("isDamaged", false);
+    }
+
+    public void OnDiedEnd(string s)
+    {
+        this.gameObject.SetActive(false);
+        Destroy(this.gameObject);
+    }
+
+    public void OnAttackStarted(string s)
+    {
+        attacking = true;
+    }
+
+
 }
