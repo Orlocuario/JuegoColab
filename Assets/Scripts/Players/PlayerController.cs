@@ -63,7 +63,6 @@ public class PlayerController : MonoBehaviour
 
     DisplayHUD hpAndMp;
 
-
     protected virtual void Start()
     {
         remoteAttacking = false;

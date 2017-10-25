@@ -5,10 +5,14 @@ using UnityEngine;
 public class EspirituController : EnemyController
 {
 
-    // Use this for initialization
     protected override void Start () {
         this.maxHp = 20f;
         base.Start();
 	}
+
+    protected override void Update()
+    {
+        Patroll();
+    }
 
 }
