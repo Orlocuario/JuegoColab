@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 
-public class Broadcasting : NetworkDiscovery
+public class ServerNetworkDiscovery : NetworkDiscovery
 {
 
     public void ServerInitialize()

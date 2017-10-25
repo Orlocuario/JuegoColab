@@ -56,7 +56,7 @@ public class Server : MonoBehaviour {
         channelId = config.AddChannel(QosType.Unreliable);
         bigChannelId = config.AddChannel(QosType.ReliableFragmented);
         HostTopology topology = new HostTopology(config, maxConnections);
-        socketId = NetworkTransport.AddHost(topology, NetConsts.port);
+        socketId = NetworkTransport.AddHost(topology, NetworkConsts.port);
         rooms = new List<Room>();
         messageHandler = new ServerMessageHandler(this);
         planner = new Thread(new ThreadStart(this.Plan));
@@ -78,16 +78,16 @@ public class Server : MonoBehaviour {
         int recSocketId;
         int recConnectionId; // Reconoce la ID del jugador
         int recChannelId;
-        byte[] recBuffer = new byte[NetConsts.bufferSize];
+        byte[] recBuffer = new byte[NetworkConsts.bufferSize];
         int dataSize;
         byte error;
-        NetworkEventType recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, NetConsts.bufferSize, out dataSize, out error);
+        NetworkEventType recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, NetworkConsts.bufferSize, out dataSize, out error);
         NetworkError Error = (NetworkError)error;
         if (Error == NetworkError.MessageToLong)
         {
             //Trata de capturar el mensaje denuevo, pero asumiendo buffer más grande.
-            recBuffer = new byte[NetConsts.bigBufferSize];
-            recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, NetConsts.bigBufferSize, out dataSize, out error);
+            recBuffer = new byte[NetworkConsts.bigBufferSize];
+            recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, NetworkConsts.bigBufferSize, out dataSize, out error);
         }
         switch (recNetworkEvent)
         {
@@ -152,25 +152,25 @@ public class Server : MonoBehaviour {
     {
         byte error;
         //int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
-        byte[] buffer = new byte[NetConsts.bufferSize];
+        byte[] buffer = new byte[NetworkConsts.bufferSize];
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, message);
-        NetworkTransport.Send(socketId, clientId, channelId, buffer, NetConsts.bufferSize, out error);
+        NetworkTransport.Send(socketId, clientId, channelId, buffer, NetworkConsts.bufferSize, out error);
     }
 
     public void SendPlannerInfoToClient(int clientId, string message)
     {
         byte error;
         //int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
-        byte[] buffer = new byte[NetConsts.bigBufferSize];
+        byte[] buffer = new byte[NetworkConsts.bigBufferSize];
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, message);
-        NetworkTransport.Send(socketId, clientId, bigChannelId, buffer, NetConsts.bigBufferSize, out error);
+        NetworkTransport.Send(socketId, clientId, bigChannelId, buffer, NetworkConsts.bigBufferSize, out error);
     }
 
-    public void SendMessageToClient(Jugador player, string message)
+    public void SendMessageToClient(NetworkPlayer player, string message)
     {
         SendMessageToClient(player.connectionId, message);
     }
@@ -184,7 +184,7 @@ public class Server : MonoBehaviour {
         UnityEngine.Networking.Types.NodeID recNodeId;
         byte recError;
         NetworkTransport.GetConnectionInfo(socketId, connectionId, out recAddress, out port, out recNetId, out recNodeId, out recError);
-        Jugador player = GetPlayer(recAddress);
+        NetworkPlayer player = GetPlayer(recAddress);
         if (player != null)
         {
             player.connected = true;
@@ -211,7 +211,7 @@ public class Server : MonoBehaviour {
 
     private void DeleteConnection(int connectionId)
     {
-        Jugador player = GetPlayer(connectionId);
+        NetworkPlayer player = GetPlayer(connectionId);
         if (player != null)
         {
             player.connected = false;
@@ -237,11 +237,11 @@ public class Server : MonoBehaviour {
         }
     }
 
-    public Jugador GetPlayer(int connectionId)
+    public NetworkPlayer GetPlayer(int connectionId)
     {
         foreach (Room room in rooms)
         {
-            Jugador player = room.FindPlayerInRoom(connectionId);
+            NetworkPlayer player = room.FindPlayerInRoom(connectionId);
             if (player != null)
             {
                 return room.FindPlayerInRoom(connectionId);
@@ -250,11 +250,11 @@ public class Server : MonoBehaviour {
         return null;
     }
 
-    public Jugador GetPlayer(string address)
+    public NetworkPlayer GetPlayer(string address)
     {
         foreach (Room room in rooms)
         {
-            Jugador player = room.FindPlayerInRoom(address);
+            NetworkPlayer player = room.FindPlayerInRoom(address);
             if (player != null)
             {
                 return room.FindPlayerInRoom(address);

@@ -1,6 +1,6 @@
 ﻿
 
-public static class NetConsts
+public static class NetworkConsts
 {
 
     public static int port = 7777;

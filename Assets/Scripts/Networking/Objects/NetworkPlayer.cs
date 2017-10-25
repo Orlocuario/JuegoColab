@@ -3,7 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
-public class Jugador
+public class NetworkPlayer
 {
     public int connectionId;
     public Room room;
@@ -23,7 +23,7 @@ public class Jugador
     public string[] inventory = new string[8];
     public string ipAddress;
 
-    public Jugador(int connectionId, int charId, Room room, string address)
+    public NetworkPlayer(int connectionId, int charId, Room room, string address)
     {
         this.ipAddress = address;
         this.connectionId = connectionId;

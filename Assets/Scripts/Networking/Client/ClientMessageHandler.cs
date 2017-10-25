@@ -282,7 +282,7 @@ public class ClientMessageHandler
         {
             return;
         }
-        DisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
+        GlobalDisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
         displayHudScript.CurrentHP(arreglo[1]);
     }
 
@@ -293,7 +293,7 @@ public class ClientMessageHandler
         {
             return;
         }
-        DisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
+        GlobalDisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
         displayHudScript.CurrentMP(arreglo[1]);
     }
 
@@ -304,7 +304,7 @@ public class ClientMessageHandler
         {
             return;
         }
-        DisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
+        GlobalDisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
         displayHudScript.ExperienceBar(arreglo[1]);
     }
 

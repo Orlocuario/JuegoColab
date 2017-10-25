@@ -8,11 +8,11 @@ using UnityEngine.Networking;
 public class Room
 {
     public ServerMessageHandler sender;
-    public List<Enemy> enemigos;
+    public List<NetworkEnemy> enemigos;
     public List<ServerSwitch> switchs;
-    public List<Jugador> players;
+    public List<NetworkPlayer> players;
     public Server server;
-    public HpAndManaHUD hpManaGer;
+    public GlobalHpMpHUD hpManaGer;
     public string sceneToLoad;
     public int numJugadores;
     public int maxJugadores;
@@ -32,25 +32,25 @@ public class Room
         this.maxJugadores = maxJugadores;
         this.id = id;
 
-        hpManaGer = new HpAndManaHUD(this);
+        hpManaGer = new GlobalHpMpHUD(this);
         switchs = new List<ServerSwitch>();
-        players = new List<Jugador>();
-        enemigos = new List<Enemy>();
+        players = new List<NetworkPlayer>();
+        enemigos = new List<NetworkEnemy>();
 
         this.server = server;
         this.sender = sender;
 
         started = false;
         historial = "";
-        hpManaGer = new HpAndManaHUD(this);
-        enemigos = new List<Enemy>();
+        hpManaGer = new GlobalHpMpHUD(this);
+        enemigos = new List<NetworkEnemy>();
         activatedGroups = new List<int>();
         sceneToLoad = Server.instance.sceneToLoad;
     }
 
     public void AddEnemy(int enemyId, float hp)
     {
-        Enemy enemy = new Enemy(enemyId, hp,  this);
+        NetworkEnemy enemy = new NetworkEnemy(enemyId, hp,  this);
         enemigos.Add(enemy);
     }
 
@@ -82,7 +82,7 @@ public class Room
             return false;
         }
 
-        Jugador newPlayer = new Jugador(connectionId, GetCharId(numJugadores), this, address);
+        NetworkPlayer newPlayer = new NetworkPlayer(connectionId, GetCharId(numJugadores), this, address);
         players.Add(newPlayer);
         numJugadores++;
         SetControlEnemies(newPlayer);
@@ -105,9 +105,9 @@ public class Room
         return numJugadores;
     }
 
-    public Enemy GetEnemy(int id)
+    public NetworkEnemy GetEnemy(int id)
     {
-        foreach(Enemy enemy in enemigos)
+        foreach(NetworkEnemy enemy in enemigos)
         {
             if(enemy.enemyId == id)
             {
@@ -117,9 +117,9 @@ public class Room
         return null;
     }
 
-    public Jugador FindPlayerInRoom(int id)
+    public NetworkPlayer FindPlayerInRoom(int id)
     {
-        foreach(Jugador player in players)
+        foreach(NetworkPlayer player in players)
         {
             if (player.connectionId == id)
             {
@@ -129,9 +129,9 @@ public class Room
         return null;
     }
 
-    public Jugador FindPlayerInRoom(string address)
+    public NetworkPlayer FindPlayerInRoom(string address)
     {
-        foreach (Jugador player in players)
+        foreach (NetworkPlayer player in players)
         {
             if (player.ipAddress == address)
             {
@@ -152,7 +152,7 @@ public class Room
             historial += "\r\n" + actualChat + HoraMinuto();
         }
 
-        foreach (Jugador player in players)
+        foreach (NetworkPlayer player in players)
         {
             if (player.connected)
             {
@@ -163,7 +163,7 @@ public class Room
 
     public void SendMessageToAllPlayersExceptOne(string message, int connectionId)
     {
-        foreach (Jugador player in players)
+        foreach (NetworkPlayer player in players)
         {
             if (player.connected && player.connectionId!=connectionId)
             {
@@ -174,7 +174,7 @@ public class Room
 
     public void SendMessageToPlayer(string message, int connectionId)
     {
-        foreach (Jugador player in players)
+        foreach (NetworkPlayer player in players)
         {
             if (player.connected && player.connectionId == connectionId)
             {
@@ -210,10 +210,10 @@ public class Room
         }
     }
 
-    private void SetControlEnemies(Jugador targetPlayer)
+    private void SetControlEnemies(NetworkPlayer targetPlayer)
     {
         bool check = false;
-        foreach(Jugador player in players)
+        foreach(NetworkPlayer player in players)
         {
             if(player.controlOverEnemies == true)
             {
@@ -229,14 +229,14 @@ public class Room
     //Set current controller to False, and find a new one that is connected
     public void ChangeControlEnemies()
     {
-        foreach(Jugador player in players)
+        foreach(NetworkPlayer player in players)
         {
             if(player.controlOverEnemies == true)
             {
                 player.controlOverEnemies = false;
             }
         }
-        foreach(Jugador player in players)
+        foreach(NetworkPlayer player in players)
         {
             if(player.connected == true)
             {
@@ -246,7 +246,7 @@ public class Room
         }
     }
 
-    private void SendControlSignal(Jugador player)
+    private void SendControlSignal(NetworkPlayer player)
     {
         string message = "SetControlOverEnemies";
         Server.instance.SendMessageToClient(player, message);

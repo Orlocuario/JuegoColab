@@ -109,7 +109,7 @@ public class ServerMessageHandler
     public void SendAllData(int connectionId, Room room)
     {
 
-        foreach (Jugador player in room.players)
+        foreach (NetworkPlayer player in room.players)
         {
             room.SendMessageToPlayer(player.GetReconnectData(), connectionId);
         }
@@ -123,7 +123,7 @@ public class ServerMessageHandler
 
     private void SendIgnoreBoxCircleCollision(string message, int connectionId)
     {
-        Jugador player = server.GetPlayer(connectionId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         room.SendMessageToAllPlayers(message);
     }
@@ -135,7 +135,7 @@ public class ServerMessageHandler
 		int newConnectionId = 0;
 		Room room = server.GetPlayer (connectionId).room;
 		room.WriteFeedbackHistorial (message + "/" + playerId);
-		foreach (Jugador jugador in room.players) {
+		foreach (NetworkPlayer jugador in room.players) {
 			if (playerId == jugador.charId) {
 				newConnectionId = jugador.connectionId;
 				break;
@@ -151,21 +151,21 @@ public class ServerMessageHandler
 
     private void SendActivationMachine(string message, int connectionId)
     {
-        Jugador player = server.GetPlayer(connectionId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 
     private void SendActivationDoor(string message, int connectionId)
     {
-        Jugador player = server.GetPlayer(connectionId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         room.SendMessageToAllPlayers(message);
     }
 
     private void SendSwitchGroupAction(string message, string[] arreglo,int connectionId)
     {
-        Jugador player = server.GetPlayer(connectionId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         int groupId = Int32.Parse(arreglo[1]);
         if (!room.activatedGroups.Contains(groupId))
@@ -179,7 +179,7 @@ public class ServerMessageHandler
         int groupId = Int32.Parse(arreglo[1]);
         int individualId = Int32.Parse(arreglo[2]);
         bool on = bool.Parse(arreglo[3]);
-        Jugador player = server.GetPlayer(connectionId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         room.SetSwitchOn(on, groupId, individualId);
         room.SendMessageToAllPlayersExceptOne(message, connectionId);
@@ -190,8 +190,8 @@ public class ServerMessageHandler
         int enemyId = Int32.Parse(arreglo[1]);
         float posX = float.Parse(arreglo[2]);
         float posY = float.Parse(arreglo[3]);
-        Jugador player = server.GetPlayer(connectionId);
-        Enemy enemy = player.room.GetEnemy(enemyId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
+        NetworkEnemy enemy = player.room.GetEnemy(enemyId);
         enemy.posX = posX;
         enemy.posY = posY;
         player.room.SendMessageToAllPlayersExceptOne(message, connectionId);
@@ -201,14 +201,14 @@ public class ServerMessageHandler
     {
         int enemyId = Int32.Parse(arreglo[1]);
         float enemyHp = float.Parse(arreglo[2]);
-        Jugador player = server.GetPlayer(connectionId);
-        Enemy enemy = player.room.GetEnemy(enemyId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
+        NetworkEnemy enemy = player.room.GetEnemy(enemyId);
         enemy.ReduceHp(enemyHp);
     }
 
     private void NewEnemy(string[] arreglo, int connectionId)
     {
-        Jugador player = server.GetPlayer(connectionId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
         int id = Int32.Parse(arreglo[1]);
         float hp = float.Parse(arreglo[2]);
         player.room.AddEnemy(id, hp);
@@ -218,7 +218,7 @@ public class ServerMessageHandler
     }
     private void SendNewGameObject(string message, int connectionId)
     {
-        Jugador player = server.GetPlayer(connectionId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         int charId = player.charId;
         room.SendMessageToAllPlayers(message + "/" + charId.ToString());
@@ -226,76 +226,76 @@ public class ServerMessageHandler
 
     private void SendInventoryUpdate(string message, int connectionId)
     {
-        Jugador player = server.GetPlayer(connectionId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
         player.InventoryUpdate(message);
     }
 
     private void SendDestroyObject(string message, int connectionId)
     {
-        Jugador player = server.GetPlayer(connectionId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         room.SendMessageToAllPlayers(message);
     }
 
 	private void SendOthersDestroyObject (string message, int connectionId)
 	{
-		Jugador player = server.GetPlayer(connectionId);
+		NetworkPlayer player = server.GetPlayer(connectionId);
 		Room room = player.room;
 		room.SendMessageToAllPlayersExceptOne (message, connectionId);
 	}
 
     private void SendHpHUDToRoom(string[] arreglo, int connectionId)
     {
-        Jugador player = server.GetPlayer(connectionId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         room.hpManaGer.ChangeHP(arreglo[1]);
     }
 
     private void SendMpHUDToRoom(string[] arreglo, int connectionId)
     {
-        Jugador player = server.GetPlayer(connectionId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         room.hpManaGer.ChangeMP(arreglo[1]);
     }
 
     private void SendHpHAndMpHUDToRoom(string[] arreglo, int connectionId)
     {
-        Jugador player = server.GetPlayer(connectionId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         room.hpManaGer.RecieveHpAndMpHUD(arreglo[1]);
     }
 
     private void SendExpToRoom(string[] arreglo, int connectionId)
     {
-        Jugador player = server.GetPlayer(connectionId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         room.hpManaGer.ChangeExp(arreglo[1]);
     }
 
     private void SendNewFireball(string message, int connectionId, string[] data)
     {
-        Jugador player = server.GetPlayer(connectionId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 
     private void SendNewProjectile(string message, int connectionId, string[] data)
     {
-        Jugador player = server.GetPlayer(connectionId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 
     private void SendNewChatMessage(string chatMessage, int connectionID)
     {
-        Jugador player = server.GetPlayer(connectionID);
+        NetworkPlayer player = server.GetPlayer(connectionID);
         Room room = player.room;
         room.SendMessageToAllPlayers(chatMessage);
     }
 
     private void SendUpdatedPosition(string message, int connectionID, string[] data)
     {
-        Jugador player = server.GetPlayer(connectionID);
+        NetworkPlayer player = server.GetPlayer(connectionID);
         Room room = player.room;
         int charId = Int32.Parse(data[1]);
         float positionX = float.Parse(data[2], CultureInfo.InvariantCulture);
@@ -320,21 +320,21 @@ public class ServerMessageHandler
 
     private void SendUpdatedObjectPosition(string message, int connectionId)
     {
-        Jugador player = server.GetPlayer(connectionId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 
     private void SendInstantiation(string message, int connectionId)
     {
-        Jugador player = server.GetPlayer(connectionId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         room.SendMessageToAllPlayers(message);
     }
 
     private void SendCharIdAndControl(int connectionId)
     {
-        Jugador player = server.GetPlayer(connectionId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
         int charId = player.charId;
         string message = "SetCharId/" + charId + "/" + player.controlOverEnemies;
         server.SendMessageToClient(connectionId, message);
@@ -349,14 +349,14 @@ public class ServerMessageHandler
 
     public void SendAttackState(string message, int connectionId, string[] data)
     {
-        Jugador player = server.GetPlayer(connectionId);
+        NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         player.attacking = bool.Parse(data[2]);
         room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 	public void SendPowerState(string message, int connectionId, string[] data)
 	{
-		Jugador player = server.GetPlayer (connectionId);
+		NetworkPlayer player = server.GetPlayer (connectionId);
 		Room room = player.room;
 		player.power = bool.Parse (data [2]);
 		room.SendMessageToAllPlayersExceptOne (message, connectionId);

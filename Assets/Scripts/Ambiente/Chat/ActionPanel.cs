@@ -17,13 +17,13 @@ public class ActionPanel : MonoBehaviour {
 
     public void ServerButton()
     {
-        Broadcasting script = Server.instance.gameObject.GetComponent<Broadcasting>();
+        ServerNetworkDiscovery script = Server.instance.gameObject.GetComponent<ServerNetworkDiscovery>();
         script.ServerInitialize();
     }
 
     public void ResetServer()
     {
-        Broadcasting script = Server.instance.gameObject.GetComponent<Broadcasting>();
+        ServerNetworkDiscovery script = Server.instance.gameObject.GetComponent<ServerNetworkDiscovery>();
         script.ResetServer();
     }
 

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class HpAndManaHUD {
+public class GlobalHpMpHUD {
 
     public float maxHP;
     public float maxMP;
@@ -18,7 +18,7 @@ public class HpAndManaHUD {
 
     Room room;
 
-    public HpAndManaHUD(Room room)
+    public GlobalHpMpHUD(Room room)
     {                         
         this.room = room;
         maxHP = 250;

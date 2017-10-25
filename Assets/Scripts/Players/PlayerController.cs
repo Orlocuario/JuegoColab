@@ -61,7 +61,7 @@ public class PlayerController : MonoBehaviour
     public bool mpDepleted;
     private bool canMove;
 
-    DisplayHUD hpAndMp;
+    GlobalDisplayHUD hpAndMp;
 
     protected virtual void Start()
     {
@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour
         mpUpdateFrame = 0;
         mpDepleted = false;
 
-        hpAndMp = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
+        hpAndMp = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
 
         theLevelManager = FindObjectOfType<LevelManager>();
         collider = GetComponent<Collider2D>();

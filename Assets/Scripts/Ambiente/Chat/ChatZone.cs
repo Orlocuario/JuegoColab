@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ChatZone : MonoBehaviour
 {
 
-    private DisplayHUD displayHudScript;
+    private GlobalDisplayHUD displayHudScript;
     public GameObject chatButtonOff;
     public GameObject chatButtonOn;
     private Vector2 myPosition;
@@ -29,7 +29,7 @@ public class ChatZone : MonoBehaviour
 
         myPosition = gameObject.transform.position;
 
-        displayHudScript = GameObject.Find("Canvas").GetComponent<DisplayHUD>();
+        displayHudScript = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
     }
 
     private void Update()

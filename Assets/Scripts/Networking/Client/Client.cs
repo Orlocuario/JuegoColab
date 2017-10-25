@@ -40,7 +40,7 @@ public class Client : MonoBehaviour
 
         HostTopology topology = new HostTopology(config, maxConnections);
 
-        socketId = NetworkTransport.AddHost(topology, NetConsts.port);
+        socketId = NetworkTransport.AddHost(topology, NetworkConsts.port);
 
         handler = new ClientMessageHandler();
     }
@@ -49,7 +49,7 @@ public class Client : MonoBehaviour
     {
         byte error;
         serverIp = ip;
-        connectionId = NetworkTransport.Connect(socketId, ip, NetConsts.port, 0, out error);
+        connectionId = NetworkTransport.Connect(socketId, ip, NetworkConsts.port, 0, out error);
     }
 
     public void Connect()
@@ -57,7 +57,7 @@ public class Client : MonoBehaviour
         try
         {
             byte error;
-            connectionId = NetworkTransport.Connect(socketId, serverIp, NetConsts.port, 0, out error);
+            connectionId = NetworkTransport.Connect(socketId, serverIp, NetworkConsts.port, 0, out error);
         }
         catch
         {
@@ -68,21 +68,21 @@ public class Client : MonoBehaviour
     public void SendMessageToServer(string message)
     {
         byte error;
-        byte[] buffer = new byte[NetConsts.bufferSize];
+        byte[] buffer = new byte[NetworkConsts.bufferSize];
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, message);
-        NetworkTransport.Send(socketId, connectionId, unreliableChannelId, buffer, NetConsts.bufferSize, out error);
+        NetworkTransport.Send(socketId, connectionId, unreliableChannelId, buffer, NetworkConsts.bufferSize, out error);
     }
 
     public void SendMessageToPlanner(string message)
     {
         byte error;
-        byte[] buffer = new byte[NetConsts.bigBufferSize];
+        byte[] buffer = new byte[NetworkConsts.bigBufferSize];
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, message);
-        NetworkTransport.Send(socketId, connectionId, reliableChannelId, buffer, NetConsts.bigBufferSize, out error);
+        NetworkTransport.Send(socketId, connectionId, reliableChannelId, buffer, NetworkConsts.bigBufferSize, out error);
     }
 
     void LateUpdate()
@@ -90,16 +90,16 @@ public class Client : MonoBehaviour
         int recSocketId;
         int recConnectionId; // Reconoce la ID del jugador
         int recChannelId;
-        byte[] recBuffer = new byte[NetConsts.bufferSize];
+        byte[] recBuffer = new byte[NetworkConsts.bufferSize];
         int dataSize;
         byte error;
-        NetworkEventType recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, NetConsts.bufferSize, out dataSize, out error);
+        NetworkEventType recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, NetworkConsts.bufferSize, out dataSize, out error);
         NetworkError Error = (NetworkError)error;
         if (Error == NetworkError.MessageToLong)
         {
             //Trata de capturar el mensaje denuevo, pero asumiendo buffer más grande.
-            recBuffer = new byte[NetConsts.bigBufferSize];
-            recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, NetConsts.bigBufferSize, out dataSize, out error);
+            recBuffer = new byte[NetworkConsts.bigBufferSize];
+            recNetworkEvent = NetworkTransport.Receive(out recSocketId, out recConnectionId, out recChannelId, recBuffer, NetworkConsts.bigBufferSize, out dataSize, out error);
         }
         switch (recNetworkEvent)
         {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class DisplayHUD: MonoBehaviour{
+public class GlobalDisplayHUD: MonoBehaviour {
     
     public float maxHP;
     public float maxMP;

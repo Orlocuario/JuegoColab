@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Enemy {
+public class NetworkEnemy {
 
     public float posX;
     public float posY;
@@ -14,7 +14,7 @@ public class Enemy {
     public LevelManager levelManager;
     public Room room;
 
-    public Enemy(int enemyId, float hp, Room room)
+    public NetworkEnemy(int enemyId, float hp, Room room)
     {
         Debug.Log("New enemy " + enemyId + " with " + hp  + " hp");
 

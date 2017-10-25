@@ -10,7 +10,7 @@ public class TouchController : MonoBehaviour {
     public void OnClick()
     {
         GameObject client = GameObject.Find("ClientObject");
-        Listening listen = client.GetComponent<Listening>();
+        ClientNetworkDiscovery listen = client.GetComponent<ClientNetworkDiscovery>();
         GameObject.Find("ConnectText").GetComponent<Text>().text = "Conectar";
         listen.InitializeListening();
 

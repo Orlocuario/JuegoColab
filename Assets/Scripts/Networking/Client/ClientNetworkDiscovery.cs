@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Networking;
 using UnityEngine.UI;
-public class Listening : NetworkDiscovery
+
+public class ClientNetworkDiscovery : NetworkDiscovery
 {
     Client scriptClient;
     // Use this for initialization
