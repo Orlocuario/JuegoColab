@@ -22,6 +22,9 @@ public class EnemyController : MonoBehaviour
 
     public int directionX = -1;  // 1 = derecha, -1 = izquierda
 
+    protected Vector2 force = new Vector2(0,0);
+    protected int damage = 0; 
+
     protected bool patrolling;
     public bool fromEditor;
     public int enemyId;
@@ -147,5 +150,35 @@ public class EnemyController : MonoBehaviour
     public void StartPatrolling()
     {
         patrolling = true;
+    }
+
+    protected bool CollidedWithPlayer(GameObject other)
+    {
+        return other.tag == "Player1" || other.tag == "Player2" || other.tag == "Player3"; // Refactor this to tag == "Player"
+    }
+
+    protected void DealDamage(GameObject player)
+    {
+
+        Vector2 playerPosition = player.transform.position;
+        PlayerController playerController = player.GetComponent<PlayerController>();
+
+        Vector2 attackForce = force;
+
+        // If player is at the left side of the enemy push it to the left
+        if (playerPosition.x < transform.position.x)
+        {
+            attackForce.x *= -1;
+        }
+
+        playerController.TakeDamage(damage, attackForce);
+    }
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (CollidedWithPlayer(collision.gameObject))
+        {
+            DealDamage(collision.gameObject);
+        }
     }
 }

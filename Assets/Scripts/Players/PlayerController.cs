@@ -613,4 +613,29 @@ public class PlayerController : MonoBehaviour
     {
         Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + mpSpendRate);
     }
+
+    public void TakeDamage(int damage, Vector2 force)
+    {
+
+        if (force.x != 0 || force.y != 0)
+        {
+            rb2d.AddForce(force);
+        }
+
+        if (damage != 0)
+        {
+
+            // Always send negative values tu HPHUD
+            if (damage > 0)
+            {
+                damage *= -1;
+            }
+
+            string message = "ChangeHpHUDToRoom/" + damage;
+            Client.instance.SendMessageToServer(message);
+
+        }
+
+    }
+
 }
