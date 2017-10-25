@@ -42,9 +42,9 @@ public class Chat : MonoBehaviour
 
     public string SetJugador()
     {
-        PlayerController player1 = GameObject.FindGameObjectsWithTag("Player1")[0].GetComponent<PlayerController>();
-        PlayerController player2 = GameObject.FindGameObjectsWithTag("Player2")[0].GetComponent<PlayerController>();
-        PlayerController player3 = GameObject.FindGameObjectsWithTag("Player3")[0].GetComponent<PlayerController>();
+        PlayerController player1 = GameObject.Find("Mage").GetComponent<PlayerController>();
+        PlayerController player2 = GameObject.Find("Warrior").GetComponent<PlayerController>();
+        PlayerController player3 = GameObject.Find("Engineer").GetComponent<PlayerController>();
 
         string role;
         string charId;

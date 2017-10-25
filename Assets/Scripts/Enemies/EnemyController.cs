@@ -168,7 +168,7 @@ public class EnemyController : MonoBehaviour
 
     protected bool CollidedWithPlayer(GameObject other)
     {
-        return other.tag == "Player1" || other.tag == "Player2" || other.tag == "Player3"; // Refactor this to tag == "Player"
+        return other.tag == "Player";
     }
 
     protected void DealDamage(GameObject player)

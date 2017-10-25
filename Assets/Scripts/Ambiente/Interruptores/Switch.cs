@@ -70,8 +70,9 @@ public class Switch : MonoBehaviour
     private bool CheckIfColliderIsLocalPlayer(Collision2D collision)
     {
         GameObject colliderGameObject = collision.collider.gameObject;
-        string playerTag = colliderGameObject.tag;
-        if(CheckIfTagMatchWithColor(playerTag))
+        string playerName = colliderGameObject.name;
+
+        if(CheckIfNameMatchWithColor(playerName))
         {
             PlayerController player = colliderGameObject.GetComponent<PlayerController>();
             if (player.localPlayer)
@@ -93,7 +94,7 @@ public class Switch : MonoBehaviour
     {
         if (switchColor == Color.Any)
         {
-            if(name == "Fireball" || name =="Arrow" || name == "Player2"){
+            if(name == "Fireball" || name =="Arrow" || name == "Warrior"){
                 return true;
             }
         }
@@ -103,26 +104,27 @@ public class Switch : MonoBehaviour
                 return switchColor == Color.Blue;
             case "Arrow":
                 return switchColor == Color.Yellow;
-            case "Player2":
+            case "Warrior":
                 return switchColor == Color.Red;
             default:
                 return false;
         }
     }
 
-    private bool CheckIfTagMatchWithColor(string tag)
+    private bool CheckIfNameMatchWithColor(string name)
     {
         if(switchColor == Color.Any)
         {
             return true;
         }
-        switch (tag)
+
+        switch (name)
         {
-            case "Player1":
+            case "Mage":
                 return switchColor == Color.Blue;
-            case "Player2":
+            case "Warrior":
                 return switchColor == Color.Red;
-            case "Player3":
+            case "Engineer":
                 return switchColor == Color.Yellow;
             default:
                 return false;
@@ -132,27 +134,29 @@ public class Switch : MonoBehaviour
     private bool CheckIfColliderIsAttack(Collision2D collision)
     {
         GameObject colliderGameObject = collision.collider.gameObject;
-        string objectTag = colliderGameObject.tag;
-        if (CheckIfObjectMatchWithColor(objectTag))
+
+        string objectName = colliderGameObject.name;
+
+        if (CheckIfObjectMatchWithColor(objectName))
         {
-            switch (objectTag)
+            switch (objectName)
             {
                 case "Fireball":
                     Destroy(colliderGameObject);
-                    if (Client.instance.GetLocalPlayer().tag == "Player1")
+                    if (Client.instance.GetLocalPlayer().name == "Mage")
                     {
                         return true;
                     }
                     break;
                 case "Arrow":
                     Destroy(colliderGameObject);
-                    if (Client.instance.GetLocalPlayer().tag == "Player3")
+                    if (Client.instance.GetLocalPlayer().name == "Engineer")
                     {
                         return true;
                     }
                     break;
-                case "Player2":
-                    if(Client.instance.GetLocalPlayer().tag == "Player2")
+                case "Warrior":
+                    if(Client.instance.GetLocalPlayer().name == "Warrior")
                     {
                         return true;
                     }

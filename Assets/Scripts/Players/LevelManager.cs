@@ -55,9 +55,9 @@ public class LevelManager : MonoBehaviour {
     {
         players = new GameObject[3];
 
-        players[0] = GameObject.FindGameObjectsWithTag("Player1")[0];
-        players[1] = GameObject.FindGameObjectsWithTag("Player2")[0];
-        players[2] = GameObject.FindGameObjectsWithTag("Player3")[0];
+        players[0] = GameObject.Find("Mage");
+        players[1] = GameObject.Find("Warrior");
+        players[2] = GameObject.Find("Engineer");
 
         switch (id)
         {

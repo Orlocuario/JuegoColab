@@ -53,7 +53,7 @@ public class TriggerCamera : MonoBehaviour {
 	{
 		string tag = collider.gameObject.tag;
 
-		if(tag == "Player1" || tag == "Player2" || tag == "Player3"){
+		if(tag == "Player"){
 			PlayerController script = collider.gameObject.GetComponent<PlayerController>();
 			if (script.localPlayer == true) {
 				return true;

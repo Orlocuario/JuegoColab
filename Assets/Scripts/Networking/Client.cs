@@ -210,15 +210,15 @@ public class Client : MonoBehaviour
         switch (charId)
         {
             case 0:
-                player = GameObject.FindGameObjectsWithTag("Player1")[0];
+                player = GameObject.Find("Mage");
                 script = player.GetComponent<MageController>();
                 break;
             case 1:
-                player = GameObject.FindGameObjectsWithTag("Player2")[0];
+                player = GameObject.Find("Warrior");
                 script = player.GetComponent<WarriorController>();
                 break;
             case 2:
-                player = GameObject.FindGameObjectsWithTag("Player3")[0];
+                player = GameObject.Find("Engineer");
                 script = player.GetComponent<EngineerController>();
                 break;
             default:
@@ -246,31 +246,31 @@ public class Client : MonoBehaviour
     public PlayerController GetLocalPlayer()
     {
 
-        GameObject[] player1 = GameObject.FindGameObjectsWithTag("Player1");
-        GameObject[] player2 = GameObject.FindGameObjectsWithTag("Player2");
-        GameObject[] player3 = GameObject.FindGameObjectsWithTag("Player3");
+        GameObject player1 = GameObject.Find("Mage");
+        GameObject player2 = GameObject.Find("Warrior");
+        GameObject player3 = GameObject.Find("Engineer"); 
 
-        if (player1.Length > 0)
+        if (player1 != null)
         {
-            MageController player1Controller = player1[0].GetComponent<MageController>();
+            MageController player1Controller = player1.GetComponent<MageController>();
             if (player1Controller.localPlayer)
             {
                 return player1Controller;
             }
         }
 
-        if (player2.Length > 0)
+        if (player2 != null)
         {
-            WarriorController player2Controller = player2[0].GetComponent<WarriorController>();
+            WarriorController player2Controller = player2.GetComponent<WarriorController>();
             if (player2Controller.localPlayer)
             {
                 return player2Controller;
             }
         }
 
-        if (player3.Length > 0)
+        if (player3 != null)
         {
-            EngineerController player3Controller = player3[0].GetComponent<EngineerController>();
+            EngineerController player3Controller = player3.GetComponent<EngineerController>();
             if (player3Controller.localPlayer)
             {
                 return player3Controller;
@@ -278,7 +278,9 @@ public class Client : MonoBehaviour
         }
 
         return null;
+
     }
+
     public PlayerController GetById(int playerId)
     {
         if (playerId == 0)
@@ -299,21 +301,21 @@ public class Client : MonoBehaviour
 
     public MageController GetMage()
     {
-        GameObject player = GameObject.FindGameObjectsWithTag("Player1")[0];
+        GameObject player = GameObject.Find("Mage");
         MageController script = player.GetComponent<MageController>();
         return script;
     }
 
     public WarriorController GetWarrior()
     {
-        GameObject player = GameObject.FindGameObjectsWithTag("Player2")[0];
+        GameObject player = GameObject.Find("Warrior");
         WarriorController script = player.GetComponent<WarriorController>();
         return script;
     }
 
     public EngineerController GetEngineer()
     {
-        GameObject player = GameObject.FindGameObjectsWithTag("Player3")[0];
+        GameObject player = GameObject.Find("Engineer");
         EngineerController script = player.GetComponent<EngineerController>();
         return script;
     }
