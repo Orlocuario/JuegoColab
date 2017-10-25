@@ -40,21 +40,21 @@ public class BagButton : MonoBehaviour {
         string actionToDo = Items.instance.ItemInformation()[0];
         char[] separator = new char[1];
         separator[0] = '/';
-        string[] arreglo = actionToDo.Split(separator);
+        string[] msg = actionToDo.Split(separator);
 
-        switch (arreglo[0])
+        switch (msg[0])
         {
             case "Everyone":
-                EveryoneActions(arreglo[1]);
+                EveryoneActions(msg[1]);
                 break;
             case "Mage":
-                MageActions(arreglo[1]);
+                MageActions(msg[1]);
                 break;
             case "Warrior":
-                WarriorActions(arreglo[1]);
+                WarriorActions(msg[1]);
                 break;
             case "Engineer":
-                EngineerActions(arreglo[1]);
+                EngineerActions(msg[1]);
                 break;
             default:
                 break;

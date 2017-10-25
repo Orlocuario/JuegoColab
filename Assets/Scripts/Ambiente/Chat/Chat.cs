@@ -237,17 +237,17 @@ public class Chat : MonoBehaviour
     {
         char[] separator = new char[1];
         separator[0] = ':';
-        string[] arreglo = message.Split(separator);
+        string[] msg = message.Split(separator);
 
-        if (arreglo[0] == "Mage")
+        if (msg[0] == "Mage")
         {
             message = "<color=#64b78e>" + message + "</color>";
         }
-        else if (arreglo[0] == "Warrior")
+        else if (msg[0] == "Warrior")
         {
             message = "<color=#e67f84>" + message + "</color>";
         }
-        else if (arreglo[0] == "Engineer")
+        else if (msg[0] == "Engineer")
         {
             message = "<color=#f9ca45>" + message + "</color>";
         }

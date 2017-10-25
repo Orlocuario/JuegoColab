@@ -16,15 +16,15 @@ public class ServerMessageHandler
     {
         char[] separator = new char[1];
         separator[0] = '/';
-        string[] arreglo = message.Split(separator);
+        string[] msg = message.Split(separator);
 
-        switch (arreglo[0])
+        switch (msg[0])
         {
             case "RequestCharId":
                 SendCharIdAndControl(connectionId);
                 break;
             case "ChangePosition":
-                SendUpdatedPosition(message, connectionId, arreglo);
+                SendUpdatedPosition(message, connectionId, msg);
                 break;
             case "ChangeObjectPosition":
                 SendUpdatedObjectPosition(message, connectionId);
@@ -36,40 +36,40 @@ public class ServerMessageHandler
                 SendNewChatMessage(message, connectionId);
                 break;
             case "ChangeHpHUDToRoom":
-                SendHpHUDToRoom(arreglo, connectionId);
+                SendHpHUDToRoom(msg, connectionId);
                 break;
             case "ChangeMpHUDToRoom":
-                SendMpHUDToRoom(arreglo, connectionId);
+                SendMpHUDToRoom(msg, connectionId);
                 break;
 			case "ChangeHpAndMpHUDToRoom": //Necessary coz' ChatZone changes both at the same rate
-                SendHpHAndMpHUDToRoom(arreglo, connectionId);
+                SendHpHAndMpHUDToRoom(msg, connectionId);
                 break;
             case "GainExp":
-                SendExpToRoom(arreglo, connectionId);
+                SendExpToRoom(msg, connectionId);
                 break;
             case "Attack":
-                SendAttackState(message, connectionId, arreglo);
+                SendAttackState(message, connectionId, msg);
                 break;
             case "AttackWarrior":
-                SendAttackState(message, connectionId, arreglo);
+                SendAttackState(message, connectionId, msg);
                 break;
             case "CastFireball":
-                SendNewFireball(message, connectionId, arreglo);
+                SendNewFireball(message, connectionId, msg);
                 break;
             case "CastProyectile":
-                SendNewProjectile(message, connectionId, arreglo);
+                SendNewProjectile(message, connectionId, msg);
                 break;
             case "Power":
-                SendPowerState(message, connectionId, arreglo);
+                SendPowerState(message, connectionId, msg);
                 break;
             case "NewEnemyId":
-                NewEnemy(arreglo, connectionId);
+                NewEnemy(msg, connectionId);
                 break;
             case "EnemyHpChange":
-                ReduceEnemyHp(message, arreglo, connectionId);
+                ReduceEnemyHp(message, msg, connectionId);
                 break;
             case "EnemyChangePosition":
-                EnemyChangePosition(message, arreglo, connectionId);
+                EnemyChangePosition(message, msg, connectionId);
                 break;
             case "CreateGameObject":
                 SendNewGameObject(message, connectionId);
@@ -84,10 +84,10 @@ public class ServerMessageHandler
                 SendInventoryUpdate(message, connectionId);
                 break;
             case "ChangeSwitchStatus":
-                SendChangeSwitchStatus(message, arreglo, connectionId);
+                SendChangeSwitchStatus(message, msg, connectionId);
                 break;
             case "SwitchGroupReady":
-                SendSwitchGroupAction(message,arreglo, connectionId);
+                SendSwitchGroupAction(message,msg, connectionId);
                 break;
             case "ActivateRuneDoor":
                 SendActivationDoor(message, connectionId);
@@ -96,7 +96,7 @@ public class ServerMessageHandler
                 SendActivationMachine(message, connectionId);
                 break;
             case "ActivateNPCLog": // No se si es necesario o no, ya que puedes llamar el metodo desde afuera (start o script)
-			SendActivationNPC(arreglo, connectionId);
+			SendActivationNPC(msg, connectionId);
                 break;
             case "IgnoreBoxCircleCollision":
                 SendIgnoreBoxCircleCollision(message, connectionId);
@@ -128,10 +128,10 @@ public class ServerMessageHandler
         room.SendMessageToAllPlayers(message);
     }
 
-    public void SendActivationNPC(string[] arreglo, int connectionId) // Manda un mensaje a un solo jugador
+    public void SendActivationNPC(string[] msg, int connectionId) // Manda un mensaje a un solo jugador
     {
-		string message = arreglo [1];
-		int playerId = int.Parse (arreglo [2]);
+		string message = msg [1];
+		int playerId = int.Parse (msg [2]);
 		int newConnectionId = 0;
 		Room room = server.GetPlayer (connectionId).room;
 		room.WriteFeedbackHistorial (message + "/" + playerId);
@@ -163,33 +163,33 @@ public class ServerMessageHandler
         room.SendMessageToAllPlayers(message);
     }
 
-    private void SendSwitchGroupAction(string message, string[] arreglo,int connectionId)
+    private void SendSwitchGroupAction(string message, string[] msg,int connectionId)
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
-        int groupId = Int32.Parse(arreglo[1]);
+        int groupId = Int32.Parse(msg[1]);
         if (!room.activatedGroups.Contains(groupId))
         {
             room.activatedGroups.Add(groupId);
         }
     }
 
-    private void SendChangeSwitchStatus(string message, string[] arreglo, int connectionId)
+    private void SendChangeSwitchStatus(string message, string[] msg, int connectionId)
     {
-        int groupId = Int32.Parse(arreglo[1]);
-        int individualId = Int32.Parse(arreglo[2]);
-        bool on = bool.Parse(arreglo[3]);
+        int groupId = Int32.Parse(msg[1]);
+        int individualId = Int32.Parse(msg[2]);
+        bool on = bool.Parse(msg[3]);
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         room.SetSwitchOn(on, groupId, individualId);
         room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 
-    private void EnemyChangePosition(string message, string[] arreglo, int connectionId)
+    private void EnemyChangePosition(string message, string[] msg, int connectionId)
     {
-        int enemyId = Int32.Parse(arreglo[1]);
-        float posX = float.Parse(arreglo[2]);
-        float posY = float.Parse(arreglo[3]);
+        int enemyId = Int32.Parse(msg[1]);
+        float posX = float.Parse(msg[2]);
+        float posY = float.Parse(msg[3]);
         NetworkPlayer player = server.GetPlayer(connectionId);
         NetworkEnemy enemy = player.room.GetEnemy(enemyId);
         enemy.posX = posX;
@@ -197,20 +197,20 @@ public class ServerMessageHandler
         player.room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 
-    private void ReduceEnemyHp(string message, string[] arreglo, int connectionId)
+    private void ReduceEnemyHp(string message, string[] msg, int connectionId)
     {
-        int enemyId = Int32.Parse(arreglo[1]);
-        float enemyHp = float.Parse(arreglo[2]);
+        int enemyId = Int32.Parse(msg[1]);
+        float enemyHp = float.Parse(msg[2]);
         NetworkPlayer player = server.GetPlayer(connectionId);
         NetworkEnemy enemy = player.room.GetEnemy(enemyId);
         enemy.ReduceHp(enemyHp);
     }
 
-    private void NewEnemy(string[] arreglo, int connectionId)
+    private void NewEnemy(string[] msg, int connectionId)
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
-        int id = Int32.Parse(arreglo[1]);
-        float hp = float.Parse(arreglo[2]);
+        int id = Int32.Parse(msg[1]);
+        float hp = float.Parse(msg[2]);
         player.room.AddEnemy(id, hp);
 
       //  string message = "EnemyStartPatrolling/" + id;
@@ -244,32 +244,32 @@ public class ServerMessageHandler
 		room.SendMessageToAllPlayersExceptOne (message, connectionId);
 	}
 
-    private void SendHpHUDToRoom(string[] arreglo, int connectionId)
+    private void SendHpHUDToRoom(string[] msg, int connectionId)
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
-        room.hpManaGer.ChangeHP(arreglo[1]);
+        room.hpManaGer.ChangeHP(msg[1]);
     }
 
-    private void SendMpHUDToRoom(string[] arreglo, int connectionId)
+    private void SendMpHUDToRoom(string[] msg, int connectionId)
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
-        room.hpManaGer.ChangeMP(arreglo[1]);
+        room.hpManaGer.ChangeMP(msg[1]);
     }
 
-    private void SendHpHAndMpHUDToRoom(string[] arreglo, int connectionId)
+    private void SendHpHAndMpHUDToRoom(string[] msg, int connectionId)
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
-        room.hpManaGer.RecieveHpAndMpHUD(arreglo[1]);
+        room.hpManaGer.RecieveHpAndMpHUD(msg[1]);
     }
 
-    private void SendExpToRoom(string[] arreglo, int connectionId)
+    private void SendExpToRoom(string[] msg, int connectionId)
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
-        room.hpManaGer.ChangeExp(arreglo[1]);
+        room.hpManaGer.ChangeExp(msg[1]);
     }
 
     private void SendNewFireball(string message, int connectionId, string[] data)

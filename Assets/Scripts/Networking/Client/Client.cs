@@ -124,10 +124,12 @@ public class Client : MonoBehaviour
                 Stream stream = new MemoryStream(recBuffer);
                 BinaryFormatter formatter = new BinaryFormatter();
                 string message = formatter.Deserialize(stream) as string;
+
                 if (recChannelId == unreliableChannelId)
                 {
                     handler.HandleMessage(message);
                 }
+
                 if (recChannelId == reliableChannelId)
                 {
                     ReceiveMessageFromPlanner(message, recConnectionId);

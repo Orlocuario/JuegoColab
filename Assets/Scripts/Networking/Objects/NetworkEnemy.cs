@@ -34,7 +34,7 @@ public class NetworkEnemy {
 
     private void Die()
     {
-        room.SendMessageToAllPlayers("Die/" + enemyId);
+        room.SendMessageToAllPlayers("EnemyDie/" + enemyId);
     }
 
     private bool IsDead()

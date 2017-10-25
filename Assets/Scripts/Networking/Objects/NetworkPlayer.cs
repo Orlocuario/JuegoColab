@@ -47,12 +47,12 @@ public class NetworkPlayer
     {
         char[] separator = new char[1];
         separator[0] = '/';
-        string[] arreglo = message.Split(separator);
-        int index = Int32.Parse(arreglo[2]);
+        string[] msg = message.Split(separator);
+        int index = Int32.Parse(msg[2]);
 
-        if (arreglo[1] == "Add")
+        if (msg[1] == "Add")
         {
-            AddItemToInventory(index, arreglo[3]);
+            AddItemToInventory(index, msg[3]);
         }
         else
         {

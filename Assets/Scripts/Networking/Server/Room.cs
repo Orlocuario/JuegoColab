@@ -145,10 +145,11 @@ public class Room
     {
         char[] separator = new char[1];
         separator[0] = '/';
-        string[] arreglo = message.Split(separator);
-        if (arreglo[0] == "NewChatMessage")
+        string[] msg = message.Split(separator);
+
+        if (msg[0] == "NewChatMessage")
         {
-            actualChat += arreglo[1];
+            actualChat += msg[1];
             historial += "\r\n" + actualChat + HoraMinuto();
         }
 

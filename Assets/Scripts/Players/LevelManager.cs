@@ -204,13 +204,13 @@ public class LevelManager : MonoBehaviour {
         StartCoroutine("ResetGameObjectPosition");
     }
 
-    public void InsantiateGameObject(string[] arreglo)
+    public void InsantiateGameObject(string[] msg)
     {
         string objectName = "";
-        for (int i = 1; i < arreglo.Length; i++)
+        for (int i = 1; i < msg.Length; i++)
         {
-            objectName += arreglo[i];
-            if (i != arreglo.Length - 1)
+            objectName += msg[i];
+            if (i != msg.Length - 1)
             {
                 objectName += "/";
             }

@@ -62,8 +62,8 @@ public class ClientMessageHandler
             case "Power":
                 HandleUpdatedPowerState(msg);
                 break;
-            case "Die":
-                KillEnemy(msg);
+            case "EnemyDie":
+                EnemyDie(msg);
                 break;
             case "EnemyStartPatrolling":
                 EnemyStartPatrolling(msg);
@@ -112,13 +112,13 @@ public class ClientMessageHandler
         }
     }
 
-    private void HandleIgnoreCollision(string[] arreglo)
+    private void HandleIgnoreCollision(string[] msg)
     {
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.IgnoreBoxCircleCollision(arreglo);
+        scriptLevel.IgnoreBoxCircleCollision(msg);
     }
 
-    private void HandleActivationNpcLog(string[] arreglo)
+    private void HandleActivationNpcLog(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
@@ -126,10 +126,10 @@ public class ClientMessageHandler
             return;
         }
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.ActivateNPCLog(arreglo[1]);
+        scriptLevel.ActivateNPCLog(msg[1]);
     }
 
-    private void HandleActivationMachine(string[] arreglo)
+    private void HandleActivationMachine(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
@@ -137,10 +137,10 @@ public class ClientMessageHandler
             return;
         }
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.ActivateMachine(arreglo[1]);
+        scriptLevel.ActivateMachine(msg[1]);
     }
 
-    private void HandleActivationDoor(string[] arreglo)
+    private void HandleActivationDoor(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
@@ -148,10 +148,10 @@ public class ClientMessageHandler
             return;
         }
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.ActivateRuneDoor(arreglo[1]);
+        scriptLevel.ActivateRuneDoor(msg[1]);
     }
 
-    private void HandleChangeObjectPosition(string[] arreglo)
+    private void HandleChangeObjectPosition(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
@@ -159,10 +159,10 @@ public class ClientMessageHandler
             return;
         }
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.MoveItemInGame(arreglo[1], arreglo[2], arreglo[3], arreglo[4]);
+        scriptLevel.MoveItemInGame(msg[1], msg[2], msg[3], msg[4]);
     }
 
-    private void HandleInstantiateObject(string[] arreglo)
+    private void HandleInstantiateObject(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
@@ -170,31 +170,31 @@ public class ClientMessageHandler
             return;
         }
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.InsantiateGameObject(arreglo);
+        scriptLevel.InsantiateGameObject(msg);
     }
 
-    private void HandleSwitchGroupReady(string[] arreglo)
+    private void HandleSwitchGroupReady(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
         {
             return;
         }
-        int groupId = Int32.Parse(arreglo[1]);
+        int groupId = Int32.Parse(msg[1]);
         SwitchManager manager = GameObject.FindGameObjectWithTag("SwitchManager").GetComponent<SwitchManager>();
         manager.CallAction(groupId);
     }
 
-    private void HandleChangeSwitchStatus(string[] arreglo)
+    private void HandleChangeSwitchStatus(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
         {
             return;
         }
-        int groupId = Int32.Parse(arreglo[1]);
-        int individualId = Int32.Parse(arreglo[2]);
-        bool on = bool.Parse(arreglo[3]);
+        int groupId = Int32.Parse(msg[1]);
+        int individualId = Int32.Parse(msg[2]);
+        bool on = bool.Parse(msg[3]);
         SwitchManager manager = GameObject.FindGameObjectWithTag("SwitchManager").GetComponent<SwitchManager>();
         Switch switchi = manager.GetSwitch(groupId, individualId);
         switchi.ReceiveDataFromServer(on);
@@ -245,48 +245,38 @@ public class ClientMessageHandler
         enemyController.StartPatrolling();
     }
 
-    private void ChangeEnemyPosition(string[] arreglo)
+    private void ChangeEnemyPosition(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
         {
             return;
         }
-        int enemyId = Int32.Parse(arreglo[1]);
-        float posX = float.Parse(arreglo[2]);
-        float posY = float.Parse(arreglo[3]);
+        int enemyId = Int32.Parse(msg[1]);
+        float posX = float.Parse(msg[2]);
+        float posY = float.Parse(msg[3]);
         EnemyController enemyScript = client.GetEnemy(enemyId);
         enemyScript.SetPosition(posX, posY);
     }
 
 
-    private void KillEnemy(string[] arreglo)
+    private void EnemyDie(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
         {
             return;
         }
-        int enemyId = Int32.Parse(arreglo[1]);
-        EnemyController script = client.GetEnemy(enemyId);
-        if (script != null)
+        int enemyId = Int32.Parse(msg[1]);
+
+        EnemyController enemyController = client.GetEnemy(enemyId);
+        if (enemyController != null)
         {
-            script.Die();
+            enemyController.Die();
         }
     }
 
-    private void HandleChangeHpHUDToClient(string[] arreglo)
-    {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
-        {
-            return;
-        }
-        GlobalDisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
-        displayHudScript.CurrentHP(arreglo[1]);
-    }
-
-    private void HandleChangeMpHUDToClient(string[] arreglo)
+    private void HandleChangeHpHUDToClient(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
@@ -294,10 +284,10 @@ public class ClientMessageHandler
             return;
         }
         GlobalDisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
-        displayHudScript.CurrentMP(arreglo[1]);
+        displayHudScript.CurrentHP(msg[1]);
     }
 
-    private void HandleChangeExpHUDToClient(string[] arreglo)
+    private void HandleChangeMpHUDToClient(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
@@ -305,10 +295,21 @@ public class ClientMessageHandler
             return;
         }
         GlobalDisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
-        displayHudScript.ExperienceBar(arreglo[1]);
+        displayHudScript.CurrentMP(msg[1]);
     }
 
-    private void HandleCreateGameObject(string[] arreglo)
+    private void HandleChangeExpHUDToClient(string[] msg)
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "ClientScene")
+        {
+            return;
+        }
+        GlobalDisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
+        displayHudScript.ExperienceBar(msg[1]);
+    }
+
+    private void HandleCreateGameObject(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
@@ -316,11 +317,11 @@ public class ClientMessageHandler
             return;
         }
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        int charId = Int32.Parse(arreglo[2]);
-        scriptLevel.CreateGameObject(arreglo[1], charId);
+        int charId = Int32.Parse(msg[2]);
+        scriptLevel.CreateGameObject(msg[1], charId);
     }
 
-    private void HandleDestroyObject(string[] arreglo)
+    private void HandleDestroyObject(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
@@ -328,13 +329,13 @@ public class ClientMessageHandler
             return;
         }
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        GameObject objectToDestroy = GameObject.Find(arreglo[1]);
+        GameObject objectToDestroy = GameObject.Find(msg[1]);
         scriptLevel.DestroyObjectInGame(objectToDestroy);
     }
 
-    private void HandleChangeScene(string[] arreglo)
+    private void HandleChangeScene(string[] msg)
     {
-        string scene = arreglo[1];
+        string scene = msg[1];
         Scene currentScene = SceneManager.GetActiveScene();
         if (!(currentScene.name == scene))
         {
@@ -343,7 +344,7 @@ public class ClientMessageHandler
 
     }
 
-    private void HandleSetCharId(string[] arreglo)
+    private void HandleSetCharId(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene") // ??
@@ -351,8 +352,8 @@ public class ClientMessageHandler
             return;
         }
 
-        string charId = arreglo[1];
-        bool controlOverEnemies = bool.Parse(arreglo[2]);
+        string charId = msg[1];
+        bool controlOverEnemies = bool.Parse(msg[2]);
         int charIdint = Convert.ToInt32(charId);
 
         LevelManager levelManager = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
@@ -389,51 +390,51 @@ public class ClientMessageHandler
         script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction, pressingRight, pressingLeft, pressingJump);
     }
 
-    private void HandleNewChatMessage(string[] arreglo)
+    private void HandleNewChatMessage(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
         {
             return;
         }
-        string chatMessage = arreglo[1];
+        string chatMessage = msg[1];
         Chat.instance.UpdateChat(chatMessage);
     }
 
-    private void HandleUpdatedPowerState(string[] arreglo)
+    private void HandleUpdatedPowerState(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
         {
             return;
         }
-        PlayerController script = client.GetById(Int32.Parse(arreglo[1]));
-        script.RemoteSetter(bool.Parse(arreglo[2]));
+        PlayerController script = client.GetById(Int32.Parse(msg[1]));
+        script.RemoteSetter(bool.Parse(msg[2]));
     }
 
-    private void HandleUpdatedAttackState(string[] arreglo)
+    private void HandleUpdatedAttackState(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
         {
             return;
         }
-        int charId = Int32.Parse(arreglo[1]);
-        bool state = bool.Parse(arreglo[2]);
+        int charId = Int32.Parse(msg[1]);
+        bool state = bool.Parse(msg[2]);
         PlayerController script = client.GetPlayerController(charId);
         script.remoteAttacking = state;
     }
 
-    private void HandleUpdatedAttackStateWarrior(string[] arreglo)
+    private void HandleUpdatedAttackStateWarrior(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
         {
             return;
         }
-        int charId = Int32.Parse(arreglo[1]);
-        bool state = bool.Parse(arreglo[2]);
-        int numHits = Int32.Parse(arreglo[3]);
+        int charId = Int32.Parse(msg[1]);
+        bool state = bool.Parse(msg[2]);
+        int numHits = Int32.Parse(msg[3]);
         WarriorController script = client.GetWarrior();
         script.remoteAttacking = state;
         script.numHits = numHits;
@@ -454,17 +455,17 @@ public class ClientMessageHandler
         script.CastLocalFireball(direction, speed, positionX, positionY, script);
     }
 
-    private void HandleCastProyectile(string[] arreglo)
+    private void HandleCastProyectile(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
         {
             return;
         }
-        int direction = Int32.Parse(arreglo[1]);
-        float speed = float.Parse(arreglo[2], CultureInfo.InvariantCulture);
-        float positionX = float.Parse(arreglo[3], CultureInfo.InvariantCulture);
-        float positionY = float.Parse(arreglo[4], CultureInfo.InvariantCulture);
+        int direction = Int32.Parse(msg[1]);
+        float speed = float.Parse(msg[2], CultureInfo.InvariantCulture);
+        float positionX = float.Parse(msg[3], CultureInfo.InvariantCulture);
+        float positionY = float.Parse(msg[4], CultureInfo.InvariantCulture);
         EngineerController script = client.GetEngineer();
         script.CastLocalProyectile(direction, positionX, positionY, script);
     }
