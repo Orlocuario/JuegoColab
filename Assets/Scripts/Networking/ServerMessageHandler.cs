@@ -212,6 +212,9 @@ public class ServerMessageHandler
         int id = Int32.Parse(arreglo[1]);
         float hp = float.Parse(arreglo[2]);
         player.room.AddEnemy(id, hp);
+
+      //  string message = "EnemyStartPatrolling/" + id;
+      //  player.room.SendMessageToAllPlayers(message);
     }
     private void SendNewGameObject(string message, int connectionId)
     {

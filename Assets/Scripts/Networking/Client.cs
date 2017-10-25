@@ -132,7 +132,9 @@ public class Client : MonoBehaviour
                 {
                     ReceiveMessageFromPlanner(message, recConnectionId);
                 }
-                Debug.Log("From: " + connectionId +" Handling: " + message);
+
+                string hora = HoraMinuto();
+                Debug.Log(hora + " - from(" + connectionId + "): " + message);
                 break;
 
             case NetworkEventType.DisconnectEvent:
@@ -148,6 +150,30 @@ public class Client : MonoBehaviour
                 Debug.Log("Disconnected from server");
                 break;
         }
+    }
+
+
+    private string HoraMinuto()
+    {
+        DateTime now = DateTime.Now;
+
+        string hora = now.Hour.ToString();
+        string minutos = now.Minute.ToString();
+        string segundos = now.Second.ToString();
+
+
+        if (minutos.Length == 1)
+        {
+            minutos = "0" + minutos;
+        }
+
+        if (segundos.Length == 1)
+        {
+            segundos = "0" + segundos;
+        }
+
+        string tiempo = " " + hora + ":" + minutos + ":" + segundos;
+        return tiempo;
     }
 
     private void Reconnect()

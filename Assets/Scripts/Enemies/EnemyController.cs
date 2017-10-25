@@ -22,6 +22,7 @@ public class EnemyController : MonoBehaviour
 
     public int directionX = -1;  // 1 = derecha, -1 = izquierda
 
+    protected bool patrolling;
     public bool fromEditor;
     public int enemyId;
 
@@ -141,5 +142,10 @@ public class EnemyController : MonoBehaviour
         Debug.Log(s);
         this.gameObject.SetActive(false);
         Destroy(this.gameObject);
+    }
+
+    public void StartPatrolling()
+    {
+        patrolling = true;
     }
 }

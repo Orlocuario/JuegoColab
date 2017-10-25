@@ -12,7 +12,10 @@ public class EspirituController : EnemyController
 
     protected override void Update()
     {
-        Patroll();
+        if (patrolling)
+        {
+            Patroll();
+        }
     }
 
 }

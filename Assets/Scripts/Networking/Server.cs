@@ -103,7 +103,7 @@ public class Server : MonoBehaviour {
                 string message = formatter.Deserialize(stream) as string;
                 string hora = HoraMinuto();
 
-                UnityEngine.Debug.Log(hora + " - From: " + recConnectionId + " Handling: " + message);
+                UnityEngine.Debug.Log(hora + " - from(" + recConnectionId + "): " + message);
 
                 if (recChannelId == channelId)
                 {
@@ -127,15 +127,24 @@ public class Server : MonoBehaviour {
 
     private string HoraMinuto()
     {
-        string hora = DateTime.Now.Hour.ToString();
-        string minutos = DateTime.Now.Minute.ToString();
+        DateTime now = DateTime.Now;
+
+        string hora = now.Hour.ToString();
+        string minutos = now.Minute.ToString();
+        string segundos = now.Second.ToString();
+
 
         if (minutos.Length == 1)
         {
             minutos = "0" + minutos;
         }
 
-        string tiempo = " (" + hora + ":" + minutos + ")";
+        if (segundos.Length == 1)
+        {
+            segundos = "0" + segundos;
+        }
+
+        string tiempo = " " + hora + ":" + minutos + ":" + segundos;
         return tiempo;
     }
 

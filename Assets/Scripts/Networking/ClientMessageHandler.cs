@@ -65,6 +65,9 @@ public class ClientMessageHandler
             case "Die":
                 KillEnemy(msg);
                 break;
+            case "EnemyStartPatrolling":
+                EnemyStartPatrolling(msg);
+                break;
             case "EnemyChangePosition":
                 ChangeEnemyPosition(msg);
                 break;
@@ -233,6 +236,13 @@ public class ClientMessageHandler
 
         localPlayer.controlOverEnemies = true;
 
+    }
+
+    private void EnemyStartPatrolling(string[] msg)
+    {
+        int enemyId = Int32.Parse(msg[1]);
+        EnemyController enemyController = client.GetEnemy(enemyId);
+        enemyController.StartPatrolling();
     }
 
     private void ChangeEnemyPosition(string[] arreglo)
