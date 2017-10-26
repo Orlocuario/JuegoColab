@@ -9,7 +9,7 @@ public class NetworkEnemy {
     public float hp;
 
     public bool fromEditor;
-    public int enemyId;
+    public int id;
 
     public LevelManager levelManager;
     public Room room;
@@ -18,7 +18,7 @@ public class NetworkEnemy {
     {
         Debug.Log("New enemy " + enemyId + " with " + hp  + " hp");
 
-        this.enemyId = enemyId;
+        this.id = enemyId;
         this.room = room;
         this.hp = hp;
     }
@@ -34,7 +34,7 @@ public class NetworkEnemy {
 
     private void Die()
     {
-        room.SendMessageToAllPlayers("EnemyDie/" + enemyId);
+        room.SendMessageToAllPlayers("EnemyDie/" + id);
     }
 
     private bool IsDead()

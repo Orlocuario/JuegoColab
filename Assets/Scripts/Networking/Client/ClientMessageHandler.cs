@@ -7,13 +7,16 @@ using UnityEngine.SceneManagement;
 
 public class ClientMessageHandler
 {
-
     private static char[] separator = new char[1] { '/' };
-    Client client;
 
+    private List<int> registeredEnemies;
+    private int enemiesToRegister;
+
+    Client client;
 
     public ClientMessageHandler()
     {
+        registeredEnemies = new List<int>();
         client = Client.instance;
     }
 
@@ -64,6 +67,9 @@ public class ClientMessageHandler
                 break;
             case "EnemyDie":
                 EnemyDie(msg);
+                break;
+            case "EnemyRegistered":
+                EnemyRegistered(msg);
                 break;
             case "EnemyStartPatrolling":
                 EnemyStartPatrolling(msg);
@@ -200,12 +206,33 @@ public class ClientMessageHandler
         switchi.ReceiveDataFromServer(on);
     }
 
-    public void TellEnemiesToRegisterThemselves()
+    public void EnemyRegistered(string[] msg)
+    {
+        int enemyId = int.Parse(msg[1]);
+        registeredEnemies.Add(enemyId);
+
+        if (registeredEnemies.Count == enemiesToRegister)
+        {
+            string message = "EnemiesStartPatrolling/true";
+            Client.instance.SendMessageToServer(message);
+        }
+
+    }
+
+    public void EnemiesStartPatrolling()
+    {
+        string message = "EnemiesStartPatrolling/true";
+        Client.instance.SendMessageToServer(message);
+    }
+
+    public void EnemiesRegisterOnRoom()
     {
         // Agregar al enemigo local al networking
         GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-        Debug.Log("Activating " + enemies.Length + " enemies");
+        enemiesToRegister = enemies.Length;
+
+        Debug.Log("Activating " + enemiesToRegister + " enemies");
 
         foreach (GameObject enemy in enemies)
         {
@@ -337,6 +364,7 @@ public class ClientMessageHandler
     {
         string scene = msg[1];
         Scene currentScene = SceneManager.GetActiveScene();
+
         if (!(currentScene.name == scene))
         {
             SceneManager.LoadScene(scene);
@@ -366,7 +394,7 @@ public class ClientMessageHandler
         {
             client.StartFirstPlan();
             Debug.Log("Activating enemies...");
-            TellEnemiesToRegisterThemselves();
+            EnemiesRegisterOnRoom();
         }
     }
 

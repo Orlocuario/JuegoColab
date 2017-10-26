@@ -7,22 +7,26 @@ using UnityEngine.Networking;
 
 public class Room
 {
+
     public ServerMessageHandler sender;
-    public List<NetworkEnemy> enemigos;
-    public List<ServerSwitch> switchs;
-    public List<NetworkPlayer> players;
     public Server server;
+
     public GlobalHpMpHUD hpManaGer;
+
+    public List<NetworkPlayer> players;
+    public List<NetworkEnemy> enemies;
+    public List<ServerSwitch> switchs;
+    public List<int> activatedGroups; //guarda los numeros de los grupos de switchs activados
+
     public string sceneToLoad;
+    public string actualChat;
     public int numJugadores;
     public int maxJugadores;
+    public bool started;
     public int id;
 
-    public bool started;
-    string numeroPartidas;
-    string historial;
-    public List<int> activatedGroups; //guarda los numeros de los grupos de switchs activados
-    public string actualChat;
+    private string numeroPartidas;
+    private string historial;
 
     //Inicialización
     public Room(int id, Server server, ServerMessageHandler sender, int maxJugadores)
@@ -35,23 +39,22 @@ public class Room
         hpManaGer = new GlobalHpMpHUD(this);
         switchs = new List<ServerSwitch>();
         players = new List<NetworkPlayer>();
-        enemigos = new List<NetworkEnemy>();
+        enemies = new List<NetworkEnemy>();
+        activatedGroups = new List<int>();
 
         this.server = server;
         this.sender = sender;
 
         started = false;
         historial = "";
-        hpManaGer = new GlobalHpMpHUD(this);
-        enemigos = new List<NetworkEnemy>();
-        activatedGroups = new List<int>();
+
         sceneToLoad = Server.instance.sceneToLoad;
     }
 
     public void AddEnemy(int enemyId, float hp)
     {
-        NetworkEnemy enemy = new NetworkEnemy(enemyId, hp,  this);
-        enemigos.Add(enemy);
+        NetworkEnemy enemy = new NetworkEnemy(enemyId, hp, this);
+        enemies.Add(enemy);
     }
 
     public string HoraMinuto()
@@ -95,9 +98,18 @@ public class Room
             SendMessageToAllPlayers("Mago: Conectado");
             SendMessageToAllPlayers("Guerrero: Conectado");
             SendMessageToAllPlayers("Ingeniero: Conectado");
-
         }
+
         return true;
+    }
+
+    public void EnemiesStartPatrolling()
+    {
+        foreach (NetworkEnemy enemy in enemies)
+        {
+            string message = "EnemyStartPatrolling/" + enemy.id;
+            SendMessageToAllPlayers(message);
+        }
     }
 
     private int GetCharId(int numJugadores)
@@ -107,9 +119,9 @@ public class Room
 
     public NetworkEnemy GetEnemy(int id)
     {
-        foreach(NetworkEnemy enemy in enemigos)
+        foreach (NetworkEnemy enemy in enemies)
         {
-            if(enemy.enemyId == id)
+            if (enemy.id == id)
             {
                 return enemy;
             }
@@ -119,7 +131,7 @@ public class Room
 
     public NetworkPlayer FindPlayerInRoom(int id)
     {
-        foreach(NetworkPlayer player in players)
+        foreach (NetworkPlayer player in players)
         {
             if (player.connectionId == id)
             {
@@ -166,7 +178,7 @@ public class Room
     {
         foreach (NetworkPlayer player in players)
         {
-            if (player.connected && player.connectionId!=connectionId)
+            if (player.connected && player.connectionId != connectionId)
             {
                 server.SendMessageToClient(player.connectionId, message);
             }
@@ -214,9 +226,9 @@ public class Room
     private void SetControlEnemies(NetworkPlayer targetPlayer)
     {
         bool check = false;
-        foreach(NetworkPlayer player in players)
+        foreach (NetworkPlayer player in players)
         {
-            if(player.controlOverEnemies == true)
+            if (player.controlOverEnemies == true)
             {
                 check = true;
             }
@@ -230,16 +242,16 @@ public class Room
     //Set current controller to False, and find a new one that is connected
     public void ChangeControlEnemies()
     {
-        foreach(NetworkPlayer player in players)
+        foreach (NetworkPlayer player in players)
         {
-            if(player.controlOverEnemies == true)
+            if (player.controlOverEnemies == true)
             {
                 player.controlOverEnemies = false;
             }
         }
-        foreach(NetworkPlayer player in players)
+        foreach (NetworkPlayer player in players)
         {
-            if(player.connected == true)
+            if (player.connected == true)
             {
                 player.controlOverEnemies = true;
                 SendControlSignal(player);
@@ -255,9 +267,9 @@ public class Room
 
     public ServerSwitch AddSwitch(int groupId, int individualId)
     {
-        foreach(ServerSwitch switchu in switchs)
+        foreach (ServerSwitch switchu in switchs)
         {
-            if(switchu.groupId == groupId && switchu.individualId == individualId)
+            if (switchu.groupId == groupId && switchu.individualId == individualId)
             {
                 return switchu;
             }
@@ -282,7 +294,7 @@ public class Room
 
     private bool CheckIfSwitchExist(int groupId, int individualId)
     {
-        if(GetSwitch(groupId, individualId) == null)
+        if (GetSwitch(groupId, individualId) == null)
         {
             return false;
         }
@@ -295,8 +307,8 @@ public class Room
         switchi.on = on;
     }
 
-	public void WriteFeedbackHistorial(string message)
-	{
-		historial += "\r\n" + message + HoraMinuto ();
-	}
+    public void WriteFeedbackHistorial(string message)
+    {
+        historial += "\r\n" + message + HoraMinuto();
+    }
 }

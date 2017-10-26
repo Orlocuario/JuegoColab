@@ -20,10 +20,10 @@ public class Client : MonoBehaviour
 
     private static int maxConnections = 12;
 
-    int connectionId;
-    int reliableChannelId;
-    string serverIp;
     int unreliableChannelId;
+    int reliableChannelId;
+    int connectionId;
+    string serverIp;
     int socketId; // Host ID
     int port;
 
