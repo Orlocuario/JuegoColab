@@ -28,22 +28,29 @@ public class ClientNetworkDiscovery : NetworkDiscovery
     public override void OnReceivedBroadcast(string fromAddress, string data)
     {
         char[] separator = new char[1] { '/' };
+
         string[] parsedData = data.Split(separator);
+        string serverIp = fromAddress;
+        int port = -1;
 
-        if (parsedData.Length > 0 && parsedData[0] == "port")
+        if (parsedData.Length > 0 && parsedData[0] == "port" && parsedData[1] != null)
         {
-            Debug.Log("Client received broadcast from " + fromAddress + ":" + parsedData[1]);
+            port = int.Parse(parsedData[1]);
+            Debug.Log("Client received broadcast from " + serverIp + ":" + port);
         }
 
-        bool connected = false;
-
-        while (!connected)
+        if (port != -1)
         {
-            connected = scriptClient.Connect(fromAddress, int.Parse(parsedData[1]));
-        }
+            bool connected = false;
 
-        GameObject.Find("ConnectText").GetComponent<Text>().text = "Esperando...";
-        StopBroadcast();
+            while (!connected)
+            {
+                connected = scriptClient.Connect(serverIp, port);
+            }
+
+            GameObject.Find("ConnectText").GetComponent<Text>().text = "Esperando...";
+            StopBroadcast();
+        }
 
     }
 

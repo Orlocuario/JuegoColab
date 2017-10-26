@@ -9,18 +9,22 @@ using UnityEngine.UI;
 using System;
 using System.Threading;
 
-public class Server : MonoBehaviour {
+public class Server : MonoBehaviour
+{
 
     public int port;
 
     public int maxConnections;
 
-    int socketId;
-    int channelId;
-    int bigChannelId;
-    int timesScene1IsLoaded;
+    private int socketId;
+    private int channelId;
+    private int bigChannelId;
+    private int timesScene1IsLoaded;
+    private bool listening;
 
     public List<Room> rooms;
+
+    private ServerNetworkDiscovery serverNetworkDiscovery;
     public ServerMessageHandler messageHandler;
     public static Server instance;
     public int maxJugadores;
@@ -28,23 +32,23 @@ public class Server : MonoBehaviour {
     public string NPCsLastMessage;
 
     //Planner Thread
-	Thread planner;
-	//Cola de mensajes a procesar
-	private List<string> messageStack = new List<string>();
-	//Cola de conections id del output del planner
-	private List<int> connectionIdStack = new List<int>();
-	//Cola de mensajes procesados por el planner
-	private List<string> outputStack = new List<string>();
-	//Ruta y nombre del template del archivo problema
-	public string templateFileName;
-	//Ruta y nombre del archivo problema nuevo
-	public string problemFileName;
-	//Ruta y nombre del archivo batch para planificar
-	public string batchFileName;
-	//Ruta y nombre del archivo output de la planificacion
-	public string outputFileName;
-	//Donde se debe escribir para cada template
-	public List<int> startLinePerLevel;
+    Thread planner;
+    //Cola de mensajes a procesar
+    private List<string> messageStack = new List<string>();
+    //Cola de conections id del output del planner
+    private List<int> connectionIdStack = new List<int>();
+    //Cola de mensajes procesados por el planner
+    private List<string> outputStack = new List<string>();
+    //Ruta y nombre del template del archivo problema
+    public string templateFileName;
+    //Ruta y nombre del archivo problema nuevo
+    public string problemFileName;
+    //Ruta y nombre del archivo batch para planificar
+    public string batchFileName;
+    //Ruta y nombre del archivo output de la planificacion
+    public string outputFileName;
+    //Donde se debe escribir para cada template
+    public List<int> startLinePerLevel;
 
 
     // Use this for initialization
@@ -58,6 +62,8 @@ public class Server : MonoBehaviour {
 
         NetworkTransport.Init();
 
+        serverNetworkDiscovery = GetComponent<ServerNetworkDiscovery>();
+
         ConnectionConfig config = new ConnectionConfig();
 
         channelId = config.AddChannel(QosType.Unreliable);
@@ -65,31 +71,64 @@ public class Server : MonoBehaviour {
 
         HostTopology topology = new HostTopology(config, maxConnections);
 
-        port = NetworkConsts.port;
+        int[] connectionData = serverNetworkDiscovery.CreateServer(topology);
 
-        socketId = NetworkTransport.AddHost(topology, port);
+        if (connectionData[0] != -1 && connectionData[1] != -1)
+        {
+            port = connectionData[0];
+            socketId = connectionData[1];
+
+            listening = true;
+            UnityEngine.Debug.Log("Server listening on port " + port);
+        }
+        else
+        {
+            throw new Exception("Server didn't found a free port");
+        }
 
         rooms = new List<Room>();
-
         messageHandler = new ServerMessageHandler(this);
 
         planner = new Thread(new ThreadStart(this.Plan));
-	    planner.Start ();
+        planner.Start();
 
         this.sceneToLoad = "Escena2";
     }
 
-    // Update is called once per frame
-    void LateUpdate ()
+    public void InitializeBroadcast()
     {
-		if (connectionIdStack.Count > 0)
-		{
-			int connectionId = connectionIdStack [0];
-			string output = outputStack [0];
-			SendPlannerInfoToClient (connectionId, output);
-			connectionIdStack.RemoveAt (0);
-			outputStack.RemoveAt (0);
-		}
+        if (!listening)
+        {
+          UnityEngine.Debug.Log("Server is not listening yet");
+            return;
+        }
+
+        serverNetworkDiscovery.InitializeBroadcast();
+    }
+
+
+    public void Reset()
+    {
+        if (!listening)
+        {
+            UnityEngine.Debug.Log("Server is not listening yet");
+            return;
+        }
+
+        serverNetworkDiscovery.ResetServer();
+    }
+
+    // Update is called once per frame
+    void LateUpdate()
+    {
+        if (connectionIdStack.Count > 0)
+        {
+            int connectionId = connectionIdStack[0];
+            string output = outputStack[0];
+            SendPlannerInfoToClient(connectionId, output);
+            connectionIdStack.RemoveAt(0);
+            outputStack.RemoveAt(0);
+        }
         int recSocketId;
         int recConnectionId; // Reconoce la ID del jugador
         int recChannelId;
@@ -207,13 +246,13 @@ public class Server : MonoBehaviour {
             SendMessageToClient(connectionId, "ChangeScene/" + sceneToLoad);
             timesScene1IsLoaded += 1;
             messageHandler.SendAllData(connectionId, player.room);
-            UnityEngine.Debug.Log("Client "  + connectionId + " reconnected");
+            UnityEngine.Debug.Log("Client " + connectionId + " reconnected");
             return;
         }
 
         //Jugador no existía y se crea uno nuevo.
         Room room = SearchRoom();
-        if(room == null)
+        if (room == null)
         {
             room = new Room(rooms.Count, this, messageHandler, maxJugadores);
             rooms.Add(room);
@@ -245,7 +284,7 @@ public class Server : MonoBehaviour {
                 role = "Engineer: Has Disconnected";
             }
             player.room.SendMessageToAllPlayers("NewChatMessage/" + role);
-            if(player.controlOverEnemies == true)
+            if (player.controlOverEnemies == true)
             {
                 player.room.ChangeControlEnemies();
             }
@@ -282,11 +321,11 @@ public class Server : MonoBehaviour {
     {
         Room selectedRoom = null;
         int selectedMaxPlayers = 0;
-        foreach(Room room in rooms)
+        foreach (Room room in rooms)
         {
             if (!room.IsFull())
             {
-                if(selectedMaxPlayers <= room.numJugadores)
+                if (selectedMaxPlayers <= room.numJugadores)
                 {
                     selectedRoom = room;
                     selectedMaxPlayers = room.numJugadores;
@@ -298,81 +337,89 @@ public class Server : MonoBehaviour {
 
     private void SendMessagToPlanner(string message, int connectionId)
     {
-		messageStack.Add (connectionId + "/" + message);
+        messageStack.Add(connectionId + "/" + message);
     }
 
-	private void Plan()
-	{
-		while (true)
-		{
-			if (messageStack != null && messageStack.Count > 0) {
-				UnityEngine.Debug.Log ("stack enter count:" + messageStack.Count);
-				string message = messageStack [0];
-				messageStack.RemoveAt (0);
-				List<string> parameters = new List<string> (message.Split ('/'));
-				int connectionId = int.Parse (parameters [0]);
-				parameters.RemoveAt (0);
-				int level = int.Parse (parameters [0]);
-				parameters.RemoveAt (0);
-				string def = parameters [0];
-				string init = parameters [1];
-				string goal = parameters [2];
-				List<string> data = new List<string> ();
-				data.Add (def);
-				data.Add (")");
-				data.Add ("(:init");
-				data.Add (init);
-				data.Add (")");
-				data.Add ("(:goal (and");
-				data.Add (goal);
-				string tempFileName = templateFileName + level + ".txt";
-				string probFileName = problemFileName + level + ".pddl";
-				string batFileName = batchFileName + level + ".bat";
-				string outFileName = outputFileName + level + ".txt";
-				List<string> lines = new List<string> (System.IO.File.ReadAllLines (tempFileName));
-				lines.InsertRange (startLinePerLevel [level - 1], data);
-				using (StreamWriter writer = new StreamWriter (probFileName, false)) {
-					foreach (string line in lines) {
-						writer.WriteLine (line);
-					}
-				}
-				Process batchProcess = new Process ();
-				batchProcess.StartInfo.UseShellExecute = false;
-				batchProcess.StartInfo.RedirectStandardOutput = true;
-				batchProcess.StartInfo.CreateNoWindow = true;
-				batchProcess.StartInfo.FileName = batFileName;
-				string output = null;
-				try {
-					batchProcess.Start ();
-					UnityEngine.Debug.Log ("batch star");
-					output = batchProcess.StandardOutput.ReadToEnd();
-					UnityEngine.Debug.Log (output);
-					batchProcess.WaitForExit ();
-					UnityEngine.Debug.Log ("batch ended");
-					batchProcess.Close();
-					UnityEngine.Debug.Log ("batch close");
-					List<string> linesOutput = new List<string> (System.IO.File.ReadAllLines (outFileName));
-					if(linesOutput.Count>0){
-						output = linesOutput[0];
-						linesOutput.RemoveAt(0);
-						foreach(string line in linesOutput)
-						{
-							output += "/" + line;
-						}
+    private void Plan()
+    {
+        while (true)
+        {
+            if (messageStack != null && messageStack.Count > 0)
+            {
+                UnityEngine.Debug.Log("stack enter count:" + messageStack.Count);
+                string message = messageStack[0];
+                messageStack.RemoveAt(0);
+                List<string> parameters = new List<string>(message.Split('/'));
+                int connectionId = int.Parse(parameters[0]);
+                parameters.RemoveAt(0);
+                int level = int.Parse(parameters[0]);
+                parameters.RemoveAt(0);
+                string def = parameters[0];
+                string init = parameters[1];
+                string goal = parameters[2];
+                List<string> data = new List<string>();
+                data.Add(def);
+                data.Add(")");
+                data.Add("(:init");
+                data.Add(init);
+                data.Add(")");
+                data.Add("(:goal (and");
+                data.Add(goal);
+                string tempFileName = templateFileName + level + ".txt";
+                string probFileName = problemFileName + level + ".pddl";
+                string batFileName = batchFileName + level + ".bat";
+                string outFileName = outputFileName + level + ".txt";
+                List<string> lines = new List<string>(System.IO.File.ReadAllLines(tempFileName));
+                lines.InsertRange(startLinePerLevel[level - 1], data);
+                using (StreamWriter writer = new StreamWriter(probFileName, false))
+                {
+                    foreach (string line in lines)
+                    {
+                        writer.WriteLine(line);
+                    }
+                }
+                Process batchProcess = new Process();
+                batchProcess.StartInfo.UseShellExecute = false;
+                batchProcess.StartInfo.RedirectStandardOutput = true;
+                batchProcess.StartInfo.CreateNoWindow = true;
+                batchProcess.StartInfo.FileName = batFileName;
+                string output = null;
+                try
+                {
+                    batchProcess.Start();
+                    UnityEngine.Debug.Log("batch star");
+                    output = batchProcess.StandardOutput.ReadToEnd();
+                    UnityEngine.Debug.Log(output);
+                    batchProcess.WaitForExit();
+                    UnityEngine.Debug.Log("batch ended");
+                    batchProcess.Close();
+                    UnityEngine.Debug.Log("batch close");
+                    List<string> linesOutput = new List<string>(System.IO.File.ReadAllLines(outFileName));
+                    if (linesOutput.Count > 0)
+                    {
+                        output = linesOutput[0];
+                        linesOutput.RemoveAt(0);
+                        foreach (string line in linesOutput)
+                        {
+                            output += "/" + line;
+                        }
 
-					}
-				} catch (FileNotFoundException e) {
-					output = "ERROR";
-					UnityEngine.Debug.Log (output);
-				}
-				catch (Exception e){
-					output = e.ToString ();
-					UnityEngine.Debug.Log (output);
-				}
-				//Send output
-				connectionIdStack.Add (connectionId);
-				outputStack.Add (output);
-			}
-		}
-	}
+                    }
+                }
+                catch (FileNotFoundException e)
+                {
+                    output = "ERROR";
+                    UnityEngine.Debug.Log(output);
+                }
+                catch (Exception e)
+                {
+                    output = e.ToString();
+                    UnityEngine.Debug.Log(output);
+                }
+                //Send output
+                connectionIdStack.Add(connectionId);
+                outputStack.Add(output);
+            }
+        }
+    }
 }

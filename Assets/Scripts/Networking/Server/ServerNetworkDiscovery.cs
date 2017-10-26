@@ -6,27 +6,22 @@ using UnityEngine.Networking;
 public class ServerNetworkDiscovery : NetworkDiscovery
 {
 
-    public int port;
+    private int port;
+    private int socketId;
 
-    public void ServerInitialize()
+    private static int minPort = 7777;
+    private static int maxPort = 8888;
+
+    public ServerNetworkDiscovery()
     {
         Initialize();
-
-        Server server = GetComponent<Server>();
-
-        port = server.port;
-
-        broadcastData = "port/" + server.port;
-
-        InitializeBroadcast();
     }
 
     public void InitializeBroadcast()
     {
         if (StartAsServer())
         {
-            Debug.Log("Server started broadcasting locally from port " + port);
-
+            Debug.Log("Server started broadcasting locally");
         }
     }
 
@@ -35,4 +30,31 @@ public class ServerNetworkDiscovery : NetworkDiscovery
         StopBroadcast();
         StartAsServer();
     }
+
+    public int[] CreateServer(HostTopology topology)
+    {
+        int[] connectionData = new int[2] { -1, -1 };
+
+        for (int portNumber = minPort; portNumber <= maxPort; portNumber++)
+        {
+            socketId = NetworkTransport.AddHost(topology, portNumber);
+
+            if (socketId != -1)
+            {
+                port = portNumber;
+
+                connectionData[0] = port;
+                connectionData[1] = socketId;
+
+                broadcastData = "port/" + port;
+               
+                break;
+            }
+
+        }
+
+        return connectionData;
+
+    }
+
 }

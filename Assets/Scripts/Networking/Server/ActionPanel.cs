@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class ActionPanel : MonoBehaviour {
 
+
     public void ChatButton()
     {
         List<Room> rooms = Server.instance.rooms;
@@ -17,14 +18,12 @@ public class ActionPanel : MonoBehaviour {
 
     public void ServerButton()
     {
-        ServerNetworkDiscovery script = Server.instance.gameObject.GetComponent<ServerNetworkDiscovery>();
-        script.ServerInitialize();
+        Server.instance.InitializeBroadcast();
     }
 
     public void ResetServer()
     {
-        ServerNetworkDiscovery script = Server.instance.gameObject.GetComponent<ServerNetworkDiscovery>();
-        script.ResetServer();
+        Server.instance.Reset();
     }
 
     public void MaxPlayerRoomButton()
