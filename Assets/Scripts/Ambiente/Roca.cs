@@ -34,4 +34,9 @@ public class Roca : MonoBehaviour {
         }
 	}
 
+    public void KilledMySelf()
+    {
+
+        Destroy(this.gameObject);
+    }
 }
