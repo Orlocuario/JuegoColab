@@ -23,6 +23,7 @@ GameObject:
   - component: {fileID: 95434664018285346}
   - component: {fileID: 114634113594973794}
   - component: {fileID: 61596569077704014}
+  - component: {fileID: 50973638855771348}
   m_Layer: 0
   m_Name: Espiritu
   m_TagString: Enemy
@@ -37,12 +38,32 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1334128760454266}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -15.633, y: -2.348, z: 0}
+  m_LocalPosition: {x: -15.328, y: -2.325, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!50 &50973638855771348
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1334128760454266}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 10
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!61 &61596569077704014
 BoxCollider2D:
   m_ObjectHideFlags: 1
@@ -85,6 +106,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5a550bb5ee09cbc45b7c22190962c617, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  directionX: -1
   fromEditor: 1
   enemyId: 0
 --- !u!212 &212162879713302450
