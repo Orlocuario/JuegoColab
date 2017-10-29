@@ -66,11 +66,11 @@ public class SpiderScene2 : MonoBehaviour
                 animator.SetBool("llegóPlayer", true);
             }
 
-            if (Mathf.Abs(player0Transform.position.x - posInicial.x) < minimunDistance && Client.instance.GetMage().InShield(players[0]))
+            if (Mathf.Abs(player0Transform.position.x - posInicial.x) < minimunDistance && Client.instance.GetMage().ProtectedByShield(players[0]))
             {
                 for (int i = 0; i < players.Length; i++)
                 {
-                    if (Client.instance.GetMage().InShield(players[i]) && conColision[i])
+                    if (Client.instance.GetMage().ProtectedByShield(players[i]) && conColision[i])
                     {
                         Physics2D.IgnoreCollision(players[i].GetComponent<BoxCollider2D>(), this.gameObject.GetComponent<CircleCollider2D>());
                         SendMessageToServer("IgnoreBoxCircleCollision/true/" + players[i].name + "/" + this.gameObject.name);
@@ -82,7 +82,7 @@ public class SpiderScene2 : MonoBehaviour
             {
                 for (int i = 0; i < players.Length; i++)
                 {
-                    if (!Client.instance.GetMage().InShield(players[i]))
+                    if (!Client.instance.GetMage().ProtectedByShield(players[i]))
                     {
                         Physics2D.IgnoreCollision(players[i].GetComponent<BoxCollider2D>(), this.gameObject.GetComponent<CircleCollider2D>(), false);
                         SendMessageToServer("IgnoreBoxCircleCollision/false/" + players[i].name + "/" + this.gameObject.name);

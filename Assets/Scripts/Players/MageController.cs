@@ -9,17 +9,19 @@ public class MageController : PlayerController {
 	GameObject particulas1;
 	GameObject particulas2;
 
-    bool powerOn;
+    protected static float shieldArea;
 
 	protected override void Start()
 	{
 		base.Start();
-        powerOn = false;
         particulas1 = GameObject.Find ("ParticulasMage");
 		particulas1.SetActive(false);
 		particulas2 = GameObject.Find ("ParticulasMage2");
 		particulas2.SetActive(false);
-	}
+
+        shieldArea = particulas1.GetComponent<ParticleSystem>().shape.radius;
+        Debug.Log("Mage particles radius is: " + shieldArea);
+    }
 
     protected override bool IsAttacking()
     {
@@ -41,13 +43,15 @@ public class MageController : PlayerController {
         return remoteAttacking;
     }
 
-    public bool InShield(GameObject player)
+    public bool ProtectedByShield(GameObject player)
     {
-        if (powerOn)
+        if (isPowerOn)
         {
-            float distance = Mathf.Abs(player.GetComponent<Transform>().position.magnitude - this.gameObject.GetComponent<Transform>().position.magnitude);
-            return distance <= 0.77f;
+            bool inShield = (player.transform.position - transform.position).magnitude <= shieldArea;
+            Debug.Log("player position: " + player.transform.position.x + " mage position?: " + transform.position + "eval?: " + (player.transform.position - transform.position).magnitude + "inShield?: " + inShield);
+            return inShield;
         }
+
         return false;
         
     }

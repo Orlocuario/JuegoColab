@@ -318,8 +318,8 @@ public class Client : MonoBehaviour
     public MageController GetMage()
     {
         GameObject player = GameObject.Find("Mage");
-        MageController script = player.GetComponent<MageController>();
-        return script;
+        MageController magecontroller = player.GetComponent<MageController>();
+        return magecontroller;
     }
 
     public WarriorController GetWarrior()

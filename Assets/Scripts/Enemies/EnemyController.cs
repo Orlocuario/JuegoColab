@@ -181,13 +181,20 @@ public class EnemyController : MonoBehaviour
     protected void DealDamage(GameObject player)
     {
 
-        // This is evaluated the second attacking frame
         PlayerController playerController = player.GetComponent<PlayerController>();
+        MageController mage = levelManager.GetMage();
+
         Vector2 playerPosition = player.transform.position;
         Vector2 attackForce = force;
 
         // Only hit local players
         if (!playerController.localPlayer)
+        {
+            return;
+        }
+
+        // Don't hit protected players
+        if (mage.ProtectedByShield(player))
         {
             return;
         }
@@ -199,12 +206,7 @@ public class EnemyController : MonoBehaviour
         }
 
         playerController.TakeDamage(damage, attackForce);
-
-        if (attackTarget.name == player.name)
-        {
-            attackTarget = null;
-        }
-
+   
     }
 
     // Attack those who enter the alert zone
@@ -243,6 +245,7 @@ public class EnemyController : MonoBehaviour
     public void OnAttackStarted(string s)
     {
         DealDamage(attackTarget);
+        attackTarget = null;
     }
 
     public void OnAttackEnd(string s)

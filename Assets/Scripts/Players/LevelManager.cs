@@ -46,6 +46,42 @@ public class LevelManager : MonoBehaviour {
         reconectando.SetActive(false);
 	}
 
+    public MageController GetMage()
+    {
+        if (players == null)
+        {
+            return null;
+        }
+
+        GameObject player = players[0];
+        MageController magecontroller = player.GetComponent<MageController>();
+        return magecontroller;
+    }
+
+    public WarriorController GetWarrior()
+    {
+        if (players == null)
+        {
+            return null;
+        }
+
+        GameObject player = players[1];
+        WarriorController script = player.GetComponent<WarriorController>();
+        return script;
+    }
+
+    public EngineerController GetEngineer()
+    {
+        if (players == null)
+        {
+            return null;
+        }
+
+        GameObject player = players[2];
+        EngineerController script = player.GetComponent<EngineerController>();
+        return script;
+    }
+
     public void MostrarReconectando(bool valor)
     {
         reconectando.SetActive(valor);
