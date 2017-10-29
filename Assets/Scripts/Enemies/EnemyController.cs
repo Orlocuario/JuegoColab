@@ -250,6 +250,4 @@ public class EnemyController : MonoBehaviour
         animator.SetBool("isAttacking", false);
     }
 
-
-
 }
