@@ -8,16 +8,14 @@ public class DestroyOverTime : MonoBehaviour {
 
 	// Use this for initialization
 	void Start () {
+
+		Destroy (this.gameObject, lifeTime);
 		
 	}
 	
 	// Update is called once per frame
 	void Update () {
 
-		lifeTime = lifeTime - Time.deltaTime;
 
-		if (lifeTime <= 0f) {
-			Destroy (gameObject); 
-		}
 	}
 }

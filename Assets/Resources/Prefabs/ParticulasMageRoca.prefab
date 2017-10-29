@@ -21,9 +21,10 @@ GameObject:
   - component: {fileID: 4107635898818388}
   - component: {fileID: 198053915995206476}
   - component: {fileID: 199380523461744204}
+  - component: {fileID: 114677610655077456}
   m_Layer: 0
   m_Name: ParticulasMageRoca
-  m_TagString: Untagged
+  m_TagString: ParticulaMuere
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -72,6 +73,17 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: -61.386}
+--- !u!114 &114677610655077456
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1065383152562020}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 54602de6224e642628131d1774d41e14, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!198 &198053915995206476
 ParticleSystem:
   m_ObjectHideFlags: 1

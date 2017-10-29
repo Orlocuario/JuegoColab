@@ -9,6 +9,7 @@ public class TriggerCamera : MonoBehaviour {
 	public float targetX;
 	public float targetY;
     public GameObject target;
+	public bool sinChat;
 
     // Use this for initialization
     void Start()
@@ -23,7 +24,7 @@ public class TriggerCamera : MonoBehaviour {
 	private void OnEnter(){
 		GameObject camaraObject = GameObject.FindGameObjectWithTag ("MainCamera");
 		CameraController camaraScript = camaraObject.GetComponent<CameraController> ();
-		camaraScript.ChangeState (state, ortographic_size,targetX,targetY);
+		camaraScript.ChangeState (state, ortographic_size,targetX,targetY,sinChat);
 		if (state == CameraState.TargetZoom) {
 			Destroy (this.gameObject);
 		}
@@ -32,7 +33,7 @@ public class TriggerCamera : MonoBehaviour {
 	private void OnExit(){
 		GameObject camaraObject = GameObject.FindGameObjectWithTag ("MainCamera");
 		CameraController camaraScript = camaraObject.GetComponent<CameraController> ();
-		camaraScript.ChangeState (CameraState.Normal, 0,0,0);
+		camaraScript.ChangeState (CameraState.Normal, 0,0,0, false);
 
 	}
 
