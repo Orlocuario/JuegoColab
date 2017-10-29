@@ -5,6 +5,8 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
 
+    public CircleCollider2D alertZone;
+
     protected LevelManager levelManager;
     protected Animator animator;
     protected Rigidbody2D rb2d;
@@ -24,14 +26,15 @@ public class EnemyController : MonoBehaviour
     public int directionX = -1;  // 1 = derecha, -1 = izquierda
 
     protected Vector2 force = new Vector2(0, 0);
+    protected GameObject attackTarget;
     protected int damage = 0;
 
-    protected float alertDistance;
     protected bool patrolling;
-    protected bool attacking;
 
     public bool fromEditor;
     public int enemyId;
+
+    int debuger = 0;
 
     protected virtual void Start()
     {
@@ -42,7 +45,6 @@ public class EnemyController : MonoBehaviour
         Collider2D collider = GetComponent<Collider2D>();
 
         initialPosition = transform.position;
-        alertDistance = collider.bounds.size.x * alertDistanceFactor;
 
         hp = maxHp;
     }
@@ -56,28 +58,22 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     protected virtual void Update()
     {
-        Attack();
     }
 
-    protected void Attack()
+    protected void Attack(GameObject player)
     {
-        DrawAlertDistance(); //  Only works on editor mode
-
-        foreach (GameObject player in levelManager.players)
+        // Set the attacking property of the animator
+        if (!animator.GetBool("isAttacking"))
         {
-            if (Vector3.Distance(transform.position, player.transform.position) < alertDistance)
-            {
-                DealDamage(player);
-                return;
-            }
+            animator.SetBool("isAttacking", true);
+            attackTarget = player;
         }
-
     }
 
-    protected void DrawAlertDistance()
+    protected void DrawDistanceFromPlayer(float distance)
     {
-        Vector3 left = new Vector3(transform.position.x - alertDistance, transform.position.y, transform.position.z);
-        Vector3 right = new Vector3(transform.position.x + alertDistance, transform.position.y, transform.position.z);
+        Vector3 left = new Vector3(transform.position.x - distance, transform.position.y, transform.position.z);
+        Vector3 right = new Vector3(transform.position.x + distance, transform.position.y, transform.position.z);
 
         Debug.DrawLine(left, transform.position, Color.blue);
         Debug.DrawLine(transform.position, right, Color.red);
@@ -168,27 +164,33 @@ public class EnemyController : MonoBehaviour
 
     protected bool CollidedWithPlayer(GameObject other)
     {
-        return other.tag == "Player";
+
+        if (other.tag == "Player")
+        {
+            PlayerController playerController = other.GetComponent<PlayerController>();
+
+            if (playerController.localPlayer)
+            {
+                return true;
+            }
+        }
+        
+        return false;
     }
 
     protected void DealDamage(GameObject player)
     {
 
-        if (!animator.GetBool("isAttacking"))
-        {
-            animator.SetBool("isAttacking", true);
-        }
+        // This is evaluated the second attacking frame
+        PlayerController playerController = player.GetComponent<PlayerController>();
+        Vector2 playerPosition = player.transform.position;
+        Vector2 attackForce = force;
 
-        if (!attacking)
+        // Only hit local players
+        if (!playerController.localPlayer)
         {
             return;
         }
-
-
-        Vector2 playerPosition = player.transform.position;
-        PlayerController playerController = player.GetComponent<PlayerController>();
-
-        Vector2 attackForce = force;
 
         // If player is at the left side of the enemy push it to the left
         if (playerPosition.x < transform.position.x)
@@ -198,22 +200,33 @@ public class EnemyController : MonoBehaviour
 
         playerController.TakeDamage(damage, attackForce);
 
-        attacking = false;
+        if (attackTarget.name == player.name)
+        {
+            attackTarget = null;
+        }
 
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    // Attack those who enter the alert zone
+    private void OnTriggerEnter2D(Collider2D collider)
     {
-        if (CollidedWithPlayer(collision.gameObject))
+        if (CollidedWithPlayer(collider.gameObject))
         {
-            DealDamage(collision.gameObject);
+            Debug.Log("Player " + collider.gameObject.name + "  entro en la alert zone");
+            Attack(collider.gameObject);
         }
     }
 
-    public void OnAttackEnd(string s)
+    // Attack those who collide with me
+    private void OnCollisionEnter2D(Collision2D collider)
     {
-        animator.SetBool("isAttacking", false);
+        if (CollidedWithPlayer(collider.gameObject))
+        {
+            Debug.Log("Player " + collider.gameObject.name + "  chocó conmigo");
+            Attack(collider.gameObject);
+        }
     }
+
 
     public void OnDamageEnd(string s)
     {
@@ -226,10 +239,17 @@ public class EnemyController : MonoBehaviour
         Destroy(this.gameObject);
     }
 
+    // This is called from the animator
     public void OnAttackStarted(string s)
     {
-        attacking = true;
+        DealDamage(attackTarget);
     }
+
+    public void OnAttackEnd(string s)
+    {
+        animator.SetBool("isAttacking", false);
+    }
+
 
 
 }
