@@ -54,8 +54,7 @@ public class SwitchActions : MonoBehaviour {
 			rejaEng.SetActive (false);
 			Roca roca = GameObject.FindGameObjectWithTag ("rocaCaida").GetComponent <Roca> ();
 			roca.isReady = true;
-			GameObject particleRoca = (GameObject)Instantiate (Resources.Load ("Prefabs/ParticulasMageRoca"));		
-			particleRoca.GetComponent<Transform> ().position = new Vector2 (30.5f, 2.4f);	
+			GameObject particleRoca = (GameObject)Instantiate (Resources.Load ("Prefabs/ParticulasMageRoca"));			
 			CajaSwitch caja = GameObject.FindGameObjectWithTag ("CajaSwitchFierro").GetComponent <CajaSwitch> ();
 			caja.meVoy = true; 
 			caja.ahoraMeVoy = true;
@@ -67,27 +66,26 @@ public class SwitchActions : MonoBehaviour {
 		
 		
 		case 2:
-			
+
+			GameObject rocaGrande = GameObject.FindGameObjectWithTag ("rocaCaida");
 			Roca rocaGigante = GameObject.FindGameObjectWithTag ("rocaCaida").GetComponent <Roca> (); 
-			GameObject sujetaRoca = GameObject.FindGameObjectWithTag ("SujetaRoca"); //identificaplataformarocaGigante
-			Animator sujetaRocaAnim = sujetaRoca.GetComponent<Animator> ();	//animador
-			sujetaRocaAnim.SetBool ("isSwitch", true);//bool
-            rocaGigante.caidaOn = true;
-			/*GameObject rocaCaida = GameObject.FindGameObjectWithTag ("rocaCaida");
-			rocaCaida.GetComponent<Animator> ().SetBool ("caidaOn", true);*/
-			GameObject arbolGigante = GameObject.FindGameObjectWithTag ("ArbolCaida");  //arbol
+			rocaGigante.caidaOn = true;
+			CameraController mainCamera = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent <CameraController> ();
+			mainCamera.ChangeState (CameraState.TargetZoom, 5, 34.9f, -3.06f, false);
+			GameObject arbolGigante = GameObject.FindGameObjectWithTag ("ArbolCaida");
+			caidArbol arbool = arbolGigante.GetComponent <caidArbol> ();
+			arbool.colliderOn = true;//arbol
 			Animator arbolQl = arbolGigante.GetComponent<Animator> ();
 			arbolQl.SetBool ("RockBottom", true); //activa camino arbol
-			GameObject particulasCaminosub = (GameObject)Instantiate (Resources.Load ("Prefabs/ParticulasWarriorMaleta"));
-			particulasCaminosub.GetComponent<Transform> ().position = new Vector2 (34.2f, -7f);
 			PathSub abreteSesamo = GameObject.FindGameObjectWithTag ("openPathSub").GetComponent <PathSub>();//destruyePasadizo
 			abreteSesamo.killMe = true;
 			Debug.Log ("wiiiiiii");
+
 			               
 			break; 
 
 		case 3:
-            GameObject platescalera = (GameObject)Instantiate(Resources.Load("Prefabs/MagePlath"));
+            GameObject platescalera = (GameObject)Instantiate(Resources.Load("Prefabs/MagePlath1"));
             platescalera.GetComponent<Transform>().position = new Vector2(43f, -16f);
             GameObject feedbackswitch = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
             feedbackswitch.GetComponent<Transform>().position = new Vector2(41.4f, -16.3f);
@@ -109,7 +107,7 @@ public class SwitchActions : MonoBehaviour {
 			break;
 
         case 6:
-			GameObject platescaleraPrueba = (GameObject)Instantiate(Resources.Load("Prefabs/MagePlath"));
+			GameObject platescaleraPrueba = (GameObject)Instantiate(Resources.Load("Prefabs/MagePlathShorter"));
 			platescaleraPrueba.GetComponent<Transform>().position = new Vector2(15f, -6.5f);
 			GameObject feedbackswitchPrueba = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
 			feedbackswitchPrueba.GetComponent<Transform>().position = new Vector2(15f, -6.5f);
@@ -119,15 +117,15 @@ public class SwitchActions : MonoBehaviour {
 			GameObject exp = (GameObject)Instantiate (Resources.Load ("Prefabs/Ambientales/Exp"));
 			exp.GetComponent <Transform>().position = new Vector2 (62f,-14.23f) ;
 			GameObject exp1 = (GameObject)Instantiate (Resources.Load ("Prefabs/Ambientales/Exp"));
-			exp.GetComponent <Transform>().position = new Vector2 (62.5f,-14.23f) ;
+			exp1.GetComponent <Transform>().position = new Vector2 (62.5f,-14.23f) ;
 			GameObject exp2 = (GameObject)Instantiate (Resources.Load ("Prefabs/Ambientales/Exp"));
-			exp.GetComponent <Transform>().position = new Vector2 (64f,-14.23f) ;
+			exp2.GetComponent <Transform>().position = new Vector2 (64f,-14.23f) ;
 			GameObject exp3 = (GameObject)Instantiate (Resources.Load ("Prefabs/Ambientales/Exp"));
-			exp.GetComponent <Transform>().position = new Vector2 (61.5f,-14.23f) ;
+			exp3.GetComponent <Transform>().position = new Vector2 (61.5f,-14.23f) ;
 			GameObject exp4 = (GameObject)Instantiate (Resources.Load ("Prefabs/Ambientales/Exp"));
-			exp.GetComponent <Transform>().position = new Vector2 (63f,-14.23f) ;
+			exp4.GetComponent <Transform>().position = new Vector2 (63f,-14.23f) ;
 			GameObject exp5 = (GameObject)Instantiate (Resources.Load ("Prefabs/Ambientales/Exp"));
-			exp.GetComponent <Transform>().position = new Vector2 (63.5f,-14.23f) ;
+			exp5.GetComponent <Transform>().position = new Vector2 (63.5f,-14.23f) ;
 			break;
 		
 		case 8:

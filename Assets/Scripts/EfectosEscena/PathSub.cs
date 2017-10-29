@@ -18,9 +18,7 @@ public class PathSub : MonoBehaviour {
 		
 		if (killMe == true) 
 		{
-			GameObject particulas = (GameObject)Instantiate (Resources.Load ("Prefabs/ParticulasWarriorMaleta"));
-			particulas.GetComponent <Transform>().position = new Vector2 (34.1f, -7.07f);
-			Destroy (gameObject, 5f);
+			Destroy (gameObject, 2f);
 		}
 	}
 }

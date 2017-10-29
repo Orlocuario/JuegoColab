@@ -9,13 +9,14 @@ public class Roca : MonoBehaviour {
 	public bool isReady;
 	private Animator animRoca;
 	private GameObject roca;
+	private CameraController camera;
 
 
 
 	// Use this for initialization
 	void Start () {
 		animRoca = this.gameObject.GetComponent <Animator>();
-
+		
         caidaOn = false;
         isReady = false;
 		roca = gameObject;
@@ -27,11 +28,15 @@ public class Roca : MonoBehaviour {
         
         if (caidaOn == true)
 		{
-            Debug.Log("me fui a la chucha");
 			animRoca.SetBool("caidaOn", true);
-			Destroy (roca, 5.5f);
-            Debug.Log("La Mateeeeee");
         }
 	}
 
+	public void KilledMySelf(string s)
+    {
+		GameObject particulas = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/Humo"));
+		particulas.GetComponent <Transform>().position = new Vector2 (34.1f, -7.07f);
+		Destroy (particulas,5f); 
+        Destroy(this.gameObject,1f);
+    }
 }

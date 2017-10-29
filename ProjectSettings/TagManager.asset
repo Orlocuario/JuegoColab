@@ -44,6 +44,8 @@ TagManager:
   - ExperienceItem
   - Test
   - Enemy
+  - ParticulaMuere
+  - Kanvas
   layers:
   - Default
   - TransparentFX
