@@ -54,31 +54,6 @@ public class SpiderController : EnemyController
             Mathf.Abs(transform.position.x - player2Transform.position.x) < minimunDistance)
         {
 
-            /* if (Mathf.Abs(player0Transform.position.x - posInicial.x) < minimunDistance && Client.instance.GetMage().ProtectedByShield(players[0]))
-             {
-                 for (int i = 0; i < players.Length; i++)
-                 {
-                     if (Client.instance.GetMage().ProtectedByShield(players[i]) && conColision[i])
-                     {
-                         Physics2D.IgnoreCollision(players[i].GetComponent<BoxCollider2D>(), this.gameObject.GetComponent<CircleCollider2D>());
-                         SendMessageToServer("IgnoreBoxCircleCollision/true/" + players[i].name + "/" + this.gameObject.name);
-                         conColision[i] = false;
-                     }
-                 }
-             }
-             else if (!conColision[0] || !conColision[1] || !conColision[2])
-             {
-                 for (int i = 0; i < players.Length; i++)
-                 {
-                     if (!Client.instance.GetMage().ProtectedByShield(players[i]))
-                     {
-                         Physics2D.IgnoreCollision(players[i].GetComponent<BoxCollider2D>(), this.gameObject.GetComponent<CircleCollider2D>(), false);
-                         SendMessageToServer("IgnoreBoxCircleCollision/false/" + players[i].name + "/" + this.gameObject.name);
-                         conColision[i] = true;
-                     }
-                 }
-             } */
-
             if ((Mathf.Abs(player0Transform.position.x - posInicial.x) < minimunDistance && player0Transform.position.y <= 0f) ||
                 (Mathf.Abs(player1Transform.position.x - posInicial.x) < minimunDistance && player1Transform.position.y <= 0f) ||
                 (Mathf.Abs(player2Transform.position.x - posInicial.x) < minimunDistance && player2Transform.position.y <= 0f))  // La araña está arriba y alguien aparece abajo y/o arriba.
