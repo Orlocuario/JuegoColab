@@ -162,7 +162,7 @@ public class EnemyController : MonoBehaviour
         patrolling = true;
     }
 
-    protected bool CollidedWithPlayer(GameObject other)
+    protected bool GameObjectIsPlayer(GameObject other)
     {
 
         if (other.tag == "Player")
@@ -209,10 +209,20 @@ public class EnemyController : MonoBehaviour
    
     }
 
+    protected void OnTriggerStay2D(Collider2D other)
+    {
+        if (GameObjectIsPlayer(other.gameObject))
+        {
+            Debug.Log(other.gameObject.name + "  stayed in " + gameObject.name + " alert zone");
+            Attack(other.gameObject);
+        }
+    }
+
+
     // Attack those who enter the alert zone
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (CollidedWithPlayer(other.gameObject))
+        if (GameObjectIsPlayer(other.gameObject))
         {
             Debug.Log(other.gameObject.name + "  entered in " + gameObject.name + " alert zone");
             Attack(other.gameObject);
@@ -222,7 +232,7 @@ public class EnemyController : MonoBehaviour
     // Attack those who collide with me
     private void OnCollisionEnter2D(Collision2D other)
     {
-        if (CollidedWithPlayer(other.gameObject))
+        if (GameObjectIsPlayer(other.gameObject))
         {
             Debug.Log(other.gameObject.name + "  collided with " + gameObject.name);
             Attack(other.gameObject);
