@@ -8,12 +8,12 @@ AnimatorController:
   m_Name: SpiderBoss
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: "lleg\xF3Player"
+  - m_Name: isAttacking
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
-    m_Controller: {fileID: 9100000}
+    m_Controller: {fileID: 0}
   m_AnimatorLayers:
   - serializedVersion: 5
     m_Name: Base Layer
@@ -35,7 +35,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: "lleg\xF3Player"
+    m_ConditionEvent: isAttacking
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102709676871329342}
@@ -59,7 +59,7 @@ AnimatorStateTransition:
   m_Name: 
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: "lleg\xF3Player"
+    m_ConditionEvent: isAttacking
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102455158430077112}
@@ -182,20 +182,20 @@ AnimatorStateMachine:
     m_Position: {x: 288, y: 60, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102709676871329342}
-    m_Position: {x: 276, y: 192, z: 0}
+    m_Position: {x: 288, y: 192, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102473538177990656}
-    m_Position: {x: 540, y: 156, z: 0}
+    m_Position: {x: 288, y: -48, z: 0}
   - serializedVersion: 1
     m_State: {fileID: 1102324509915698038}
-    m_Position: {x: 528, y: 96, z: 0}
+    m_Position: {x: 564, y: -48, z: 0}
   m_ChildStateMachines: []
   m_AnyStateTransitions: []
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 50, y: 20, z: 0}
-  m_EntryPosition: {x: 48, y: 120, z: 0}
-  m_ExitPosition: {x: 800, y: 120, z: 0}
+  m_AnyStatePosition: {x: -180, y: -24, z: 0}
+  m_EntryPosition: {x: 36, y: 72, z: 0}
+  m_ExitPosition: {x: 576, y: 72, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 1102455158430077112}

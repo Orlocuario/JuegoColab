@@ -178,11 +178,11 @@ public class EnemyController : MonoBehaviour
         return false;
     }
 
-    protected void DealDamage(GameObject player)
+    protected virtual void DealDamage(GameObject player)
     {
 
         PlayerController playerController = player.GetComponent<PlayerController>();
-        MageController mage = levelManager.GetMage();
+        MageController mage = Client.instance.GetMage();
 
         Vector2 playerPosition = player.transform.position;
         Vector2 attackForce = force;
@@ -210,25 +210,24 @@ public class EnemyController : MonoBehaviour
     }
 
     // Attack those who enter the alert zone
-    private void OnTriggerEnter2D(Collider2D collider)
+    private void OnTriggerEnter2D(Collider2D other)
     {
-        if (CollidedWithPlayer(collider.gameObject))
+        if (CollidedWithPlayer(other.gameObject))
         {
-            Debug.Log("Player " + collider.gameObject.name + "  entro en la alert zone");
-            Attack(collider.gameObject);
+            Debug.Log(other.gameObject.name + "  entered in " + gameObject.name + " alert zone");
+            Attack(other.gameObject);
         }
     }
 
     // Attack those who collide with me
-    private void OnCollisionEnter2D(Collision2D collider)
+    private void OnCollisionEnter2D(Collision2D other)
     {
-        if (CollidedWithPlayer(collider.gameObject))
+        if (CollidedWithPlayer(other.gameObject))
         {
-            Debug.Log("Player " + collider.gameObject.name + "  chocó conmigo");
-            Attack(collider.gameObject);
+            Debug.Log(other.gameObject.name + "  collided with " + gameObject.name);
+            Attack(other.gameObject);
         }
     }
-
 
     public void OnDamageEnd(string s)
     {
@@ -242,13 +241,13 @@ public class EnemyController : MonoBehaviour
     }
 
     // This is called from the animator
-    public void OnAttackStarted(string s)
+    public virtual void OnAttackStarted(string s)
     {
         DealDamage(attackTarget);
         attackTarget = null;
     }
 
-    public void OnAttackEnd(string s)
+    public virtual void OnAttackEnd(string s)
     {
         animator.SetBool("isAttacking", false);
     }

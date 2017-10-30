@@ -17,12 +17,13 @@ public class PlayerController : MonoBehaviour
     public Vector3 respawnPosition;
     public LayerMask whatIsGround;
 
-    private LevelManager theLevelManager;
+    private LevelManager levelManager;
     private SpriteRenderer sprite;
 
     public static float maxAcceleration = 1; //100% del speed
-    private static float maxYSpeed = 8f;
     public static float maxXSpeed = 3.5f;
+    private static float maxYSpeed = 8f;
+
     public float acceleration = 0f;
     public bool canAccelerate = false; //Limita la aceleración a la mitad de los frames
 
@@ -41,7 +42,6 @@ public class PlayerController : MonoBehaviour
     public bool remoteAttacking;
     public bool remoteJumping;
     public bool remoteRight;
-    public bool remotePower;
     public bool remoteLeft;
     public bool remoteUp;
 
@@ -50,24 +50,29 @@ public class PlayerController : MonoBehaviour
     public static int mpUpdateRate = 30; // Cada cuantos frames se actualiza el HP y MP display
     public int mpUpdateFrame;
     public bool gravity = true; // true = normal, false = invertida
-    private int directionY = 1; // 1 = de pie, -1 = de cabeza
+    public int directionY = 1; // 1 = de pie, -1 = de cabeza
     public int directionX = 1;  // 1 = derecha, -1 = izquierda
     public bool controlOverEnemies;
     public int sortingOrder = 0;
     public int saltarDoble;
     public int characterId;
-    bool conectado = true;
     public bool isPowerOn;
     public bool mpDepleted;
+
+    private bool conectado = true;
     private bool canMove;
+
+    private int debuger;
 
     GlobalDisplayHUD hpAndMp;
 
     protected virtual void Start()
     {
+
+        debuger = 0;
+
         remoteAttacking = false;
         remoteJumping = false;
-        remotePower = false;
         remoteRight = false;
         remoteLeft = false;
         canMove = true;
@@ -77,7 +82,7 @@ public class PlayerController : MonoBehaviour
 
         hpAndMp = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
 
-        theLevelManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<LevelManager>();
         collider = GetComponent<Collider2D>();
         transform = GetComponent<Transform>();
         rb2d = GetComponent<Rigidbody2D>();
@@ -286,7 +291,6 @@ public class PlayerController : MonoBehaviour
     {
         if (!localPlayer)
         {
-
             transform.localScale = new Vector3(directionX * 1f, directionY, 1f);
             SetAnimVariables();
         }
@@ -433,12 +437,11 @@ public class PlayerController : MonoBehaviour
                 if (!mpDepleted)
                 {
                     mpUpdateFrame = 0;
-                    remotePower = false;
                     isPowerOn = false;
                     mpDepleted = true;
 
                     SendPowerDataToServer();
-                    SetAnimacion(remotePower);
+                    SetParticlesAnimationState(isPowerOn);
                 }
             }
 
@@ -455,10 +458,9 @@ public class PlayerController : MonoBehaviour
                 if (powerButtonPressed)
                 {
                     isPowerOn = !isPowerOn;
-                    remotePower = isPowerOn;
 
                     SendPowerDataToServer();
-                    SetAnimacion(remotePower);
+                    SetParticlesAnimationState(isPowerOn);
                 }
 
                 if (isPowerOn)
@@ -466,7 +468,7 @@ public class PlayerController : MonoBehaviour
 
                     if (mpUpdateFrame == mpUpdateRate)
                     {
-                        SpendMP();
+                        SendMPDataToServer();
                         mpUpdateFrame = 0;
                     }
 
@@ -477,10 +479,36 @@ public class PlayerController : MonoBehaviour
             }
 
         }
-        return remotePower;
+
+        return isPowerOn;
     }
 
-    protected virtual void SetAnimacion(bool activo)
+
+    public void TakeDamage(int damage, Vector2 force)
+    {
+
+        if (force.x != 0 || force.y != 0)
+        {
+            rb2d.AddForce(force);
+        }
+
+        if (damage != 0)
+        {
+
+            // Always send negative values tu HPHUD
+            if (damage > 0)
+            {
+                damage *= -1;
+            }
+
+            string message = "ChangeHpHUDToRoom/" + damage;
+            Client.instance.SendMessageToServer(message);
+
+        }
+
+    }
+
+    protected virtual void SetParticlesAnimationState(bool activo)
     {
 
     }
@@ -501,7 +529,7 @@ public class PlayerController : MonoBehaviour
             {
                 string daño = other.gameObject.GetComponent<KillPlane>().killPlaneDamage;
                 Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);
-                theLevelManager.Respawn();
+                levelManager.Respawn();
             }
         }
         if (other.tag == "KillPlaneSpike")
@@ -510,7 +538,7 @@ public class PlayerController : MonoBehaviour
             {
                 string daño = other.gameObject.GetComponent<KillPlane>().killPlaneDamage;
                 Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);
-                theLevelManager.Respawn();
+                levelManager.Respawn();
             }
         }
 
@@ -559,6 +587,12 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void SetPowerState(bool power)
+    {
+        SetParticlesAnimationState(power);
+        isPowerOn = power;
+    }
+
     public void SetVariablesFromServer(float positionX, float positionY, bool isGrounded, float speed, int direction, bool remoteRight, bool remoteLeft, bool remoteJumping)
     {
         if (localPlayer)
@@ -600,42 +634,13 @@ public class PlayerController : MonoBehaviour
 
     protected void SendPowerDataToServer()
     {
-        string message = "Power/" + characterId + "/" + remotePower;
+        string message = "Power/" + characterId + "/" + isPowerOn;
         Client.instance.SendMessageToServer(message);
     }
 
-    public virtual void RemoteSetter(bool power)
-    {
-
-    }
-
-    public void SpendMP()
+    public void SendMPDataToServer()
     {
         Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + mpSpendRate);
-    }
-
-    public void TakeDamage(int damage, Vector2 force)
-    {
-
-        if (force.x != 0 || force.y != 0)
-        {
-            rb2d.AddForce(force);
-        }
-
-        if (damage != 0)
-        {
-
-            // Always send negative values tu HPHUD
-            if (damage > 0)
-            {
-                damage *= -1;
-            }
-
-            string message = "ChangeHpHUDToRoom/" + damage;
-            Client.instance.SendMessageToServer(message);
-
-        }
-
     }
 
 }

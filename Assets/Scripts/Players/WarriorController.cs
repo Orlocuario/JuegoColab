@@ -20,7 +20,7 @@ public class WarriorController : PlayerController {
 	{
 		base.Start();
 		damage = 3;
-        particulas = GameObject.Find ("ParticulasWarrior");
+        particulas = GameObject.Find("ParticulasWarrior");
 		particulas.SetActive(false);
     }
 
@@ -86,16 +86,9 @@ public class WarriorController : PlayerController {
         }
     }
 
-    protected override void SetAnimacion(bool activo)
+    protected override void SetParticlesAnimationState(bool activo)
     {
         particulas.SetActive(activo);
-	}
-    
-	public override void RemoteSetter(bool power)
-	{
-		SetAnimacion (power);
-		remotePower = power;
-
 	}
 
     private void CastOnePunchMan(string[] enemies, Vector3 position)

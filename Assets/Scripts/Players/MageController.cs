@@ -47,27 +47,19 @@ public class MageController : PlayerController {
     {
         if (isPowerOn)
         {
-            bool inShield = (player.transform.position - transform.position).magnitude <= shieldArea;
-            Debug.Log("player position: " + player.transform.position.x + " mage position?: " + transform.position + "eval?: " + (player.transform.position - transform.position).magnitude + "inShield?: " + inShield);
-            return inShield;
+            return Vector2.Distance(player.transform.position, transform.position) <= shieldArea;
         }
 
         return false;
         
     }
 
-    protected override void SetAnimacion(bool activo)
+    protected override void SetParticlesAnimationState(bool activo)
     {
-        particulas1.SetActive (activo);
-		particulas2.SetActive (activo);
+        particulas1.SetActive(activo);
+		particulas2.SetActive(activo);
 	}
-
-	public override void RemoteSetter(bool power)
-	{
-		SetAnimacion (power);
-		remotePower = power;
-	}
-
+    
     private void CastFireball(int direction, float speed)
     {
         Vector3 myPosition = transform.position;

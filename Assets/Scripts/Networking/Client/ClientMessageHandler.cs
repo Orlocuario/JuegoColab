@@ -213,8 +213,7 @@ public class ClientMessageHandler
 
         if (registeredEnemies.Count == enemiesToRegister)
         {
-            string message = "EnemiesStartPatrolling/true";
-            Client.instance.SendMessageToServer(message);
+            //EnemiesStartPatrolling();
         }
 
     }
@@ -436,8 +435,12 @@ public class ClientMessageHandler
         {
             return;
         }
-        PlayerController script = client.GetById(Int32.Parse(msg[1]));
-        script.RemoteSetter(bool.Parse(msg[2]));
+
+        int playerId = Int32.Parse(msg[1]);
+        bool powerState = bool.Parse(msg[2]);
+
+        PlayerController playerController = client.GetById(playerId);
+        playerController.SetPowerState(powerState);
     }
 
     private void HandleUpdatedAttackState(string[] msg)

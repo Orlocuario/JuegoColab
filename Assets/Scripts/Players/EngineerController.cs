@@ -3,17 +3,18 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EngineerController : PlayerController {
+public class EngineerController : PlayerController
+{
 
     private float skillSpeed;
     GameObject particulas;
     bool jumpedInAir = false;
 
     protected override void Start()
-	{
-		base.Start();
-		particulas = GameObject.FindGameObjectWithTag ("ParticulasEngin");
-		particulas.SetActive(false);
+    {
+        base.Start();
+        particulas = GameObject.FindGameObjectWithTag("ParticulasEngin");
+        particulas.SetActive(false);
     }
 
     protected override bool IsAttacking()
@@ -64,11 +65,11 @@ public class EngineerController : PlayerController {
         {
             skillSpeed = 3.5f;
         }
-        else if(level <= 3)
+        else if (level <= 3)
         {
             skillSpeed = 4f;
         }
-        else if(level <= 5)
+        else if (level <= 5)
         {
             skillSpeed = 4.5f;
         }
@@ -83,7 +84,8 @@ public class EngineerController : PlayerController {
     {
         if (localPlayer)
         {
-            if (isGrounded) {
+            if (isGrounded)
+            {
                 jumpedInAir = false;
             }
 
@@ -104,28 +106,22 @@ public class EngineerController : PlayerController {
                 return true;
             }
 
-             if(remoteJumping)
-             {
-                 remoteJumping = false;
-                 SendObjectDataToServer();
-             }
+            if (remoteJumping)
+            {
+                remoteJumping = false;
+                SendObjectDataToServer();
+            }
 
-            return  false;
+            return false;
         }
 
         return remoteJumping;
     }
 
-	protected override void SetAnimacion(bool activo)
-	{
-		particulas.SetActive (activo);
-	}
+    protected override void SetParticlesAnimationState(bool activo)
+    {
+        particulas.SetActive(activo);
+    }
 
-	public override void RemoteSetter(bool power)
-	{
-		SetAnimacion (power);
-		remotePower = power;
-
-	}
 }
 

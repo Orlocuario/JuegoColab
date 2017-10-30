@@ -5,7 +5,8 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
-public class LevelManager : MonoBehaviour {
+public class LevelManager : MonoBehaviour
+{
 
     public PlayerController thePlayer;
     public GameObject[] players;
@@ -24,7 +25,7 @@ public class LevelManager : MonoBehaviour {
     private float waitToGrabItem;
     public float waitToRespawn;
 
-    void Start ()
+    void Start()
     {
         if (canvas == null)
         {
@@ -44,7 +45,7 @@ public class LevelManager : MonoBehaviour {
 
         reconectando = GameObject.Find("ReconnectingText");
         reconectando.SetActive(false);
-	}
+    }
 
     public MageController GetMage()
     {
@@ -112,7 +113,7 @@ public class LevelManager : MonoBehaviour {
         }
 
         thePlayer.Activate(id);
-        Camera.main.GetComponent<CameraController>().SetTarget(thePlayer.gameObject) ;
+        Camera.main.GetComponent<CameraController>().SetTarget(thePlayer.gameObject);
     }
 
     public void Respawn()
@@ -124,9 +125,9 @@ public class LevelManager : MonoBehaviour {
     {
         thePlayer.gameObject.SetActive(false);
 
-        yield return new WaitForSeconds(waitToRespawn); 
+        yield return new WaitForSeconds(waitToRespawn);
 
-        thePlayer.transform.position = thePlayer.respawnPosition + Vector3.up*0.1f;
+        thePlayer.transform.position = thePlayer.respawnPosition + Vector3.up * 0.1f;
         thePlayer.gameObject.SetActive(true);
         thePlayer.IgnoreCollisionBetweenPlayers();
         thePlayer.SendObjectDataToServer();
@@ -167,7 +168,7 @@ public class LevelManager : MonoBehaviour {
         doorSpriteRenderer.sprite = door.GetComponent<RuneSystem>().doorIsOpen;
     }
 
-	public void ActivateNPCLog(string message)
+    public void ActivateNPCLog(string message)
     {
         npcLog.SetActive(true);
         Text npcLogText = GameObject.Find("NPCLogText").GetComponent<Text>();
@@ -177,18 +178,21 @@ public class LevelManager : MonoBehaviour {
 
     public void IgnoreBoxCircleCollision(string[] array)
     {
-        if (array[1] == "true")
+        bool isThereCollison = bool.Parse(array[1]);
+
+        GameObject boxObject = GameObject.Find(array[2]);
+        GameObject circleObject = GameObject.Find(array[3]);
+
+        CircleCollider2D[] circleColliders = circleObject.GetComponents<CircleCollider2D>();
+
+        foreach (CircleCollider2D collider in circleColliders)
         {
-            GameObject boxObject = GameObject.Find(array[2]);
-            GameObject circleObject = GameObject.Find(array[3]);
-            Physics2D.IgnoreCollision(boxObject.GetComponent<BoxCollider2D>(), circleObject.GetComponent<CircleCollider2D>());
+            if (!collider.isTrigger)
+            {
+                Physics2D.IgnoreCollision(boxObject.GetComponent<BoxCollider2D>(), collider, isThereCollison);
+            }
         }
-        else
-        {
-            GameObject boxObject = GameObject.Find(array[2]);
-            GameObject circleObject = GameObject.Find(array[3]);
-            Physics2D.IgnoreCollision(boxObject.GetComponent<BoxCollider2D>(), circleObject.GetComponent<CircleCollider2D>(), false);
-        }
+
     }
 
     public void ActivateMachine(string machineName)
