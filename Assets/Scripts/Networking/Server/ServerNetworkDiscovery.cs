@@ -12,7 +12,7 @@ public class ServerNetworkDiscovery : NetworkDiscovery
     private static int minPort = 7777;
     private static int maxPort = 8888;
 
-    public ServerNetworkDiscovery()
+    public void Start()
     {
         Initialize();
     }

@@ -135,7 +135,7 @@ public class Switch : MonoBehaviour
     {
         GameObject colliderGameObject = collision.collider.gameObject;
 
-        string objectName = colliderGameObject.name;
+        string objectName = colliderGameObject.tag;
 
         if (CheckIfObjectMatchWithColor(objectName))
         {
