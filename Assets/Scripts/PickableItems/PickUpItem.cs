@@ -54,7 +54,7 @@ public class PickUpItem : MonoBehaviour
     public void PickUpExp()
     {
 		Destroy (this.gameObject);
-		Client.instance.SendMessageToServer("DestroyItem/" + this.gameObject.name);
+		Client.instance.SendMessageToServer("OthersDestroyObject/" + this.gameObject.name);
         Client.instance.SendMessageToServer("GainExp/" + "50");
     }
 }
