@@ -23,8 +23,6 @@ public class SpiderController : EnemyController
         maxHp = 2000f;
         damage = 5;
 
-        protecting = false;
-
         ignoresCollisions = new Dictionary<string, bool> { { "Mage", false }, { "Warrior", false }, { "Engineer", false } };
 
         upperTunnelPosition = new Vector3(73.38f, 0.73f);
