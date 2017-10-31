@@ -8,13 +8,12 @@ public class PickUpItem : MonoBehaviour
 
 	public PlannerItem itemObj = null;
 
-
     public void OnCollisionEnter2D(Collision2D other)
     {
         if (other.collider.tag == "Player")
         {
             PlayerController localPlayer = Client.instance.GetLocalPlayer();
-            if (localPlayer.gameObject.tag == other.collider.tag)
+            if (localPlayer.gameObject.name == other.collider.name)
             {
                 PickUp();
             }
@@ -33,7 +32,7 @@ public class PickUpItem : MonoBehaviour
         if (this.gameObject.tag == "ExperienceItem" && (other.tag == "Player"))
         {
             PlayerController localPlayer = Client.instance.GetLocalPlayer();
-            if (localPlayer.gameObject.tag == other.tag)
+            if (localPlayer.gameObject.name == other.name)
             {
                 PickUpExp();
             }
