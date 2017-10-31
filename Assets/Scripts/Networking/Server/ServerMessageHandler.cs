@@ -201,9 +201,6 @@ public class ServerMessageHandler
         float posX = float.Parse(msg[2]);
         float posY = float.Parse(msg[3]);
         NetworkPlayer player = server.GetPlayer(connectionId);
-        NetworkEnemy enemy = player.room.GetEnemy(enemyId);
-        enemy.posX = posX;
-        enemy.posY = posY;
         player.room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 

@@ -278,9 +278,11 @@ public class ClientMessageHandler
         {
             return;
         }
+
         int enemyId = Int32.Parse(msg[1]);
         float posX = float.Parse(msg[2]);
         float posY = float.Parse(msg[3]);
+
         EnemyController enemyScript = client.GetEnemy(enemyId);
         enemyScript.SetPosition(posX, posY);
     }
