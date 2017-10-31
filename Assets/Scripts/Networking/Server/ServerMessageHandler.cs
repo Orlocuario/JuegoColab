@@ -93,7 +93,7 @@ public class ServerMessageHandler
                 SendSwitchGroupAction(message, msg, connectionId);
                 break;
             case "ActivateRuneDoor":
-                SendActivationDoor(message, connectionId);
+                SendActivationDoor(message, connectionId, msg);
                 break;
             case "ActivateMachine":
                 SendActivationMachine(message, connectionId);
@@ -116,6 +116,8 @@ public class ServerMessageHandler
         room.EnemiesStartPatrolling();
     }
 
+
+    //Usado para sincronizar estado del servidor con un cliente que se está reconectando
     public void SendAllData(int connectionId, Room room)
     {
         foreach (NetworkPlayer player in room.players)
@@ -126,6 +128,11 @@ public class ServerMessageHandler
         foreach (ServerSwitch switchi in room.switchs)
         {
             room.SendMessageToPlayer(switchi.GetReconnectData(), connectionId);
+        }
+
+        foreach(string doorMessage in room.doorManager.GetDoorMessages())
+        {
+            room.SendMessageToPlayer(doorMessage, connectionId);
         }
     }
 
@@ -166,11 +173,13 @@ public class ServerMessageHandler
         room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 
-    private void SendActivationDoor(string message, int connectionId)
+    private void SendActivationDoor(string message, int connectionId, string[] msg)
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
+        string doorId = msg[1];
         Room room = player.room;
         room.SendMessageToAllPlayers(message);
+        room.doorManager.AddDoor(doorId);
     }
 
     private void SendSwitchGroupAction(string message, string[] msg, int connectionId)
@@ -359,6 +368,8 @@ public class ServerMessageHandler
     {
         string command = "ChangeScene/" + sceneName;
         room.SendMessageToAllPlayers(command);
+        room.sceneToLoad = sceneName;
+        room.doorManager.Reset();
     }
 
     public void SendAttackState(string message, int connectionId, string[] data)
