@@ -5,20 +5,31 @@ using UnityEngine;
 public class PunchController : AttackController
 {
 
+    CircleCollider2D collider2d;
+    private static float maxColliderRadius = .25f;
+
     protected override void Start()
     {
-        base.Start();   
+        base.Start();
+        maxDistance = 2.5f;
+        collider2d = GetComponent<CircleCollider2D>();
     }
 
-    // Update is called once per frame
     protected override void Update()
     {
         base.Update();
+        collider2d.radius =  (currentDistance / maxDistance) * maxColliderRadius;
     }
 
-    public void SetPosition(float x, float y)
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        transform.position = new Vector2(x, y);
+        Debug.Log("Le pegué a " + collision.gameObject.name + " con trigger");
+        if (CollidedWithEnemy(collision.gameObject))
+        {
+            DealDamage(collision.gameObject);
+        }
+
+        Destroy(this.gameObject, destroyDelayTime);
     }
 
 }

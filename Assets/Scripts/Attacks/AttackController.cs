@@ -109,6 +109,7 @@ public class AttackController : MonoBehaviour
     protected void OnCollisionEnter2D(Collision2D collision)
     {
 
+        Debug.Log("Le pegué a " + collision.gameObject.name + " normal");
         if (CollidedWithEnemy(collision.gameObject))
         {
             DealDamage(collision.gameObject);
@@ -116,4 +117,5 @@ public class AttackController : MonoBehaviour
 
         Destroy(this.gameObject, destroyDelayTime);
     }
+
 }

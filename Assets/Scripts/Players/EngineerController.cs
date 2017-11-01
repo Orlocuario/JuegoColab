@@ -34,7 +34,6 @@ public class EngineerController : PlayerController
         bool attackButtonPressed = CnInputManager.GetButtonDown("Attack Button");
         if (attackButtonPressed)
         {
-            SendAttackDataToServer();
             CastProyectile();
         }
 
@@ -48,8 +47,8 @@ public class EngineerController : PlayerController
     private void CastProyectile()
     {
         CastLocalProyectile();
-        SendProyectileSignalToServer();
-    }
+        SendAttackDataToServer();
+   }
 
     public void CastLocalProyectile()
     {
@@ -61,14 +60,7 @@ public class EngineerController : PlayerController
         controller.SetMovement(directionX, SkillSpeed(1), transform.position.x, transform.position.y, this);
     }
 
-    private void SendProyectileSignalToServer()
-    {
-        string x = transform.position.x.ToString();
-        string y = transform.position.y.ToString();
-        Client.instance.SendMessageToServer("CastProyectile/" + directionX + "/" + SkillSpeed(1).ToString() + "/" + x + "/" + y);
-    }
     //change all 1's to GetLevel()
-
     public float SkillSpeed(int level)
     {
         if (level <= 1)

@@ -37,7 +37,6 @@ public class MageController : PlayerController
         bool attackButtonPressed = CnInputManager.GetButtonDown("Attack Button");
         if (attackButtonPressed)
         {
-            SendAttackDataToServer();
             CastFireball();
         }
 
@@ -66,9 +65,8 @@ public class MageController : PlayerController
 
     private void CastFireball()
     {
-        Vector3 myPosition = transform.position;
         CastLocalFireball();
-        SendFireballSignalToServer();
+        SendAttackDataToServer();
     }
 
     public void CastLocalFireball()
@@ -79,13 +77,6 @@ public class MageController : PlayerController
         GameObject fireball = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/BolaM1"));
         FireballController controller = fireball.GetComponent<FireballController>();
         controller.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
-    }
-
-    private void SendFireballSignalToServer()
-    {
-        string x = transform.position.x.ToString();
-        string y = transform.position.y.ToString();
-        Client.instance.SendMessageToServer("CastFireball/" + directionX + "/" + attackSpeed + "/" + transform.position.x + "/" + transform.position.y);
     }
 
 }

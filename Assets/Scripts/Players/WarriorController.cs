@@ -15,6 +15,7 @@ public class WarriorController : PlayerController
     private float damage;
     private double force = 0;
     private int hits = 0;
+    private static int attackSpeed = 2;
 
     protected override void Start()
     {
@@ -38,7 +39,6 @@ public class WarriorController : PlayerController
 
         if (attackButtonPressed)
         {
-            SendAttackDataToServer();
             CastPunch();
             if (SceneManager.GetActiveScene().name == "Escena2")
             {
@@ -67,7 +67,6 @@ public class WarriorController : PlayerController
         if (numHits % 2 == 0)
         {
             animator.SetBool("IsAttacking2", isAttacking);
-
         }
         else
         {
@@ -76,9 +75,7 @@ public class WarriorController : PlayerController
 
         GameObject punch = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Punch"));
         PunchController punchController = punch.GetComponent<PunchController>();
-        punchController.SetPosition(transform.position.x, transform.position.y);
-
-        punch.GetComponent<Transform>().position = new Vector2(transform.position.x, transform.position.y);
+        punchController.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
     }
 
     protected override void SetParticlesAnimationState(bool activo)
