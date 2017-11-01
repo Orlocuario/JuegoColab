@@ -25,7 +25,7 @@ public class EnemyController : MonoBehaviour
     protected int damage = 0;
 
     protected bool patrolling;
-
+     
     public bool fromEditor;
     public int directionX;  // 1 = derecha, -1 = izquierda
     public int enemyId;

@@ -463,6 +463,9 @@ public class PlayerController : MonoBehaviour
         if (force.x != 0 || force.y != 0)
         {
             rb2d.AddForce(force);
+
+            string message = "PlayerTookDamage/" + characterId + "/" + force.x  +  "/" + force.y;
+            Client.instance.SendMessageToServer(message);
         }
 
         if (damage != 0)
@@ -476,7 +479,6 @@ public class PlayerController : MonoBehaviour
 
             string message = "ChangeHpHUDToRoom/" + damage;
             Client.instance.SendMessageToServer(message);
-
         }
 
     }
@@ -557,6 +559,11 @@ public class PlayerController : MonoBehaviour
     {
         SetParticlesAnimationState(power);
         isPowerOn = power;
+    }
+
+    public void SetDamageFromServer(Vector2 force)
+    {
+        rb2d.AddForce(force);
     }
 
     public void SetPlayerDataFromServer(float positionX, float positionY, int directionX, int directionY, float speedX, bool isGrounded, bool remoteJumping, bool remoteLeft, bool remoteRight)

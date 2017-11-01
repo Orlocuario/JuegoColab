@@ -65,6 +65,9 @@ public class ServerMessageHandler
             case "PlayerChangePosition":
                 SendUpdatedPosition(message, connectionId, msg);
                 break;
+            case "PlayerTookDamage":
+                SendPlayerTookDamage(message, connectionId);
+                break;
             case "CreateGameObject":
                 SendNewGameObject(message, connectionId);
                 break;
@@ -306,6 +309,14 @@ public class ServerMessageHandler
         NetworkPlayer player = server.GetPlayer(connectionID);
         Room room = player.room;
         room.SendMessageToAllPlayers(chatMessage);
+    }
+
+    private void SendPlayerTookDamage(string message, int connectionID)
+    {
+        NetworkPlayer player = server.GetPlayer(connectionID);
+        Room room = player.room;
+
+        room.SendMessageToAllPlayersExceptOne(message, connectionID);
     }
 
     private void SendUpdatedPosition(string message, int connectionID, string[] data)

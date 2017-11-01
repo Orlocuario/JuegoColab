@@ -74,6 +74,9 @@ public class ClientMessageHandler
             case "PlayerAttack":
                 HandleUpdatedAttackState(msg);
                 break;
+            case "PlayerTookDamage":
+                HandlePlayerTookDamage(msg);
+                break;
             case "PlayerPower":
                 HandleUpdatedPowerState(msg);
                 break;
@@ -452,6 +455,24 @@ public class ClientMessageHandler
 
         PlayerController playerController = client.GetPlayerController(charId);
         playerController.SetAttack();
+    }
+
+    private void HandlePlayerTookDamage(string[] msg)
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "ClientScene")
+        {
+            return;
+        }
+
+        int charId = Int32.Parse(msg[1]);
+        float forceX = float.Parse(msg[2]);
+        float forceY = float.Parse(msg[3]);
+
+        Vector2 force = new Vector2(forceX, forceY);
+
+        PlayerController playerController = client.GetPlayerController(charId);
+        playerController.SetDamageFromServer(force);
     }
 
     private void HandlePlayersAreDead(string[] array)
