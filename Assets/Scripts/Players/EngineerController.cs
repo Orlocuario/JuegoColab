@@ -6,56 +6,60 @@ using UnityEngine;
 public class EngineerController : PlayerController
 {
 
+    private GameObject particulas;
+
     private float skillSpeed;
-    GameObject particulas;
-    bool jumpedInAir = false;
+    private  bool jumpedInAir;
 
     protected override void Start()
     {
         base.Start();
+
+        jumpedInAir = false;
+
         particulas = GameObject.FindGameObjectWithTag("ParticulasEngin");
         particulas.SetActive(false);
     }
 
-    protected override bool IsAttacking()
+    protected override void Attack()
     {
-        if (localPlayer)
+        isAttacking = false;
+
+        bool attackButtonPressed = CnInputManager.GetButtonDown("Attack Button");
+        if (attackButtonPressed)
         {
-            bool buttonState = CnInputManager.GetButtonDown("Attack Button");
-            if (buttonState && !remoteAttacking)
-            {
-                remoteAttacking = true;
-                SendAttackDataToServer();
-                CastProyectile(this.directionX, this.IsGoingUp());
-            }
-            else if (!buttonState && remoteAttacking)
-            {
-                remoteAttacking = false;
-                SendAttackDataToServer();
-            }
+            SendAttackDataToServer();
+            CastProyectile();
         }
-        return remoteAttacking;
+
     }
 
-    private void CastProyectile(int direction, bool goingUp)
+    public override void SetAttack()
     {
-        Vector3 myPosition = transform.position;
-        CastLocalProyectile(direction, myPosition.x, myPosition.y, this);
-        SendProyectileSignalToServer(direction);
+        CastLocalProyectile();
     }
 
-    public void CastLocalProyectile(int direction, float x, float y, EngineerController caster)
+    private void CastProyectile()
     {
-        GameObject proyectile = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/FlechaE1")); //Encontrar el prefab de la roca
+        CastLocalProyectile();
+        SendProyectileSignalToServer();
+    }
+
+    public void CastLocalProyectile()
+    {
+        isAttacking = true;
+        animator.SetBool("IsAttacking", isAttacking);
+
+        GameObject proyectile = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/FlechaE1")); 
         ProyectileController controller = proyectile.GetComponent<ProyectileController>();
-        controller.SetMovement(direction, SkillSpeed(1), x, y, this);
+        controller.SetMovement(directionX, SkillSpeed(1), transform.position.x, transform.position.y, this);
     }
 
-    private void SendProyectileSignalToServer(int direction)
+    private void SendProyectileSignalToServer()
     {
         string x = transform.position.x.ToString();
         string y = transform.position.y.ToString();
-        Client.instance.SendMessageToServer("CastProyectile/" + direction + "/" + SkillSpeed(1).ToString() + "/" + x + "/" + y);
+        Client.instance.SendMessageToServer("CastProyectile/" + directionX + "/" + SkillSpeed(1).ToString() + "/" + x + "/" + y);
     }
     //change all 1's to GetLevel()
 
@@ -82,40 +86,26 @@ public class EngineerController : PlayerController
 
     protected override bool IsJumping(bool isGrounded)
     {
-        if (localPlayer)
+
+        bool pressedJump = CnInputManager.GetButtonDown("Jump Button");
+
+        if (isGrounded)
         {
-            if (isGrounded)
-            {
-                jumpedInAir = false;
-            }
-
-            bool pressedJump = CnInputManager.GetButtonDown("Jump Button");
-
-            if (pressedJump && isGrounded && !remoteJumping)
-            {
-                remoteJumping = true;
-                SendObjectDataToServer();
-                return true;
-            }
-
-            if (pressedJump && !isGrounded && !jumpedInAir && !remoteJumping)
-            {
-                remoteJumping = true;
-                jumpedInAir = true;
-                SendObjectDataToServer();
-                return true;
-            }
-
-            if (remoteJumping)
-            {
-                remoteJumping = false;
-                SendObjectDataToServer();
-            }
-
-            return false;
+            jumpedInAir = false;
         }
 
-        return remoteJumping;
+        if (pressedJump && isGrounded)
+        {
+            return true;
+        }
+
+        if (pressedJump && !isGrounded && !jumpedInAir)
+        {
+            jumpedInAir = true;
+            return true;
+        }
+
+        return false;
     }
 
     protected override void SetParticlesAnimationState(bool activo)

@@ -177,7 +177,7 @@ public class LevelManager : MonoBehaviour
         thePlayer.transform.position = thePlayer.respawnPosition + Vector3.up * 0.1f;
         thePlayer.gameObject.SetActive(true);
         thePlayer.IgnoreCollisionBetweenPlayers();
-        thePlayer.SendObjectDataToServer();
+        thePlayer.SendPositionToServer();
     }
 
     public void MoveItemInGame(string itemName, string posX, string posY, string rotZ)

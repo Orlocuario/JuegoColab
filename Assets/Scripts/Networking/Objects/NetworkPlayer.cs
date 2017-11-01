@@ -12,13 +12,11 @@ public class NetworkPlayer
     public float positionX;
     public float positionY;
     public bool isGrounded;
-    public float speed;
-    public int direction;
-    public bool pressingJump;
-    public bool pressingRight;
-    public bool pressingLeft;
+    public float speedX;
+    public int directionX;
+    public int directionY;
     public bool attacking;
-	public bool power;
+    public bool power;
     public bool controlOverEnemies;
     public string[] inventory = new string[8];
     public string ipAddress;
@@ -29,18 +27,19 @@ public class NetworkPlayer
         this.connectionId = connectionId;
         this.room = room;
         this.charId = charId;
+
+        controlOverEnemies = false;
+        isGrounded = false;
+        attacking = false;
         connected = true;
+        power = false;
+
         positionX = 0;
         positionY = 0;
-        isGrounded = false;
-        speed = 0;
-        direction = 1;
-        pressingJump = false;
-        pressingRight = false;
-        pressingLeft = false;
-        attacking = false;
-		power = false;
-        controlOverEnemies = false;
+        speedX = 0;
+        directionX = 1;
+        directionY = 1;
+
     }
 
     public void InventoryUpdate(string message)
@@ -86,6 +85,14 @@ public class NetworkPlayer
 
     public string GetReconnectData()
     {
-        return "ChangePosition/" + charId + "/" + positionX + "/" + positionY + "/" + isGrounded + "/" + speed + "/" + direction + "/" + pressingJump + "/" + pressingLeft + "/" + pressingRight; 
+        return "PlayerChangePosition/" +
+           charId + "/" +
+           positionX + "/" +
+           positionY + "/" +
+           directionX + "/" +
+           directionY + "/" +
+           speedX + "/" +
+           isGrounded;
     }
+
 }

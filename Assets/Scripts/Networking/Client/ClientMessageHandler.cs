@@ -32,9 +32,6 @@ public class ClientMessageHandler
             case "SetCharId":
                 HandleSetCharId(msg);
                 break;
-            case "ChangePosition":
-                HandleChangePosition(msg);
-                break;
             case "ChangeObjectPosition":
                 HandleChangeObjectPosition(msg);
                 break;
@@ -53,18 +50,6 @@ public class ClientMessageHandler
             case "DisplayChangeExpToClient":
                 HandleChangeExpHUDToClient(msg);
                 break;
-            case "Attack":
-                HandleUpdatedAttackState(msg);
-                break;
-            case "AttackWarrior":
-                HandleUpdatedAttackStateWarrior(msg);
-                break;
-            case "CastFireball":
-                HandleCastFireball(msg);
-                break;
-            case "Power":
-                HandleUpdatedPowerState(msg);
-                break;
             case "EnemyDie":
                 EnemyDie(msg);
                 break;
@@ -80,11 +65,17 @@ public class ClientMessageHandler
             case "SetControlOverEnemies":
                 SetControlOverEnemies();
                 break;
-            case "CastProyectile":
-                HandleCastProyectile(msg);
-                break;
             case "PlayersAreDead":
                 HandlePlayersAreDead(msg);
+                break;
+            case "PlayerChangePosition":
+                HandleChangePlayerPosition(msg);
+                break;
+            case "PlayerAttack":
+                HandleUpdatedAttackState(msg);
+                break;
+            case "PlayerPower":
+                HandleUpdatedPowerState(msg);
                 break;
             case "CreateGameObject":
                 HandleCreateGameObject(msg);
@@ -399,24 +390,25 @@ public class ClientMessageHandler
         }
     }
 
-    private void HandleChangePosition(string[] data)
+    private void HandleChangePlayerPosition(string[] data)
     {
         Scene currentScene = SceneManager.GetActiveScene();
+
         if (currentScene.name == "ClientScene")
         {
             return;
         }
-        float positionX = float.Parse(data[2], CultureInfo.InvariantCulture);
-        float positionY = float.Parse(data[3], CultureInfo.InvariantCulture);
+
         int charId = Int32.Parse(data[1]);
-        bool isGrounded = bool.Parse(data[4]);
-        float speed = float.Parse(data[5], CultureInfo.InvariantCulture);
-        int direction = Int32.Parse(data[6]);
-        bool pressingJump = bool.Parse(data[7]);
-        bool pressingLeft = bool.Parse(data[8]);
-        bool pressingRight = bool.Parse(data[9]);
-        PlayerController script = client.GetPlayerController(charId);
-        script.SetVariablesFromServer(positionX, positionY, isGrounded, speed, direction, pressingRight, pressingLeft, pressingJump);
+        float positionX = float.Parse(data[2]);
+        float positionY = float.Parse(data[3]);
+        int directionX = Int32.Parse(data[4]);
+        int directionY = Int32.Parse(data[5]);
+        float speedX = float.Parse(data[6]);
+        bool isGrounded = bool.Parse(data[7]);
+
+        PlayerController playerController = client.GetPlayerController(charId);
+        playerController.SetPosition(positionX, positionY, directionX, directionY, speedX, isGrounded);
     }
 
     private void HandleNewChatMessage(string[] msg)
@@ -452,55 +444,11 @@ public class ClientMessageHandler
         {
             return;
         }
+
         int charId = Int32.Parse(msg[1]);
-        bool state = bool.Parse(msg[2]);
-        PlayerController script = client.GetPlayerController(charId);
-        script.remoteAttacking = state;
-    }
 
-    private void HandleUpdatedAttackStateWarrior(string[] msg)
-    {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
-        {
-            return;
-        }
-        int charId = Int32.Parse(msg[1]);
-        bool state = bool.Parse(msg[2]);
-        int numHits = Int32.Parse(msg[3]);
-        WarriorController script = client.GetWarrior();
-        script.remoteAttacking = state;
-        script.numHits = numHits;
-    }
-
-    private void HandleCastFireball(string[] data)
-    {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
-        {
-            return;
-        }
-        int direction = Int32.Parse(data[1]);
-        float speed = float.Parse(data[2], CultureInfo.InvariantCulture);
-        float positionX = float.Parse(data[3], CultureInfo.InvariantCulture);
-        float positionY = float.Parse(data[4], CultureInfo.InvariantCulture);
-        MageController script = client.GetMage();
-        script.CastLocalFireball(direction, speed, positionX, positionY, script);
-    }
-
-    private void HandleCastProyectile(string[] msg)
-    {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
-        {
-            return;
-        }
-        int direction = Int32.Parse(msg[1]);
-        float speed = float.Parse(msg[2], CultureInfo.InvariantCulture);
-        float positionX = float.Parse(msg[3], CultureInfo.InvariantCulture);
-        float positionY = float.Parse(msg[4], CultureInfo.InvariantCulture);
-        EngineerController script = client.GetEngineer();
-        script.CastLocalProyectile(direction, positionX, positionY, script);
+        PlayerController playerController = client.GetPlayerController(charId);
+        playerController.SetAttack();
     }
 
     private void HandlePlayersAreDead(string[] array)

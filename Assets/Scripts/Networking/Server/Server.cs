@@ -239,13 +239,14 @@ public class Server : MonoBehaviour
         byte recError;
         NetworkTransport.GetConnectionInfo(socketId, connectionId, out recAddress, out port, out recNetId, out recNodeId, out recError);
         NetworkPlayer player = GetPlayer(recAddress);
+
         if (player != null)
         {
             player.connected = true;
             player.connectionId = connectionId;
             SendMessageToClient(connectionId, "ChangeScene/" + sceneToLoad);
             timesScene1IsLoaded += 1;
-            messageHandler.SendAllData(connectionId, player.room);
+            messageHandler.SendAllData(connectionId, player.room, true);
             UnityEngine.Debug.Log("Client " + connectionId + " reconnected");
             return;
         }
@@ -260,8 +261,6 @@ public class Server : MonoBehaviour
 
         room.AddPlayer(connectionId, recAddress);
     }
-
-
 
     private void DeleteConnection(int connectionId)
     {

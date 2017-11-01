@@ -14,6 +14,7 @@ public class AttackController : MonoBehaviour
     protected int direction;
     protected float speed;
     protected int damage;
+    protected bool moves;
 
     PlayerController caster;
 
@@ -40,13 +41,14 @@ public class AttackController : MonoBehaviour
         Physics2D.IgnoreCollision(gameObjectCollider, Client.instance.GetEngineer().GetComponent<Collider2D>());
     }
 
-    public void SetMovement(int direction, float speed, float x, float y, PlayerController caster)
+    public void SetMovement(int _direction, float _speed, float initialX, float initialY, PlayerController _caster)
     {
-        this.direction = direction;
-        this.caster = caster;
-        this.speed = speed;
+        direction = _direction;
+        caster = _caster;
+        speed = _speed;
+        moves = true;
 
-        transform.position = new Vector2(x + (direction * 0.0001f), y - 0.02f);
+        transform.position = new Vector2(initialX + (direction * 0.0001f), initialY - 0.02f);
 
         if (direction == -1)
         {
@@ -56,7 +58,15 @@ public class AttackController : MonoBehaviour
 
     protected virtual void Update()
     {
+        if (moves)
+        {
+            Move();
+        }
 
+    }
+
+    protected void Move()
+    {
         float distance = speed * direction * Time.deltaTime;
 
         transform.position = transform.position + Vector3.right * distance;
@@ -67,7 +77,6 @@ public class AttackController : MonoBehaviour
         {
             Destroy(gameObject);
         }
-
     }
 
     //Hacer que reciba un enemigo

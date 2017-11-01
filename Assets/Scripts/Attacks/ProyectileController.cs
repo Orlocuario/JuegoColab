@@ -11,10 +11,4 @@ public class ProyectileController : AttackController
         maxDistance = 7;
     }
 
-    // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
-    }
-
 }
