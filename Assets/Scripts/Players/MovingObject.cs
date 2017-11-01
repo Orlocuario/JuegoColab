@@ -46,6 +46,5 @@ public class MovingObject : MonoBehaviour
             currentTarget = endPoint.position;
         }
 
-
     }
 }

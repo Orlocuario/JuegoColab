@@ -314,12 +314,16 @@ public class ServerMessageHandler
         Room room = player.room;
 
         int charId = Int32.Parse(data[1]);
+
         float positionX = float.Parse(data[2]);
         float positionY = float.Parse(data[3]);
         int directionX = Int32.Parse(data[4]);
         int directionY = Int32.Parse(data[5]);
         float speedX = float.Parse(data[6]);
         bool isGrounded = bool.Parse(data[7]);
+        bool pressingJump = bool.Parse(data[8]);
+        bool pressingLeft = bool.Parse(data[9]);
+        bool pressingRight = bool.Parse(data[10]);
 
         player.positionX = positionX;
         player.positionY = positionY;
@@ -327,6 +331,9 @@ public class ServerMessageHandler
         player.directionY = directionY;
         player.speedX = speedX;
         player.isGrounded = isGrounded;
+        player.pressingJump = pressingJump;
+        player.pressingLeft = pressingLeft;
+        player.pressingRight = pressingRight;
 
         room.SendMessageToAllPlayersExceptOne(message, connectionID);
     }

@@ -9,7 +9,7 @@ public class EngineerController : PlayerController
     private GameObject particulas;
 
     private float skillSpeed;
-    private  bool jumpedInAir;
+    private bool jumpedInAir;
 
     protected override void Start()
     {
@@ -23,6 +23,12 @@ public class EngineerController : PlayerController
 
     protected override void Attack()
     {
+
+        if (!localPlayer)
+        {
+            return;
+        }
+
         isAttacking = false;
 
         bool attackButtonPressed = CnInputManager.GetButtonDown("Attack Button");
@@ -50,7 +56,7 @@ public class EngineerController : PlayerController
         isAttacking = true;
         animator.SetBool("IsAttacking", isAttacking);
 
-        GameObject proyectile = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/FlechaE1")); 
+        GameObject proyectile = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/FlechaE1"));
         ProyectileController controller = proyectile.GetComponent<ProyectileController>();
         controller.SetMovement(directionX, SkillSpeed(1), transform.position.x, transform.position.y, this);
     }
@@ -86,27 +92,42 @@ public class EngineerController : PlayerController
 
     protected override bool IsJumping(bool isGrounded)
     {
-
-        bool pressedJump = CnInputManager.GetButtonDown("Jump Button");
-
-        if (isGrounded)
+        if (localPlayer)
         {
-            jumpedInAir = false;
+            if (isGrounded)
+            {
+                jumpedInAir = false;
+            }
+
+            bool pressedJump = CnInputManager.GetButtonDown("Jump Button");
+
+            if (pressedJump && isGrounded && !remoteJumping)
+            {
+                remoteJumping = true;
+                SendPlayerDataToServer();
+                return true;
+            }
+
+            if (pressedJump && !isGrounded && !jumpedInAir && !remoteJumping)
+            {
+                remoteJumping = true;
+                jumpedInAir = true;
+                SendPlayerDataToServer();
+                return true;
+            }
+
+            if (remoteJumping)
+            {
+                remoteJumping = false;
+                SendPlayerDataToServer();
+            }
+
+            return false;
         }
 
-        if (pressedJump && isGrounded)
-        {
-            return true;
-        }
-
-        if (pressedJump && !isGrounded && !jumpedInAir)
-        {
-            jumpedInAir = true;
-            return true;
-        }
-
-        return false;
+        return remoteJumping;
     }
+
 
     protected override void SetParticlesAnimationState(bool activo)
     {

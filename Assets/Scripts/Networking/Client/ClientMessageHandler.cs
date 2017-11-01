@@ -406,9 +406,12 @@ public class ClientMessageHandler
         int directionY = Int32.Parse(data[5]);
         float speedX = float.Parse(data[6]);
         bool isGrounded = bool.Parse(data[7]);
+        bool pressingJump = bool.Parse(data[8]);
+        bool pressingLeft = bool.Parse(data[9]);
+        bool pressingRight = bool.Parse(data[10]);
 
         PlayerController playerController = client.GetPlayerController(charId);
-        playerController.SetPosition(positionX, positionY, directionX, directionY, speedX, isGrounded);
+        playerController.SetPlayerDataFromServer(positionX, positionY, directionX, directionY, speedX, isGrounded, pressingJump, pressingLeft, pressingRight);
     }
 
     private void HandleNewChatMessage(string[] msg)

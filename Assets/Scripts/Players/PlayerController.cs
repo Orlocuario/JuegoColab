@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
+
     protected Vector3 lastPosition;
     public PlannerPlayer playerObj;
     protected Transform transform;
@@ -31,6 +32,13 @@ public class PlayerController : MonoBehaviour
     public float groundCheckRadius;
     public float actualSpeed;
 
+    //Used to synchronize data from the server
+    public bool remoteAttacking;
+    public bool remoteJumping;
+    public bool remoteRight;
+    public bool remoteLeft;
+    public bool remoteUp;
+
     public bool isGrounded;
     public bool leftPressed;
     public bool rightPressed;
@@ -50,8 +58,8 @@ public class PlayerController : MonoBehaviour
     public bool isPowerOn;
     public bool mpDepleted;
 
-    private bool conectado;
     protected bool isAttacking;
+    private bool conectado;
     private bool canMove;
 
     private float speedX;
@@ -89,7 +97,7 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (!localPlayer || !conectado || !canMove)
+        if (!conectado || !canMove)
         {
             return;
         }
@@ -147,45 +155,87 @@ public class PlayerController : MonoBehaviour
 
     protected bool IsGoingRight()
     {
-        bool goingRight = false;
-
-        float axisHorizontal = CnInputManager.GetAxisRaw("Horizontal");
-        float axisVertical = CnInputManager.GetAxisRaw("Vertical");
-
-        bool up = axisVertical > 0f;
-
-        // si el wn esta apuntando hacia arriba/abajo con menor inclinacion que hacia la derecha, start moving
-        if ((axisHorizontal > 0f))
+        if (localPlayer)
         {
-            if ((up && axisHorizontal >= axisVertical) || (!up && axisHorizontal >= -axisVertical))
+
+            float axisHorizontal = CnInputManager.GetAxisRaw("Horizontal");
+            float axisVertical = CnInputManager.GetAxisRaw("Vertical");
+
+            bool up = axisVertical > 0f;
+
+            // si el wn esta apuntando hacia arriba/abajo con menor inclinacion que hacia la derecha, start moving
+            if ((axisHorizontal > 0f) && !remoteRight)
             {
-                goingRight = true;
+                if ((up && axisHorizontal >= axisVertical) || (!up && axisHorizontal >= -axisVertical))
+                {
+                    remoteRight = true;
+                    remoteLeft = false;
+                    SendPlayerDataToServer();
+                }
             }
+
+            // si el wn esta apuntando hacia arriba/abajo con mayor inclinacion que hacia la derecha, stop moving
+            else if (Mathf.Abs(axisVertical) > Mathf.Abs(axisHorizontal) && (remoteRight || remoteLeft))
+            {
+                remoteRight = false;
+                remoteLeft = false;
+                SendPlayerDataToServer();
+            }
+
+            // si no se esta apretando el joystick
+            else if (remoteRight && axisHorizontal == 0)
+            {
+                remoteRight = false;
+                SendPlayerDataToServer();
+            }
+
         }
 
-        return goingRight;
+        return remoteRight;
+
     }
 
     protected bool IsGoingLeft()
     {
-        bool goingLeft = false;
-
-        float axisHorizontal = CnInputManager.GetAxisRaw("Horizontal");
-        float axisVertical = CnInputManager.GetAxisRaw("Vertical");
-
-        bool up = axisVertical > 0f;
-
-        // si el wn esta apuntando hacia arriba/abajo con menor inclinacion que hacia la izquierda, start moving
-        if ((axisHorizontal < 0f))
+        if (localPlayer)
         {
-            if ((up && -axisHorizontal >= axisVertical) || (!up && axisHorizontal <= axisVertical))
+
+            float axisHorizontal = CnInputManager.GetAxisRaw("Horizontal");
+            float axisVertical = CnInputManager.GetAxisRaw("Vertical");
+
+            bool up = axisVertical > 0f;
+
+            // si el wn esta apuntando hacia arriba/abajo con menor inclinacion que hacia la izquierda, start moving
+            if ((!remoteLeft && axisHorizontal < 0f))
             {
-                goingLeft = true;
+                if ((up && -axisHorizontal >= axisVertical) || (!up && axisHorizontal <= axisVertical))
+                {
+                    remoteLeft = true;
+                    remoteRight = false;
+                    SendPlayerDataToServer();
+                }
             }
+
+            // si el wn esta apuntando hacia arriba/abajo con mayor inclinacion que hacia la derecha, stop moving
+            else if (Mathf.Abs(axisVertical) > Mathf.Abs(axisHorizontal) && (remoteRight || remoteLeft))
+            {
+                remoteRight = false;
+                remoteLeft = false;
+                SendPlayerDataToServer();
+            }
+
+            // si no se esta apretando el joystick
+            else if (remoteLeft && axisHorizontal == 0)
+            {
+                remoteLeft = false;
+                SendPlayerDataToServer();
+            }
+
         }
 
-        return goingLeft;
+        return remoteLeft;
     }
+
 
     public bool IsGoingUp()
     {
@@ -201,8 +251,27 @@ public class PlayerController : MonoBehaviour
 
     protected virtual bool IsJumping(bool isGrounded)
     {
-        bool pressedJump = CnInputManager.GetButtonDown("Jump Button");
-        return pressedJump && isGrounded;
+        if (localPlayer)
+        {
+            bool pressedJump = CnInputManager.GetButtonDown("Jump Button");
+            bool isJumping = pressedJump && isGrounded;
+
+            if (isJumping && !remoteJumping)
+            {
+                remoteJumping = true;
+                SendPlayerDataToServer();
+            }
+
+            else if (!isJumping && remoteJumping)
+            {
+                remoteJumping = false;
+                SendPlayerDataToServer();
+            }
+
+        }
+
+        return remoteJumping;
+
     }
 
     protected virtual void Attack()
@@ -236,35 +305,44 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    protected void ResetDirectionX(int newDirectionX)
+    {
+        transform.localScale = new Vector3(newDirectionX, directionY, 1f);
+        directionX = newDirectionX;
+        acceleration = .1f;
+    }
+
+    protected void Accelerate()
+    {
+        if (canAccelerate)
+        {
+            acceleration += .1f;
+            canAccelerate = false;
+        }
+
+        else
+        {
+            canAccelerate = true;
+        }
+    }
+
     protected void Move()
     {
 
         isGrounded = IsItGrounded();
-
 
         if (IsGoingRight())
         {
             // Si estaba yendo a la izquierda resetea la aceleración
             if (directionX == -1)
             {
-                transform.localScale = new Vector3(1f, directionY, 1f);
-                acceleration = .1f;
-                directionX = 1;
+                ResetDirectionX(1);
             }
 
             // sino acelera
             else if (acceleration < maxAcceleration)
             {
-                if (canAccelerate)
-                {
-                    acceleration += .1f;
-                    canAccelerate = false;
-                }
-
-                else
-                {
-                    canAccelerate = true;
-                }
+                Accelerate();
             }
 
             actualSpeed = maxXSpeed * acceleration;
@@ -277,24 +355,13 @@ public class PlayerController : MonoBehaviour
             // Si estaba yendo a la derecha resetea la aceleración
             if (directionX == 1)
             {
-                transform.localScale = new Vector3(-1f, directionY, 1f);
-                acceleration = .1f;
-                directionX = -1;
+                ResetDirectionX(-1);
             }
 
             // sino acelera
             else if (acceleration < maxAcceleration)
             {
-                if (canAccelerate)
-                {
-                    acceleration += .1f;
-                    canAccelerate = false;
-                }
-
-                else
-                {
-                    canAccelerate = true;
-                }
+                Accelerate();
             }
 
             actualSpeed = maxXSpeed * acceleration;
@@ -310,20 +377,19 @@ public class PlayerController : MonoBehaviour
         if (IsJumping(isGrounded))
         {
             speedY = maxYSpeed * directionY;
-        } else
+        }
+        else
         {
             speedY = rb2d.velocity.y;
         }
-
-        rb2d.velocity = new Vector2(speedX, speedY);
 
         if (lastPosition != transform.position)
         {
             animator.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
             animator.SetBool("IsGrounded", isGrounded);
-            SendPositionToServer();
         }
 
+        rb2d.velocity = new Vector2(speedX, speedY);
         lastPosition = transform.position;
 
     }
@@ -331,55 +397,60 @@ public class PlayerController : MonoBehaviour
     public bool UpdatePowerState()
     {
 
-        bool powerButtonPressed = CnInputManager.GetButtonDown("Power Button");
-        float mpCurrentPercentage = hpAndMp.mpCurrentPercentage;
-
-        // Se acabó el maná
-        if (mpCurrentPercentage <= 0f)
+        if (localPlayer)
         {
-            // Si no he avisado que se acabó el maná, aviso
-            if (!mpDepleted)
+
+
+            bool powerButtonPressed = CnInputManager.GetButtonDown("Power Button");
+            float mpCurrentPercentage = hpAndMp.mpCurrentPercentage;
+
+            // Se acabó el maná
+            if (mpCurrentPercentage <= 0f)
             {
-                mpUpdateFrame = 0;
-                isPowerOn = false;
-                mpDepleted = true;
-
-                SendPowerDataToServer();
-                SetParticlesAnimationState(isPowerOn);
-            }
-        }
-
-        // Hay maná
-        else
-        {
-            // Reseteo la variable para avisar que el maná se acabó
-            if (mpDepleted)
-            {
-                mpDepleted = false;
-            }
-
-            // Toogle power button
-            if (powerButtonPressed)
-            {
-                isPowerOn = !isPowerOn;
-
-                SendPowerDataToServer();
-                SetParticlesAnimationState(isPowerOn);
-            }
-
-            if (isPowerOn)
-            {
-
-                if (mpUpdateFrame == mpUpdateRate)
+                // Si no he avisado que se acabó el maná, aviso
+                if (!mpDepleted)
                 {
-                    SendMPDataToServer();
                     mpUpdateFrame = 0;
+                    isPowerOn = false;
+                    mpDepleted = true;
+
+                    SendPowerDataToServer();
+                    SetParticlesAnimationState(isPowerOn);
+                }
+            }
+
+            // Hay maná
+            else
+            {
+                // Reseteo la variable para avisar que el maná se acabó
+                if (mpDepleted)
+                {
+                    mpDepleted = false;
                 }
 
-                mpUpdateFrame++;
+                // Toogle power button
+                if (powerButtonPressed)
+                {
+                    isPowerOn = !isPowerOn;
+
+                    SendPowerDataToServer();
+                    SetParticlesAnimationState(isPowerOn);
+                }
+
+                if (isPowerOn)
+                {
+
+                    if (mpUpdateFrame == mpUpdateRate)
+                    {
+                        SendMPDataToServer();
+                        mpUpdateFrame = 0;
+                    }
+
+                    mpUpdateFrame++;
+
+                }
 
             }
-
         }
 
         return isPowerOn;
@@ -425,16 +496,16 @@ public class PlayerController : MonoBehaviour
 
         if (other.tag == "KillPlane")
         {
-                string daño = other.gameObject.GetComponent<KillPlane>().killPlaneDamage;
-                Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);
-                levelManager.Respawn();
+            string daño = other.gameObject.GetComponent<KillPlane>().killPlaneDamage;
+            Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);
+            levelManager.Respawn();
         }
 
         if (other.tag == "KillPlaneSpike")
         {
-                string daño = other.gameObject.GetComponent<KillPlane>().killPlaneDamage;
-                Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);
-                levelManager.Respawn();
+            string daño = other.gameObject.GetComponent<KillPlane>().killPlaneDamage;
+            Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);
+            levelManager.Respawn();
         }
 
         if (other.tag == "Checkpoint")
@@ -488,11 +559,16 @@ public class PlayerController : MonoBehaviour
         isPowerOn = power;
     }
 
-    public void SetPosition(float positionX, float positionY, int directionX, int directionY, float speedX, bool isGrounded)
+    public void SetPlayerDataFromServer(float positionX, float positionY, int directionX, int directionY, float speedX, bool isGrounded, bool remoteJumping, bool remoteLeft, bool remoteRight)
     {
 
+        this.remoteJumping = remoteJumping;
+        this.remoteRight = remoteRight;
+        this.remoteLeft = remoteLeft;
+        this.isGrounded = isGrounded;
         this.directionX = directionX;
         this.directionY = directionY;
+        this.speedX = speedX;
 
         animator.SetFloat("Speed", Mathf.Abs(speedX));
         animator.SetBool("IsGrounded", isGrounded);
@@ -506,8 +582,13 @@ public class PlayerController : MonoBehaviour
         throw new NotImplementedException("Implement the remote set attack method in each player");
     }
 
-    public void SendPositionToServer()
+    public void SendPlayerDataToServer()
     {
+        if (!localPlayer)
+        {
+            return;
+        }
+
         string message = "PlayerChangePosition/" +
             characterId + "/" +
             transform.position.x + "/" +
@@ -515,7 +596,10 @@ public class PlayerController : MonoBehaviour
             directionX + "/" +
             directionY + "/" +
             Mathf.Abs(rb2d.velocity.x) + "/" +
-            isGrounded;
+            isGrounded + "/" +
+            remoteJumping + "/" +
+            remoteLeft + "/" +
+            remoteRight;
 
         Client.instance.SendMessageToServer(message);
     }
@@ -539,6 +623,7 @@ public class PlayerController : MonoBehaviour
 
     public virtual void OnAttackEnd(string s)
     {
+        Debug.Log(name + " stopped attacking");
         animator.SetFloat("Speed", Mathf.Abs(speedX));
         animator.SetBool("IsAttacking", false);
     }

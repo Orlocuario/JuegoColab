@@ -15,6 +15,9 @@ public class NetworkPlayer
     public float speedX;
     public int directionX;
     public int directionY;
+    public bool pressingJump;
+    public bool pressingRight;
+    public bool pressingLeft;
     public bool attacking;
     public bool power;
     public bool controlOverEnemies;
@@ -33,7 +36,9 @@ public class NetworkPlayer
         attacking = false;
         connected = true;
         power = false;
-
+        pressingJump = false;
+        pressingRight = false;
+        pressingLeft = false;
         positionX = 0;
         positionY = 0;
         speedX = 0;

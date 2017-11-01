@@ -27,6 +27,11 @@ public class MageController : PlayerController
 
     protected override void Attack()
     {
+        if (!localPlayer)
+        {
+            return;
+        }
+
         isAttacking = false;
 
         bool attackButtonPressed = CnInputManager.GetButtonDown("Attack Button");
