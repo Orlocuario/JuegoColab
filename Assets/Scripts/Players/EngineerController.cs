@@ -6,59 +6,65 @@ using UnityEngine;
 public class EngineerController : PlayerController
 {
 
+    private GameObject particulas;
+
     private float skillSpeed;
-    GameObject particulas;
-    bool jumpedInAir = false;
+    private bool jumpedInAir;
 
     protected override void Start()
     {
+
         base.Start();
+
+        jumpedInAir = false;
+
         particulas = GameObject.FindGameObjectWithTag("ParticulasEngin");
         particulas.SetActive(false);
     }
 
-    protected override bool IsAttacking()
+    protected override void Attack()
     {
-        if (localPlayer)
+
+        if (!localPlayer)
         {
-            bool buttonState = CnInputManager.GetButtonDown("Attack Button");
-            if (buttonState && !remoteAttacking)
-            {
-                remoteAttacking = true;
-                SendAttackDataToServer();
-                CastProyectile(this.directionX, this.IsGoingUp());
-            }
-            else if (!buttonState && remoteAttacking)
-            {
-                remoteAttacking = false;
-                SendAttackDataToServer();
-            }
+            return;
         }
-        return remoteAttacking;
+
+        isAttacking = false;
+
+        bool attackButtonPressed = CnInputManager.GetButtonDown("Attack Button");
+        if (attackButtonPressed)
+        {
+            CastProyectile();
+        }
+
     }
 
-    private void CastProyectile(int direction, bool goingUp)
+    public override void SetAttack()
     {
-        Vector3 myPosition = transform.position;
-        CastLocalProyectile(direction, myPosition.x, myPosition.y, this);
-        SendProyectileSignalToServer(direction);
+        CastLocalProyectile();
     }
 
-    public void CastLocalProyectile(int direction, float x, float y, EngineerController caster)
+    private void CastProyectile()
     {
-        GameObject proyectile = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/FlechaE1")); //Encontrar el prefab de la roca
+        CastLocalProyectile();
+        SendAttackDataToServer();
+   }
+
+    public void CastLocalProyectile()
+    {
+        isAttacking = true;
+        animator.SetBool("IsAttacking", isAttacking);
+        currentAttackName = "EngineerAttack";
+
+        GameObject proyectile = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/FlechaE1"));
         ProyectileController controller = proyectile.GetComponent<ProyectileController>();
-        controller.SetMovement(direction, SkillSpeed(1), x, y, this);
+        controller.SetMovement(directionX, SkillSpeed(1), transform.position.x, transform.position.y, this);
+
+        StartCoroutine("Attacking");
     }
 
-    private void SendProyectileSignalToServer(int direction)
-    {
-        string x = transform.position.x.ToString();
-        string y = transform.position.y.ToString();
-        Client.instance.SendMessageToServer("CastProyectile/" + direction + "/" + SkillSpeed(1).ToString() + "/" + x + "/" + y);
-    }
     //change all 1's to GetLevel()
-
     public float SkillSpeed(int level)
     {
         if (level <= 1)
@@ -94,7 +100,7 @@ public class EngineerController : PlayerController
             if (pressedJump && isGrounded && !remoteJumping)
             {
                 remoteJumping = true;
-                SendObjectDataToServer();
+                SendPlayerDataToServer();
                 return true;
             }
 
@@ -102,14 +108,14 @@ public class EngineerController : PlayerController
             {
                 remoteJumping = true;
                 jumpedInAir = true;
-                SendObjectDataToServer();
+                SendPlayerDataToServer();
                 return true;
             }
 
             if (remoteJumping)
             {
                 remoteJumping = false;
-                SendObjectDataToServer();
+                SendPlayerDataToServer();
             }
 
             return false;
@@ -117,6 +123,7 @@ public class EngineerController : PlayerController
 
         return remoteJumping;
     }
+
 
     protected override void SetParticlesAnimationState(bool activo)
     {

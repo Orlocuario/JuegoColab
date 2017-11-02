@@ -23,9 +23,6 @@ public class ServerMessageHandler
             case "RequestCharId":
                 SendCharIdAndControl(connectionId);
                 break;
-            case "ChangePosition":
-                SendUpdatedPosition(message, connectionId, msg);
-                break;
             case "ChangeObjectPosition":
                 SendUpdatedObjectPosition(message, connectionId);
                 break;
@@ -47,21 +44,6 @@ public class ServerMessageHandler
             case "GainExp":
                 SendExpToRoom(msg, connectionId);
                 break;
-            case "Attack":
-                SendAttackState(message, connectionId, msg);
-                break;
-            case "AttackWarrior":
-                SendAttackState(message, connectionId, msg);
-                break;
-            case "CastFireball":
-                SendNewFireball(message, connectionId, msg);
-                break;
-            case "CastProyectile":
-                SendNewProjectile(message, connectionId, msg);
-                break;
-            case "Power":
-                SendPowerState(message, connectionId, msg);
-                break;
             case "NewEnemyId":
                 NewEnemy(msg, connectionId);
                 break;
@@ -73,6 +55,18 @@ public class ServerMessageHandler
                 break;
             case "EnemiesStartPatrolling":
                 EnemiesStartPatrolling(connectionId);
+                break;
+            case "PlayerAttack":
+                SendAttackState(message, connectionId, msg);
+                break;
+            case "PlayerPower":
+                SendPowerState(message, connectionId, msg);
+                break;
+            case "PlayerChangePosition":
+                SendUpdatedPosition(message, connectionId, msg);
+                break;
+            case "PlayerTookDamage":
+                SendPlayerTookDamage(message, connectionId);
                 break;
             case "CreateGameObject":
                 SendNewGameObject(message, connectionId);
@@ -93,7 +87,7 @@ public class ServerMessageHandler
                 SendSwitchGroupAction(message, msg, connectionId);
                 break;
             case "ActivateRuneDoor":
-                SendActivationDoor(message, connectionId);
+                SendActivationDoor(message, connectionId, msg);
                 break;
             case "ActivateMachine":
                 SendActivationMachine(message, connectionId);
@@ -116,16 +110,26 @@ public class ServerMessageHandler
         room.EnemiesStartPatrolling();
     }
 
-    public void SendAllData(int connectionId, Room room)
+    //Usado para sincronizar estado del servidor con un cliente que se está reconectando
+    public void SendAllData(int connectionId, Room room, bool includePlayersData)
     {
-        foreach (NetworkPlayer player in room.players)
+        // Only doing this to avoid sending wrong/uninitialized players positions 
+        if (includePlayersData)
         {
-            room.SendMessageToPlayer(player.GetReconnectData(), connectionId);
+            foreach (NetworkPlayer player in room.players)
+            {
+                room.SendMessageToPlayer(player.GetReconnectData(), connectionId);
+            }
         }
 
         foreach (ServerSwitch switchi in room.switchs)
         {
             room.SendMessageToPlayer(switchi.GetReconnectData(), connectionId);
+        }
+
+        foreach (string doorMessage in room.doorManager.GetDoorMessages())
+        {
+            room.SendMessageToPlayer(doorMessage, connectionId);
         }
     }
 
@@ -166,11 +170,13 @@ public class ServerMessageHandler
         room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 
-    private void SendActivationDoor(string message, int connectionId)
+    private void SendActivationDoor(string message, int connectionId, string[] msg)
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
+        string doorId = msg[1];
         Room room = player.room;
         room.SendMessageToAllPlayers(message);
+        room.doorManager.AddDoor(doorId);
     }
 
     private void SendSwitchGroupAction(string message, string[] msg, int connectionId)
@@ -201,9 +207,6 @@ public class ServerMessageHandler
         float posX = float.Parse(msg[2]);
         float posY = float.Parse(msg[3]);
         NetworkPlayer player = server.GetPlayer(connectionId);
-        NetworkEnemy enemy = player.room.GetEnemy(enemyId);
-        enemy.posX = posX;
-        enemy.posY = posY;
         player.room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 
@@ -308,27 +311,41 @@ public class ServerMessageHandler
         room.SendMessageToAllPlayers(chatMessage);
     }
 
+    private void SendPlayerTookDamage(string message, int connectionID)
+    {
+        NetworkPlayer player = server.GetPlayer(connectionID);
+        Room room = player.room;
+
+        room.SendMessageToAllPlayersExceptOne(message, connectionID);
+    }
+
     private void SendUpdatedPosition(string message, int connectionID, string[] data)
     {
         NetworkPlayer player = server.GetPlayer(connectionID);
         Room room = player.room;
+
         int charId = Int32.Parse(data[1]);
-        float positionX = float.Parse(data[2], CultureInfo.InvariantCulture);
-        float positionY = float.Parse(data[3], CultureInfo.InvariantCulture);
-        bool isGrounded = bool.Parse(data[4]);
-        float speed = float.Parse(data[5], CultureInfo.InvariantCulture);
-        int direction = Int32.Parse(data[6]);
-        bool pressingJump = bool.Parse(data[7]);
-        bool pressingLeft = bool.Parse(data[8]);
-        bool pressingRight = bool.Parse(data[9]);
+
+        float positionX = float.Parse(data[2]);
+        float positionY = float.Parse(data[3]);
+        int directionX = Int32.Parse(data[4]);
+        int directionY = Int32.Parse(data[5]);
+        float speedX = float.Parse(data[6]);
+        bool isGrounded = bool.Parse(data[7]);
+        bool pressingJump = bool.Parse(data[8]);
+        bool pressingLeft = bool.Parse(data[9]);
+        bool pressingRight = bool.Parse(data[10]);
+
         player.positionX = positionX;
         player.positionY = positionY;
+        player.directionX = directionX;
+        player.directionY = directionY;
+        player.speedX = speedX;
         player.isGrounded = isGrounded;
-        player.speed = speed;
-        player.direction = direction;
         player.pressingJump = pressingJump;
         player.pressingLeft = pressingLeft;
         player.pressingRight = pressingRight;
+
         room.SendMessageToAllPlayersExceptOne(message, connectionID);
     }
 
@@ -352,22 +369,24 @@ public class ServerMessageHandler
         int charId = player.charId;
         string message = "SetCharId/" + charId + "/" + player.controlOverEnemies;
         server.SendMessageToClient(connectionId, message);
-        SendAllData(connectionId, player.room);
+        SendAllData(connectionId, player.room, false);
     }
 
     public void SendChangeScene(string sceneName, Room room)
     {
         string command = "ChangeScene/" + sceneName;
         room.SendMessageToAllPlayers(command);
+        room.sceneToLoad = sceneName;
+        room.doorManager.Reset();
     }
 
     public void SendAttackState(string message, int connectionId, string[] data)
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
-        player.attacking = bool.Parse(data[2]);
         room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
+
     public void SendPowerState(string message, int connectionId, string[] data)
     {
         NetworkPlayer player = server.GetPlayer(connectionId);

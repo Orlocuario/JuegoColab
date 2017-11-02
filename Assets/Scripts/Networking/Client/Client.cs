@@ -150,7 +150,7 @@ public class Client : MonoBehaviour
                 }
 
                 string hora = HoraMinuto();
-                Debug.Log(hora + " - from(" + connectionId + "): " + message);
+                Debug.Log(hora + " - " + message);
                 break;
 
             case NetworkEventType.DisconnectEvent:
@@ -256,6 +256,8 @@ public class Client : MonoBehaviour
                 return script;
             }
         }
+
+        Debug.Log("Enemy with id " + enemyId + " does not exists");
         return null;
     }
 

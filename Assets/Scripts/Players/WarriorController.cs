@@ -5,119 +5,119 @@ using UnityEngine;
 using System;
 using UnityEngine.SceneManagement;
 
-public class WarriorController : PlayerController {
-
-    public int numHits = 0;
-    private int prevNumHits = 0;
-    bool par;
-	float damage;
-    double force = 0;
+public class WarriorController : PlayerController
+{
     GameObject particulas;
-    private int hits = 0;
 
+    // TODO: refactor this
+    private int numHits = 0;
+    private int prevNumHits = 0;
+    private float damage;
+    private double force = 0;
+    private int hits = 0;
+    private static int attackSpeed = 2;
 
     protected override void Start()
-	{
-		base.Start();
-		damage = 3;
-        particulas = GameObject.Find("ParticulasWarrior");
-		particulas.SetActive(false);
-    }
-
-    protected override bool IsAttacking()
-	{	
-        if (localPlayer)
-        {
-            bool buttonState = CnInputManager.GetButtonDown("Attack Button");
-            if (buttonState && !remoteAttacking)
-            {
-				GameObject punch = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Punch"));
-				punch.GetComponent <Transform>().position = new Vector2 (gameObject.transform.position.x, gameObject.transform.position.y);
-                remoteAttacking = true;
-                numHits++;
-                SendAttackDataToServer();
-				if (SceneManager.GetActiveScene ().name == "Escena2") 
-				{
-					RemoveRockMass ();
-				}
-            }
-            else if (!buttonState && remoteAttacking)
-            {
-                remoteAttacking = false;
-                SendAttackDataToServer();
-            }
-        }
-        return remoteAttacking;
-    }
-
-    protected override void SetAnimVariables()
     {
-        bool isAttacking = IsAttacking();
-        myAnim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
-        myAnim.SetBool("IsGrounded", isGrounded);
 
-        if (prevNumHits >=numHits)
+        base.Start();
+
+        damage = 3;
+        particulas = GameObject.Find("ParticulasWarrior");
+        particulas.SetActive(false);
+    }
+
+    protected override void Attack()
+    {
+
+        if (!localPlayer)
         {
-            myAnim.SetBool("IsAttacking", false);
-            myAnim.SetBool("IsAttacking2", false);
-
             return;
         }
 
+        isAttacking = false;
+
+        bool attackButtonPressed = CnInputManager.GetButtonDown("Attack Button");
+
+        if (attackButtonPressed)
+        {
+            CastPunch();
+            if (SceneManager.GetActiveScene().name == "Escena2")
+            {
+                RemoveRockMass();
+            }
+        }
+
+    }
+
+    public override void SetAttack()
+    {
+        CastLocalPunch();
+    }
+
+    private void CastPunch()
+    {
+        CastLocalPunch();
+        SendAttackDataToServer();
+    }
+
+    public void CastLocalPunch()
+    {
+        isAttacking = true;
+
+        numHits++;
         if (numHits % 2 == 0)
         {
-            par = true;
+            animator.SetBool("IsAttacking2", isAttacking);
+            currentAttackName = "WarriorAttack2";
         }
         else
         {
-            par = false;
+            animator.SetBool("IsAttacking", isAttacking);
+            currentAttackName = "WarriorAttack";
         }
-        prevNumHits = numHits;
 
+        GameObject punch = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Punch"));
+        PunchController punchController = punch.GetComponent<PunchController>();
+        punchController.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
 
-        if (par == false)
-        {
-            myAnim.SetBool("IsAttacking", isAttacking);
+        Debug.Log(name + " casted " + currentAttackName);
 
-        }
-        else
-        {
-            myAnim.SetBool("IsAttacking2", isAttacking);
-        }
+        StartCoroutine("Attacking");
     }
 
     protected override void SetParticlesAnimationState(bool activo)
     {
         particulas.SetActive(activo);
-	}
-
-    private void CastOnePunchMan(string[] enemies, Vector3 position)
-    {
-		
-		
     }
 
-
-    protected override void SendAttackDataToServer()
+    public void RemoveRockMass()
     {
-        string message = "AttackWarrior/" + characterId + "/" + remoteAttacking + "/" + numHits.ToString();
-        Client.instance.SendMessageToServer(message);
-    }
-
-	public void RemoveRockMass()
-	{
-		Vector3 myPosition = this.GetComponent<Transform>().position;
-		GameObject piedra = GameObject.FindGameObjectWithTag ("RocaGiganteAraña");
-		Rigidbody2D rigidez = piedra.GetComponent<Rigidbody2D> ();
-		Vector3 posicionPiedra = piedra.GetComponent<Transform> ().position;
-		if ((myPosition - posicionPiedra).magnitude < 3f) 
-		{
+        Vector3 myPosition = this.GetComponent<Transform>().position;
+        GameObject piedra = GameObject.FindGameObjectWithTag("RocaGiganteAraña");
+        Rigidbody2D rigidez = piedra.GetComponent<Rigidbody2D>();
+        Vector3 posicionPiedra = piedra.GetComponent<Transform>().position;
+        if ((myPosition - posicionPiedra).magnitude < 3f)
+        {
             hits++;
-			if (hits > 7) {
-				hits = 7;
-			}
-            force = Math.Pow(hits, damage)/50;
+            if (hits > 7)
+            {
+                hits = 7;
+            }
+            force = Math.Pow(hits, damage) / 50;
             rigidez.AddForce(Vector2.right * (float)force);
         }
-	}
+
+    }
+
+    public override IEnumerator Attacking()
+    {
+        float animLength = attackAnimLength[currentAttackName];
+
+        yield return new WaitForSeconds(animLength);
+        animator.SetFloat("Speed", Mathf.Abs(speedX));
+        animator.SetBool("IsAttacking", false);
+        animator.SetBool("IsAttacking2", false);
+    }
+
 }

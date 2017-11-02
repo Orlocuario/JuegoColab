@@ -4,8 +4,6 @@ using UnityEngine;
 
 public class NetworkEnemy {
 
-    public float posX;
-    public float posY;
     public float hp;
 
     public bool fromEditor;

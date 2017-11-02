@@ -12,9 +12,6 @@ public class EnemyController : MonoBehaviour
     protected Rigidbody2D rb2d;
 
     protected float maxHp = 100f;
-
-    protected float posX;
-    protected float posY;
     protected float hp;
 
     protected static Vector2 initialPosition;
@@ -23,18 +20,17 @@ public class EnemyController : MonoBehaviour
     private static float maxYSpeed = 0f;
     public static float maxXSpeed = .5f;
 
-    public int directionX = -1;  // 1 = derecha, -1 = izquierda
-
     protected Vector2 force = new Vector2(0, 0);
     protected GameObject attackTarget;
     protected int damage = 0;
 
     protected bool patrolling;
-
+     
     public bool fromEditor;
+    public int directionX;  // 1 = derecha, -1 = izquierda
     public int enemyId;
 
-    int debuger = 0;
+    protected int debuger = 0;
 
     protected virtual void Start()
     {
@@ -47,12 +43,12 @@ public class EnemyController : MonoBehaviour
         initialPosition = transform.position;
 
         hp = maxHp;
+        directionX = -1;
     }
 
     public void SetPosition(float x, float y)
     {
-        this.posX = x;
-        this.posY = y;
+        transform.position = new Vector3(x, y, transform.position.z);
     }
 
     // Update is called once per frame
@@ -70,7 +66,7 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    protected void DrawDistanceFromPlayer(float distance)
+    protected void DebugDrawDistance(float distance)
     {
         Vector3 left = new Vector3(transform.position.x - distance, transform.position.y, transform.position.z);
         Vector3 right = new Vector3(transform.position.x + distance, transform.position.y, transform.position.z);
@@ -119,7 +115,7 @@ public class EnemyController : MonoBehaviour
             {
                 if (localPlayer.controlOverEnemies)
                 {
-                    Debug.Log(this.gameObject.name + " took " + damage);
+                    Debug.Log(name + " took " + damage);
                     SendHpDataToServer(damage);
                 }
             }
@@ -141,20 +137,28 @@ public class EnemyController : MonoBehaviour
     {
         Debug.Log("Sending enemy " + enemyId + " to register");
         string message = "NewEnemyId/" + enemyId.ToString() + "/" + maxHp.ToString();
-        Client.instance.SendMessageToServer(message);
+        SendMessageToServer(message);
     }
 
     protected virtual void SendHpDataToServer(float damage)
     {
-        //string message = "EnemyHpChange/" + enemyId.ToString() + "/" + hp.ToString();
         string message = "EnemyHpChange/" + enemyId.ToString() + "/" + damage.ToString();
-        Client.instance.SendMessageToServer(message);
+        SendMessageToServer(message);
     }
 
     protected virtual void SendPositionToServer()
     {
-        string message = "EnemyChangePosition/" + enemyId.ToString() + "/" + posX + "/" + posY;
-        Client.instance.SendMessageToServer(message);
+        string message = "EnemyChangePosition/" + 
+            enemyId.ToString() + "/" + 
+            transform.position.x + "/" + 
+            transform.position.y;
+
+        SendMessageToServer(message);
+    }
+
+    protected virtual void SendMessageToServer(string message)
+    {
+            Client.instance.SendMessageToServer(message);
     }
 
     public void StartPatrolling()
@@ -213,7 +217,6 @@ public class EnemyController : MonoBehaviour
     {
         if (GameObjectIsPlayer(other.gameObject))
         {
-            Debug.Log(other.gameObject.name + "  stayed in " + gameObject.name + " alert zone");
             Attack(other.gameObject);
         }
     }

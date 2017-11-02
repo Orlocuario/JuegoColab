@@ -1,23 +1,27 @@
 ﻿using CnControls;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 
 public class PlayerController : MonoBehaviour
 {
-    protected Vector3 previousPosition;
+
+    protected Vector3 lastPosition;
     public PlannerPlayer playerObj;
     protected Transform transform;
     protected Rigidbody2D rb2d;
     public Collider2D collider;
     public GameObject parent;
 
-    public Transform groundCheck;
-    public Animator myAnim;
     public Vector3 respawnPosition;
     public LayerMask whatIsGround;
+    public Transform groundCheck;
+    public Animator animator;
 
     private LevelManager levelManager;
+    private GlobalDisplayHUD hpAndMp;
     private SpriteRenderer sprite;
 
     public static float maxAcceleration = 1; //100% del speed
@@ -29,14 +33,6 @@ public class PlayerController : MonoBehaviour
 
     public float groundCheckRadius;
     public float actualSpeed;
-    public float speed; //For animation nonlocal purposes
-
-    public bool isGrounded;
-    public bool leftPressed;
-    public bool rightPressed;
-    public bool upPressed;
-    public bool jumpPressed;
-    public bool localPlayer;
 
     //Used to synchronize data from the server
     public bool remoteAttacking;
@@ -45,60 +41,99 @@ public class PlayerController : MonoBehaviour
     public bool remoteLeft;
     public bool remoteUp;
 
+    public bool rightPressed;
+    public bool leftPressed;
+    public bool jumpPressed;
+    public bool localPlayer;
+    public bool isGrounded;
+    public bool upPressed;
 
     public static string mpSpendRate = "-1"; // Cuanto mp se gasta cada vez
     public static int mpUpdateRate = 30; // Cada cuantos frames se actualiza el HP y MP display
+
+    public bool controlOverEnemies;
     public int mpUpdateFrame;
     public bool gravity = true; // true = normal, false = invertida
     public int directionY = 1; // 1 = de pie, -1 = de cabeza
     public int directionX = 1;  // 1 = derecha, -1 = izquierda
-    public bool controlOverEnemies;
     public int sortingOrder = 0;
-    public int saltarDoble;
     public int characterId;
     public bool isPowerOn;
     public bool mpDepleted;
 
-    private bool conectado = true;
+    protected string currentAttackName;
+    protected bool isAttacking;
+    private bool conectado;
     private bool canMove;
+    protected float speedX;
+    protected float speedY;
 
     private int debuger;
 
-    GlobalDisplayHUD hpAndMp;
+    protected Dictionary<String, float> attackAnimLength;
+    // protected string[] attackAnimNames;
 
     protected virtual void Start()
     {
-
-        debuger = 0;
-
-        remoteAttacking = false;
-        remoteJumping = false;
-        remoteRight = false;
-        remoteLeft = false;
-        canMove = true;
-
-        mpUpdateFrame = 0;
-        mpDepleted = false;
-
         hpAndMp = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
 
+        attackAnimLength = new Dictionary<String, float>();
         levelManager = FindObjectOfType<LevelManager>();
         collider = GetComponent<Collider2D>();
         transform = GetComponent<Transform>();
         rb2d = GetComponent<Rigidbody2D>();
-        myAnim = GetComponent<Animator>();
+        animator = GetComponent<Animator>();
 
-        isPowerOn = false;
         respawnPosition = transform.position;
 
         controlOverEnemies = false;
+        isAttacking = false;
         localPlayer = false;
-        saltarDoble = 0;
+        mpDepleted = false;
+        isPowerOn = false;
+        conectado = true;
+        canMove = true;
 
-        this.SetGravity(gravity);
+        mpUpdateFrame = 0;
+        debuger = 0;
+
+        SetGravity(gravity);
 
         IgnoreCollisionBetweenPlayers();
-        SendObjectDataToServer();
+        LoadAnimationLength();
+    }
+
+    protected virtual void LoadAnimationLength()
+    {
+        RuntimeAnimatorController ac = animator.runtimeAnimatorController;
+
+        Debug.Log("Found " + ac.animationClips.Length + " animation clips");
+        Debug.Log("And I have" + attackAnimLength.Keys.Count + " animation clips names");
+
+        foreach (AnimationClip animationClip in ac.animationClips)
+        {
+            attackAnimLength.Add(animationClip.name, animationClip.length);
+
+            Debug.Log(animationClip.name + " : " + animationClip.length);
+        }
+
+    }
+
+    protected virtual void Update()
+    {
+        if (!conectado || !canMove)
+        {
+            return;
+        }
+
+        if (transform.parent != null)
+        {
+            parent = transform.parent.gameObject;
+        }
+
+        Move();
+        Attack();
+        UpdatePowerState();
     }
 
     public void Conectar(bool valor)
@@ -146,19 +181,20 @@ public class PlayerController : MonoBehaviour
     {
         if (localPlayer)
         {
+
             float axisHorizontal = CnInputManager.GetAxisRaw("Horizontal");
             float axisVertical = CnInputManager.GetAxisRaw("Vertical");
 
             bool up = axisVertical > 0f;
 
             // si el wn esta apuntando hacia arriba/abajo con menor inclinacion que hacia la derecha, start moving
-            if ((!remoteRight && axisHorizontal > 0f))
+            if ((axisHorizontal > 0f) && !remoteRight)
             {
                 if ((up && axisHorizontal >= axisVertical) || (!up && axisHorizontal >= -axisVertical))
                 {
                     remoteRight = true;
                     remoteLeft = false;
-                    SendObjectDataToServer();
+                    SendPlayerDataToServer();
                 }
             }
 
@@ -167,25 +203,27 @@ public class PlayerController : MonoBehaviour
             {
                 remoteRight = false;
                 remoteLeft = false;
-                SendObjectDataToServer();
+                SendPlayerDataToServer();
             }
 
             // si no se esta apretando el joystick
             else if (remoteRight && axisHorizontal == 0)
             {
                 remoteRight = false;
-                SendObjectDataToServer();
+                SendPlayerDataToServer();
             }
 
         }
 
         return remoteRight;
+
     }
 
     protected bool IsGoingLeft()
     {
         if (localPlayer)
         {
+
             float axisHorizontal = CnInputManager.GetAxisRaw("Horizontal");
             float axisVertical = CnInputManager.GetAxisRaw("Vertical");
 
@@ -198,22 +236,30 @@ public class PlayerController : MonoBehaviour
                 {
                     remoteLeft = true;
                     remoteRight = false;
-                    SendObjectDataToServer();
+                    SendPlayerDataToServer();
                 }
             }
 
+            // si el wn esta apuntando hacia arriba/abajo con mayor inclinacion que hacia la derecha, stop moving
+            else if (Mathf.Abs(axisVertical) > Mathf.Abs(axisHorizontal) && (remoteRight || remoteLeft))
+            {
+                remoteRight = false;
+                remoteLeft = false;
+                SendPlayerDataToServer();
+            }
 
             // si no se esta apretando el joystick
             else if (remoteLeft && axisHorizontal == 0)
             {
                 remoteLeft = false;
-                SendObjectDataToServer();
+                SendPlayerDataToServer();
             }
 
         }
 
         return remoteLeft;
     }
+
 
     public bool IsGoingUp()
     {
@@ -227,19 +273,6 @@ public class PlayerController : MonoBehaviour
         return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
     }
 
-    protected void DrawGroundCheckerRadius()
-    {
-        Vector3 right = new Vector3(groundCheckRadius, 0, 0);
-        Vector3 left = new Vector3(-groundCheckRadius, 0, 0);
-        Vector3 up = new Vector3(0, groundCheckRadius, 0);
-        Vector3 down = new Vector3(0, -groundCheckRadius, 0);
-
-        Debug.DrawLine(groundCheck.position, groundCheck.position + right, Color.green);
-        Debug.DrawLine(groundCheck.position, groundCheck.position + left, Color.green);
-        Debug.DrawLine(groundCheck.position, groundCheck.position + up, Color.green);
-        Debug.DrawLine(groundCheck.position, groundCheck.position + down, Color.green);
-    }
-
     protected virtual bool IsJumping(bool isGrounded)
     {
         if (localPlayer)
@@ -250,59 +283,32 @@ public class PlayerController : MonoBehaviour
             if (isJumping && !remoteJumping)
             {
                 remoteJumping = true;
-                SendObjectDataToServer();
+                SendPlayerDataToServer();
             }
 
             else if (!isJumping && remoteJumping)
             {
                 remoteJumping = false;
-                SendObjectDataToServer();
+                SendPlayerDataToServer();
             }
 
-            return isJumping;
         }
 
         return remoteJumping;
+
     }
 
-    protected virtual bool IsAttacking()
+    protected virtual void Attack()
     {
-        return false;
-    }
-
-    protected bool CheckIfSomethingChanged()
-    {
-        Vector3 newPosition = transform.position;
-
-        if (previousPosition.x != newPosition.x)
-        {
-            return true;
-        }
-
-        if (previousPosition.y != newPosition.y)
-        {
-            return true;
-        }
-
-        return false;
-    }
-
-    protected void SynchronizeNonLocalPlayer()
-    {
-        if (!localPlayer)
-        {
-            transform.localScale = new Vector3(directionX * 1f, directionY, 1f);
-            SetAnimVariables();
-        }
-
+        throw new NotImplementedException("Implement an attack function for every player");
     }
 
     public virtual void StopMoving()
     {
         canMove = false;
-        myAnim.SetFloat("Speed", 0);
-        myAnim.SetBool("IsGrounded", true);
-        myAnim.SetBool("IsAttacking", false);
+        animator.SetFloat("Speed", 0);
+        animator.SetBool("IsGrounded", true);
+        animator.SetBool("IsAttacking", false);
     }
 
     public virtual void ResumeMoving()
@@ -323,51 +329,44 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    protected virtual void Update()
+    protected void ResetDirectionX(int newDirectionX)
     {
-        if (!conectado)
+        transform.localScale = new Vector3(newDirectionX, directionY, 1f);
+        directionX = newDirectionX;
+        acceleration = .1f;
+    }
+
+    protected void Accelerate()
+    {
+        if (canAccelerate)
         {
-            return;
+            acceleration += .1f;
+            canAccelerate = false;
         }
 
-        if (!canMove)
+        else
         {
-            return;
+            canAccelerate = true;
         }
+    }
 
-        if (transform.parent != null)
-        {
-            parent = transform.parent.gameObject;
-        }
+    protected void Move()
+    {
 
         isGrounded = IsItGrounded();
-
-        float speedY = rb2d.velocity.y;
-        float speedX;
 
         if (IsGoingRight())
         {
             // Si estaba yendo a la izquierda resetea la aceleración
             if (directionX == -1)
             {
-                transform.localScale = new Vector3(1f, directionY, 1f);
-                acceleration = .1f;
-                directionX = 1;
+                ResetDirectionX(1);
             }
 
             // sino acelera
             else if (acceleration < maxAcceleration)
             {
-                if (canAccelerate)
-                {
-                    acceleration += .1f;
-                    canAccelerate = false;
-                }
-
-                else
-                {
-                    canAccelerate = true;
-                }
+                Accelerate();
             }
 
             actualSpeed = maxXSpeed * acceleration;
@@ -380,24 +379,13 @@ public class PlayerController : MonoBehaviour
             // Si estaba yendo a la derecha resetea la aceleración
             if (directionX == 1)
             {
-                transform.localScale = new Vector3(-1f, directionY, 1f);
-                acceleration = .1f;
-                directionX = -1;
+                ResetDirectionX(-1);
             }
 
             // sino acelera
             else if (acceleration < maxAcceleration)
             {
-                if (canAccelerate)
-                {
-                    acceleration += .1f;
-                    canAccelerate = false;
-                }
-
-                else
-                {
-                    canAccelerate = true;
-                }
+                Accelerate();
             }
 
             actualSpeed = maxXSpeed * acceleration;
@@ -414,18 +402,28 @@ public class PlayerController : MonoBehaviour
         {
             speedY = maxYSpeed * directionY;
         }
+        else
+        {
+            speedY = rb2d.velocity.y;
+        }
+
+        if (lastPosition != transform.position)
+        {
+            animator.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
+            animator.SetBool("IsGrounded", isGrounded);
+        }
 
         rb2d.velocity = new Vector2(speedX, speedY);
+        lastPosition = transform.position;
 
-        previousPosition = transform.position;
-        SetAnimVariables();
-        UpdatePowerState();
     }
 
     public bool UpdatePowerState()
     {
+
         if (localPlayer)
         {
+
 
             bool powerButtonPressed = CnInputManager.GetButtonDown("Power Button");
             float mpCurrentPercentage = hpAndMp.mpCurrentPercentage;
@@ -477,7 +475,6 @@ public class PlayerController : MonoBehaviour
                 }
 
             }
-
         }
 
         return isPowerOn;
@@ -490,6 +487,9 @@ public class PlayerController : MonoBehaviour
         if (force.x != 0 || force.y != 0)
         {
             rb2d.AddForce(force);
+
+            string message = "PlayerTookDamage/" + characterId + "/" + force.x + "/" + force.y;
+            Client.instance.SendMessageToServer(message);
         }
 
         if (damage != 0)
@@ -503,7 +503,6 @@ public class PlayerController : MonoBehaviour
 
             string message = "ChangeHpHUDToRoom/" + damage;
             Client.instance.SendMessageToServer(message);
-
         }
 
     }
@@ -513,33 +512,26 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    protected virtual void SetAnimVariables()
-    {
-        myAnim.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
-        myAnim.SetBool("IsGrounded", isGrounded);
-        myAnim.SetBool("IsAttacking", IsAttacking());
-
-    }
-
     protected void OnTriggerEnter2D(Collider2D other)
     {
+
+        if (!localPlayer)
+        {
+            return;
+        }
+
         if (other.tag == "KillPlane")
         {
-            if (localPlayer)
-            {
-                string daño = other.gameObject.GetComponent<KillPlane>().killPlaneDamage;
-                Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);
-                levelManager.Respawn();
-            }
+            string daño = other.gameObject.GetComponent<KillPlane>().killPlaneDamage;
+            Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);
+            levelManager.Respawn();
         }
+
         if (other.tag == "KillPlaneSpike")
         {
-            if (localPlayer)
-            {
-                string daño = other.gameObject.GetComponent<KillPlane>().killPlaneDamage;
-                Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);
-                levelManager.Respawn();
-            }
+            string daño = other.gameObject.GetComponent<KillPlane>().killPlaneDamage;
+            Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);
+            levelManager.Respawn();
         }
 
         if (other.tag == "Checkpoint")
@@ -593,54 +585,80 @@ public class PlayerController : MonoBehaviour
         isPowerOn = power;
     }
 
-    public void SetVariablesFromServer(float positionX, float positionY, bool isGrounded, float speed, int direction, bool remoteRight, bool remoteLeft, bool remoteJumping)
+    public void SetDamageFromServer(Vector2 force)
     {
-        if (localPlayer)
-        {
-            return;
-        }
+        rb2d.AddForce(force);
+    }
 
-        transform.position = new Vector3(positionX, positionY);
+    public void SetPlayerDataFromServer(float positionX, float positionY, int directionX, int directionY, float speedX, bool isGrounded, bool remoteJumping, bool remoteLeft, bool remoteRight)
+    {
 
         this.remoteJumping = remoteJumping;
         this.remoteRight = remoteRight;
         this.remoteLeft = remoteLeft;
         this.isGrounded = isGrounded;
-        this.directionX = direction;
-        this.speed = speed;
+        this.directionX = directionX;
+        this.directionY = directionY;
+        this.speedX = speedX;
 
-        SynchronizeNonLocalPlayer();
+        animator.SetFloat("Speed", Mathf.Abs(speedX));
+        animator.SetBool("IsGrounded", isGrounded);
+
+        transform.position = new Vector3(positionX, positionY, transform.position.z);
+        transform.localScale = new Vector3(directionX, directionY, 1f);
     }
 
-    public void SendObjectDataToServer()
+    public virtual void SetAttack()
+    {
+        throw new NotImplementedException("Implement the remote set attack method in each player");
+    }
+
+    public void SendPlayerDataToServer()
     {
         if (!localPlayer)
         {
             return;
         }
 
-        float positionX = transform.position.x;
-        float positionY = transform.position.y;
-        float speed = Mathf.Abs(rb2d.velocity.x);
-        string message = "ChangePosition/" + characterId + "/" + positionX + "/" + positionY + "/" + isGrounded + "/" + speed + "/" + directionX + "/" + remoteJumping + "/" + remoteLeft + "/" + remoteRight;
+        string message = "PlayerChangePosition/" +
+            characterId + "/" +
+            transform.position.x + "/" +
+            transform.position.y + "/" +
+            directionX + "/" +
+            directionY + "/" +
+            Mathf.Abs(rb2d.velocity.x) + "/" +
+            isGrounded + "/" +
+            remoteJumping + "/" +
+            remoteLeft + "/" +
+            remoteRight;
+
         Client.instance.SendMessageToServer(message);
     }
 
     protected virtual void SendAttackDataToServer()
     {
-        string message = "Attack/" + characterId + "/" + remoteAttacking;
+        string message = "PlayerAttack/" + characterId;
         Client.instance.SendMessageToServer(message);
     }
 
     protected void SendPowerDataToServer()
     {
-        string message = "Power/" + characterId + "/" + isPowerOn;
+        string message = "PlayerPower/" + characterId + "/" + isPowerOn;
         Client.instance.SendMessageToServer(message);
     }
 
     public void SendMPDataToServer()
     {
         Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + mpSpendRate);
+    }
+
+    public virtual IEnumerator Attacking()
+    {
+        float animLength = attackAnimLength[currentAttackName];
+
+        yield return new WaitForSeconds(animLength);
+        animator.SetFloat("Speed", Mathf.Abs(speedX));
+        animator.SetBool("IsAttacking", false);
     }
 
 }

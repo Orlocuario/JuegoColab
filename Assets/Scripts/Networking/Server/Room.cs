@@ -27,12 +27,13 @@ public class Room
 
     private string numeroPartidas;
     private string historial;
+    public ServerDoorsManager doorManager;
 
     //Inicialización
     public Room(int id, Server server, ServerMessageHandler sender, int maxJugadores)
     {
         numJugadores = 0;
-
+        this.doorManager = new ServerDoorsManager();
         this.maxJugadores = maxJugadores;
         this.id = id;
 

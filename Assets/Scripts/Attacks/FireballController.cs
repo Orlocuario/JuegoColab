@@ -11,11 +11,5 @@ public class FireballController : AttackController
         maxDistance = 12;
     }
 
-    // Update is called once per frame
-    protected override void Update()
-    {
-        base.Update();
-    }
-
 }
 

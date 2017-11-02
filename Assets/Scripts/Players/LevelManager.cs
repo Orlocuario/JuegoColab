@@ -13,16 +13,17 @@ public class LevelManager : MonoBehaviour
     public GameObject canvas;
     public GameObject npcLog;
 
-    private Client client;
-    private GameObject createGameObject;
-    private GameObject player;
-    private GameObject[] itemsInLevel;
     private List<Vector3> itemsOriginalPositions = new List<Vector3>();
-    private GameObject reconectando;
+    private GameObject createGameObject;
+    private GameObject[] itemsInLevel;
+    private GameObject reconnectText;
+    private GameObject player;
+    private Client client;
 
     private float waitToKillNPCCountdown;
     private float waitToResetItemPos;
     private float waitToGrabItem;
+
     public float waitToRespawn;
 
     void Start()
@@ -43,8 +44,54 @@ public class LevelManager : MonoBehaviour
         client = GameObject.Find("ClientObject").GetComponent<Client>();
         client.RequestCharIdToServer();
 
-        reconectando = GameObject.Find("ReconnectingText");
-        reconectando.SetActive(false);
+        reconnectText = GameObject.Find("ReconnectingText");
+        reconnectText.SetActive(false);
+    }
+
+
+    public GameObject GetLocalPlayer()
+    {
+
+        GameObject localPlayer = null;
+
+        foreach (GameObject player in players)
+        {
+            if (player.GetComponent<PlayerController>().localPlayer)
+            {
+                localPlayer = player;
+                break;
+            }
+        }
+
+        return localPlayer;
+    }
+
+    public PlayerController GetLocalPlayerController()
+    {
+        PlayerController playerController = null;
+
+        foreach (GameObject player in players)
+        {
+
+            if (player.GetComponent<PlayerController>().localPlayer)
+            {
+                switch (player.name)
+                {
+                    case "Mage":
+                        playerController = player.GetComponent<MageController>();
+                        break;
+                    case "Warrior":
+                        playerController = player.GetComponent<WarriorController>();
+                        break;
+                    case "Engineer":
+                        playerController = player.GetComponent<EngineerController>();
+                        break;
+                }
+                break;
+            }
+        }
+
+        return playerController;
     }
 
     public MageController GetMage()
@@ -85,7 +132,7 @@ public class LevelManager : MonoBehaviour
 
     public void MostrarReconectando(bool valor)
     {
-        reconectando.SetActive(valor);
+        reconnectText.SetActive(valor);
     }
 
     public void SetLocalPlayer(int id)
@@ -130,7 +177,7 @@ public class LevelManager : MonoBehaviour
         thePlayer.transform.position = thePlayer.respawnPosition + Vector3.up * 0.1f;
         thePlayer.gameObject.SetActive(true);
         thePlayer.IgnoreCollisionBetweenPlayers();
-        thePlayer.SendObjectDataToServer();
+        thePlayer.SendPlayerDataToServer();
     }
 
     public void MoveItemInGame(string itemName, string posX, string posY, string rotZ)
