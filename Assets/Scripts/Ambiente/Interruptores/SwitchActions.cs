@@ -37,6 +37,9 @@ public class SwitchActions : MonoBehaviour {
 			//animadorRoca.SetBool ("rocasecae", true);
 			break;
 
+
+			//Aquí Comienzan Acciones Switch Etapa 1
+
 		case 0:
 			GameObject platEscaleraEng = (GameObject)Instantiate (Resources.Load ("Prefabs/EnginPlath1"));
 			platEscaleraEng.GetComponent<Transform> ().position = new Vector2 (12.9f, -1.3f);
@@ -132,7 +135,7 @@ public class SwitchActions : MonoBehaviour {
 
 			break;
 
-		/* Acciones Escena Tutorial*/
+		/* Aquí Comienzan Acciones Escena Tutorial*/
 		
 		case 9:
 
@@ -146,6 +149,15 @@ public class SwitchActions : MonoBehaviour {
 			primerPlat3.transform.position = new Vector2 (18.7f, 2.9f);
 
 			break;
+		case 10: 
+
+			GameObject lilPlatform = (GameObject)Instantiate (Resources.Load ("Prefabs/SueloMetalFlotante"));
+			GameObject lilPlatform2 = (GameObject)Instantiate (Resources.Load ("Prefabs/SueloMetalFlotante"));
+			lilPlatform.transform.position = new Vector2 (46.6f, 3.7f);
+			lilPlatform2.transform.position = new Vector2 (45.3f, 3.3f);
+
+			break;
+
 
 		default:
 			break;

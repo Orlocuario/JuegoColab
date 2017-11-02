@@ -2,17 +2,15 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class ActivateNPC : MonoBehaviour {
+public class DontMove : MonoBehaviour {
 
-	private LevelManager theLevelManager;
-	public string mensajeNPC;
-
+	private LevelManager levelManager; 
 
 	// Use this for initialization
 	void Start () {
 
-		theLevelManager = FindObjectOfType<LevelManager> ();
-
+		levelManager = FindObjectOfType<LevelManager> ();
+		
 	}
 	
 	// Update is called once per frame
@@ -46,13 +44,14 @@ public class ActivateNPC : MonoBehaviour {
 		return false;
 	}
 
-	private void OnEnter ()
+	private void OnEnter () 
 	{
-		theLevelManager.ActivateNPCLog (mensajeNPC); 
+		
 	}
 
-	private void OnExit()
+	private void OnExit ()
 	{
-		Destroy (this.gameObject);
+		
 	}
+
 }
