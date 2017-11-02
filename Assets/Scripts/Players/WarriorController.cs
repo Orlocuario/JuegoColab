@@ -19,7 +19,9 @@ public class WarriorController : PlayerController
 
     protected override void Start()
     {
+
         base.Start();
+
         damage = 3;
         particulas = GameObject.Find("ParticulasWarrior");
         particulas.SetActive(false);
@@ -67,15 +69,21 @@ public class WarriorController : PlayerController
         if (numHits % 2 == 0)
         {
             animator.SetBool("IsAttacking2", isAttacking);
+            currentAttackName = "WarriorAttack2";
         }
         else
         {
             animator.SetBool("IsAttacking", isAttacking);
+            currentAttackName = "WarriorAttack";
         }
 
         GameObject punch = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Punch"));
         PunchController punchController = punch.GetComponent<PunchController>();
         punchController.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
+
+        Debug.Log(name + " casted " + currentAttackName);
+
+        StartCoroutine("Attacking");
     }
 
     protected override void SetParticlesAnimationState(bool activo)
@@ -102,10 +110,13 @@ public class WarriorController : PlayerController
 
     }
 
-
-    public override void OnAttackEnd(string s)
+    public override IEnumerator Attacking()
     {
-        base.OnAttackEnd(s);
+        float animLength = attackAnimLength[currentAttackName];
+
+        yield return new WaitForSeconds(animLength);
+        animator.SetFloat("Speed", Mathf.Abs(speedX));
+        animator.SetBool("IsAttacking", false);
         animator.SetBool("IsAttacking2", false);
     }
 

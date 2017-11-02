@@ -13,6 +13,7 @@ public class EngineerController : PlayerController
 
     protected override void Start()
     {
+
         base.Start();
 
         jumpedInAir = false;
@@ -54,10 +55,13 @@ public class EngineerController : PlayerController
     {
         isAttacking = true;
         animator.SetBool("IsAttacking", isAttacking);
+        currentAttackName = "EngineerAttack";
 
         GameObject proyectile = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/FlechaE1"));
         ProyectileController controller = proyectile.GetComponent<ProyectileController>();
         controller.SetMovement(directionX, SkillSpeed(1), transform.position.x, transform.position.y, this);
+
+        StartCoroutine("Attacking");
     }
 
     //change all 1's to GetLevel()

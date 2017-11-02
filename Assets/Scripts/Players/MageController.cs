@@ -16,7 +16,9 @@ public class MageController : PlayerController
 
     protected override void Start()
     {
+
         base.Start();
+
         particulas1 = GameObject.Find("ParticulasMage");
         particulas1.SetActive(false);
         particulas2 = GameObject.Find("ParticulasMage2");
@@ -73,10 +75,13 @@ public class MageController : PlayerController
     {
         isAttacking = true;
         animator.SetBool("IsAttacking", isAttacking);
+        currentAttackName = "MageAttack";
 
         GameObject fireball = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/BolaM1"));
         FireballController controller = fireball.GetComponent<FireballController>();
         controller.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
+
+        StartCoroutine("Attacking");
     }
 
 }

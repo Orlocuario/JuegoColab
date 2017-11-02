@@ -1,5 +1,7 @@
 ﻿using CnControls;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 
@@ -39,38 +41,43 @@ public class PlayerController : MonoBehaviour
     public bool remoteLeft;
     public bool remoteUp;
 
-    public bool isGrounded;
-    public bool leftPressed;
     public bool rightPressed;
-    public bool upPressed;
+    public bool leftPressed;
     public bool jumpPressed;
     public bool localPlayer;
+    public bool isGrounded;
+    public bool upPressed;
 
     public static string mpSpendRate = "-1"; // Cuanto mp se gasta cada vez
     public static int mpUpdateRate = 30; // Cada cuantos frames se actualiza el HP y MP display
+
+    public bool controlOverEnemies;
     public int mpUpdateFrame;
     public bool gravity = true; // true = normal, false = invertida
     public int directionY = 1; // 1 = de pie, -1 = de cabeza
     public int directionX = 1;  // 1 = derecha, -1 = izquierda
-    public bool controlOverEnemies;
     public int sortingOrder = 0;
     public int characterId;
     public bool isPowerOn;
     public bool mpDepleted;
 
+    protected string currentAttackName;
     protected bool isAttacking;
     private bool conectado;
     private bool canMove;
-
-    private float speedX;
-    private float speedY;
+    protected float speedX;
+    protected float speedY;
 
     private int debuger;
+
+    protected Dictionary<String, float> attackAnimLength;
+    // protected string[] attackAnimNames;
 
     protected virtual void Start()
     {
         hpAndMp = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
 
+        attackAnimLength = new Dictionary<String, float>();
         levelManager = FindObjectOfType<LevelManager>();
         collider = GetComponent<Collider2D>();
         transform = GetComponent<Transform>();
@@ -93,6 +100,23 @@ public class PlayerController : MonoBehaviour
         SetGravity(gravity);
 
         IgnoreCollisionBetweenPlayers();
+        LoadAnimationLength();
+    }
+
+    protected virtual void LoadAnimationLength()
+    {
+        RuntimeAnimatorController ac = animator.runtimeAnimatorController;
+
+        Debug.Log("Found " + ac.animationClips.Length + " animation clips");
+        Debug.Log("And I have" + attackAnimLength.Keys.Count + " animation clips names");
+
+        foreach (AnimationClip animationClip in ac.animationClips)
+        {
+            attackAnimLength.Add(animationClip.name, animationClip.length);
+
+            Debug.Log(animationClip.name + " : " + animationClip.length);
+        }
+
     }
 
     protected virtual void Update()
@@ -464,7 +488,7 @@ public class PlayerController : MonoBehaviour
         {
             rb2d.AddForce(force);
 
-            string message = "PlayerTookDamage/" + characterId + "/" + force.x  +  "/" + force.y;
+            string message = "PlayerTookDamage/" + characterId + "/" + force.x + "/" + force.y;
             Client.instance.SendMessageToServer(message);
         }
 
@@ -628,9 +652,11 @@ public class PlayerController : MonoBehaviour
         Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + mpSpendRate);
     }
 
-    public virtual void OnAttackEnd(string s)
+    public virtual IEnumerator Attacking()
     {
-        Debug.Log(name + " stopped attacking");
+        float animLength = attackAnimLength[currentAttackName];
+
+        yield return new WaitForSeconds(animLength);
         animator.SetFloat("Speed", Mathf.Abs(speedX));
         animator.SetBool("IsAttacking", false);
     }
