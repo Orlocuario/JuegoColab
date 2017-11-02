@@ -46,6 +46,7 @@ TagManager:
   - Enemy
   - ParticulaMuere
   - Kanvas
+  - Destroyable
   layers:
   - Default
   - TransparentFX

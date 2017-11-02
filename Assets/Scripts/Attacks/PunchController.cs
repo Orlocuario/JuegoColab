@@ -18,15 +18,32 @@ public class PunchController : AttackController
     protected override void Update()
     {
         base.Update();
-        collider2d.radius =  (currentDistance / maxDistance) * maxColliderRadius;
+        collider2d.radius = (currentDistance / maxDistance) * maxColliderRadius;
+    }
+
+    protected bool CollidedWithDestroyable(GameObject other)
+    {
+        return other.tag == "Destroyable";
+    }
+
+    protected void DestroyDestroyable(GameObject other)
+    {
+        DestroyableController destroyable = other.GetComponent<DestroyableController>();
+        destroyable.DestroyMe();
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        Debug.Log("Le pegué a " + collision.gameObject.name + " con trigger");
+
         if (CollidedWithEnemy(collision.gameObject))
         {
             DealDamage(collision.gameObject);
+
+        }
+
+        else if (CollidedWithDestroyable(collision.gameObject))
+        {
+            DestroyDestroyable(collision.gameObject);
         }
 
         Destroy(this.gameObject, destroyDelayTime);
