@@ -7,15 +7,15 @@ public class NetworkEnemy {
     public float hp;
 
     public bool fromEditor;
+    public int instanceId;
     public int id;
-
+    
     public LevelManager levelManager;
     public Room room;
 
-    public NetworkEnemy(int enemyId, float hp, Room room)
+    public NetworkEnemy(int instanceId, int enemyId, float hp, Room room)
     {
-        Debug.Log("New enemy " + enemyId + " with " + hp  + " hp");
-
+        this.instanceId = instanceId;
         this.id = enemyId;
         this.room = room;
         this.hp = hp;

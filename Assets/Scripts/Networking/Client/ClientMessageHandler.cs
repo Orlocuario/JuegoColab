@@ -10,8 +10,8 @@ public class ClientMessageHandler
     private static char[] separator = new char[1] { '/' };
 
     private List<int> registeredEnemies;
-    private int enemiesToRegister;
 
+    GameObject[] enemies;
     Client client;
 
     public ClientMessageHandler()
@@ -202,12 +202,35 @@ public class ClientMessageHandler
 
     public void EnemyRegistered(string[] msg)
     {
-        int enemyId = int.Parse(msg[1]);
-        registeredEnemies.Add(enemyId);
+        int instanceId = int.Parse(msg[1]);
+        int enemyId = int.Parse(msg[2]);
 
-        if (registeredEnemies.Count == enemiesToRegister)
+        if (client.GetLocalPlayer().controlOverEnemies)
         {
-            //EnemiesStartPatrolling();
+            registeredEnemies.Add(enemyId);
+
+            if (registeredEnemies.Count == enemies.Length)
+            {
+                //EnemiesStartPatrolling();
+            }
+        }
+
+        else
+        {
+            if (enemies == null)
+            {
+                enemies = GameObject.FindGameObjectsWithTag("Enemy");
+            }
+
+            foreach (GameObject enemy in enemies)
+            {
+                if(enemy.GetInstanceID() == instanceId)
+                {
+                    Debug.Log("Encontré al enemy con el instance id " + instanceId);
+                    EnemyController enemyController = enemy.GetComponent<EnemyController>();
+                    enemyController.enemyId = enemyId;
+                }
+            }
         }
 
     }
@@ -220,21 +243,20 @@ public class ClientMessageHandler
 
     public void EnemiesRegisterOnRoom()
     {
+        int enemyId = 0;
+
         // Agregar al enemigo local al networking
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        enemies = GameObject.FindGameObjectsWithTag("Enemy");
 
-        enemiesToRegister = enemies.Length;
-
-        Debug.Log("Activating " + enemiesToRegister + " enemies");
+        Debug.Log("Activating " + enemies.Length + " enemies");
 
         foreach (GameObject enemy in enemies)
         {
             EnemyController enemyController = enemy.GetComponent<EnemyController>();
 
-            if (enemyController.fromEditor)
-            {
-                enemyController.SendIdToRegister();
-            }
+            Debug.Log(enemy.name + " : " + enemyId);
+            enemyController.enemyId = enemyId++;
+            enemyController.SendIdToRegister(enemy.GetInstanceID());
         }
     }
 

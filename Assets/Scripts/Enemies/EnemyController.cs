@@ -133,10 +133,10 @@ public class EnemyController : MonoBehaviour
         SendPositionToServer();
     }
 
-    public void SendIdToRegister()
+    public void SendIdToRegister(int instanceId)
     {
         Debug.Log("Sending enemy " + enemyId + " to register");
-        string message = "NewEnemyId/" + enemyId.ToString() + "/" + maxHp.ToString();
+        string message = "NewEnemyId/" + instanceId + "/" + enemyId + "/" + maxHp;
         SendMessageToServer(message);
     }
 

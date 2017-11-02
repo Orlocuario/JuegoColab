@@ -221,16 +221,17 @@ public class ServerMessageHandler
 
     private void NewEnemy(string[] msg, int connectionId)
     {
-        int enemyId = Int32.Parse(msg[1]);
-        float hp = float.Parse(msg[2]);
+        int instanceId = Int32.Parse(msg[1]);
+        int id = Int32.Parse(msg[2]);
+        float hp = float.Parse(msg[3]);
 
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
 
-        room.AddEnemy(enemyId, hp);
+        room.AddEnemy(instanceId, id, hp);
 
-        string message = "EnemyRegistered/" + enemyId;
-        room.SendMessageToPlayer(message, connectionId);
+        string message = "EnemyRegistered/" + instanceId + "/" + id;
+        room.SendMessageToAllPlayers(message);
     }
 
     private void SendNewGameObject(string message, int connectionId)
