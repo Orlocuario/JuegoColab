@@ -25,7 +25,7 @@ public class EnemyController : MonoBehaviour
     protected int damage = 0;
 
     protected bool patrolling;
-     
+
     public bool fromEditor;
     public int directionX;  // 1 = derecha, -1 = izquierda
     public int enemyId;
@@ -38,17 +38,10 @@ public class EnemyController : MonoBehaviour
         levelManager = FindObjectOfType<LevelManager>();
         rb2d = GetComponent<Rigidbody2D>();
 
-        Collider2D collider = GetComponent<Collider2D>();
-
         initialPosition = transform.position;
 
         hp = maxHp;
         directionX = -1;
-    }
-
-    public void SetPosition(float x, float y)
-    {
-        transform.position = new Vector3(x, y, transform.position.z);
     }
 
     // Update is called once per frame
@@ -86,14 +79,15 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        if (Mathf.Abs(Mathf.Abs(initialPosition.x) - Mathf.Abs(transform.position.x)) >= patrollingDistance)
+        if (levelManager.GetLocalPlayerController().controlOverEnemies)
         {
-            directionX *= -1; // Turn the other direction and start walking
-        }
+            if (Mathf.Abs(Mathf.Abs(initialPosition.x) - Mathf.Abs(transform.position.x)) >= patrollingDistance)
+            {
+                directionX *= -1; // Turn the other direction and start walking
+                transform.localScale = new Vector3(-transform.localScale.x, 1f, 1f);
 
-        if (transform.localScale.x == directionX)
-        {
-            transform.localScale = new Vector3(-directionX, 1f, 1f);
+                SendPositionToServer();
+            }
         }
 
         float speedX = maxXSpeed * directionX;
@@ -114,7 +108,7 @@ public class EnemyController : MonoBehaviour
             if (localPlayer != null)
             {
                 if (localPlayer.controlOverEnemies)
-                {
+                { 
                     Debug.Log(name + " took " + damage);
                     SendHpDataToServer(damage);
                 }
@@ -127,30 +121,35 @@ public class EnemyController : MonoBehaviour
         animator.SetBool("isDead", true);
     }
 
-    public virtual void SendEnemyDataToServer()
+    public void SetPosition(int directionX, float positionX, float positionY)
     {
-        SendHpDataToServer(0f);
-        SendPositionToServer();
+        this.directionX = directionX;
+        transform.position = new Vector3(positionX, positionY, transform.position.z);
     }
 
     public void SendIdToRegister(int instanceId)
     {
-        Debug.Log("Sending enemy " + enemyId + " to register");
-        string message = "NewEnemyId/" + instanceId + "/" + enemyId + "/" + maxHp;
-        SendMessageToServer(message);
+        string message = "NewEnemyId/" + 
+            instanceId + "/" + 
+            enemyId + "/" + 
+            maxHp + "/" + 
+            directionX + "/" +
+            transform.position.x + "/" +
+            transform.position.y;
     }
 
     protected virtual void SendHpDataToServer(float damage)
     {
-        string message = "EnemyHpChange/" + enemyId.ToString() + "/" + damage.ToString();
+        string message = "EnemyHpChange/" + enemyId + "/" + damage;
         SendMessageToServer(message);
     }
 
     protected virtual void SendPositionToServer()
     {
-        string message = "EnemyChangePosition/" + 
-            enemyId.ToString() + "/" + 
-            transform.position.x + "/" + 
+        string message = "EnemyChangePosition/" +
+            enemyId + "/" +
+            directionX + "/" +
+            transform.position.x + "/" +
             transform.position.y;
 
         SendMessageToServer(message);
@@ -158,7 +157,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void SendMessageToServer(string message)
     {
-            Client.instance.SendMessageToServer(message);
+        Client.instance.SendMessageToServer(message);
     }
 
     public void StartPatrolling()
@@ -178,7 +177,7 @@ public class EnemyController : MonoBehaviour
                 return true;
             }
         }
-        
+
         return false;
     }
 
@@ -210,7 +209,7 @@ public class EnemyController : MonoBehaviour
         }
 
         playerController.TakeDamage(damage, attackForce);
-   
+
     }
 
     protected void OnTriggerStay2D(Collider2D other)
@@ -263,6 +262,12 @@ public class EnemyController : MonoBehaviour
     public virtual void OnAttackEnd(string s)
     {
         animator.SetBool("isAttacking", false);
+    }
+    
+    public void Initialize(int enemyId, int directionX, float posX, float posY)
+    {
+        this.enemyId = enemyId;
+        SetPosition(directionX, posX, posY);
     }
 
 }

@@ -225,12 +225,17 @@ public class ServerMessageHandler
         int id = Int32.Parse(msg[2]);
         float hp = float.Parse(msg[3]);
 
+        int directionX = Int32.Parse(msg[4]);
+        float posX = float.Parse(msg[5]);
+        float posY = float.Parse(msg[6]);
+
+
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
 
         room.AddEnemy(instanceId, id, hp);
 
-        string message = "EnemyRegistered/" + instanceId + "/" + id;
+        string message = "EnemyRegistered/" + instanceId + "/" + id + "/" + directionX + "/" + posX + "/" + posY;
         room.SendMessageToAllPlayers(message);
     }
 

@@ -8,7 +8,7 @@ public class EspirituController : EnemyController
     protected override void Start()
     {
         force = new Vector2(1500f, 200f);
-        damage = 2;
+        damage = 5;
         maxHp = 20f;
         base.Start();
     }

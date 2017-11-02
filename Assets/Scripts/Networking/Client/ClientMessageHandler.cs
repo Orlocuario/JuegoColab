@@ -204,6 +204,9 @@ public class ClientMessageHandler
     {
         int instanceId = int.Parse(msg[1]);
         int enemyId = int.Parse(msg[2]);
+        int directionX = Int32.Parse(msg[3]);
+        float posX = float.Parse(msg[3]);
+        float posY = float.Parse(msg[4]);
 
         if (client.GetLocalPlayer().controlOverEnemies)
         {
@@ -211,7 +214,8 @@ public class ClientMessageHandler
 
             if (registeredEnemies.Count == enemies.Length)
             {
-                //EnemiesStartPatrolling();
+                Debug.Log("Start enemy patrolling");
+                EnemiesStartPatrolling();
             }
         }
 
@@ -226,13 +230,11 @@ public class ClientMessageHandler
             {
                 if(enemy.GetInstanceID() == instanceId)
                 {
-                    Debug.Log("Encontré al enemy con el instance id " + instanceId);
                     EnemyController enemyController = enemy.GetComponent<EnemyController>();
-                    enemyController.enemyId = enemyId;
+                    enemyController.Initialize(enemyId, directionX, posX, posY);
                 }
             }
         }
-
     }
 
     public void EnemiesStartPatrolling()
@@ -254,7 +256,6 @@ public class ClientMessageHandler
         {
             EnemyController enemyController = enemy.GetComponent<EnemyController>();
 
-            Debug.Log(enemy.name + " : " + enemyId);
             enemyController.enemyId = enemyId++;
             enemyController.SendIdToRegister(enemy.GetInstanceID());
         }
@@ -296,11 +297,12 @@ public class ClientMessageHandler
         }
 
         int enemyId = Int32.Parse(msg[1]);
-        float posX = float.Parse(msg[2]);
-        float posY = float.Parse(msg[3]);
+        int directionX = Int32.Parse(msg[3]);
+        float posX = float.Parse(msg[3]);
+        float posY = float.Parse(msg[4]);
 
         EnemyController enemyScript = client.GetEnemy(enemyId);
-        enemyScript.SetPosition(posX, posY);
+        enemyScript.SetPosition(directionX, posX, posY);
     }
 
 
@@ -410,7 +412,6 @@ public class ClientMessageHandler
         if (controlOverEnemies)
         {
             client.StartFirstPlan();
-            Debug.Log("Activating enemies...");
             EnemiesRegisterOnRoom();
         }
     }
