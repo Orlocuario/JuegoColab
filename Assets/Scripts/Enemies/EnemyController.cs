@@ -5,32 +5,32 @@ using UnityEngine;
 public class EnemyController : MonoBehaviour
 {
 
+    public Vector2[] patrollingPoints;
     public CircleCollider2D alertZone;
 
+    public float patrollingSpeed;
+    public bool patrolling;
+    public bool fromEditor;
+    public int directionX;  // 1 = derecha, -1 = izquierda
+
+    protected Vector2 force = new Vector2(0, 0);
+    protected PlayerController localPlayer;
+    protected Vector2 currentPatrolPoint;
     protected LevelManager levelManager;
+    protected GameObject attackTarget;
     protected Animator animator;
     protected Rigidbody2D rb2d;
 
+    protected int currentPatrolPointCount;
     protected float maxHp = 100f;
+    protected int debuger = 0;
+    protected int damage = 0;
+    protected int enemyId;
     protected float hp;
 
-    protected static Vector2 initialPosition;
-    protected static float patrollingDistance = .75f;
     protected static float alertDistanceFactor = 1.5f;
-    private static float maxYSpeed = 0f;
-    public static float maxXSpeed = .5f;
-
-    protected Vector2 force = new Vector2(0, 0);
-    protected GameObject attackTarget;
-    protected int damage = 0;
-
-    protected bool patrolling;
-
-    public bool fromEditor;
-    public int directionX;  // 1 = derecha, -1 = izquierda
-    public int enemyId;
-
-    protected int debuger = 0;
+    protected static float maxYSpeed = 0f;
+    protected static float maxXSpeed = .5f;
 
     protected virtual void Start()
     {
@@ -38,15 +38,29 @@ public class EnemyController : MonoBehaviour
         levelManager = FindObjectOfType<LevelManager>();
         rb2d = GetComponent<Rigidbody2D>();
 
-        initialPosition = transform.position;
-
-        hp = maxHp;
+        currentPatrolPointCount = 0;
+        patrollingSpeed = 0.005f;
         directionX = -1;
+        hp = maxHp;
+
+        if (levelManager != null)
+        {
+            localPlayer = levelManager.GetLocalPlayerController();
+        }
+
+        if (patrollingPoints != null && patrollingPoints.Length > 0)
+        {
+            NextPatrollingPoint();
+        }
     }
 
     // Update is called once per frame
     protected virtual void Update()
     {
+        foreach (Vector2 patrollingPoint in patrollingPoints)
+        {
+            DebugDrawDistance(patrollingPoint);
+        }
     }
 
     protected void Attack(GameObject player)
@@ -59,19 +73,13 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    protected void DebugDrawDistance(float distance)
+    protected void DebugDrawDistance(Vector2 point)
     {
-        Vector3 left = new Vector3(transform.position.x - distance, transform.position.y, transform.position.z);
-        Vector3 right = new Vector3(transform.position.x + distance, transform.position.y, transform.position.z);
-
-        Debug.DrawLine(left, transform.position, Color.blue);
-        Debug.DrawLine(transform.position, right, Color.red);
+        Debug.DrawLine(transform.position, point, Color.green);
     }
 
     protected virtual void Patroll()
     {
-
-        Debug.DrawLine(transform.position, initialPosition, Color.green); // See which point the enemy is patrolling
 
         if (rb2d == null)
         {
@@ -79,22 +87,61 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        if (levelManager.GetLocalPlayerController().controlOverEnemies)
+        if ((localPlayer != null && localPlayer.controlOverEnemies) || fromEditor)
         {
-            if (Mathf.Abs(Mathf.Abs(initialPosition.x) - Mathf.Abs(transform.position.x)) >= patrollingDistance)
+            if (Vector2.Distance(transform.position, currentPatrolPoint) < .1f)
             {
-                directionX *= -1; // Turn the other direction and start walking
-                transform.localScale = new Vector3(-transform.localScale.x, 1f, 1f);
-
-                SendPositionToServer();
+                NextPatrollingPoint();
             }
+
         }
 
-        float speedX = maxXSpeed * directionX;
-        float speedY = maxYSpeed;
+        transform.position = Vector3.MoveTowards(transform.position, currentPatrolPoint, patrollingSpeed);
+    }
 
-        rb2d.velocity = new Vector2(speedX, speedY);
+    protected void TurnAroundIfNeccessary()
+    {
+        bool turnAround = false;
 
+        if (currentPatrolPoint.x < transform.position.x)
+        {
+            if (directionX == 1)
+            {
+                turnAround = true;
+            }
+
+        }
+
+        else if (currentPatrolPoint.x > transform.position.x)
+        {
+            if (directionX == -1)
+            {
+                turnAround = true;
+            }
+
+        }
+
+        if (turnAround)
+        {
+            directionX *= -1;
+            transform.localScale = new Vector3(-directionX, transform.localScale.y, transform.localScale.z);
+        }
+
+    }
+
+    protected void NextPatrollingPoint()
+    {
+
+        if (patrollingPoints == null || patrollingPoints.Length == 0)
+        {
+            Debug.Log(name + " : " + enemyId + " has no patrolling points.");
+            return;
+        }
+
+        currentPatrolPoint = patrollingPoints[currentPatrolPointCount];
+        currentPatrolPointCount = (currentPatrolPointCount + 1) % patrollingPoints.Length;
+
+        TurnAroundIfNeccessary();
     }
 
     public virtual void TakeDamage(float damage)
@@ -108,7 +155,7 @@ public class EnemyController : MonoBehaviour
             if (localPlayer != null)
             {
                 if (localPlayer.controlOverEnemies)
-                { 
+                {
                     Debug.Log(name + " took " + damage);
                     SendHpDataToServer(damage);
                 }
@@ -127,15 +174,19 @@ public class EnemyController : MonoBehaviour
         transform.position = new Vector3(positionX, positionY, transform.position.z);
     }
 
-    public void SendIdToRegister(int instanceId)
+    public void Register(int enemyId)
     {
-        string message = "NewEnemyId/" + 
-            instanceId + "/" + 
-            enemyId + "/" + 
-            maxHp + "/" + 
+        this.enemyId = enemyId;
+
+        string message = "NewEnemyId/" +
+            GetInstanceID() + "/" +
+            enemyId + "/" +
+            maxHp + "/" +
             directionX + "/" +
             transform.position.x + "/" +
             transform.position.y;
+
+        SendMessageToServer(message);
     }
 
     protected virtual void SendHpDataToServer(float damage)
@@ -241,6 +292,11 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    public int GetEnemyId()
+    {
+        return enemyId;
+    }
+
     public void OnDamageEnd(string s)
     {
         animator.SetBool("isDamaged", false);
@@ -263,7 +319,7 @@ public class EnemyController : MonoBehaviour
     {
         animator.SetBool("isAttacking", false);
     }
-    
+
     public void Initialize(int enemyId, int directionX, float posX, float posY)
     {
         this.enemyId = enemyId;

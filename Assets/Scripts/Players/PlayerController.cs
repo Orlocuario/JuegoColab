@@ -61,6 +61,7 @@ public class PlayerController : MonoBehaviour
     public bool isPowerOn;
     public bool mpDepleted;
 
+
     protected string currentAttackName;
     protected bool isAttacking;
     private bool conectado;

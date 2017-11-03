@@ -251,7 +251,7 @@ public class Client : MonoBehaviour
         foreach (GameObject enemy in enemies)
         {
             EnemyController script = enemy.GetComponent<EnemyController>();
-            if (script.enemyId == enemyId)
+            if (script.GetEnemyId() == enemyId)
             {
                 return script;
             }

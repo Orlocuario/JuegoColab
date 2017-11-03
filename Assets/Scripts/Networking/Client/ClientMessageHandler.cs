@@ -212,6 +212,8 @@ public class ClientMessageHandler
         {
             registeredEnemies.Add(enemyId);
 
+            Debug.Log("Registered enemies: " + registeredEnemies.Count + "/" + enemies.Length);
+
             if (registeredEnemies.Count == enemies.Length)
             {
                 Debug.Log("Start enemy patrolling");
@@ -256,8 +258,7 @@ public class ClientMessageHandler
         {
             EnemyController enemyController = enemy.GetComponent<EnemyController>();
 
-            enemyController.enemyId = enemyId++;
-            enemyController.SendIdToRegister(enemy.GetInstanceID());
+            enemyController.Register(enemyId++);
         }
     }
 
@@ -297,7 +298,7 @@ public class ClientMessageHandler
         }
 
         int enemyId = Int32.Parse(msg[1]);
-        int directionX = Int32.Parse(msg[3]);
+        int directionX = Int32.Parse(msg[2]);
         float posX = float.Parse(msg[3]);
         float posY = float.Parse(msg[4]);
 
