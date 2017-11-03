@@ -76,7 +76,6 @@ public class PlayerController : MonoBehaviour
     protected virtual void Start()
     {
         hpAndMp = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
-
         attackAnimLength = new Dictionary<String, float>();
         levelManager = FindObjectOfType<LevelManager>();
         collider = GetComponent<Collider2D>();
