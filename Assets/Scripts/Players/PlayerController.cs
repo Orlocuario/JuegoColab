@@ -566,7 +566,7 @@ public class PlayerController : MonoBehaviour
     {
         if (other.gameObject.tag == "MovingPlatform")
         {
-            Debug.Log(other.transform.position);
+            Debug.Log(other.gameObject.name);
             transform.parent = other.transform;
         }
     }

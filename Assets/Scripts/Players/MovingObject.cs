@@ -7,8 +7,8 @@ public class MovingObject : MonoBehaviour
 
     public GameObject objectToMove;
 
-    public Transform startPoint;
-    public Transform endPoint;
+    public GameObject startPoint;
+    public GameObject endPoint;
 
     public float moveSpeed;
 
@@ -18,10 +18,10 @@ public class MovingObject : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        if (endPoint != null)
-        {
-            currentTarget = endPoint.position;
-        }
+
+
+            currentTarget = endPoint.transform.position;
+
 
     }
 
@@ -36,14 +36,14 @@ public class MovingObject : MonoBehaviour
         objectToMove.transform.position = Vector3.MoveTowards(objectToMove.transform.position, currentTarget, moveSpeed * Time.deltaTime);
 
 
-        if (objectToMove.transform.position == endPoint.position)
+        if (objectToMove.transform.position == endPoint.transform.position)
         {
-            currentTarget = startPoint.position;
+            currentTarget = startPoint.transform.position;
         }
 
-        if (objectToMove.transform.position == startPoint.position)
+        if (objectToMove.transform.position == startPoint.transform.position)
         {
-            currentTarget = endPoint.position;
+            currentTarget = endPoint.transform.position;
         }
 
     }
