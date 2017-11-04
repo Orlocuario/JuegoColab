@@ -108,14 +108,9 @@ public class PlayerController : MonoBehaviour
     {
         RuntimeAnimatorController ac = animator.runtimeAnimatorController;
 
-        Debug.Log("Found " + ac.animationClips.Length + " animation clips");
-        Debug.Log("And I have" + attackAnimLength.Keys.Count + " animation clips names");
-
         foreach (AnimationClip animationClip in ac.animationClips)
         {
             attackAnimLength.Add(animationClip.name, animationClip.length);
-
-            Debug.Log(animationClip.name + " : " + animationClip.length);
         }
 
     }

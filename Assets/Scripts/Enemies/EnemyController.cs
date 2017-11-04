@@ -32,6 +32,8 @@ public class EnemyController : MonoBehaviour
     protected static float maxYSpeed = 0f;
     protected static float maxXSpeed = .5f;
 
+    #region Update & Start
+
     protected virtual void Start()
     {
         animator = this.gameObject.GetComponent<Animator>();
@@ -43,15 +45,11 @@ public class EnemyController : MonoBehaviour
         directionX = -1;
         hp = maxHp;
 
-        if (levelManager != null)
-        {
-            localPlayer = levelManager.GetLocalPlayerController();
-        }
-
         if (patrollingPoints != null && patrollingPoints.Length > 0)
         {
             NextPatrollingPoint();
         }
+
     }
 
     // Update is called once per frame
@@ -63,6 +61,10 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    #endregion
+
+    #region Common methods
+
     protected void Attack(GameObject player)
     {
         // Set the attacking property of the animator
@@ -71,11 +73,6 @@ public class EnemyController : MonoBehaviour
             animator.SetBool("isAttacking", true);
             attackTarget = player;
         }
-    }
-
-    protected void DebugDrawDistance(Vector2 point)
-    {
-        Debug.DrawLine(transform.position, point, Color.green);
     }
 
     protected virtual void Patroll()
@@ -87,16 +84,203 @@ public class EnemyController : MonoBehaviour
             return;
         }
 
-        if ((localPlayer != null && localPlayer.controlOverEnemies) || fromEditor)
+        if (levelManager != null)
         {
+            localPlayer = levelManager.GetLocalPlayerController();
+        }
+
+        if (localPlayer != null && localPlayer.controlOverEnemies)
+        {
+            Debug.Log(name + " has the control over enemies and is patrolling");
+
             if (Vector2.Distance(transform.position, currentPatrolPoint) < .1f)
             {
                 NextPatrollingPoint();
+                SendPatrollingPoint();
             }
-
         }
 
         transform.position = Vector3.MoveTowards(transform.position, currentPatrolPoint, patrollingSpeed);
+    }
+
+    public virtual void TakeDamage(float damage)
+    {
+        animator.SetBool("isDamaged", true);
+
+        if (Client.instance != null)
+        {
+            PlayerController localPlayer = Client.instance.GetLocalPlayer();
+
+            if (localPlayer != null)
+            {
+                if (localPlayer.controlOverEnemies)
+                {
+                    Debug.Log(name + " took " + damage);
+                    SendHpDataToServer(damage);
+                }
+            }
+        }
+    }
+
+    protected virtual void DealDamage(GameObject player)
+    {
+
+        PlayerController playerController = player.GetComponent<PlayerController>();
+        MageController mage = Client.instance.GetMage();
+
+        Vector2 playerPosition = player.transform.position;
+        Vector2 attackForce = force;
+
+        // Only hit local players
+        if (!playerController.localPlayer)
+        {
+            return;
+        }
+
+        // Don't hit protected players
+        if (mage.ProtectedByShield(player))
+        {
+            return;
+        }
+
+        // If player is at the left side of the enemy push it to the left
+        if (playerPosition.x < transform.position.x)
+        {
+            attackForce.x *= -1;
+        }
+
+        playerController.TakeDamage(damage, attackForce);
+
+    }
+
+    public virtual void Die()
+    {
+        animator.SetBool("isDead", true);
+    }
+
+    #endregion
+
+    #region Setters & Getters
+
+    public void Register(int enemyId)
+    {
+        this.enemyId = enemyId;
+
+        string message = "EnemyRegisterId/" +
+            gameObject.GetInstanceID() + "/" +
+            enemyId + "/" +
+            maxHp + "/" +
+            directionX + "/" +
+            transform.position.x + "/" +
+            transform.position.y;
+
+        if (patrollingPoints != null && patrollingPoints.Length > 0)
+        {
+            message += ("/" + patrollingPoints[0].x + "/" + patrollingPoints[0].y);
+        }
+
+        SendMessageToServer(message);
+    }
+
+    public void Initialize(int enemyId, int directionX, float posX, float posY)
+    {
+        this.enemyId = enemyId;
+        SetPosition(directionX, posX, posY);
+        Debug.Log("Enemy " + enemyId + " starting position " + posX + "," + posY);
+    }
+
+    public int GetEnemyId()
+    {
+        return enemyId;
+    }
+
+    public void StartPatrolling()
+    {
+        Debug.Log("Enemy " + enemyId + " patrolling: " + transform.position.x + "," + transform.position.y + " to " + currentPatrolPoint.x + "," + currentPatrolPoint.y);
+        patrolling = true;
+    }
+
+    public void SetPosition(int directionX, float positionX, float positionY)
+    {
+        this.directionX = directionX;
+        transform.position = new Vector3(positionX, positionY, transform.position.z);
+
+        if (directionX == transform.localScale.x)
+        {
+            transform.localScale = new Vector3(-directionX, transform.localScale.y, transform.localScale.z);
+        }
+    }
+
+    public void SetPatrollingPoint(int directionX, float positionX, float positionY, float patrollingPointX, float patrollingPointY)
+    {
+        SetPosition(directionX, positionX, positionY);
+        currentPatrolPoint = new Vector2(patrollingPointX, patrollingPointY);
+    }
+
+    #endregion
+
+    #region Messaging
+
+    protected virtual void SendHpDataToServer(float damage)
+    {
+        string message = "EnemyHpChange/" + enemyId + "/" + damage;
+        SendMessageToServer(message);
+    }
+
+    protected virtual void SendPositionToServer()
+    {
+        string message = "EnemyChangePosition/" +
+            enemyId + "/" +
+            directionX + "/" +
+            transform.position.x + "/" +
+            transform.position.y;
+
+        SendMessageToServer(message);
+    }
+
+    protected void SendPatrollingPoint()
+    {
+
+        string message = "EnemyPatrollingPoint/" +
+            enemyId + "/" +
+            directionX + "/" +
+            transform.position.x + "/" +
+            transform.position.y + "/" +
+            currentPatrolPoint.x + "/" +
+            currentPatrolPoint.y;
+
+        SendMessageToServer(message);
+    }
+
+    protected virtual void SendMessageToServer(string message)
+    {
+        Client.instance.SendMessageToServer(message);
+    }
+
+    #endregion
+
+    #region Utils
+
+    protected void DebugDrawDistance(Vector2 point)
+    {
+        Debug.DrawLine(transform.position, point, Color.green);
+    }
+
+
+    protected bool GameObjectIsPlayer(GameObject other)
+    {
+
+        if (other.tag == "Player")
+        {
+            PlayerController playerController = other.GetComponent<PlayerController>();
+
+            if (playerController.localPlayer)
+            {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     protected void TurnAroundIfNeccessary()
@@ -144,124 +328,9 @@ public class EnemyController : MonoBehaviour
         TurnAroundIfNeccessary();
     }
 
-    public virtual void TakeDamage(float damage)
-    {
-        animator.SetBool("isDamaged", true);
+    #endregion
 
-        if (Client.instance != null)
-        {
-            PlayerController localPlayer = Client.instance.GetLocalPlayer();
-
-            if (localPlayer != null)
-            {
-                if (localPlayer.controlOverEnemies)
-                {
-                    Debug.Log(name + " took " + damage);
-                    SendHpDataToServer(damage);
-                }
-            }
-        }
-    }
-
-    public virtual void Die()
-    {
-        animator.SetBool("isDead", true);
-    }
-
-    public void SetPosition(int directionX, float positionX, float positionY)
-    {
-        this.directionX = directionX;
-        transform.position = new Vector3(positionX, positionY, transform.position.z);
-    }
-
-    public void Register(int enemyId)
-    {
-        this.enemyId = enemyId;
-
-        string message = "NewEnemyId/" +
-            GetInstanceID() + "/" +
-            enemyId + "/" +
-            maxHp + "/" +
-            directionX + "/" +
-            transform.position.x + "/" +
-            transform.position.y;
-
-        SendMessageToServer(message);
-    }
-
-    protected virtual void SendHpDataToServer(float damage)
-    {
-        string message = "EnemyHpChange/" + enemyId + "/" + damage;
-        SendMessageToServer(message);
-    }
-
-    protected virtual void SendPositionToServer()
-    {
-        string message = "EnemyChangePosition/" +
-            enemyId + "/" +
-            directionX + "/" +
-            transform.position.x + "/" +
-            transform.position.y;
-
-        SendMessageToServer(message);
-    }
-
-    protected virtual void SendMessageToServer(string message)
-    {
-        Client.instance.SendMessageToServer(message);
-    }
-
-    public void StartPatrolling()
-    {
-        patrolling = true;
-    }
-
-    protected bool GameObjectIsPlayer(GameObject other)
-    {
-
-        if (other.tag == "Player")
-        {
-            PlayerController playerController = other.GetComponent<PlayerController>();
-
-            if (playerController.localPlayer)
-            {
-                return true;
-            }
-        }
-
-        return false;
-    }
-
-    protected virtual void DealDamage(GameObject player)
-    {
-
-        PlayerController playerController = player.GetComponent<PlayerController>();
-        MageController mage = Client.instance.GetMage();
-
-        Vector2 playerPosition = player.transform.position;
-        Vector2 attackForce = force;
-
-        // Only hit local players
-        if (!playerController.localPlayer)
-        {
-            return;
-        }
-
-        // Don't hit protected players
-        if (mage.ProtectedByShield(player))
-        {
-            return;
-        }
-
-        // If player is at the left side of the enemy push it to the left
-        if (playerPosition.x < transform.position.x)
-        {
-            attackForce.x *= -1;
-        }
-
-        playerController.TakeDamage(damage, attackForce);
-
-    }
+    #region Events
 
     protected void OnTriggerStay2D(Collider2D other)
     {
@@ -271,13 +340,11 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-
     // Attack those who enter the alert zone
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (GameObjectIsPlayer(other.gameObject))
         {
-            Debug.Log(other.gameObject.name + "  entered in " + gameObject.name + " alert zone");
             Attack(other.gameObject);
         }
     }
@@ -287,14 +354,8 @@ public class EnemyController : MonoBehaviour
     {
         if (GameObjectIsPlayer(other.gameObject))
         {
-            Debug.Log(other.gameObject.name + "  collided with " + gameObject.name);
             Attack(other.gameObject);
         }
-    }
-
-    public int GetEnemyId()
-    {
-        return enemyId;
     }
 
     public void OnDamageEnd(string s)
@@ -319,11 +380,6 @@ public class EnemyController : MonoBehaviour
     {
         animator.SetBool("isAttacking", false);
     }
-
-    public void Initialize(int enemyId, int directionX, float posX, float posY)
-    {
-        this.enemyId = enemyId;
-        SetPosition(directionX, posX, posY);
-    }
+    #endregion
 
 }

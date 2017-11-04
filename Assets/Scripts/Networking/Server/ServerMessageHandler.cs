@@ -44,7 +44,7 @@ public class ServerMessageHandler
             case "GainExp":
                 SendExpToRoom(msg, connectionId);
                 break;
-            case "NewEnemyId":
+            case "EnemyRegisterId":
                 NewEnemy(msg, connectionId);
                 break;
             case "EnemyHpChange":
@@ -52,6 +52,9 @@ public class ServerMessageHandler
                 break;
             case "EnemyChangePosition":
                 EnemyChangePosition(message, msg, connectionId);
+                break;
+            case "EnemyPatrollingPoint":
+                SendEnemyPatrollingPoint(message, msg, connectionId);
                 break;
             case "EnemiesStartPatrolling":
                 EnemiesStartPatrolling(connectionId);
@@ -204,10 +207,32 @@ public class ServerMessageHandler
     private void EnemyChangePosition(string message, string[] msg, int connectionId)
     {
         int enemyId = Int32.Parse(msg[1]);
-        float posX = float.Parse(msg[2]);
-        float posY = float.Parse(msg[3]);
+        int directionX = Int32.Parse(msg[2]);
+        float posX = float.Parse(msg[3]);
+        float posY = float.Parse(msg[4]);
+
         NetworkPlayer player = server.GetPlayer(connectionId);
+        NetworkEnemy enemy = player.room.GetEnemy(enemyId);
+
+        enemy.SetPosition(directionX, posX, posY);
         player.room.SendMessageToAllPlayersExceptOne(message, connectionId);
+    }
+
+    private void SendEnemyPatrollingPoint(string message, string[] msg, int connectionId)
+    {
+        int enemyId = Int32.Parse(msg[1]);
+        int directionX = Int32.Parse(msg[2]);
+        float posX = float.Parse(msg[3]);
+        float posY = float.Parse(msg[4]);
+        float patrolX = float.Parse(msg[5]);
+        float patrolY = float.Parse(msg[6]);
+
+        NetworkPlayer player = server.GetPlayer(connectionId);
+        NetworkEnemy enemy = player.room.GetEnemy(enemyId);
+
+        enemy.SetPatrollingPoint(directionX, posX, posY, patrolX, patrolY);
+        player.room.SendMessageToAllPlayersExceptOne(message, connectionId);
+
     }
 
     private void ReduceEnemyHp(string message, string[] msg, int connectionId)
@@ -228,14 +253,26 @@ public class ServerMessageHandler
         int directionX = Int32.Parse(msg[4]);
         float posX = float.Parse(msg[5]);
         float posY = float.Parse(msg[6]);
-
-
+        
         NetworkPlayer player = server.GetPlayer(connectionId);
-        Room room = player.room;
 
+        Room room = player.room;
         room.AddEnemy(instanceId, id, hp);
 
+        NetworkEnemy enemy = room.GetEnemy(id);
+        enemy.SetPosition(directionX, posX, posY);
+
         string message = "EnemyRegistered/" + instanceId + "/" + id + "/" + directionX + "/" + posX + "/" + posY;
+
+        if (msg.Length >= 9)
+        {
+            float patrolX = float.Parse(msg[7]);
+            float patrolY = float.Parse(msg[8]);
+
+            message += ("/" + patrolX + "/" + patrolY);
+            enemy.SetPatrollingPoint(directionX, posX, posY, patrolX, patrolY);
+        }
+
         room.SendMessageToAllPlayers(message);
     }
 

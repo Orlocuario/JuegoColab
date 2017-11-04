@@ -108,8 +108,18 @@ public class Room
     {
         foreach (NetworkEnemy enemy in enemies)
         {
-            string message = "EnemyStartPatrolling/" + enemy.id;
-            SendMessageToAllPlayers(message);
+            if (enemy.patrollingPointX != default(float) & enemy.patrollingPointY != default(float))
+            {
+                string message = "EnemyStartPatrolling/" +
+                    enemy.id + "/" +
+                    enemy.directionX + "/" +
+                    enemy.positionX + "/" +
+                    enemy.positionY + "/" +
+                    enemy.patrollingPointX + "/" +
+                    enemy.patrollingPointY;
+
+                SendMessageToAllPlayers(message);
+            }
         }
     }
 

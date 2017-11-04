@@ -263,7 +263,6 @@ public class Client : MonoBehaviour
 
     public PlayerController GetLocalPlayer()
     {
-
         GameObject player1 = GameObject.Find("Mage");
         GameObject player2 = GameObject.Find("Warrior");
         GameObject player3 = GameObject.Find("Engineer");

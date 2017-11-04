@@ -62,6 +62,9 @@ public class ClientMessageHandler
             case "EnemyChangePosition":
                 ChangeEnemyPosition(msg);
                 break;
+            case "EnemyPatrollingPoint":
+                ChangeEnemyPatrollingPoint(msg);
+                break;
             case "SetControlOverEnemies":
                 SetControlOverEnemies();
                 break;
@@ -205,14 +208,12 @@ public class ClientMessageHandler
         int instanceId = int.Parse(msg[1]);
         int enemyId = int.Parse(msg[2]);
         int directionX = Int32.Parse(msg[3]);
-        float posX = float.Parse(msg[3]);
-        float posY = float.Parse(msg[4]);
+        float posX = float.Parse(msg[4]);
+        float posY = float.Parse(msg[5]);
 
         if (client.GetLocalPlayer().controlOverEnemies)
         {
             registeredEnemies.Add(enemyId);
-
-            Debug.Log("Registered enemies: " + registeredEnemies.Count + "/" + enemies.Length);
 
             if (registeredEnemies.Count == enemies.Length)
             {
@@ -230,6 +231,7 @@ public class ClientMessageHandler
 
             foreach (GameObject enemy in enemies)
             {
+
                 if(enemy.GetInstanceID() == instanceId)
                 {
                     EnemyController enemyController = enemy.GetComponent<EnemyController>();
@@ -285,7 +287,14 @@ public class ClientMessageHandler
     private void EnemyStartPatrolling(string[] msg)
     {
         int enemyId = Int32.Parse(msg[1]);
+        int directionX = Int32.Parse(msg[2]);
+        float posX = float.Parse(msg[3]);
+        float posY = float.Parse(msg[4]);
+        float patrolX = float.Parse(msg[5]);
+        float patrolY = float.Parse(msg[6]);
+
         EnemyController enemyController = client.GetEnemy(enemyId);
+        enemyController.SetPatrollingPoint(directionX, posX, posY, patrolX, patrolY);
         enemyController.StartPatrolling();
     }
 
@@ -306,6 +315,24 @@ public class ClientMessageHandler
         enemyScript.SetPosition(directionX, posX, posY);
     }
 
+    private void ChangeEnemyPatrollingPoint(string[] msg)
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "ClientScene")
+        {
+            return;
+        }
+
+        int enemyId = Int32.Parse(msg[1]);
+        int directionX = Int32.Parse(msg[2]);
+        float posX = float.Parse(msg[3]);
+        float posY = float.Parse(msg[4]);
+        float patrolX = float.Parse(msg[5]);
+        float patrolY = float.Parse(msg[6]);
+
+        EnemyController enemyScript = client.GetEnemy(enemyId);
+        enemyScript.SetPatrollingPoint(directionX, posX, posY, patrolX, patrolY);
+    }
 
     private void EnemyDie(string[] msg)
     {
