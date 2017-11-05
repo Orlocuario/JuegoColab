@@ -10,7 +10,6 @@ public class ChatZone : MonoBehaviour
     private GlobalDisplayHUD displayHudScript;
     public GameObject chatButtonOff;
     public GameObject chatButtonOn;
-    private Vector2 myPosition;
 
     private static string regenerationUnits = "1";
     private static int regenerationFrameRate = 50;
@@ -21,62 +20,94 @@ public class ChatZone : MonoBehaviour
 
     private void Start()
     {
-        activated = false;
         regenerationFrame = 0;
-
-        chatButtonOn.SetActive(false);
-        chatButtonOff.SetActive(false);
-
-        myPosition = gameObject.transform.position;
-
+        activated = false;
+        InitializeChatButtons();
         displayHudScript = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
     }
 
     private void Update()
     {
-        if(Client.instance == null || Client.instance.GetLocalPlayer() == null)
+        if (activated)
         {
-            return;
-        }
-
-        PlayerController player = Client.instance.GetLocalPlayer();
-        Vector2 playerPosition = player.gameObject.transform.position;
-        float playerDistance = (playerPosition - myPosition).magnitude;
-
-        if (playerDistance <= activationDistance)
-        {
-            if (activated)
+            if (CanRegenerateHPorMP())
             {
-                if (displayHudScript.hpCurrentPercentage < 1f || displayHudScript.mpCurrentPercentage < 1f)
+                regenerationFrame++;
+
+                if (regenerationFrame == regenerationFrameRate)
                 {
-                    regenerationFrame++;
-
-                    if (regenerationFrame == regenerationFrameRate)
-                    {
-                        regenerationFrame = 0;
-                        Client.instance.SendMessageToServer("ChangeHpAndMpHUDToRoom/" + regenerationUnits);
-                    }
-                } 
+                    regenerationFrame = 0;
+                    Client.instance.SendMessageToServer("ChangeHpAndMpHUDToRoom/" + regenerationUnits);
+                }
             }
-            else
-            {
-                activated = true;
-                ToogleChatButtons(true);
-            }
-
         }
-        else if (activated)
+    }
+
+    public void InitializeChatButtons()
+    {
+        chatButtonOn = GameObject.Find("ToggleChatOn");
+        chatButtonOff = GameObject.Find("ToggleChatOff");
+
+        if (chatButtonOn != null)
+        {
+            chatButtonOn.SetActive(false);
+        }
+
+        if (chatButtonOff != null)
+        {
+            chatButtonOff.SetActive(false);
+        }
+
+    }
+
+    protected bool CanRegenerateHPorMP()
+    {
+        return displayHudScript.hpCurrentPercentage < 1f || displayHudScript.mpCurrentPercentage < 1f;
+    }
+
+
+    // Attack those who enter the alert zone
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (GameObjectIsPlayer(other.gameObject))
+        {
+            ToogleChatButtons(true);
+            activated = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (GameObjectIsPlayer(other.gameObject))
         {
             regenerationFrame = 0;
             ToogleChatButtons(false);
             activated = false;
         }
-
     }
 
     private void ToogleChatButtons(bool activate)
     {
-        chatButtonOn.SetActive(activate);
-        chatButtonOff.SetActive(activate);
+        if (chatButtonOn != null && chatButtonOff != null)
+        {
+            chatButtonOn.SetActive(activate);
+            chatButtonOff.SetActive(activate);
+        }
     }
+
+    protected bool GameObjectIsPlayer(GameObject other)
+    {
+        if (other.tag == "Player")
+        {
+            PlayerController playerController = other.GetComponent<PlayerController>();
+
+            if (playerController.localPlayer)
+            {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
 }

@@ -168,6 +168,7 @@ GameObject:
   - component: {fileID: 114141587208771452}
   - component: {fileID: 95626143404606218}
   - component: {fileID: 212884391469771420}
+  - component: {fileID: 61734137780385588}
   m_Layer: 0
   m_Name: ChatZone
   m_TagString: ChatZone
@@ -317,8 +318,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1835914925010142}
   m_LocalRotation: {x: 0, y: 0, z: -0, w: 1}
-  m_LocalPosition: {x: 27.859001, y: 0.006000012, z: 0}
-  m_LocalScale: {x: -1, y: 1, z: 1}
+  m_LocalPosition: {x: 71.05, y: 0.13472798, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4914071451073016}
   - {fileID: 4740194775442070}
@@ -373,6 +374,20 @@ Transform:
   m_Father: {fileID: 4668807220914626}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &61734137780385588
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1835914925010142}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  serializedVersion: 2
+  m_Size: {x: 3, y: 0.9}
 --- !u!95 &95626143404606218
 Animator:
   serializedVersion: 3
@@ -401,9 +416,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac2514c8e44fd7e48bd0392a8b6b7eca, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  chatButtonOn: {fileID: 0}
   chatButtonOff: {fileID: 0}
-  HUDRate: 
+  chatButtonOn: {fileID: 0}
 --- !u!198 &198454798674718522
 ParticleSystem:
   m_ObjectHideFlags: 1

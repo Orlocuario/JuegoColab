@@ -18,7 +18,7 @@ public class EngineerController : PlayerController
 
         jumpedInAir = false;
 
-        particulas = GameObject.FindGameObjectWithTag("ParticulasEngin");
+        particulas = GameObject.Find("ParticulasEngin");
         particulas.SetActive(false);
     }
 

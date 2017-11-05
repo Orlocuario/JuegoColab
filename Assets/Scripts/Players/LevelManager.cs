@@ -25,6 +25,12 @@ public class LevelManager : MonoBehaviour
     private float waitToGrabItem;
 
     public float waitToRespawn;
+    public float NPCMessageReadTime;
+
+    private NPCtrigger NPCtrigger;
+    private Text npcLogText;
+
+    private int npcMessageCount;
 
     void Start()
     {
@@ -215,12 +221,45 @@ public class LevelManager : MonoBehaviour
         doorSpriteRenderer.sprite = door.GetComponent<RuneSystem>().doorIsOpen;
     }
 
+    private void ReadNPCMessage()
+    {
+        if (npcMessageCount >= NPCtrigger.messages.Length)
+        {
+            npcLog.SetActive(false);
+            NPCtrigger = null;
+            return;
+        }
+
+        npcLogText.text = NPCtrigger.messages[npcMessageCount];
+
+        if (!npcLog.activeInHierarchy)
+        {
+            npcLog.SetActive(true);
+        }
+
+        StartCoroutine("WaitToReadNPCMessage");
+        npcMessageCount += 1;
+    }
+
     public void ActivateNPCLog(string message)
     {
         npcLog.SetActive(true);
         Text npcLogText = GameObject.Find("NPCLogText").GetComponent<Text>();
         npcLogText.text = message;
         StartCoroutine("WaitToKillNPC");
+    }
+
+    public void ActivateNPCLog(NPCtrigger NPCtrigger)
+    {
+
+        npcLog.SetActive(true);
+        this.npcLogText = GameObject.Find("NPCLogText").GetComponent<Text>();
+        this.NPCtrigger = NPCtrigger;
+        this.npcMessageCount = 0;
+
+        NPCMessageReadTime = NPCtrigger.readTime;
+
+        ReadNPCMessage();
     }
 
     public void IgnoreBoxCircleCollision(string[] array)
@@ -315,7 +354,15 @@ public class LevelManager : MonoBehaviour
     {
         yield return new WaitForSeconds(waitToGrabItem);
         npcLog.SetActive(false);
+        NPCtrigger = null;
     }
+
+    private IEnumerator WaitToReadNPCMessage()
+    {
+        yield return new WaitForSeconds(NPCMessageReadTime);
+        ReadNPCMessage();
+    }
+
 
     public void ReloadLevel(string sceneName)
     {
