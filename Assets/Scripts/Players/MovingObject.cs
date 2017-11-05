@@ -4,47 +4,43 @@ using UnityEngine;
 
 public class MovingObject : MonoBehaviour
 {
-
-    public GameObject objectToMove;
-
-    public GameObject startPoint;
-    public GameObject endPoint;
+    public Vector2 startPoint;
+    public Vector2 endPoint;
 
     public float moveSpeed;
 
     private Vector3 currentTarget;
 
-
     // Use this for initialization
     void Start()
     {
 
-
-            currentTarget = endPoint.transform.position;
-
+        if (endPoint != null)
+        {
+            currentTarget = endPoint;
+        }
 
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (objectToMove == null)
+        if (currentTarget == null || startPoint == null || endPoint == null)
         {
             return;
         }
 
-        objectToMove.transform.position = Vector3.MoveTowards(objectToMove.transform.position, currentTarget, moveSpeed * Time.deltaTime);
-
-
-        if (objectToMove.transform.position == endPoint.transform.position)
+        if (Vector2.Distance(transform.position, endPoint) <= 0f)
         {
-            currentTarget = startPoint.transform.position;
+            currentTarget = startPoint;
         }
 
-        if (objectToMove.transform.position == startPoint.transform.position)
+        if (Vector2.Distance(transform.position, startPoint) <= 0f)
         {
-            currentTarget = endPoint.transform.position;
+            currentTarget = endPoint;
         }
+
+        transform.position = Vector3.MoveTowards(transform.position, currentTarget, moveSpeed * Time.deltaTime);
 
     }
 }
