@@ -14,8 +14,8 @@ public class CajaDestroyableController : DestroyableController
     public override void DestroyMe()
     {
 
-        Rigidbody2D rb2d = GetComponent<Rigidbody2D>();
-        Destroy(rb2d);
+       // Rigidbody2D rb2d = GetComponent<Rigidbody2D>();
+        //Destroy(rb2d);
 
         Collider2D collider = GetComponent<Collider2D>();
         Destroy(collider);
