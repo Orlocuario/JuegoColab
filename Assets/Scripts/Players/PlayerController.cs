@@ -179,32 +179,18 @@ public class PlayerController : MonoBehaviour
         if (localPlayer)
         {
 
-            float axisHorizontal = CnInputManager.GetAxisRaw("Horizontal");
-            float axisVertical = CnInputManager.GetAxisRaw("Vertical");
-
-            bool up = axisVertical > 0f;
+            bool buttonRightPressed = CnInputManager.GetAxisRaw("Horizontal") == 1;
 
             // si el wn esta apuntando hacia arriba/abajo con menor inclinacion que hacia la derecha, start moving
-            if ((axisHorizontal > 0f) && !remoteRight)
+            if (buttonRightPressed && !remoteRight)
             {
-                if ((up && axisHorizontal >= axisVertical) || (!up && axisHorizontal >= -axisVertical))
-                {
                     remoteRight = true;
                     remoteLeft = false;
                     SendPlayerDataToServer();
-                }
-            }
-
-            // si el wn esta apuntando hacia arriba/abajo con mayor inclinacion que hacia la derecha, stop moving
-            else if (Mathf.Abs(axisVertical) > Mathf.Abs(axisHorizontal) && (remoteRight || remoteLeft))
-            {
-                remoteRight = false;
-                remoteLeft = false;
-                SendPlayerDataToServer();
             }
 
             // si no se esta apretando el joystick
-            else if (remoteRight && axisHorizontal == 0)
+            else if (!buttonRightPressed && remoteRight)
             {
                 remoteRight = false;
                 SendPlayerDataToServer();
@@ -221,32 +207,18 @@ public class PlayerController : MonoBehaviour
         if (localPlayer)
         {
 
-            float axisHorizontal = CnInputManager.GetAxisRaw("Horizontal");
-            float axisVertical = CnInputManager.GetAxisRaw("Vertical");
+            bool buttonLeftPressed = CnInputManager.GetAxisRaw("Horizontal") == -1f;
 
-            bool up = axisVertical > 0f;
-
-            // si el wn esta apuntando hacia arriba/abajo con menor inclinacion que hacia la izquierda, start moving
-            if ((!remoteLeft && axisHorizontal < 0f))
+            // si el wn esta apuntando hacia arriba/abajo con menor inclinacion que hacia la derecha, start moving
+            if (buttonLeftPressed && !remoteLeft)
             {
-                if ((up && -axisHorizontal >= axisVertical) || (!up && axisHorizontal <= axisVertical))
-                {
-                    remoteLeft = true;
-                    remoteRight = false;
-                    SendPlayerDataToServer();
-                }
-            }
-
-            // si el wn esta apuntando hacia arriba/abajo con mayor inclinacion que hacia la derecha, stop moving
-            else if (Mathf.Abs(axisVertical) > Mathf.Abs(axisHorizontal) && (remoteRight || remoteLeft))
-            {
+                remoteLeft = true;
                 remoteRight = false;
-                remoteLeft = false;
                 SendPlayerDataToServer();
             }
 
             // si no se esta apretando el joystick
-            else if (remoteLeft && axisHorizontal == 0)
+            else if (!buttonLeftPressed && remoteLeft)
             {
                 remoteLeft = false;
                 SendPlayerDataToServer();
@@ -352,6 +324,15 @@ public class PlayerController : MonoBehaviour
 
         isGrounded = IsItGrounded();
 
+        if (IsJumping(isGrounded))
+        {
+            speedY = maxYSpeed * directionY;
+        }
+        else
+        {
+            speedY = rb2d.velocity.y;
+        }
+
         if (IsGoingRight())
         {
             // Si estaba yendo a la izquierda resetea la aceleración
@@ -395,15 +376,6 @@ public class PlayerController : MonoBehaviour
             acceleration = 0;
         }
 
-        if (IsJumping(isGrounded))
-        {
-            speedY = maxYSpeed * directionY;
-        }
-        else
-        {
-            speedY = rb2d.velocity.y;
-        }
-
         if (lastPosition != transform.position)
         {
             animator.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
@@ -420,7 +392,6 @@ public class PlayerController : MonoBehaviour
 
         if (localPlayer)
         {
-
 
             bool powerButtonPressed = CnInputManager.GetButtonDown("Power Button");
             float mpCurrentPercentage = hpAndMp.mpCurrentPercentage;

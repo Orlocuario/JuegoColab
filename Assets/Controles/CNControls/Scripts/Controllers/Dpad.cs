@@ -30,6 +30,7 @@ namespace CnControls
         {
             foreach (var dpadAxis in DpadAxis)
             {
+                Debug.Log(dpadAxis.name  + " was released");
                 dpadAxis.TryRelease(eventData.pointerId);
             }
         }
