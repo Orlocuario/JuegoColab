@@ -31,7 +31,10 @@ public class AttackController : MonoBehaviour
 
     protected void IgnoreCollisionWithObjects()
     {
-        Physics2D.IgnoreCollision(gameObjectCollider, GameObject.Find("RocaGiganteAraña").GetComponents<CircleCollider2D>()[0]);
+        if (GameObject.Find("RocaGiganteAraña") != null)
+        {
+            Physics2D.IgnoreCollision(gameObjectCollider, GameObject.Find("RocaGiganteAraña").GetComponents<CircleCollider2D>()[0]);
+        }
     }
 
     protected void IgnoreCollisionWithPlayers()
@@ -48,11 +51,11 @@ public class AttackController : MonoBehaviour
         speed = _speed;
         moves = true;
 
-        transform.position = new Vector2(initialX + (direction * 0.0001f), initialY - 0.02f);
+        transform.position = new Vector2(initialX + (direction * 0.0001f), initialY);
 
         if (direction == -1)
         {
-            transform.localScale = new Vector3(-1f, 1f, 1f);
+            transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
     }
 
@@ -62,14 +65,13 @@ public class AttackController : MonoBehaviour
         {
             Move();
         }
-
     }
 
     protected void Move()
     {
         float distance = speed * direction * Time.deltaTime;
 
-        transform.position = transform.position + Vector3.right * distance;
+        transform.position += Vector3.right * distance;
 
         currentDistance += System.Math.Abs(distance);
 

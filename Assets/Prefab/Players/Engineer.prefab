@@ -122,7 +122,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &61611526610384536
 BoxCollider2D:
@@ -169,35 +169,33 @@ MonoBehaviour:
   playerObj: {fileID: 0}
   collider: {fileID: 0}
   parent: {fileID: 0}
-  groundCheck: {fileID: 4006069394395388}
-  myAnim: {fileID: 0}
   respawnPosition: {x: 0, y: 0, z: 0}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 512
+  groundCheck: {fileID: 4006069394395388}
+  animator: {fileID: 0}
   acceleration: 0
   canAccelerate: 0
   groundCheckRadius: 0.25
   actualSpeed: 0
-  speed: 0
-  isGrounded: 0
-  leftPressed: 0
-  rightPressed: 0
-  upPressed: 0
-  jumpPressed: 0
-  localPlayer: 0
   remoteAttacking: 0
   remoteJumping: 0
   remoteRight: 0
-  remotePower: 0
   remoteLeft: 0
   remoteUp: 0
+  rightPressed: 0
+  leftPressed: 0
+  jumpPressed: 0
+  localPlayer: 0
+  isGrounded: 0
+  upPressed: 0
+  controlOverEnemies: 0
   mpUpdateFrame: 0
   gravity: 1
+  directionY: 1
   directionX: 1
-  controlOverEnemies: 0
   sortingOrder: 0
-  saltarDoble: 0
   characterId: 0
   isPowerOn: 0
   mpDepleted: 0
@@ -2917,7 +2915,7 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -477427129
+  m_SortingLayerID: -1897596871
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300068, guid: 57be59aba1adb7049a0c948e969b2279, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

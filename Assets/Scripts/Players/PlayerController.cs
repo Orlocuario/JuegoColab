@@ -62,6 +62,7 @@ public class PlayerController : MonoBehaviour
     public bool mpDepleted;
 
 
+    protected static int attackSpeed = 4;
     protected string currentAttackName;
     protected bool isAttacking;
     private bool conectado;

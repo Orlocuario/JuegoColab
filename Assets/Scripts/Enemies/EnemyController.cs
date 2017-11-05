@@ -91,7 +91,6 @@ public class EnemyController : MonoBehaviour
 
         if (localPlayer != null && localPlayer.controlOverEnemies)
         {
-            Debug.Log(name + " has the control over enemies and is patrolling");
 
             if (Vector2.Distance(transform.position, currentPatrolPoint) < .1f)
             {

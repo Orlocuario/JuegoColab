@@ -10,8 +10,6 @@ public class MageController : PlayerController
     GameObject particulas1;
     GameObject particulas2;
 
-    private static int attackSpeed = 4;
-
     protected static float shieldArea;
 
     protected override void Start()
@@ -77,7 +75,7 @@ public class MageController : PlayerController
         animator.SetBool("IsAttacking", isAttacking);
         currentAttackName = "MageAttack";
 
-        GameObject fireball = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/BolaM1"));
+        GameObject fireball = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Fireball"));
         FireballController controller = fireball.GetComponent<FireballController>();
         controller.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
 

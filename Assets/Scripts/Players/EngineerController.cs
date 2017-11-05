@@ -57,33 +57,11 @@ public class EngineerController : PlayerController
         animator.SetBool("IsAttacking", isAttacking);
         currentAttackName = "EngineerAttack";
 
-        GameObject proyectile = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/FlechaE1"));
+        GameObject proyectile = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Arrow"));
         ProyectileController controller = proyectile.GetComponent<ProyectileController>();
-        controller.SetMovement(directionX, SkillSpeed(1), transform.position.x, transform.position.y, this);
+        controller.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
 
         StartCoroutine("Attacking");
-    }
-
-    //change all 1's to GetLevel()
-    public float SkillSpeed(int level)
-    {
-        if (level <= 1)
-        {
-            skillSpeed = 3.5f;
-        }
-        else if (level <= 3)
-        {
-            skillSpeed = 4f;
-        }
-        else if (level <= 5)
-        {
-            skillSpeed = 4.5f;
-        }
-        else
-        {
-            skillSpeed = 5f;
-        }
-        return skillSpeed;
     }
 
     protected override bool IsJumping(bool isGrounded)
