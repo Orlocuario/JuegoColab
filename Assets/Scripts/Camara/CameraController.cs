@@ -33,8 +33,8 @@ public class CameraController : MonoBehaviour
     public float followUp;
 
     private static float stepsToTarget = 100; //Iteraciones hasta llegar al target
-    private static float initialSize = 3.0f;
-    private static float freezeTime = 150; //Tiempo en que espera volver
+    private static float initialSize = 2.8f;
+    private static float freezeTime = 100; //Tiempo en que espera volver
 
     private float cameraRate;
     public float startTime;

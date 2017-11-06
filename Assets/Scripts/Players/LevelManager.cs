@@ -259,7 +259,7 @@ public class LevelManager : MonoBehaviour
 
         NPCMessageReadTime = NPCtrigger.readTime;
 
-        ReadNPCMessage();
+		ReadNPCMessage();
     }
 
     public void IgnoreBoxCircleCollision(string[] array)

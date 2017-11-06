@@ -44,69 +44,59 @@ public class SwitchActions : MonoBehaviour
             //Aquí Comienzan Acciones Switch Etapa 1
 
 		case 0:
-			GameObject firstPlatform = (GameObject)Instantiate (Resources.Load ("Prefabs/MovPlatform"));
-			firstPlatform.GetComponent<Transform> ().position = new Vector2 (13.3f, -1f);
-			MovingObject firstPlatformScript = firstPlatform.GetComponent <MovingObject> ();
-			firstPlatformScript.startPoint = new Vector2 (13.3f, -1f);
-			firstPlatformScript.endPoint = new Vector2 (13.3f, 0.3f);
-			firstPlatformScript.moveSpeed = 1f;
-                GameObject feedbackswitchEng = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
-                feedbackswitchEng.GetComponent<Transform>().position = new Vector2(13.2f, -1.3f);
-                Destroy(feedbackswitchEng, 3f);
-                MuereParticula hintPart = GameObject.FindGameObjectWithTag("SwitchEnginPart").GetComponent<MuereParticula>();
-                hintPart.living = false;
+		GameObject firstPlatform = (GameObject)Instantiate (Resources.Load ("Prefabs/MovPlatform"));
+				   firstPlatform.GetComponent<Transform> ().position = new Vector2 (13.3f, -1f);
+		MovingObject firstPlatformScript = firstPlatform.GetComponent <MovingObject> ();
+				     firstPlatformScript.startPoint = new Vector2 (13.3f, -1f);
+					 firstPlatformScript.endPoint = new Vector2 (13.3f, 0.3f);
+					 firstPlatformScript.moveSpeed = 1f;
+        GameObject feedbackswitchEng = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
+                   feedbackswitchEng.GetComponent<Transform>().position = new Vector2(13.2f, -1.3f);
+            Destroy(feedbackswitchEng, 3f);
+        MuereParticula hintPart = GameObject.FindGameObjectWithTag("SwitchEnginPart").GetComponent<MuereParticula>();
+     		           hintPart.living = false;
+                	   break;
 
-                break;
+        case 1:
+		GameObject rejaEng = GameObject.FindGameObjectWithTag("RejaRocaEng");
+       	           rejaEng.SetActive(false);
+        Roca roca = GameObject.FindGameObjectWithTag("rocaCaida").GetComponent<Roca>();
+             roca.isReady = true;
+        GameObject particleRoca = (GameObject)Instantiate(Resources.Load("Prefabs/ParticulasMageRoca"));
+        CajaSwitch caja = GameObject.FindGameObjectWithTag("CajaSwitchFierro").GetComponent<CajaSwitch>();
+                   caja.meVoy = true;
+                   caja.ahoraMeVoy = true;
+        GameObject spikes = GameObject.FindGameObjectWithTag("KillPlaneSpikes");
+           Destroy(spikes);
+        GameObject lavaPool = GameObject.Find("LavaPool");
+           Destroy(lavaPool, 1f);
+		   break;
 
-            case 1:
-
-                GameObject rejaEng = GameObject.FindGameObjectWithTag("RejaRocaEng");
-                rejaEng.SetActive(false);
-                Roca roca = GameObject.FindGameObjectWithTag("rocaCaida").GetComponent<Roca>();
-                roca.isReady = true;
-                GameObject particleRoca = (GameObject)Instantiate(Resources.Load("Prefabs/ParticulasMageRoca"));
-                CajaSwitch caja = GameObject.FindGameObjectWithTag("CajaSwitchFierro").GetComponent<CajaSwitch>();
-                caja.meVoy = true;
-                caja.ahoraMeVoy = true;
-                CameraController mainCamera1 = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>();
-                mainCamera1.ChangeState(CameraState.TargetZoom, 5, 34.9f, -3.06f, false);
-                GameObject spikes = GameObject.FindGameObjectWithTag("KillPlaneSpikes");
-                Destroy(spikes);
-                GameObject lavaPool = GameObject.Find("LavaPool");
-                Destroy(lavaPool, 1f);
-
-
-                break;
-
-
-            case 2:
-
-                Roca rocaGigante = GameObject.FindGameObjectWithTag("rocaCaida").GetComponent<Roca>();
-                rocaGigante.caidaOn = true;
-                CameraController mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>();
-                mainCamera.ChangeState(CameraState.TargetZoom, 5, 34.9f, -3.06f, false);
-                GameObject arbolGigante = GameObject.FindGameObjectWithTag("ArbolCaida");
-                caidArbol arbool = arbolGigante.GetComponent<caidArbol>();
-                arbool.colliderOn = true;//arbol
-                Animator arbolQl = arbolGigante.GetComponent<Animator>();
-                arbolQl.SetBool("RockBottom", true); //activa camino arbol
-                PathSub abreteSesamo = GameObject.FindGameObjectWithTag("openPathSub").GetComponent<PathSub>();//destruyePasadizo
+        case 2:
+        Roca rocaGigante = GameObject.FindGameObjectWithTag("rocaCaida").GetComponent<Roca>();
+             rocaGigante.caidaOn = true;
+        CameraController mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>();
+       	 		         mainCamera.ChangeState(CameraState.TargetZoom, 5, 34.9f, -3.06f, false);
+        GameObject arbolGigante = GameObject.FindGameObjectWithTag("ArbolCaida");
+        caidArbol arbool = arbolGigante.GetComponent<caidArbol>();
+                  arbool.colliderOn = true;//arbol
+        Animator arbolQl = arbolGigante.GetComponent<Animator>();
+                 arbolQl.SetBool("RockBottom", true); //activa camino arbol
+        PathSub abreteSesamo = GameObject.FindGameObjectWithTag("openPathSub").GetComponent<PathSub>();//destruyePasadizo
                 abreteSesamo.killMe = true;
                 Debug.Log("wiiiiiii");
-
-
                 break;
 
 		case 3:
-			GameObject platescalera = (GameObject)Instantiate (Resources.Load ("Prefabs/MovPlatform"));
-			platescalera.GetComponent<Transform> ().position = new Vector2 (43f, -16f);
-			MovingObject secondPlatform = platescalera.GetComponent <MovingObject> ();
-				secondPlatform.startPoint = new Vector2 (platescalera.transform.position.x, platescalera.transform.position.y);
-				secondPlatform.endPoint = new Vector2 (platescalera.transform.position.x, platescalera.transform.position.y + 3.9f);
-				secondPlatform.moveSpeed = 1f; 
-            GameObject feedbackswitch = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
-            	feedbackswitch.GetComponent<Transform>().position = new Vector2(41.4f, -16.3f);
-                break;
+		GameObject platescalera = (GameObject)Instantiate (Resources.Load ("Prefabs/MovPlatform"));
+		platescalera.GetComponent<Transform> ().position = new Vector2 (43f, -16f);
+		MovingObject secondPlatform = platescalera.GetComponent <MovingObject> ();
+			secondPlatform.startPoint = new Vector2 (platescalera.transform.position.x, platescalera.transform.position.y);
+			secondPlatform.endPoint = new Vector2 (platescalera.transform.position.x, platescalera.transform.position.y + 3.9f);
+			secondPlatform.moveSpeed = 1f; 
+        GameObject feedbackswitch = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
+           	feedbackswitch.GetComponent<Transform>().position = new Vector2(41.4f, -16.3f);
+	        break;
 
 		case 4:
 			GameObject platparaMage = (GameObject)Instantiate (Resources.Load ("Prefabs/MovPlatform"));
@@ -115,69 +105,91 @@ public class SwitchActions : MonoBehaviour
 			platController.startPoint = new Vector2 (platparaMage.transform.position.x, platparaMage.transform.position.y);
 			platController.endPoint = new Vector2 (platparaMage.transform.position.x, platparaMage.transform.position.y + 1.3f);
 			platController.moveSpeed = 1f;
-                GameObject feedbackswitchwarr = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
-                feedbackswitchwarr.GetComponent<Transform>().position = new Vector2(72.86f, -19.3f);
-                Destroy(feedbackswitchwarr, 4f);
-                GameObject comebackMessage = (GameObject)Instantiate(Resources.Load("Prefabs/ActivateNPC"));
-                comebackMessage.transform.position = new Vector2(70f, -19.2f);
-                NPCtrigger mensajeReal = comebackMessage.GetComponent<NPCtrigger>();
+			GameObject feedbackswitchwarr = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
+			feedbackswitchwarr.GetComponent<Transform> ().position = new Vector2 (72.86f, -19.3f);
+			Destroy (feedbackswitchwarr, 4f);
+			GameObject comebackMessage = (GameObject)Instantiate (Resources.Load ("Prefabs/ActivateNPC"));
+			comebackMessage.transform.position = new Vector2 (70f, -19.2f);
+			NPCtrigger mensajeReal = comebackMessage.GetComponent<NPCtrigger> ();
 
-                if (mensajeReal.messages == null)
-                {
-                    mensajeReal.messages = new string[1];
-                }
+			if (mensajeReal.messages == null) {
+				mensajeReal.messages = new string[2];
+			}
 
-                mensajeReal.messages[0] = "Ahora Debes Regresar. Tal vez alguien te abra la puerta";
-                break;
+			mensajeReal.messages [0] = "Ahora Debes Regresar.";
+			mensajeReal.messages [1] = "Tal vez alguien te abra la puerta.";
+   			break;
 
-            case 5:
-                GameObject platEnginUp = (GameObject)Instantiate(Resources.Load("Prefabs/PlataformaPastVoladora"));
-                platEnginUp.GetComponent<Transform>().position = new Vector2(39f, 7.5f);
-                GameObject platEnginUp2 = (GameObject)Instantiate(Resources.Load("Prefabs/PlataformaPastVoladora"));
-                platEnginUp2.GetComponent<Transform>().position = new Vector2(36f, 7.5f);
-                break;
+    	case 5:
+		GameObject platEnginUp = (GameObject)Instantiate(Resources.Load("Prefabs/PlataformaPastVoladora"));
+        		   platEnginUp.GetComponent<Transform>().position = new Vector2(39f, 7.5f);
+        GameObject platEnginUp2 = (GameObject)Instantiate(Resources.Load("Prefabs/PlataformaPastVoladora"));
+                   platEnginUp2.GetComponent<Transform>().position = new Vector2(36f, 7.5f);
+                   break;
 
-            case 6:
-                GameObject platescaleraPrueba = (GameObject)Instantiate(Resources.Load("Prefabs/MagePlathShorter"));
-                platescaleraPrueba.GetComponent<Transform>().position = new Vector2(15f, -6.5f);
-                GameObject feedbackswitchPrueba = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
-                feedbackswitchPrueba.GetComponent<Transform>().position = new Vector2(15f, -6.5f);
-                break;
+        case 6:
+		GameObject exp6 = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/Exp"));
+			       exp6.GetComponent<Transform>().position = new Vector2(14.1f, -6.3f);
+		GameObject exp61 = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/Exp"));
+			       exp61.GetComponent<Transform>().position = new Vector2(14.3f, -6.3f);
+		GameObject exp62 = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/Exp"));
+				   exp62.GetComponent<Transform>().position = new Vector2(13.6f, -6.3f);
+		GameObject exp63 = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/Exp"));
+				   exp63.GetComponent<Transform>().position = new Vector2(13.1f, -6.3f);
+		GameObject exp64 = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/Exp"));
+				   exp64.GetComponent<Transform>().position = new Vector2(15f, -6.3f);
+		GameObject exp65 = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/Exp"));
+				   exp65.GetComponent<Transform>().position = new Vector2(15f, -6.3f);
+				   break;
 
-            case 7:
-                GameObject exp = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/Exp"));
-                exp.GetComponent<Transform>().position = new Vector2(62f, -14.23f);
-                GameObject exp1 = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/Exp"));
-                exp1.GetComponent<Transform>().position = new Vector2(62.5f, -14.23f);
-                GameObject exp2 = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/Exp"));
-                exp2.GetComponent<Transform>().position = new Vector2(64f, -14.23f);
-                GameObject exp3 = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/Exp"));
-                exp3.GetComponent<Transform>().position = new Vector2(61.5f, -14.23f);
-                GameObject exp4 = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/Exp"));
-                exp4.GetComponent<Transform>().position = new Vector2(63f, -14.23f);
-                GameObject exp5 = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/Exp"));
-                exp5.GetComponent<Transform>().position = new Vector2(63.5f, -14.23f);
-                break;
+        case 7:
+        GameObject exp = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/Exp"));
+                   exp.GetComponent<Transform>().position = new Vector2(62f, -14.23f);
+        GameObject exp1 = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/Exp"));
+       			   exp1.GetComponent<Transform>().position = new Vector2(62.5f, -14.23f);
+        GameObject exp2 = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/Exp"));
+        		   exp2.GetComponent<Transform>().position = new Vector2(64f, -14.23f);
+        GameObject exp3 = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/Exp"));
+        	       exp3.GetComponent<Transform>().position = new Vector2(61.5f, -14.23f);
+        GameObject exp4 = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/Exp"));
+        	       exp4.GetComponent<Transform>().position = new Vector2(63f, -14.23f);
+        GameObject exp5 = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/Exp"));
+       		       exp5.GetComponent<Transform>().position = new Vector2(63.5f, -14.23f);
+            	   break;
 
-            case 8:
+        case 8:
 
                 break;
 
             /* Aquí Comienzan Acciones Escena Tutorial*/
 
-            case 9:
+        case 9:
+		GameObject particleFeedback = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
+                   particleFeedback.transform.position = new Vector2(25.72f, 0.1f);
+        GameObject primerPlat = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
+        		   primerPlat.transform.position = new Vector2(21.8f, .7f);
+        GameObject primerPlat2 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
+         	       primerPlat2.transform.position = new Vector2(20.1f, 1.4f);
+        GameObject primerPlat3 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
+                   primerPlat3.transform.position = new Vector2(18.7f, 2.1f);
+		GameObject primerPlat4 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
+	     		   primerPlat4.transform.position = new Vector2(18.7f, 3.5f);
+		GameObject primerPlat5 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
+				   primerPlat5.transform.position = new Vector2(20.1f, 2.8f);
+                   break;
+            
+		case 10:
+			GameObject secondPlat0 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
+			secondPlat0.transform.position = new Vector2(18f, 4.8f);
+			break;
 
-                GameObject particleFeedback = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
-                particleFeedback.transform.position = new Vector2(25.72f, 0.1f);
-                GameObject primerPlat = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                primerPlat.transform.position = new Vector2(21.8f, 1.1f);
-                GameObject primerPlat2 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                primerPlat2.transform.position = new Vector2(20.1f, 1.9f);
-                GameObject primerPlat3 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                primerPlat3.transform.position = new Vector2(18.7f, 2.9f);
+		case 11:
+			GameObject secondPlat1 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
+			secondPlat1.transform.position = new Vector2(19.3f, 5.3f);
+			break;
 
-                break;
-            case 10:
+		
+			case 12:
 
                 GameObject lilPlatform = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
                 GameObject lilPlatform2 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));

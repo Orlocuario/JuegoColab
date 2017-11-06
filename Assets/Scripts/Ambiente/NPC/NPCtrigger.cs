@@ -9,6 +9,7 @@ public class NPCtrigger : MonoBehaviour
     public string[] messages;
     public float readTime;
 
+
     // Use this for initialization
     void Start()
     {
