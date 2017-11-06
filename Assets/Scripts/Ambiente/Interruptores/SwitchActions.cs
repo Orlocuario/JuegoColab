@@ -43,9 +43,13 @@ public class SwitchActions : MonoBehaviour
 
             //Aquí Comienzan Acciones Switch Etapa 1
 
-            case 0:
-                GameObject platEscaleraEng = (GameObject)Instantiate(Resources.Load("Prefabs/EnginPlath1"));
-                platEscaleraEng.GetComponent<Transform>().position = new Vector2(12.9f, -1.3f);
+		case 0:
+			GameObject firstPlatform = (GameObject)Instantiate (Resources.Load ("Prefabs/MovPlatform"));
+			firstPlatform.GetComponent<Transform> ().position = new Vector2 (13.3f, -1f);
+			MovingObject firstPlatformScript = firstPlatform.GetComponent <MovingObject> ();
+			firstPlatformScript.startPoint = new Vector2 (13.3f, -1f);
+			firstPlatformScript.endPoint = new Vector2 (13.3f, 0.3f);
+			firstPlatformScript.moveSpeed = 1f;
                 GameObject feedbackswitchEng = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
                 feedbackswitchEng.GetComponent<Transform>().position = new Vector2(13.2f, -1.3f);
                 Destroy(feedbackswitchEng, 3f);
@@ -93,16 +97,24 @@ public class SwitchActions : MonoBehaviour
 
                 break;
 
-            case 3:
-                GameObject platescalera = (GameObject)Instantiate(Resources.Load("Prefabs/MagePlath1"));
-                platescalera.GetComponent<Transform>().position = new Vector2(43f, -16f);
-                GameObject feedbackswitch = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
-                feedbackswitch.GetComponent<Transform>().position = new Vector2(41.4f, -16.3f);
+		case 3:
+			GameObject platescalera = (GameObject)Instantiate (Resources.Load ("Prefabs/MovPlatform"));
+			platescalera.GetComponent<Transform> ().position = new Vector2 (43f, -16f);
+			MovingObject secondPlatform = platescalera.GetComponent <MovingObject> ();
+				secondPlatform.startPoint = new Vector2 (platescalera.transform.position.x, platescalera.transform.position.y);
+				secondPlatform.endPoint = new Vector2 (platescalera.transform.position.x, platescalera.transform.position.y + 3.9f);
+				secondPlatform.moveSpeed = 1f; 
+            GameObject feedbackswitch = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
+            	feedbackswitch.GetComponent<Transform>().position = new Vector2(41.4f, -16.3f);
                 break;
 
-            case 4:
-                GameObject platparaMage = (GameObject)Instantiate(Resources.Load("Prefabs/plathParaMageWarrior"));
-                platparaMage.GetComponent<Transform>().position = new Vector2(61f, -9.5f);
+		case 4:
+			GameObject platparaMage = (GameObject)Instantiate (Resources.Load ("Prefabs/MovPlatform"));
+			platparaMage.GetComponent<Transform> ().position = new Vector2 (61f, -9.5f);
+			MovingObject platController = platparaMage.GetComponent <MovingObject> ();
+			platController.startPoint = new Vector2 (platparaMage.transform.position.x, platparaMage.transform.position.y);
+			platController.endPoint = new Vector2 (platparaMage.transform.position.x, platparaMage.transform.position.y + 1.3f);
+			platController.moveSpeed = 1f;
                 GameObject feedbackswitchwarr = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
                 feedbackswitchwarr.GetComponent<Transform>().position = new Vector2(72.86f, -19.3f);
                 Destroy(feedbackswitchwarr, 4f);

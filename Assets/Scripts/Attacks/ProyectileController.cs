@@ -8,7 +8,7 @@ public class ProyectileController : AttackController
     protected override void Start()
     {
         base.Start();   
-        maxDistance = 12;
+        maxDistance = 6f;
     }
 
 }
