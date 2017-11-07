@@ -213,8 +213,28 @@ public class SwitchActions : MonoBehaviour
 			movPlat2.startPoint = new Vector2 (36.5f, 6.72f);
 			movPlat2.endPoint = new Vector2 (36.5f, 9.35f);
 			movPlat2.moveSpeed = 1f;
-			
 			break;
+
+		case 15: 
+			GameObject lilPlatform2 = (GameObject)Instantiate (Resources.Load ("Prefabs/SueloMetalFlotante"));
+			lilPlatform2.transform.position = new Vector2 (40.03f, 12.17f);
+			GameObject lilPlatform3 = (GameObject)Instantiate (Resources.Load ("Prefabs/SueloMetalFlotante"));
+			lilPlatform3.transform.position = new Vector2 (38.6f, 11.58f);
+			GameObject hojasArbol = (GameObject)Instantiate (Resources.Load ("Prefabs/Ambientales/HojasPlat"));
+			hojasArbol.transform.position = new Vector2 (35.55f, 12.03f);
+			break;
+
+		case 16: 
+			GameObject lilMovPlatform3 = (GameObject)Instantiate (Resources.Load ("Prefabs/MovPlatform"));
+			lilMovPlatform3.transform.position = new Vector2 (50.35f, 14f);
+			MovingObject movPlat3 = lilMovPlatform3.GetComponent <MovingObject> ();
+			movPlat3.startPoint = new Vector2 (50.35f, 14f);
+			movPlat3.endPoint = new Vector2 (50.35f, 21f);
+			movPlat3.moveSpeed = 1.2f;
+			GameObject plataformaFinal = (GameObject)Instantiate (Resources.Load ("Prefabs/PlataformaPastVoladora"));
+			plataformaFinal.transform.position = new Vector2 (48.37f, 21f);
+			break;
+
             default:
                 break;
 
