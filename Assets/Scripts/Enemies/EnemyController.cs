@@ -13,6 +13,7 @@ public class EnemyController : MonoBehaviour
     public bool fromEditor;
     public int directionX;  // 1 = derecha, -1 = izquierda
 
+    private Dictionary<string, bool> ignoresCollisions;
     protected Vector2 force = new Vector2(0, 0);
     protected PlayerController localPlayer;
     protected Vector2 currentPatrolPoint;
@@ -39,6 +40,8 @@ public class EnemyController : MonoBehaviour
         animator = this.gameObject.GetComponent<Animator>();
         levelManager = FindObjectOfType<LevelManager>();
         rb2d = GetComponent<Rigidbody2D>();
+
+        ignoresCollisions = new Dictionary<string, bool> { { "Mage", false }, { "Warrior", false }, { "Engineer", false } };
 
         currentPatrolPointCount = 0;
         patrollingSpeed = 0.005f;
@@ -121,6 +124,21 @@ public class EnemyController : MonoBehaviour
         }
     }
 
+    protected virtual void UpdateCollisionsWithPlayer(GameObject player, bool ignores)
+    {
+        foreach (Collider2D collider  in GetComponents<Collider2D>())
+        {
+            if (!collider.isTrigger)
+            {
+                Physics2D.IgnoreCollision(player.GetComponent<BoxCollider2D>(), GetComponent<Collider2D>(), ignores);
+            }
+        }
+
+        ignoresCollisions[player.name] = ignores;
+        SendIgnoreCollisionDataToServer(player, ignores);
+
+    }
+
     protected virtual void DealDamage(GameObject player)
     {
 
@@ -139,7 +157,18 @@ public class EnemyController : MonoBehaviour
         // Don't hit protected players
         if (mage.ProtectedByShield(player))
         {
+            if (!ignoresCollisions[player.name])
+            {
+                UpdateCollisionsWithPlayer(player, true);
+            }
             return;
+        }
+        else
+        {
+            if (ignoresCollisions[player.name])
+            {
+                UpdateCollisionsWithPlayer(player, false);
+            }
         }
 
         // If player is at the left side of the enemy push it to the left
@@ -239,7 +268,6 @@ public class EnemyController : MonoBehaviour
 
     protected void SendPatrollingPoint()
     {
-
         string message = "EnemyPatrollingPoint/" +
             enemyId + "/" +
             directionX + "/" +
@@ -249,6 +277,11 @@ public class EnemyController : MonoBehaviour
             currentPatrolPoint.y;
 
         SendMessageToServer(message);
+    }
+
+    private void SendIgnoreCollisionDataToServer(GameObject player, bool collision)
+    {
+        SendMessageToServer("IgnoreCollisionBetweenObjects/" + collision + "/" + player.name + "/" + gameObject.name);
     }
 
     protected virtual void SendMessageToServer(string message)

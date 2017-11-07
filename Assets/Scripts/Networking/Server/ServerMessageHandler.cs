@@ -101,8 +101,8 @@ public class ServerMessageHandler
             case "ActivateNPCLog": // No se si es necesario o no, ya que puedes llamar el metodo desde afuera (start o script)
                 SendActivationNPC(msg, connectionId);
                 break;
-            case "IgnoreBoxCircleCollision":
-                SendIgnoreBoxCircleCollision(message, connectionId);
+            case "IgnoreCollisionBetweenObjects":
+                SendIgnoreCollisionBetweenObjects(message, connectionId);
                 break;
             default:
                 break;
@@ -149,7 +149,7 @@ public class ServerMessageHandler
         }
     }
 
-    private void SendIgnoreBoxCircleCollision(string message, int connectionId)
+    private void SendIgnoreCollisionBetweenObjects(string message, int connectionId)
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;

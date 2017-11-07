@@ -274,20 +274,20 @@ public class LevelManager : MonoBehaviour
         ReadNPCMessage();
     }
 
-    public void IgnoreBoxCircleCollision(string[] array)
+    public void IgnoreCollisionBetweenObjects(string[] array)
     {
-        bool isThereCollison = bool.Parse(array[1]);
+        bool ignores = bool.Parse(array[1]);
 
-        GameObject boxObject = GameObject.Find(array[2]);
-        GameObject circleObject = GameObject.Find(array[3]);
+        GameObject objectA = GameObject.Find(array[2]);
+        GameObject objectB = GameObject.Find(array[3]);
 
-        CircleCollider2D[] circleColliders = circleObject.GetComponents<CircleCollider2D>();
+        Collider2D[] colliders = objectB.GetComponents<Collider2D>();
 
-        foreach (CircleCollider2D collider in circleColliders)
+        foreach (Collider2D collider in colliders)
         {
             if (!collider.isTrigger)
             {
-                Physics2D.IgnoreCollision(boxObject.GetComponent<BoxCollider2D>(), collider, isThereCollison);
+                Physics2D.IgnoreCollision(objectA.GetComponent<Collider2D>(), collider, ignores);
             }
         }
 
