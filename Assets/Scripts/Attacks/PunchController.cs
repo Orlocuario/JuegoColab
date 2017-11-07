@@ -11,7 +11,7 @@ public class PunchController : AttackController
     protected override void Start()
     {
         base.Start();
-        maxDistance = 2.5f;
+        maxDistance = 4.5f;
         collider2d = GetComponent<CircleCollider2D>();
     }
 
@@ -32,7 +32,7 @@ public class PunchController : AttackController
         destroyable.DestroyMe();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
 
         if (CollidedWithEnemy(collision.gameObject))

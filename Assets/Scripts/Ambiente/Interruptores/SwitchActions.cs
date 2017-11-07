@@ -166,7 +166,7 @@ public class SwitchActions : MonoBehaviour
 
             /* Aquí Comienzan Acciones Escena Tutorial*/
 
-        case 9:
+        case 9:		// Primeros grandes peldaños
 		GameObject particleFeedback = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
                    particleFeedback.transform.position = new Vector2(25.72f, 0.1f);
         GameObject primerPlat = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
@@ -181,31 +181,40 @@ public class SwitchActions : MonoBehaviour
 				   primerPlat5.transform.position = new Vector2(20.1f, 2.8f);
                    break;
             
-		case 10:
+		case 10:	// peldaño
 			GameObject secondPlat0 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
 			secondPlat0.transform.position = new Vector2(18f, 4.8f);
 			break;
 
-		case 11:
+		case 11:	// peldaño para players 
 			GameObject secondPlat1 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
 			secondPlat1.transform.position = new Vector2(19.3f, 5.3f);
 			break;
 
 		
-		case 12:
+		case 12: 	// disparo primeros 2 switch. 
             GameObject lilPlatform = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
 			lilPlatform.transform.position = new Vector2(44.1f, 3.75f);
 			break;
 		
-		case 13:
-			GameObject lilMovPlatform = (GameObject)Instantiate(Resources.Load("Prefabs/MovPlatform"));
-			lilMovPlatform.transform.position = new Vector2(43.1f, 3.7f);
-			MovingObject movPlat1 = lilMovPlatform.GetComponent <MovingObject>();
+		case 13: 	// Disparo tercer switch
+			GameObject lilMovPlatform = (GameObject)Instantiate (Resources.Load ("Prefabs/MovPlatform"));
+			lilMovPlatform.transform.position = new Vector2 (43.1f, 3.7f);
+			MovingObject movPlat1 = lilMovPlatform.GetComponent <MovingObject> ();
 			movPlat1.startPoint = new Vector2 (43.1f, 3.7f);
 			movPlat1.endPoint = new Vector2 (43.1f, 7f);
-
+			movPlat1.moveSpeed = 1f;
 			break;
 
+		case 14:   // Dispar Switches que se mueven
+			GameObject lilMovPlatform2 = (GameObject)Instantiate (Resources.Load ("Prefabs/MovPlatform"));
+			lilMovPlatform2.transform.position = new Vector2 (35.5f, 6.72f);
+			MovingObject movPlat2 = lilMovPlatform2.GetComponent <MovingObject> ();
+			movPlat2.startPoint = new Vector2 (36.5f, 6.72f);
+			movPlat2.endPoint = new Vector2 (36.5f, 9.35f);
+			movPlat2.moveSpeed = 1f;
+			
+			break;
             default:
                 break;
 
