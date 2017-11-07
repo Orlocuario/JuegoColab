@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -54,6 +55,17 @@ public class LevelManager : MonoBehaviour
         reconnectText.SetActive(false);
     }
 
+    public void GoToNextScene()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        string currentSceneNumber = Regex.Match(currentSceneName, @"\d+").Value;
+        int nextSceneNumber = int.Parse(currentSceneNumber) + 1;
+        string nextSceneName = "Escena" + nextSceneNumber;
+
+        Debug.Log("Changing to scene " + nextSceneName);
+
+        client.SendMessageToServer("ChangeScene/" + nextSceneName);
+    }
 
     public GameObject GetLocalPlayer()
     {
@@ -259,7 +271,7 @@ public class LevelManager : MonoBehaviour
 
         NPCMessageReadTime = NPCtrigger.readTime;
 
-		ReadNPCMessage();
+        ReadNPCMessage();
     }
 
     public void IgnoreBoxCircleCollision(string[] array)

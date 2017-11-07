@@ -20,6 +20,9 @@ public class ServerMessageHandler
 
         switch (msg[0])
         {
+            case "ChangeScene":
+                HandleChangeScene(msg, connectionId);
+                break;
             case "RequestCharId":
                 SendCharIdAndControl(connectionId);
                 break;
@@ -105,6 +108,16 @@ public class ServerMessageHandler
                 break;
         }
     }
+
+    private void HandleChangeScene(string[] msg, int connectionId)
+    {
+        string scence = msg[1];
+        NetworkPlayer player = server.GetPlayer(connectionId);
+        Room room = player.room;
+
+        SendChangeScene(scence, room);
+    }
+
 
     private void EnemiesStartPatrolling(int connectionId)
     {
