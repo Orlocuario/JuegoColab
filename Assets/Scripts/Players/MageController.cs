@@ -14,7 +14,6 @@ public class MageController : PlayerController
 
     protected override void Start()
     {
-
         base.Start();
 
         particulas1 = GameObject.Find("ParticulasMage");
@@ -25,21 +24,17 @@ public class MageController : PlayerController
         shieldArea = particulas1.GetComponent<ParticleSystem>().shape.radius;
     }
 
-    protected override void Attack()
+    public override void CastLocalAttack()
     {
-        if (!localPlayer)
-        {
-            return;
-        }
+        isAttacking = true;
+        animator.SetBool("IsAttacking", isAttacking);
+        currentAttackName = "MageAttack";
 
-        isAttacking = false;
+        GameObject fireball = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Fireball"));
+        FireballController controller = fireball.GetComponent<FireballController>();
+        controller.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
 
-        bool attackButtonPressed = CnInputManager.GetButtonDown("Attack Button");
-        if (attackButtonPressed)
-        {
-            CastFireball();
-        }
-
+        StartCoroutine("Attacking");
     }
 
     public bool ProtectedByShield(GameObject player)
@@ -60,26 +55,7 @@ public class MageController : PlayerController
 
     public override void SetAttack()
     {
-        CastLocalFireball();
-    }
-
-    private void CastFireball()
-    {
-        CastLocalFireball();
-        SendAttackDataToServer();
-    }
-
-    public void CastLocalFireball()
-    {
-        isAttacking = true;
-        animator.SetBool("IsAttacking", isAttacking);
-        currentAttackName = "MageAttack";
-
-        GameObject fireball = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Fireball"));
-        FireballController controller = fireball.GetComponent<FireballController>();
-        controller.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
-
-        StartCoroutine("Attacking");
+        CastLocalAttack();
     }
 
 }

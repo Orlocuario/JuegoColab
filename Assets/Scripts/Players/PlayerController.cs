@@ -184,9 +184,9 @@ public class PlayerController : MonoBehaviour
             // si el wn esta apuntando hacia arriba/abajo con menor inclinacion que hacia la derecha, start moving
             if (buttonRightPressed && !remoteRight)
             {
-                    remoteRight = true;
-                    remoteLeft = false;
-                    SendPlayerDataToServer();
+                remoteRight = true;
+                remoteLeft = false;
+                SendPlayerDataToServer();
             }
 
             // si no se esta apretando el joystick
@@ -267,9 +267,32 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    protected virtual void Attack()
+    protected void Attack()
     {
-        throw new NotImplementedException("Implement an attack function for every player");
+
+        if (!localPlayer || isAttacking)
+        {
+            return;
+        }
+
+        bool attackButtonPressed = CnInputManager.GetButtonDown("Attack Button");
+
+        if (attackButtonPressed)
+        {
+            CastAttack();
+        }
+
+    }
+
+    protected virtual void CastAttack()
+    {
+        CastLocalAttack();
+        SendAttackDataToServer();
+    }
+
+    public virtual void CastLocalAttack()
+    {
+        throw new NotImplementedException("Every player must implement a public CastLocalAttack method");
     }
 
     public virtual void StopMoving()
@@ -625,8 +648,11 @@ public class PlayerController : MonoBehaviour
         float animLength = attackAnimLength[currentAttackName];
 
         yield return new WaitForSeconds(animLength);
+
+        isAttacking = false;
+
         animator.SetFloat("Speed", Mathf.Abs(speedX));
-        animator.SetBool("IsAttacking", false);
+        animator.SetBool("IsAttacking", isAttacking);
     }
 
 }

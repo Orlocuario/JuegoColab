@@ -10,58 +10,34 @@ public class WarriorController : PlayerController
     GameObject particulas;
 
     // TODO: refactor this
-    private int numHits = 0;
-    private int prevNumHits = 0;
-    private float damage;
     private double force = 0;
+    private int numHits = 0;
     private int hits = 0;
-    private static int attackSpeed = 2;
+    private float damage;
 
     protected override void Start()
     {
-
         base.Start();
 
         damage = 3;
+        attackSpeed = 2;
         particulas = GameObject.Find("ParticulasWarrior");
         particulas.SetActive(false);
     }
 
-    protected override void Attack()
+    protected override void CastAttack()
     {
-
-        if (!localPlayer)
-        {
-            return;
-        }
-
-        isAttacking = false;
-
-        bool attackButtonPressed = CnInputManager.GetButtonDown("Attack Button");
-
-        if (attackButtonPressed)
-        {
-            CastPunch();
-            if (SceneManager.GetActiveScene().name == "Escena2")
-            {
-                RemoveRockMass();
-            }
-        }
-
-    }
-
-    public override void SetAttack()
-    {
-        CastLocalPunch();
-    }
-
-    private void CastPunch()
-    {
-        CastLocalPunch();
+        CastLocalAttack();
         SendAttackDataToServer();
+
+        // TODO: refactor this
+        if (SceneManager.GetActiveScene().name == "Escena2")
+        {
+            RemoveRockMass();
+        }
     }
 
-    public void CastLocalPunch()
+    public override void CastLocalAttack()
     {
         isAttacking = true;
 
@@ -81,9 +57,12 @@ public class WarriorController : PlayerController
         PunchController punchController = punch.GetComponent<PunchController>();
         punchController.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
 
-        Debug.Log(name + " casted " + currentAttackName);
-
         StartCoroutine("Attacking");
+    }
+
+    public override void SetAttack()
+    {
+        CastLocalAttack();
     }
 
     protected override void SetParticlesAnimationState(bool activo)
@@ -115,9 +94,12 @@ public class WarriorController : PlayerController
         float animLength = attackAnimLength[currentAttackName];
 
         yield return new WaitForSeconds(animLength);
+
+        isAttacking = false;
+
         animator.SetFloat("Speed", Mathf.Abs(speedX));
-        animator.SetBool("IsAttacking", false);
-        animator.SetBool("IsAttacking2", false);
+        animator.SetBool("IsAttacking", isAttacking);
+        animator.SetBool("IsAttacking2", isAttacking);
     }
 
 }

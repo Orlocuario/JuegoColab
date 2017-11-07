@@ -5,15 +5,12 @@ using UnityEngine;
 
 public class EngineerController : PlayerController
 {
-
     private GameObject particulas;
 
-    private float skillSpeed;
     private bool jumpedInAir;
 
     protected override void Start()
     {
-
         base.Start();
 
         jumpedInAir = false;
@@ -22,36 +19,7 @@ public class EngineerController : PlayerController
         particulas.SetActive(false);
     }
 
-    protected override void Attack()
-    {
-
-        if (!localPlayer)
-        {
-            return;
-        }
-
-        isAttacking = false;
-
-        bool attackButtonPressed = CnInputManager.GetButtonDown("Attack Button");
-        if (attackButtonPressed)
-        {
-            CastProyectile();
-        }
-
-    }
-
-    public override void SetAttack()
-    {
-        CastLocalProyectile();
-    }
-
-    private void CastProyectile()
-    {
-        CastLocalProyectile();
-        SendAttackDataToServer();
-   }
-
-    public void CastLocalProyectile()
+    public override void CastLocalAttack()
     {
         isAttacking = true;
         animator.SetBool("IsAttacking", isAttacking);
@@ -102,6 +70,10 @@ public class EngineerController : PlayerController
         return remoteJumping;
     }
 
+    public override void SetAttack()
+    {
+        CastLocalAttack();
+    }
 
     protected override void SetParticlesAnimationState(bool activo)
     {
