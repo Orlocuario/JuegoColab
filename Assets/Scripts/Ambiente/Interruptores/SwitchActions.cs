@@ -91,33 +91,36 @@ public class SwitchActions : MonoBehaviour
 		GameObject platescalera = (GameObject)Instantiate (Resources.Load ("Prefabs/MovPlatform"));
 		platescalera.GetComponent<Transform> ().position = new Vector2 (43f, -16f);
 		MovingObject secondPlatform = platescalera.GetComponent <MovingObject> ();
-			secondPlatform.startPoint = new Vector2 (platescalera.transform.position.x, platescalera.transform.position.y);
-			secondPlatform.endPoint = new Vector2 (platescalera.transform.position.x, platescalera.transform.position.y + 3.9f);
-			secondPlatform.moveSpeed = 1f; 
+		secondPlatform.startPoint = new Vector2 (platescalera.transform.position.x, platescalera.transform.position.y);
+		secondPlatform.endPoint = new Vector2 (platescalera.transform.position.x, platescalera.transform.position.y + 3.9f);
+		secondPlatform.moveSpeed = 1f; 
         GameObject feedbackswitch = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
-           	feedbackswitch.GetComponent<Transform>().position = new Vector2(41.4f, -16.3f);
-	        break;
+        feedbackswitch.GetComponent<Transform>().position = new Vector2(41.4f, -16.3f);
+	    	break;
 
 		case 4:
-			GameObject platparaMage = (GameObject)Instantiate (Resources.Load ("Prefabs/MovPlatform"));
-			platparaMage.GetComponent<Transform> ().position = new Vector2 (61f, -9.5f);
-			MovingObject platController = platparaMage.GetComponent <MovingObject> ();
-			platController.startPoint = new Vector2 (platparaMage.transform.position.x, platparaMage.transform.position.y);
-			platController.endPoint = new Vector2 (platparaMage.transform.position.x, platparaMage.transform.position.y + 1.3f);
-			platController.moveSpeed = 1f;
-			GameObject feedbackswitchwarr = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
-			feedbackswitchwarr.GetComponent<Transform> ().position = new Vector2 (72.86f, -19.3f);
-			Destroy (feedbackswitchwarr, 4f);
-			GameObject comebackMessage = (GameObject)Instantiate (Resources.Load ("Prefabs/ActivateNPC"));
-			comebackMessage.transform.position = new Vector2 (70f, -19.2f);
-			NPCtrigger mensajeReal = comebackMessage.GetComponent<NPCtrigger> ();
+		GameObject platparaMage = (GameObject)Instantiate (Resources.Load ("Prefabs/MovPlatform"));
+		platparaMage.GetComponent<Transform> ().position = new Vector2 (61f, -9.5f);
+		MovingObject platController = platparaMage.GetComponent <MovingObject> ();
+		platController.startPoint = new Vector2 (platparaMage.transform.position.x, platparaMage.transform.position.y);
+		platController.endPoint = new Vector2 (platparaMage.transform.position.x, platparaMage.transform.position.y + 1.3f);
+		platController.moveSpeed = 1f;
+    	GameObject feedbackswitchwarr = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
+    	feedbackswitchwarr.GetComponent<Transform>().position = new Vector2(72.86f, -19.3f);
+    	Destroy(feedbackswitchwarr, 4f);
+    	GameObject comebackMessage = (GameObject)Instantiate(Resources.Load("Prefabs/ActivateNPC"));
+    	comebackMessage.transform.position = new Vector2(70f, -19.2f);
+    	NPCtrigger mensajeReal = comebackMessage.GetComponent<NPCtrigger>();
 
-			if (mensajeReal.messages == null) {
-				mensajeReal.messages = new string[2];
+		if (mensajeReal.messages == null)
+    		{
+    			mensajeReal.messages = new string[2];
+			
 			}
-
-			mensajeReal.messages [0] = "Ahora Debes Regresar.";
+			mensajeReal.messages[0] = "Ahora Debes Regresar.";
 			mensajeReal.messages [1] = "Tal vez alguien te abra la puerta.";
+			mensajeReal.readTime = 4f; 
+
    			break;
 
     	case 5:
@@ -189,15 +192,19 @@ public class SwitchActions : MonoBehaviour
 			break;
 
 		
-			case 12:
+		case 12:
+            GameObject lilPlatform = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
+			lilPlatform.transform.position = new Vector2(44.1f, 3.75f);
+			break;
+		
+		case 13:
+			GameObject lilMovPlatform = (GameObject)Instantiate(Resources.Load("Prefabs/MovPlatform"));
+			lilMovPlatform.transform.position = new Vector2(43.1f, 3.7f);
+			MovingObject movPlat1 = lilMovPlatform.GetComponent <MovingObject>();
+			movPlat1.startPoint = new Vector2 (43.1f, 3.7f);
+			movPlat1.endPoint = new Vector2 (43.1f, 7f);
 
-                GameObject lilPlatform = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                GameObject lilPlatform2 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                lilPlatform.transform.position = new Vector2(46.6f, 3.7f);
-                lilPlatform2.transform.position = new Vector2(45.3f, 3.3f);
-
-                break;
-
+			break;
 
             default:
                 break;
