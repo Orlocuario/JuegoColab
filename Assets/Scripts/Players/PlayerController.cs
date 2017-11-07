@@ -518,7 +518,7 @@ public class PlayerController : MonoBehaviour
             levelManager.Respawn();
         }
 
-        if (other.tag == "KillPlaneSpike")
+        if (other.tag == "KillPlaneSpikes")
         {
             string daño = other.gameObject.GetComponent<KillPlane>().killPlaneDamage;
             Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);

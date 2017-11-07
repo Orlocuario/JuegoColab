@@ -12,6 +12,7 @@ public class Attach : MonoBehaviour {
  
 		Transform roca = GameObject.FindGameObjectWithTag ("rocaCaida").GetComponent <Transform>();
 		this.gameObject.transform.position = roca.position;
+        this.gameObject.transform.parent = roca.transform;
 
 	}
 	

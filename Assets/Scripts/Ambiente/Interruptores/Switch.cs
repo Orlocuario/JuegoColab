@@ -94,7 +94,7 @@ public class Switch : MonoBehaviour
     {
         if (switchColor == Color.Any)
         {
-            if(name == "Fireball" || name =="Arrow" || name == "Warrior"){
+            if(name == "Fireball" || name =="Arrow" || name == "Punch"){
                 return true;
             }
         }
@@ -104,7 +104,7 @@ public class Switch : MonoBehaviour
                 return switchColor == Color.Blue;
             case "Arrow":
                 return switchColor == Color.Yellow;
-            case "Warrior":
+            case "Punch":
                 return switchColor == Color.Red;
             default:
                 return false;
@@ -155,7 +155,7 @@ public class Switch : MonoBehaviour
                         return true;
                     }
                     break;
-                case "Warrior":
+                case "Punch":
                     if(Client.instance.GetLocalPlayer().name == "Warrior")
                     {
                         return true;

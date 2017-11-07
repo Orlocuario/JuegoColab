@@ -9,7 +9,7 @@ public class Roca : MonoBehaviour {
 	public bool isReady;
 	private Animator animRoca;
 	private GameObject roca;
-	private CameraController camera;
+
 
 
 
@@ -19,6 +19,7 @@ public class Roca : MonoBehaviour {
 		
         caidaOn = false;
         isReady = false;
+
 		roca = gameObject;
 	}
 	
@@ -34,9 +35,13 @@ public class Roca : MonoBehaviour {
 
 	public void KilledMySelf(string s)
     {
-		GameObject particulas = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/Humo"));
-		particulas.GetComponent <Transform>().position = new Vector2 (34.1f, -7.07f);
-		Destroy (particulas,5f); 
+		GameObject humo = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/Humo"));
+		humo.GetComponent <Transform>().position = new Vector2 (34.1f, -7.07f);
+		Destroy (humo,5f);
+
+        GameObject particulasEffect = GameObject.Find("ParticulasMageRoca");
+        Destroy(particulasEffect, 1f);
+        
         Destroy(this.gameObject,1f);
     }
 }
