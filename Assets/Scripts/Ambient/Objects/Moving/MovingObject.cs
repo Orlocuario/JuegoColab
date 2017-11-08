@@ -43,4 +43,5 @@ public class MovingObject : MonoBehaviour
         transform.position = Vector3.MoveTowards(transform.position, currentTarget, moveSpeed * Time.deltaTime);
 
     }
+
 }

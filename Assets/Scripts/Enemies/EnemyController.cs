@@ -13,7 +13,7 @@ public class EnemyController : MonoBehaviour
     public bool fromEditor;
     public int directionX;  // 1 = derecha, -1 = izquierda
 
-    private Dictionary<string, bool> ignoresCollisions;
+    protected Dictionary<string, bool> ignoresCollisions;
     protected Vector2 force = new Vector2(0, 0);
     protected PlayerController localPlayer;
     protected Vector2 currentPatrolPoint;
@@ -297,7 +297,6 @@ public class EnemyController : MonoBehaviour
     {
         Debug.DrawLine(transform.position, point, Color.green);
     }
-
 
     protected bool GameObjectIsPlayer(GameObject other)
     {
