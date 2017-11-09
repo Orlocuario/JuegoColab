@@ -20,7 +20,7 @@ public class WarriorController : PlayerController
         base.Start();
 
         damage = 3;
-        attackSpeed = 2;
+        //attackSpeed = 4;
         particulas = GameObject.Find("ParticulasWarrior");
         particulas.SetActive(false);
     }

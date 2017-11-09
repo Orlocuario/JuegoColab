@@ -102,6 +102,24 @@ public class DamagingObject : MonoBehaviour
 
     #region Utils
 
+	protected void OnTriggerStay2D(Collider2D other)
+	{
+		if (GameObjectIsPlayer(other.gameObject))
+		{
+			DealDamage(other.gameObject);
+		}
+	}
+
+	// Attack those who enter the alert zone
+	private void OnTriggerEnter2D(Collider2D other)
+	{
+		if (GameObjectIsPlayer(other.gameObject))
+		{
+			DealDamage(other.gameObject);
+		}
+	}
+
+
     protected bool GameObjectIsPlayer(GameObject other)
     {
 

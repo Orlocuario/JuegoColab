@@ -7,11 +7,13 @@ public class PunchController : AttackController
 
     CircleCollider2D collider2d;
     private static float maxColliderRadius = .25f;
+	ParticleSystem particles;
 
     protected override void Start()
     {
+		//particles = this.gameObject.GetComponent <ParticleSystem> ();
         base.Start();
-        maxDistance = 4.5f;
+        maxDistance = 5f;
         collider2d = GetComponent<CircleCollider2D>();
     }
 
@@ -19,6 +21,7 @@ public class PunchController : AttackController
     {
         base.Update();
         collider2d.radius = (currentDistance / maxDistance) * maxColliderRadius;
+		//particles.shape.radius = (currentDistance / maxDistance) * maxColliderRadius;
     }
 
     protected bool CollidedWithDestroyable(GameObject other)
