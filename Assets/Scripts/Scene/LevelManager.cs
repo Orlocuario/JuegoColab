@@ -9,12 +9,12 @@ using UnityEngine.UI;
 public class LevelManager : MonoBehaviour
 {
 
-    public PlayerController thePlayer;
+    public PlayerController localPlayer;
     public GameObject[] players;
     public GameObject canvas;
     public GameObject npcLog;
 
-    private List<Vector3> itemsOriginalPositions = new List<Vector3>();
+    private List<Vector3> itemsOriginalPositions;
     private GameObject createGameObject;
     private GameObject[] itemsInLevel;
     private GameObject reconnectText;
@@ -41,6 +41,8 @@ public class LevelManager : MonoBehaviour
         }
 
         canvas.SetActive(true); // 8=D
+
+        itemsOriginalPositions = new List<Vector3>();
 
         waitToKillNPCCountdown = 10f;
         waitToGrabItem = 5f;
@@ -69,47 +71,12 @@ public class LevelManager : MonoBehaviour
 
     public GameObject GetLocalPlayer()
     {
-
-        GameObject localPlayer = null;
-
-        foreach (GameObject player in players)
-        {
-            if (player.GetComponent<PlayerController>().localPlayer)
-            {
-                localPlayer = player;
-                break;
-            }
-        }
-
-        return localPlayer;
+        return localPlayer.gameObject;
     }
 
     public PlayerController GetLocalPlayerController()
     {
-        PlayerController playerController = null;
-
-        foreach (GameObject player in players)
-        {
-
-            if (player.GetComponent<PlayerController>().localPlayer)
-            {
-                switch (player.name)
-                {
-                    case "Mage":
-                        playerController = player.GetComponent<MageController>();
-                        break;
-                    case "Warrior":
-                        playerController = player.GetComponent<WarriorController>();
-                        break;
-                    case "Engineer":
-                        playerController = player.GetComponent<EngineerController>();
-                        break;
-                }
-                break;
-            }
-        }
-
-        return playerController;
+        return localPlayer;
     }
 
     public MageController GetMage()
@@ -164,38 +131,38 @@ public class LevelManager : MonoBehaviour
         switch (id)
         {
             case 0:
-                thePlayer = players[0].GetComponent<MageController>();
+                localPlayer = players[0].GetComponent<MageController>();
                 Debug.Log("Activating Mage local player");
                 break;
             case 1:
                 Debug.Log("Activating Warrior local player");
-                thePlayer = players[1].GetComponent<WarriorController>();
+                localPlayer = players[1].GetComponent<WarriorController>();
                 break;
             case 2:
                 Debug.Log("Activating Engineer local player");
-                thePlayer = players[2].GetComponent<EngineerController>();
+                localPlayer = players[2].GetComponent<EngineerController>();
                 break;
         }
 
-        thePlayer.Activate(id);
-        Camera.main.GetComponent<CameraController>().SetTarget(thePlayer.gameObject);
+        localPlayer.Activate(id);
+        Camera.main.GetComponent<CameraController>().SetTarget(localPlayer.gameObject);
     }
 
     public void Respawn()
     {
-        StartCoroutine("RespawnCo");
+        StartCoroutine("Respawning");
     }
 
-    public IEnumerator RespawnCo()
+    public IEnumerator Respawning()
     {
-        thePlayer.gameObject.SetActive(false);
+        localPlayer.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(waitToRespawn);
 
-        thePlayer.transform.position = thePlayer.respawnPosition + Vector3.up * 0.1f;
-        thePlayer.gameObject.SetActive(true);
-        thePlayer.IgnoreCollisionBetweenPlayers();
-        thePlayer.SendPlayerDataToServer();
+        localPlayer.transform.position = localPlayer.respawnPosition + Vector3.up * .1f;
+        localPlayer.gameObject.SetActive(true);
+        localPlayer.IgnoreCollisionBetweenPlayers();
+        localPlayer.SendPlayerDataToServer();
     }
 
     public void MoveItemInGame(string itemName, string posX, string posY, string rotZ)

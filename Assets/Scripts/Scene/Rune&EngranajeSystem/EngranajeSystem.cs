@@ -34,12 +34,12 @@ public class EngranajeSystem : MonoBehaviour
     private void Update()
     {
 
-        if (levelManager.thePlayer == null)
+        if (levelManager.localPlayer == null)
         {
             return;
         }
 
-        PlayerController player = levelManager.thePlayer;
+        PlayerController player = levelManager.localPlayer;
         Vector2 playerPosition = player.gameObject.transform.position;
         float distance = (playerPosition - myPosition).magnitude;
 
