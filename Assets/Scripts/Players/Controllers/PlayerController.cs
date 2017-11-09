@@ -511,20 +511,6 @@ public class PlayerController : MonoBehaviour
             return;
         }
 
-        if (other.tag == "KillPlane")
-        {
-            string daño = other.gameObject.GetComponent<KillingObject>().damage;
-            Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);
-            levelManager.Respawn();
-        }
-
-        if (other.tag == "KillPlaneSpikes")
-        {
-            string daño = other.gameObject.GetComponent<KillingObject>().damage;
-            Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);
-            levelManager.Respawn();
-        }
-
         if (other.tag == "Checkpoint")
         {
             respawnPosition = other.transform.position;

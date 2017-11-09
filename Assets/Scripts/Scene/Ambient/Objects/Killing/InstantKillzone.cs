@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class InstantKillzone : MonoBehaviour {
 
-	private GameObject killiZone;
+	private GameObject killZone;
 
     // TODO: REFACTOR THIS
 
@@ -41,13 +41,13 @@ public class InstantKillzone : MonoBehaviour {
 
 	private void OnEnter ()
 	{
-		killiZone = (GameObject)Instantiate (Resources.Load ("Prefabs/KillZones/KillZoneEnginAir"));
-		killiZone.transform.position = new Vector2 (37.3f, 5.4f);
+		killZone = (GameObject)Instantiate (Resources.Load ("Prefabs/KillZones/KillZoneEnginAir"));
+		killZone.transform.position = new Vector2 (37.3f, 5.4f);
 	}
 		
 	private void OnExit()
 	{
-		Destroy (killiZone); 
+		Destroy (killZone); 
 	}
 
 }
