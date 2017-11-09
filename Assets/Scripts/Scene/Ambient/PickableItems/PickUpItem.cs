@@ -29,7 +29,7 @@ public class PickUpItem : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (this.gameObject.tag == "ExperienceItem" && (GameObjectIsPlayer(other.gameObject))
+        if (this.gameObject.tag == "ExperienceItem" && GameObjectIsPlayer(other.gameObject))
         {
             PlayerController localPlayer = Client.instance.GetLocalPlayer();
             if (localPlayer.gameObject.name == other.name)
