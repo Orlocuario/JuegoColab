@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CajaDestroyableController : DestroyableController
+public class DestroyableBox : DestroyableObject
 {
     public Sprite brokenBox;
 

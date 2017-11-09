@@ -31,7 +31,7 @@ public class PunchController : AttackController
 
     protected void DestroyDestroyable(GameObject other)
     {
-        DestroyableController destroyable = other.GetComponent<DestroyableController>();
+        DestroyableObject destroyable = other.GetComponent<DestroyableObject>();
         destroyable.DestroyMe();
     }
 

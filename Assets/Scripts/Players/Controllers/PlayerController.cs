@@ -513,14 +513,14 @@ public class PlayerController : MonoBehaviour
 
         if (other.tag == "KillPlane")
         {
-            string daño = other.gameObject.GetComponent<KillPlane>().killPlaneDamage;
+            string daño = other.gameObject.GetComponent<KillingObject>().damage;
             Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);
             levelManager.Respawn();
         }
 
         if (other.tag == "KillPlaneSpikes")
         {
-            string daño = other.gameObject.GetComponent<KillPlane>().killPlaneDamage;
+            string daño = other.gameObject.GetComponent<KillingObject>().damage;
             Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + daño);
             levelManager.Respawn();
         }

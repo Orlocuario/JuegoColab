@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class DestroyableController : MonoBehaviour
+public class DestroyableObject : MonoBehaviour
 {
 
     protected static float destroyDelayTime = .04f;

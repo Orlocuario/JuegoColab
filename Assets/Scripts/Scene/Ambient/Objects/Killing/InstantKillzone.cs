@@ -6,7 +6,7 @@ public class InstantKillzone : MonoBehaviour {
 
 	private GameObject killiZone;
 
-
+    // TODO: REFACTOR THIS
 
 	// Use this for initialization
 	void Start () {
