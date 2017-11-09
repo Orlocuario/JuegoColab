@@ -6,14 +6,16 @@ public class PunchController : AttackController
 {
 
     CircleCollider2D collider2d;
+    ParticleSystem particles;
+
+    private static Vector2 attackForce = new Vector2(2500f, 100f);
     private static float maxColliderRadius = .25f;
-	ParticleSystem particles;
 
     protected override void Start()
     {
-		//particles = this.gameObject.GetComponent <ParticleSystem> ();
+        //particles = this.gameObject.GetComponent <ParticleSystem> ();
         base.Start();
-        maxDistance = 5f;
+        maxDistance = 3f;
         collider2d = GetComponent<CircleCollider2D>();
     }
 
@@ -21,32 +23,54 @@ public class PunchController : AttackController
     {
         base.Update();
         collider2d.radius = (currentDistance / maxDistance) * maxColliderRadius;
-		//particles.shape.radius = (currentDistance / maxDistance) * maxColliderRadius;
+        //particles.shape.radius = (currentDistance / maxDistance) * maxColliderRadius;
     }
 
     protected bool CollidedWithDestroyable(GameObject other)
     {
-        return other.tag == "Destroyable";
+        return other.GetComponent<DestroyableObject>();
     }
 
-    protected void DestroyDestroyable(GameObject other)
+    protected bool CollidedWithMovable(GameObject other)
+    {
+        return other.GetComponent<MovableObject>();
+    }
+
+    protected void DestroyObject(GameObject other)
     {
         DestroyableObject destroyable = other.GetComponent<DestroyableObject>();
         destroyable.DestroyMe();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    protected void MoveObject(GameObject other)
+    {
+        MovableObject movable = other.GetComponent<MovableObject>();
+        Vector2 force = attackForce;
+
+        if (other.transform.position.x < transform.position.x)
+        {
+            force.x *= -1;
+        }
+
+        movable.MoveMe(force);
+    }
+
+    private new void OnCollisionEnter2D(Collision2D collision)
     {
 
         if (CollidedWithEnemy(collision.gameObject))
         {
             DealDamage(collision.gameObject);
-
         }
 
         else if (CollidedWithDestroyable(collision.gameObject))
         {
-            DestroyDestroyable(collision.gameObject);
+            DestroyObject(collision.gameObject);
+        }
+
+        else if (CollidedWithMovable(collision.gameObject))
+        {
+            MoveObject(collision.gameObject);
         }
 
         Destroy(this.gameObject, destroyDelayTime);

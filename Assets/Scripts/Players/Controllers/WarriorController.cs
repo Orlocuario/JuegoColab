@@ -1,9 +1,6 @@
-﻿using CnControls;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
-using System;
-using UnityEngine.SceneManagement;
+
 
 public class WarriorController : PlayerController
 {
@@ -20,21 +17,8 @@ public class WarriorController : PlayerController
         base.Start();
 
         damage = 3;
-        //attackSpeed = 4;
         particulas = GameObject.Find("ParticulasWarrior");
         particulas.SetActive(false);
-    }
-
-    protected override void CastAttack()
-    {
-        CastLocalAttack();
-        SendAttackDataToServer();
-
-        // TODO: refactor this
-        if (SceneManager.GetActiveScene().name == "Escena2")
-        {
-            RemoveRockMass();
-        }
     }
 
     public override void CastLocalAttack()
@@ -69,26 +53,7 @@ public class WarriorController : PlayerController
     {
         particulas.SetActive(activo);
     }
-
-    public void RemoveRockMass()
-    {
-        Vector3 myPosition = this.GetComponent<Transform>().position;
-        GameObject piedra = GameObject.FindGameObjectWithTag("RocaGiganteAraña");
-        Rigidbody2D rigidez = piedra.GetComponent<Rigidbody2D>();
-        Vector3 posicionPiedra = piedra.GetComponent<Transform>().position;
-        if ((myPosition - posicionPiedra).magnitude < 3f)
-        {
-            hits++;
-            if (hits > 7)
-            {
-                hits = 7;
-            }
-            force = Math.Pow(hits, damage) / 50;
-            rigidez.AddForce(Vector2.right * (float)force);
-        }
-
-    }
-
+    
     public override IEnumerator Attacking()
     {
         float animLength = attackAnimLength[currentAttackName];
