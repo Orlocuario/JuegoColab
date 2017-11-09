@@ -19,7 +19,7 @@ public class MovableObject : MonoBehaviour
 
 
     // Use this for initialization
-    protected void Start()
+    protected virtual void Start()
     {
         lastPosition = transform.position;
     }

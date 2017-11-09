@@ -5,7 +5,11 @@ using UnityEngine;
 public class GiantRock : MovableObject
 {
 
-    public new string openningTrigger = "TriggerRocaGigante";
-    public new string openedPrefab = "Ambientales/SueloRoca";
-
+    // Use this for initialization
+    protected override void Start()
+    {
+        base.Start();
+        openningTrigger = "TriggerRocaGigante";
+        openedPrefab = "Ambientales/SueloRoca";
+    }
 }
