@@ -50,18 +50,8 @@ public class Checkpoint : MonoBehaviour
 
     protected bool GameObjectIsPlayer(GameObject other)
     {
-
-        if (other.tag == "Player")
-        {
-            PlayerController playerController = other.GetComponent<PlayerController>();
-
-            if (playerController.localPlayer)
-            {
-                return true;
-            }
-        }
-
-        return false;
+        PlayerController playerController = other.GetComponent<PlayerController>();
+        return playerController && playerController.localPlayer;
     }
 
     #endregion

@@ -39,31 +39,25 @@ public class TriggerCamera : MonoBehaviour {
 
 	public void OnTriggerEnter2D(Collider2D other)
 	{
-		if (IsCollisionLocalPlayer (other)) {
+		if (GameObjectIsPlayer(other.gameObject)) {
 			OnEnter ();
 		}
 	}
 
 	public void OnTriggerExit2D(Collider2D other){
-		if (IsCollisionLocalPlayer (other)) {
+		if (GameObjectIsPlayer(other.gameObject)) {
 			OnExit ();
 		}
 	}
 
-	private bool IsCollisionLocalPlayer(Collider2D collider)
-	{
-		string tag = collider.gameObject.tag;
+    protected bool GameObjectIsPlayer(GameObject other)
+    {
+        PlayerController playerController = other.GetComponent<PlayerController>();
+        return playerController && playerController.localPlayer;
+    }
 
-		if(tag == "Player"){
-			PlayerController script = collider.gameObject.GetComponent<PlayerController>();
-			if (script.localPlayer == true) {
-				return true;
-			}
-		}
-		return false;
-	}
-	// Update is called once per frame
-	void Update () {
+    // Update is called once per frame
+    void Update () {
 		
 	}
 }

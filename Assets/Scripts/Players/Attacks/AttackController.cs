@@ -105,7 +105,7 @@ public class AttackController : MonoBehaviour
 
     protected bool CollidedWithEnemy(GameObject other)
     {
-        return other.tag == "Enemy";
+        return other.GetComponent<EnemyController>();
     }
 
     protected void OnCollisionEnter2D(Collision2D collision)

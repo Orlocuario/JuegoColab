@@ -503,9 +503,14 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    protected bool GameObjectIsPOI(GameObject other)
+    {
+        return other.GetComponent<PlannerPoi>();
+    }
+
     protected void OnTriggerStay2D(Collider2D other)
     {
-        if (other.tag == "Poi")
+        if (GameObjectIsPOI(other.gameObject))
         {
             PlannerPoi newPoi = other.GetComponent<PlannerPoi>();
             if (!playerObj.playerAt.name.Equals(newPoi.name))

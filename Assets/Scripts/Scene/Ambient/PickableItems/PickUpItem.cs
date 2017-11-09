@@ -10,7 +10,7 @@ public class PickUpItem : MonoBehaviour
 
     public void OnCollisionEnter2D(Collision2D other)
     {
-        if (other.collider.tag == "Player")
+        if (GameObjectIsPlayer(other.gameObject))
         {
             PlayerController localPlayer = Client.instance.GetLocalPlayer();
             if (localPlayer.gameObject.name == other.collider.name)
@@ -29,7 +29,7 @@ public class PickUpItem : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (this.gameObject.tag == "ExperienceItem" && (other.tag == "Player"))
+        if (this.gameObject.tag == "ExperienceItem" && (GameObjectIsPlayer(other.gameObject))
         {
             PlayerController localPlayer = Client.instance.GetLocalPlayer();
             if (localPlayer.gameObject.name == other.name)
@@ -57,4 +57,11 @@ public class PickUpItem : MonoBehaviour
 		Client.instance.SendMessageToServer("OthersDestroyObject/" + this.gameObject.name);
         Client.instance.SendMessageToServer("GainExp/" + "50");
     }
+
+    protected bool GameObjectIsPlayer(GameObject other)
+    {
+        PlayerController playerController = other.GetComponent<PlayerController>();
+        return playerController && playerController.localPlayer;
+    }
+
 }

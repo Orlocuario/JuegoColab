@@ -24,7 +24,7 @@ public class NPCtrigger : MonoBehaviour
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        if (IsCollisionLocalPlayer(other))
+        if (GameObjectIsPlayer(other.gameObject))
         {
             Debug.Log(other.name + " is in the npc trigger");
             OnEnter();
@@ -33,26 +33,17 @@ public class NPCtrigger : MonoBehaviour
 
     public void OnTriggerExit2D(Collider2D other)
     {
-        if (IsCollisionLocalPlayer(other))
+        if (GameObjectIsPlayer(other.gameObject))
         {
             Debug.Log(other.name + " left npc trigger");
             OnExit();
         }
     }
 
-    private bool IsCollisionLocalPlayer(Collider2D collider)
+    protected bool GameObjectIsPlayer(GameObject other)
     {
-        string tag = collider.gameObject.tag;
-
-        if (tag == "Player")
-        {
-            PlayerController script = collider.gameObject.GetComponent<PlayerController>();
-            if (script.localPlayer == true)
-            {
-                return true;
-            }
-        }
-        return false;
+        PlayerController playerController = other.GetComponent<PlayerController>();
+        return playerController && playerController.localPlayer;
     }
 
     private void OnEnter()
