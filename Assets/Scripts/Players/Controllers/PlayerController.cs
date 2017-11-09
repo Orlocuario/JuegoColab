@@ -503,20 +503,6 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    protected void OnTriggerEnter2D(Collider2D other)
-    {
-
-        if (!localPlayer)
-        {
-            return;
-        }
-
-        if (other.tag == "Checkpoint")
-        {
-            respawnPosition = other.transform.position;
-        }
-    }
-
     protected void OnTriggerStay2D(Collider2D other)
     {
         if (other.tag == "Poi")
