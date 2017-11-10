@@ -143,6 +143,7 @@ public class Room
         char[] separator = new char[1];
         separator[0] = '/';
         string[] arreglo = message.Split(separator);
+		Debug.Log (message);
         if (arreglo[0] == "NewChatMessage")
         {
             actualChat += arreglo[1];
@@ -292,6 +293,11 @@ public class Room
     }
 
 	public void WriteFeedbackHistorial(string message)
+	{
+		historial += "\r\n" + message + HoraMinuto ();
+	}
+
+	public void WriteActionHistorial(string message)
 	{
 		historial += "\r\n" + message + HoraMinuto ();
 	}

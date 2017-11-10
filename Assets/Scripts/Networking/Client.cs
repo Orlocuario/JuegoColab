@@ -152,7 +152,9 @@ public class Client : MonoBehaviour {
 
     private void ReceiveMessageFromPlanner(string message, int connectionId)
     {
+		Debug.Log ("Receive message test");
 		Planner planner = FindObjectOfType<Planner> ();
+		Debug.Log ("Planner found");
 		planner.SetPlanFromServer (message);
     }
 
