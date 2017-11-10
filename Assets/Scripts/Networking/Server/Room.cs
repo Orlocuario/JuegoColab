@@ -166,8 +166,7 @@ public class Room
 
     public void SendMessageToAllPlayers(string message)
     {
-        char[] separator = new char[1];
-        separator[0] = '/';
+        char[] separator = new char[1] { '/' };
         string[] msg = message.Split(separator);
 
         if (msg[0] == "NewChatMessage")
@@ -322,4 +321,5 @@ public class Room
     {
         historial += "\r\n" + message + HoraMinuto();
     }
+
 }

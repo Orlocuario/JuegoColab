@@ -82,5 +82,6 @@ public enum ObstacleType{
 	rollable = 1,
 	door = 2,
 	jump = 3,
-	enemy = 4
+	enemy = 4,
+	barrier = 5
 }
