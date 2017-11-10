@@ -110,7 +110,8 @@ public class SwitchActions : MonoBehaviour
     	Destroy(feedbackswitchwarr, 4f);
     	GameObject comebackMessage = (GameObject)Instantiate(Resources.Load("Prefabs/ActivateNPC"));
     	comebackMessage.transform.position = new Vector2(70f, -19.2f);
-    	NPCtrigger mensajeReal = comebackMessage.GetComponent<NPCtrigger>();
+    	
+		/*NPCtrigger mensajeReal = comebackMessage.GetComponent<NPCtrigger>();
 
 		if (mensajeReal.messages == null)
     		{
@@ -119,7 +120,7 @@ public class SwitchActions : MonoBehaviour
 			}
 			mensajeReal.messages[0] = "Ahora Debes Regresar.";
 			mensajeReal.messages [1] = "Tal vez alguien te abra la puerta.";
-			mensajeReal.readTime = 4f; 
+			mensajeReal.readTime = 4f;*/ 
 
    			break;
 
