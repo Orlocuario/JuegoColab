@@ -248,6 +248,11 @@ public class LevelManager : MonoBehaviour
         GameObject objectA = GameObject.Find(array[2]);
         GameObject objectB = GameObject.Find(array[3]);
 
+        if (!objectA || !objectB)
+        {
+            return;
+        }
+
         Collider2D[] collidersA = objectA.GetComponents<Collider2D>();
         Collider2D[] collidersB = objectB.GetComponents<Collider2D>();
 

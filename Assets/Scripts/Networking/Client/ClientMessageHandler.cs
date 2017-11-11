@@ -293,9 +293,13 @@ public class ClientMessageHandler
         float patrolX = float.Parse(msg[5]);
         float patrolY = float.Parse(msg[6]);
 
-        EnemyController enemyController = client.GetEnemy(enemyId);
-        enemyController.SetPatrollingPoint(directionX, posX, posY, patrolX, patrolY);
-        enemyController.StartPatrolling();
+        EnemyController enemy = client.GetEnemy(enemyId);
+
+        if (enemy)
+        {
+            enemy.SetPatrollingPoint(directionX, posX, posY, patrolX, patrolY);
+            enemy.StartPatrolling();
+        }
     }
 
     private void ChangeEnemyPosition(string[] msg)
@@ -311,8 +315,12 @@ public class ClientMessageHandler
         float posX = float.Parse(msg[3]);
         float posY = float.Parse(msg[4]);
 
-        EnemyController enemyScript = client.GetEnemy(enemyId);
-        enemyScript.SetPosition(directionX, posX, posY);
+        EnemyController enemy = client.GetEnemy(enemyId);
+
+        if (enemy)
+        {
+            enemy.SetPosition(directionX, posX, posY);
+        }
     }
 
     private void ChangeEnemyPatrollingPoint(string[] msg)
@@ -330,11 +338,11 @@ public class ClientMessageHandler
         float patrolX = float.Parse(msg[5]);
         float patrolY = float.Parse(msg[6]);
 
-        EnemyController enemyScript = client.GetEnemy(enemyId);
+        EnemyController enemy = client.GetEnemy(enemyId);
 
-        if (enemyScript)
+        if (enemy)
         {
-            enemyScript.SetPatrollingPoint(directionX, posX, posY, patrolX, patrolY);
+            enemy.SetPatrollingPoint(directionX, posX, posY, patrolX, patrolY);
         }
     }
 
@@ -347,10 +355,11 @@ public class ClientMessageHandler
         }
         int enemyId = Int32.Parse(msg[1]);
 
-        EnemyController enemyController = client.GetEnemy(enemyId);
-        if (enemyController != null)
+        EnemyController enemy = client.GetEnemy(enemyId);
+
+        if (enemy)
         {
-            enemyController.Die();
+            enemy.Die();
         }
     }
 
