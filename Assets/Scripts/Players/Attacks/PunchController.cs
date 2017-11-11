@@ -22,7 +22,7 @@ public class PunchController : AttackController
     protected override void Update()
     {
         base.Update();
-        collider2d.radius = (currentDistance / maxDistance) * maxColliderRadius;
+        //collider2d.radius = (currentDistance / maxDistance) * maxColliderRadius;
         //particles.shape.radius = (currentDistance / maxDistance) * maxColliderRadius;
     }
 
