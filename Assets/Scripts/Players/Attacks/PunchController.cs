@@ -44,8 +44,14 @@ public class PunchController : AttackController
 
     protected void MoveObject(GameObject other)
     {
+
         MovableObject movable = other.GetComponent<MovableObject>();
         Vector2 force = attackForce;
+
+        if (caster.isPowerOn)
+        {
+            force *= 10;
+        }
 
         if (other.transform.position.x < transform.position.x)
         {

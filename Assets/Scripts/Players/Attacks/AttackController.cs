@@ -6,6 +6,7 @@ public class AttackController : MonoBehaviour
 {
 
     protected Collider2D gameObjectCollider;
+    protected PlayerController caster;
 
     protected static float destroyDelayTime = .04f;
 
@@ -15,8 +16,6 @@ public class AttackController : MonoBehaviour
     protected float speed;
     protected int damage;
     protected bool moves;
-
-    PlayerController caster;
 
     protected virtual void Start()
     {

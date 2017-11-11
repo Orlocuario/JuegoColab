@@ -56,6 +56,7 @@ public class MovableObject : MonoBehaviour
     {
         if (rgbd)
         {
+            Debug.Log(name + " moved with force " + force);
             rgbd.AddForce(force);
         }
     }
