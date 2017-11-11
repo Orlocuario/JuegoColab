@@ -126,11 +126,11 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void UpdateCollisionsWithPlayer(GameObject player, bool ignores)
     {
-        foreach (Collider2D collider  in GetComponents<Collider2D>())
+        foreach (Collider2D collider in GetComponents<Collider2D>())
         {
             if (!collider.isTrigger)
             {
-                Physics2D.IgnoreCollision(player.GetComponent<BoxCollider2D>(), GetComponent<Collider2D>(), ignores);
+                Physics2D.IgnoreCollision(player.GetComponent<BoxCollider2D>(), collider, ignores);
             }
         }
 

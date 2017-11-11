@@ -248,13 +248,20 @@ public class LevelManager : MonoBehaviour
         GameObject objectA = GameObject.Find(array[2]);
         GameObject objectB = GameObject.Find(array[3]);
 
-        Collider2D[] colliders = objectB.GetComponents<Collider2D>();
+        Collider2D[] collidersA = objectA.GetComponents<Collider2D>();
+        Collider2D[] collidersB = objectB.GetComponents<Collider2D>();
 
-        foreach (Collider2D collider in colliders)
+        foreach (Collider2D colliderA in collidersA)
         {
-            if (!collider.isTrigger)
+            if (!colliderA.isTrigger)
             {
-                Physics2D.IgnoreCollision(objectA.GetComponent<Collider2D>(), collider, ignores);
+                foreach (Collider2D colliderB in collidersB)
+                {
+                    if (!colliderB.isTrigger)
+                    {
+                        Physics2D.IgnoreCollision(colliderA, colliderB, ignores);
+                    }
+                }
             }
         }
 
