@@ -30,12 +30,18 @@ public class SpiderController : EnemyController
     {
         GameObject spiderRock = GameObject.Find("RocaGiganteAraña");
 
-        foreach (CircleCollider2D rockCollider in spiderRock.GetComponents<CircleCollider2D>())
+        foreach (Collider2D rockCollider in spiderRock.GetComponents<Collider2D>())
         {
-			foreach (CircleCollider2D spiderCollider in GetComponents<CircleCollider2D>())
-			{
-				Physics2D.IgnoreCollision(rockCollider, spiderCollider);
-			}
+            if (!rockCollider.isTrigger)
+            {
+                foreach (Collider2D spiderCollider in GetComponents<Collider2D>())
+                {
+                    if (!spiderCollider.isTrigger)
+                    {
+                        Physics2D.IgnoreCollision(rockCollider, spiderCollider);
+                    }
+                }
+            }
         }
     }
 
