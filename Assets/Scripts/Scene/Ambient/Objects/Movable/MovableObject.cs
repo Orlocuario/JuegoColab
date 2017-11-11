@@ -7,6 +7,7 @@ public class MovableObject : MonoBehaviour
     #region Attributes
 
     public PlannerObstacle obstacleObj = null;
+    protected Rigidbody2D rgbd;
 
     public string openningTrigger; // The trigger that makes dissapear the object
     public string openedPrefab; // How it looks when its opened
@@ -23,6 +24,7 @@ public class MovableObject : MonoBehaviour
     // Use this for initialization
     protected virtual void Start()
     {
+        rgbd = GetComponent<Rigidbody2D>();
         updateFrame = 0;
         lastPosition = transform.position;
     }
@@ -52,11 +54,9 @@ public class MovableObject : MonoBehaviour
 
     public virtual void MoveMe(Vector2 force)
     {
-        Rigidbody2D rgbd = GetComponent<Rigidbody2D>();
-
         if (rgbd)
         {
-            rgbd.MovePosition(transform.position + (new Vector3(force.x, force.y, 0)));
+            rgbd.AddForce(force);
         }
     }
 
@@ -91,6 +91,19 @@ public class MovableObject : MonoBehaviour
         }
     }
 
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        if (!GameObjectIsPunch(collision.gameObject))
+        {
+            Vector2 counter = new Vector2(-collision.relativeVelocity.x, collision.relativeVelocity.y);
+
+            if (rgbd)
+            {
+                rgbd.AddForce(counter);
+            }
+        }
+    }
+
     #endregion
 
     #region Utils
@@ -98,6 +111,11 @@ public class MovableObject : MonoBehaviour
     protected bool TriggerIsOpener(GameObject trigger)
     {
         return trigger.name == openningTrigger;
+    }
+
+    protected bool GameObjectIsPunch(GameObject other)
+    {
+        return other.GetComponent<PunchController>();
     }
 
     #endregion

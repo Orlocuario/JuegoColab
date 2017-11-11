@@ -8,7 +8,7 @@ public class PunchController : AttackController
     CircleCollider2D collider2d;
     ParticleSystem particles;
 
-    private static Vector2 attackForce = new Vector2(5f, 1f);
+    private static Vector2 attackForce = new Vector2(10000f, 100f);
     private static float maxColliderRadius = .25f;
 
     protected override void Start()
