@@ -32,10 +32,10 @@ public class MovableObject : MonoBehaviour
     protected void Update()
     {
 
-        if (++updateFrame % updateRate == 0)
+        if (transform.position != lastPosition)
         {
 
-            if (transform.position != lastPosition)
+            if (++updateFrame % updateRate == 0)
             {
                 Client.instance.SendMessageToServer("ChangeObjectPosition/" +
                     name + "/" +
@@ -94,18 +94,15 @@ public class MovableObject : MonoBehaviour
     private void OnCollisionEnter2D(Collision2D collision)
     {
 
-        if (!collision.gameObject)
+        if (!collision.gameObject || !collision.rigidbody)
         {
-            return; 
+            return;
         }
 
         if (!GameObjectIsPunch(collision.gameObject))
         {
-            if (collision.rigidbody)
-            {
-                Vector2 counter = -collision.rigidbody.velocity;
-                rgbd.AddForce(counter);
-            }
+            Vector2 counter = -collision.rigidbody.velocity;
+            rgbd.AddForce(counter);
         }
         else
         {
