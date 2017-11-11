@@ -232,7 +232,7 @@ public class ClientMessageHandler
             foreach (GameObject enemy in enemies)
             {
 
-                if(enemy.GetInstanceID() == instanceId)
+                if (enemy.GetInstanceID() == instanceId)
                 {
                     EnemyController enemyController = enemy.GetComponent<EnemyController>();
                     enemyController.Initialize(enemyId, directionX, posX, posY);
@@ -331,7 +331,11 @@ public class ClientMessageHandler
         float patrolY = float.Parse(msg[6]);
 
         EnemyController enemyScript = client.GetEnemy(enemyId);
-        enemyScript.SetPatrollingPoint(directionX, posX, posY, patrolX, patrolY);
+
+        if (enemyScript)
+        {
+            enemyScript.SetPatrollingPoint(directionX, posX, posY, patrolX, patrolY);
+        }
     }
 
     private void EnemyDie(string[] msg)

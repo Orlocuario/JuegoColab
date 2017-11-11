@@ -91,6 +91,7 @@ public class PlayerController : MonoBehaviour
         controlOverEnemies = false;
         isAttacking = false;
         localPlayer = false;
+        isGrounded = false; 
         mpDepleted = false;
         isPowerOn = false;
         conectado = true;

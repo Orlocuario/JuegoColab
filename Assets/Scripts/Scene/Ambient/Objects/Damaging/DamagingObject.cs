@@ -17,7 +17,7 @@ public class DamagingObject : MonoBehaviour
     void Start()
     {
         ignoresCollisions = new Dictionary<string, bool> { { "Mage", false }, { "Warrior", false }, { "Engineer", false } };
-        SetupTriggerCollider();
+        //SetupTriggerCollider();
     }
 
     // Update is called once per frame

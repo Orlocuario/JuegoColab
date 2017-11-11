@@ -97,6 +97,9 @@ public class MovableObject : MonoBehaviour
         if (!GameObjectIsPunch(collision.gameObject))
         {
             rgbd.velocity = Vector3.zero;
+        } else
+        {
+            Debug.Log("Punch move me");
         }
     }
 
