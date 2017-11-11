@@ -143,7 +143,7 @@ public class EnemyController : MonoBehaviour
     {
 
         PlayerController playerController = player.GetComponent<PlayerController>();
-        MageController mage = Client.instance.GetMage();
+        MageController mage = levelManager.GetMage();
 
         Vector2 playerPosition = player.transform.position;
         Vector2 attackForce = force;
@@ -286,7 +286,10 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void SendMessageToServer(string message)
     {
-        Client.instance.SendMessageToServer(message);
+        if (Client.instance)
+        {
+            Client.instance.SendMessageToServer(message);
+        }
     }
 
     #endregion
