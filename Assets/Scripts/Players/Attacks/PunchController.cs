@@ -63,21 +63,24 @@ public class PunchController : AttackController
 
     private new void OnCollisionEnter2D(Collision2D collision)
     {
-		Debug.Log ("Choqué con " + collision.gameObject.name + " " + collision.gameObject.GetComponent<MovableObject>());
+        Debug.Log("Choqué con " + collision.gameObject.name + " " + collision.gameObject.GetComponent<MovableObject>());
 
-        if (CollidedWithEnemy(collision.gameObject))
+        if (caster.localPlayer)
         {
-            DealDamage(collision.gameObject);
-        }
+            if (CollidedWithEnemy(collision.gameObject))
+            {
+                DealDamage(collision.gameObject);
+            }
 
-        else if (CollidedWithDestroyable(collision.gameObject))
-        {
-            DestroyObject(collision.gameObject);
-        }
+            else if (CollidedWithDestroyable(collision.gameObject))
+            {
+                DestroyObject(collision.gameObject);
+            }
 
-        else if (CollidedWithMovable(collision.gameObject))
-        {
-            MoveObject(collision.gameObject);
+            else if (CollidedWithMovable(collision.gameObject))
+            {
+                MoveObject(collision.gameObject);
+            }
         }
 
         Destroy(this.gameObject, destroyDelayTime);
