@@ -88,7 +88,6 @@ public class MovableObject : MonoBehaviour
             {
                 TransitionToOpened(other.gameObject);
             }
-
         }
     }
 
@@ -96,8 +95,14 @@ public class MovableObject : MonoBehaviour
     {
         if (!GameObjectIsPunch(collision.gameObject))
         {
-            rgbd.velocity = Vector3.zero;
-        } else
+            //Vector2 counter = -collision.relativeVelocity;
+            //rgbd.AddForce(counter);
+
+            //rgbd.velocity = Vector3.zero;
+            rgbd.velocity -= collision.relativeVelocity; 
+
+        }
+        else
         {
             Debug.Log("Punch move me");
         }
