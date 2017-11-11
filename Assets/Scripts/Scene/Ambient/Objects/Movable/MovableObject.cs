@@ -56,8 +56,7 @@ public class MovableObject : MonoBehaviour
 
         if (rgbd)
         {
-			rgbd.MovePosition () 
-            //rgbd.AddForce(force);
+            rgbd.MovePosition(transform.position + (new Vector3(force.x, force.y, 0)));
         }
     }
 
