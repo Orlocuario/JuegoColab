@@ -8,7 +8,7 @@ public class PunchController : AttackController
     CircleCollider2D collider2d;
     ParticleSystem particles;
 
-    private static Vector2 attackForce = new Vector2(2500f, 100f);
+    private static Vector2 attackForce = new Vector2(10000f, 100f);
     private static float maxColliderRadius = .25f;
 
     protected override void Start()
@@ -57,6 +57,7 @@ public class PunchController : AttackController
 
     private new void OnCollisionEnter2D(Collision2D collision)
     {
+		Debug.Log ("Choqué con " + collision.gameObject.name + " " + collision.gameObject.GetComponent<MovableObject>());
 
         if (CollidedWithEnemy(collision.gameObject))
         {

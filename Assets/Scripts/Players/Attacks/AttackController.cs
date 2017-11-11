@@ -31,10 +31,7 @@ public class AttackController : MonoBehaviour
 
     protected void IgnoreCollisionWithObjects()
     {
-        if (GameObject.Find("RocaGiganteAraña") != null)
-        {
-            Physics2D.IgnoreCollision(gameObjectCollider, GameObject.Find("RocaGiganteAraña").GetComponents<CircleCollider2D>()[0]);
-        }
+       
     }
 
     protected void IgnoreCollisionWithPlayers()
