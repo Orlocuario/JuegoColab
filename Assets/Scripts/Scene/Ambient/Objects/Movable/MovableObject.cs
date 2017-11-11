@@ -93,6 +93,12 @@ public class MovableObject : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+
+        if (!collision.gameObject)
+        {
+            return; 
+        }
+
         if (!GameObjectIsPunch(collision.gameObject))
         {
             if (collision.rigidbody)
