@@ -95,20 +95,11 @@ public class MovableObject : MonoBehaviour
     {
         if (!GameObjectIsPunch(collision.gameObject))
         {
-            Vector2 counter = -collision.rigidbody.velocity;
-            rgbd.AddForce(counter);
-
-            //rgbd.velocity = Vector3.zero;
-
-           /* if ((rgbd.velocity - collision.rigidbody.velocity ).magnitude < 0)
+            if (collision.rigidbody)
             {
-                rgbd.velocity = Vector3.zero;
+                Vector2 counter = -collision.rigidbody.velocity;
+                rgbd.AddForce(counter);
             }
-            else
-            {
-                rgbd.velocity -= collision.rigidbody.velocity;
-            }*/
-
         }
         else
         {
