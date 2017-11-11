@@ -17,6 +17,7 @@ public class DamagingObject : MonoBehaviour
     void Start()
     {
         ignoresCollisions = new Dictionary<string, bool> { { "Mage", false }, { "Warrior", false }, { "Engineer", false } };
+        SetupTriggerCollider();
     }
 
     // Update is called once per frame
@@ -102,22 +103,22 @@ public class DamagingObject : MonoBehaviour
 
     #region Utils
 
-	protected void OnTriggerStay2D(Collider2D other)
-	{
-		if (GameObjectIsPlayer(other.gameObject))
-		{
-			DealDamage(other.gameObject);
-		}
-	}
+    protected void OnTriggerStay2D(Collider2D other)
+    {
+        if (GameObjectIsPlayer(other.gameObject))
+        {
+            DealDamage(other.gameObject);
+        }
+    }
 
-	// Attack those who enter the alert zone
-	private void OnTriggerEnter2D(Collider2D other)
-	{
-		if (GameObjectIsPlayer(other.gameObject))
-		{
-			DealDamage(other.gameObject);
-		}
-	}
+    // Attack those who enter the alert zone
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (GameObjectIsPlayer(other.gameObject))
+        {
+            DealDamage(other.gameObject);
+        }
+    }
 
     protected bool GameObjectIsPlayer(GameObject other)
     {
@@ -138,6 +139,35 @@ public class DamagingObject : MonoBehaviour
         ignoresCollisions[player.name] = ignores;
         SendIgnoreCollisionDataToServer(player, ignores);
 
+    }
+
+    protected void SetupTriggerCollider()
+    {
+        Collider2D solidColider = null;
+        bool hasTrigger = false;
+
+        foreach (Collider2D collider in GetComponents<Collider2D>())
+        {
+            if (collider.isTrigger)
+            {
+                hasTrigger = true;
+            }
+            else
+            {
+                solidColider = collider;
+            }
+        }
+
+        if (!solidColider)
+        {
+            Debug.LogError("Every damaging object must have a collider");
+        }
+
+        if (!hasTrigger)
+        {
+            Collider2D trigger = gameObject.AddComponent<Collider2D>();
+            trigger.isTrigger = true;
+        }
     }
 
     #endregion
