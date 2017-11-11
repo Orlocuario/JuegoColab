@@ -29,8 +29,6 @@ public class MovableObject : MonoBehaviour
 
         if (transform.position != lastPosition)
         {
-            lastPosition = transform.position;
-
             Client.instance.SendMessageToServer("ChangeObjectPosition/" +
                 name + "/" +
                 transform.position.x + "/" +
@@ -38,6 +36,7 @@ public class MovableObject : MonoBehaviour
                 transform.position.z);
         }
 
+        lastPosition = transform.position;
     }
 
     #endregion

@@ -96,6 +96,12 @@ public class PlayerController : MonoBehaviour
         conectado = true;
         canMove = true;
 
+        remoteAttacking = false;
+        remoteJumping = false;
+        remoteRight = false;
+        remoteLeft = false;
+        remoteUp = false;
+
         mpUpdateFrame = 0;
         debuger = 0;
 
