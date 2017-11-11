@@ -36,6 +36,12 @@ public class EngineerController : PlayerController
     {
         if (localPlayer)
         {
+            
+            if (!isPowerOn)
+            {
+                return base.IsJumping(isGrounded);
+            }
+
             if (isGrounded)
             {
                 jumpedInAir = false;
