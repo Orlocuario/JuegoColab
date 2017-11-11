@@ -13,7 +13,7 @@ public class MovableObject : MonoBehaviour
     public string openedPrefab; // How it looks when its opened
 
     protected Vector3 lastPosition;
-    protected static int updateRate = 10;
+    protected static int updateRate = 25;
     protected int updateFrame;
 
     #endregion
