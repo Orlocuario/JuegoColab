@@ -87,17 +87,17 @@ public class SwitchActions : MonoBehaviour
                 Debug.Log("wiiiiiii");
                 break;
 
-            case 3:
-                GameObject platescalera = (GameObject)Instantiate(Resources.Load("Prefabs/MovPlatform"));
-                platescalera.GetComponent<Transform>().position = new Vector2(43f, -16f);
-                MovingObject secondPlatform = platescalera.GetComponent<MovingObject>();
-                secondPlatform.startPoint = new Vector2(platescalera.transform.position.x, platescalera.transform.position.y);
-                secondPlatform.endPoint = new Vector2(platescalera.transform.position.x, platescalera.transform.position.y + 3.9f);
-                secondPlatform.moveSpeed = 1f;
-                GameObject feedbackswitch = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
-                feedbackswitch.GetComponent<Transform>().position = new Vector2(41.4f, -16.3f);
+		case 3:
+			GameObject platescalera = (GameObject)Instantiate (Resources.Load ("Prefabs/MovPlatform"));
+			platescalera.GetComponent<Transform> ().position = new Vector2 (43f, -16f);
+			MovingObject secondPlatform = platescalera.GetComponent<MovingObject> ();
+			secondPlatform.startPoint = new Vector2 (platescalera.transform.position.x, platescalera.transform.position.y);
+			secondPlatform.endPoint = new Vector2 (platescalera.transform.position.x, platescalera.transform.position.y + 3.9f);
+			secondPlatform.moveSpeed = 1f;
+			GameObject feedbackswitch = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
+			feedbackswitch.GetComponent<Transform> ().position = new Vector2 (41.4f, -16.3f);
 
-                GameObject mageFilter = GameObject.Find("FilterMage");
+			GameObject mageFilter = GameObject.Instantiate (Resources.Load ("FilterMage"));
 
                 if (mageFilter)
                 {
