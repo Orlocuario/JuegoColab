@@ -37,10 +37,12 @@ public class Planner : MonoBehaviour {
 	public double coeficienteMaximo = 40;
 	private double coeficienteActual;
 	private int distanciaObjetiva = -1;
+	private Dictionary<string, int> distanciaObjetivaParcial = new Dictionary<string, int> ();
 	private double timer;
 	private int feedbackLevel = 0;
 	private int feedbackPlayer = 0;
 	private int etapaCumplida = 0;
+	private Dictionary<string, int> etapaCumplidaParcial = new Dictionary<string, int> ();
 	private string lastAction = "";
 	private Dictionary<string,int> nivelPop = new Dictionary<string, int>();
 	private Dictionary<string,int> etapaPop = new Dictionary<string, int>();
@@ -64,13 +66,12 @@ public class Planner : MonoBehaviour {
 		EstadoPorAccionPop = new List<List<List<string>>> ();
 		AccionPop = new List<List<int>> ();
 
-		nivelPop.Add ("pj1", 999);
-		nivelPop.Add ("pj2", 999);
-		nivelPop.Add ("pj3", 999);
-
-		etapaPop.Add ("pj1", 0);
-		etapaPop.Add ("pj2", 0);
-		etapaPop.Add ("pj3", 0);
+		foreach (PlannerPlayer item in playerList) {
+			distanciaObjetivaParcial.Add (item.name, -1);
+			etapaCumplidaParcial.Add (item.name, 0);
+			nivelPop.Add (item.name, 999);
+			etapaPop.Add (item.name, 0);
+		}
 
 		foreach (PlannerPlayer item in playerList) {
 			feedbackNames.Add (item.name, item.nameFeedback);
@@ -91,12 +92,63 @@ public class Planner : MonoBehaviour {
 
 	void Update(){
 		if (control && Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
-			timer += Time.deltaTime;
+			bool valido = false;
+			if (Plan.Count > 0) {
+				valido = true;
+			}
+			foreach (string personaje in PlanParcial.Keys.ToList()) {
+				if (PlanParcial [personaje].Count > 0) {
+					valido = true;
+				}
+			}
+			if (valido) {
+				timer += Time.deltaTime;
+			}
+			if (tipoPlanificacion == 3) {
+				distanciaObjetiva = 0;
+				foreach (string personaje in distanciaObjetivaParcial.Keys.ToList()) {
+					distanciaObjetiva += distanciaObjetivaParcial [personaje];
+				}
+			}
 			coeficienteActual = distanciaObjetiva * timer / 60.0;
+
 			if (coeficienteActual > coeficienteMaximo) {
 				Debug.Log ("Feedback: " + feedbackPlayer);
 				timer = 0;
 				if (tipoPlanificacion == 3) {
+					string personajeFeedback = "";
+					foreach (string personaje in this.etapaCumplidaParcial.Keys.ToList()) {
+						if (PlanParcial [personaje] [etapaCumplidaParcial [personaje]].Equals (lastAction)) {
+							personajeFeedback = personaje;
+						}
+					}
+					if (personajeFeedback.Equals ("")) {
+						int minimo = 0;
+						foreach (string personaje in this.etapaCumplidaParcial.Keys.ToList()) {
+							bool dependant = false;
+							if(reverseConstraintsPerAction.ContainsKey(PlanParcial[personajeFeedback] [etapaCumplidaParcial[personajeFeedback]])){
+								List<string> conditions = reverseConstraintsPerAction [PlanParcial [personajeFeedback] [etapaCumplidaParcial [personajeFeedback]]];
+								foreach (string action in conditions) {
+									if (!PlanParcial [personaje].Contains (action)) {
+										dependant = true;
+									}
+								}
+							}
+							if (!dependant) {
+								if (personajeFeedback.Equals ("")) {
+									minimo = this.etapaCumplidaParcial [personaje];
+									personajeFeedback = personaje;
+								}
+								if (minimo > this.etapaCumplidaParcial [personaje]) {
+									minimo = this.etapaCumplidaParcial [personaje];
+									personajeFeedback = personaje;
+								}
+							}
+						}
+					}
+					//Falta seleccionar la accion a aplicar feedback
+					this.RequestActivateNPCLog (GetFeedback (PlanParcial[personajeFeedback] [etapaCumplidaParcial[personajeFeedback]]));
+				} else if (tipoPlanificacion == 4) {
 					string player = "";
 					int nivel = 0;
 					foreach (string personaje in nivelPop.Keys.ToList()) {
@@ -134,8 +186,19 @@ public class Planner : MonoBehaviour {
 			List<string> parameters = new List<string> (message.Split ('/'));
 			this.Plan = new List<string> (parameters);
 			etapaCumplida = 0;
-			if (!(this.Plan.Count > 0 && this.Plan.First ().Equals (lastAction))) {
-				feedbackLevel = 0;
+			foreach (PlannerPlayer item in playerList) {
+				etapaCumplidaParcial.Add (item.name, 0);
+			}
+			if (tipoPlanificacion == 3) {
+				foreach (string personaje in this.PlanParcial.Keys.ToList()) {
+					if (!(this.PlanParcial [personaje].Count > 0 && this.PlanParcial [personaje].First ().Equals (lastAction))) {
+						feedbackLevel = 0;
+					}
+				}
+			} else {
+				if (!(this.Plan.Count > 0 && this.Plan.First ().Equals (lastAction))) {
+					feedbackLevel = 0;
+				}
 			}
 			distanciaObjetiva = this.Plan.Count;
 			Debug.Log ("distancia objetiva: " + distanciaObjetiva);
@@ -300,15 +363,15 @@ public class Planner : MonoBehaviour {
 						for (int i = 0; i <= this.PlanParcial [personaje].Count; i++) {	
 							List<string> estadoActual = new List<string> (EstadoPorAccionParcial [personaje] [i]);
 							if (estadoActual.All (initDef.Contains)) {
-								int etapa = this.Plan.Count - i;
+								int etapa = this.PlanParcial [personaje].Count - i;
 								Debug.Log (personaje + " cumple estado:" + etapa);
-								if (etapaCumplida < etapa) {
+								if (etapaCumplidaParcial [personaje] < etapa) {
 									Debug.Log (personaje + " cambio estado");
-									etapaCumplida = etapa;
+									etapaCumplidaParcial [personaje] = etapa;
 									feedbackLevel = 0;
 								}
-								distanciaObjetiva = i;
-								Debug.Log (personaje + " distancia objetiva: " + distanciaObjetiva);
+								distanciaObjetivaParcial [personaje] = i;
+								Debug.Log (personaje + " distancia objetiva: " + distanciaObjetivaParcial [personaje]);
 								cumplePorPersonaje [personaje] = true;
 								break;
 							}
@@ -1015,13 +1078,13 @@ public class Planner : MonoBehaviour {
 			switch (nombre) {
 			case "move":
 				switch (feedbackLevel) {
+				//case 1:
+					//feedback = "¿Creo que no han pasado por aqui aún?";
+					//break;
 				case 1:
-					feedback = "¿Creo que no han pasado por aqui aún?";
-					break;
-				case 2:
 					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
-				case 3:
+				case 2:
 					feedback = "¿Probaron ir hasta " + feedbackNames [parametros [2]] + "?";
 					break;
 				default:
@@ -1044,7 +1107,7 @@ public class Planner : MonoBehaviour {
 					feedback = "¿Probaron usar la habilidad especial de " + feedbackNames [parametros [0]] + "?";
 					break;
 				default:
-					feedback = feedbackNames [parametros [0]] + " debería usar su salto alto para llegar a " + feedbackNames [parametros [2]];
+					feedback = feedbackNames [parametros [0]] + " debería usar su habilidad especial para llegar a " + feedbackNames [parametros [2]];
 					break;
 				}
 				break;
@@ -1054,16 +1117,10 @@ public class Planner : MonoBehaviour {
 					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 2:
-					feedback = "No olviden sus habilidades...";
-					break;
-				case 3:
-					feedback = "¿Probaron ir a " + feedbackNames [parametros [2]] + "?";
-					break;
-				case 4:
-					feedback = "¿Probaron usar la habilidad especial de " + feedbackNames [parametros [0]] + "?";
+					feedback = "¿Probaron ir hasta " + feedbackNames [parametros [2]] + "?";
 					break;
 				default:
-					feedback = feedbackNames [parametros [0]] + " debería usar su salto alto para llegar a " + feedbackNames [parametros [2]];
+					feedback = feedbackNames [parametros [0]] + ", debe ir desde " + feedbackNames [parametros [1]] + " hasta " + feedbackNames [parametros [2]];
 					break;
 				}
 				break;
@@ -2446,11 +2503,9 @@ public class Planner : MonoBehaviour {
 				this.PlanParcial [personaje].Add (action);
 			}
 		}
-		foreach (string personaje in PlanParcial.Keys.ToList()) {
-			Debug.Log (personaje);
-			foreach (string acc in PlanParcial[personaje]) {
-				Debug.Log (acc);	
-			}
+		distanciaObjetiva = 0;
+		foreach (string personaje in this.PlanParcial.Keys.ToList()) {
+			distanciaObjetiva += this.PlanParcial [personaje].Count;
 		}
 	}
 
