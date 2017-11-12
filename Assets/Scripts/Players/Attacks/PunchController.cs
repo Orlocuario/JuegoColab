@@ -66,16 +66,15 @@ public class PunchController : AttackController
 
     private new void OnCollisionEnter2D(Collision2D collision)
     {
-        Debug.Log("Choqué con " + collision.gameObject.name + " " + collision.gameObject.GetComponent<MovableObject>());
+
+        if (CollidedWithEnemy(collision.gameObject))
+        {
+            DealDamage(collision.gameObject);
+        }
 
         if (caster.localPlayer)
         {
-            if (CollidedWithEnemy(collision.gameObject))
-            {
-                DealDamage(collision.gameObject);
-            }
-
-            else if (CollidedWithDestroyable(collision.gameObject))
+            if (CollidedWithDestroyable(collision.gameObject))
             {
                 DestroyObject(collision.gameObject);
             }

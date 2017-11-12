@@ -103,9 +103,9 @@ public class EnemyController : MonoBehaviour
     public virtual void TakeDamage(float damage)
     {
 
-        if (Client.instance != null)
+        if (levelManager != null)
         {
-            PlayerController localPlayer = Client.instance.GetLocalPlayer();
+            PlayerController localPlayer = levelManager.GetLocalPlayerController();
 
             if (localPlayer != null)
             {
