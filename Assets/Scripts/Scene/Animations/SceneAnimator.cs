@@ -5,17 +5,21 @@ using System.Reflection.Emit;
 
 public class SceneAnimator : MonoBehaviour
 {
+    #region Attributes
 
-    private Dictionary<string, float> animLengths;
     private Animator[] animators;
+
+    #endregion
+
+    #region Start
 
     void Start()
     {
-		animLengths = new Dictionary<string, float>(); 
         animators = GameObject.FindObjectsOfType<Animator>();
-		Debug.Log ("Found " + animators.Length + " animators");
-		LoadAnimatorsData();
+        Debug.Log("Found " + animators.Length + " animators");
     }
+
+    #endregion
 
     #region Common
 
@@ -23,38 +27,49 @@ public class SceneAnimator : MonoBehaviour
     {
         Animator animator = FindAnimator(gameObject.name);
 
-		Debug.Log (gameObject.name + " animator is " + animator);
+        Debug.Log(gameObject.name + " animator is " + animator);
 
         if (animator)
         {
             animator.SetBool(animName, true);
 
-			float animLength = animLengths[gameObject.GetInstanceID () + "/" + animName];
-            yield return new WaitForSeconds(animLength);
+            float animLength = FindAnimLength(animator, animName);
+            if (animLength != -1)
+            {
+                yield return new WaitForSeconds(animLength);
 
-			Debug.Log ("Setting animation " + animName + " to false"); 
+                Debug.Log("Setting animation " + animName + " to false");
 
-            animator.SetBool(animName, false);
+                animator.SetBool(animName, false);
+            } else
+            {
+                Debug.Log(animName  + " animation was not found in " + animator);
+            }
         }
     }
+
+
 
     #endregion
 
     #region Utils
 
-    private void LoadAnimatorsData()
+    private float FindAnimLength(Animator animator, string clipName)
     {
-        foreach (Animator animator in animators)
-        {
-            RuntimeAnimatorController ac = animator.runtimeAnimatorController;
+        RuntimeAnimatorController ac = animator.runtimeAnimatorController;
 
-			if (ac) 
-				{
-					foreach (AnimationClip clip in ac.animationClips) {
-					animLengths.Add (animator.gameObject.GetInstanceID () + "/" + clip.name, clip.length);
-				}
-			}
+        if (ac)
+        {
+            foreach (AnimationClip clip in ac.animationClips)
+            {
+                if (clip.name == clipName)
+                {
+                    return clip.length;
+                }
+            }
         }
+
+        return -1;
     }
 
     private Animator FindAnimator(string name)
