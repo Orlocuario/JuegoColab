@@ -11,7 +11,7 @@ public class MovableObject : MonoBehaviour
     public string openningTrigger; // The trigger that makes dissapear the object
     public string openedPrefab; // How it looks when its opened
 
-    protected AnimatorController animControl;
+    protected SceneAnimator animControl;
     protected Rigidbody2D rgbd;
 
     #endregion

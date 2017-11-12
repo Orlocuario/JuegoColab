@@ -7,7 +7,6 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-
     public PlannerPlayer playerObj;
     public Collider2D collider;
     public GameObject parent;
@@ -58,7 +57,7 @@ public class PlayerController : MonoBehaviour
     public bool isPowerOn;
     public bool mpDepleted;
 
-    protected AnimatorController animControl;
+    protected SceneAnimator animControl;
     protected Vector3 lastPosition;
     protected Rigidbody2D rb2d;
 
@@ -73,7 +72,7 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void Start()
     {
-        animControl = GameObject.FindObjectOfType<AnimatorController>();
+        animControl = GameObject.FindObjectOfType<SceneAnimator>();
         hpAndMp = GameObject.Find("Canvas").GetComponent<HUDDisplay>();
 
         levelManager = FindObjectOfType<LevelManager>();

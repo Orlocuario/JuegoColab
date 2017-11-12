@@ -13,7 +13,7 @@ public class EnemyController : MonoBehaviour
     public int directionX;  // 1 = derecha, -1 = izquierda
 
     protected Dictionary<string, bool> ignoresCollisions;
-    protected AnimatorController animControl;
+    protected SceneAnimator animControl;
     protected PlayerController localPlayer;
     protected Vector2 currentPatrolPoint;
     protected LevelManager levelManager;
@@ -35,7 +35,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Start()
     {
-        animControl = GameObject.FindObjectOfType<AnimatorController>();
+        animControl = GameObject.FindObjectOfType<SceneAnimator>();
         levelManager = FindObjectOfType<LevelManager>();
         rb2d = GetComponent<Rigidbody2D>();
 
