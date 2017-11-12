@@ -14,18 +14,25 @@ using UnityEngine.UI;
 public class Client : MonoBehaviour
 {
 
+    #region Attributes
+
     public static Client instance;
-    ClientMessageHandler handler;
-    HostTopology topology;
+
+    private ClientMessageHandler handler;
+    private HostTopology topology;
 
     private static int maxConnections = 12;
 
-    int unreliableChannelId;
-    int reliableChannelId;
-    int connectionId;
-    string serverIp;
-    int socketId; // Host ID
-    int port;
+    private int unreliableChannelId;
+    private int reliableChannelId;
+    private int connectionId;
+    private string serverIp;
+    private int socketId; // Host ID
+    private int port;
+    
+    #endregion
+
+    #region Start & Update
 
     void Start()
     {
@@ -43,60 +50,6 @@ public class Client : MonoBehaviour
         topology = new HostTopology(config, maxConnections);
 
         handler = new ClientMessageHandler();
-    }
-
-    public bool Connect(string ip, int port)
-    {
-        try
-        {
-
-            this.port = port;
-            socketId = NetworkTransport.AddHost(topology, port);
-
-            byte error;
-            serverIp = ip;
-            connectionId = NetworkTransport.Connect(socketId, ip, port, 0, out error);
-            return true;
-        }
-        catch
-        {
-            Debug.Log("Connection to server failed");
-            return false;
-        }
-
-    }
-
-    public void Connect()
-    {
-        try
-        {
-            byte error;
-            connectionId = NetworkTransport.Connect(socketId, serverIp, port, 0, out error);
-        }
-        catch
-        {
-            Debug.Log("Connection to server failed");
-        }
-    }
-
-    public void SendMessageToServer(string message)
-    {
-        byte error;
-        byte[] buffer = new byte[NetworkConsts.bufferSize];
-        Stream stream = new MemoryStream(buffer);
-        BinaryFormatter formatter = new BinaryFormatter();
-        formatter.Serialize(stream, message);
-        NetworkTransport.Send(socketId, connectionId, unreliableChannelId, buffer, NetworkConsts.bufferSize, out error);
-    }
-
-    public void SendMessageToPlanner(string message)
-    {
-        byte error;
-        byte[] buffer = new byte[NetworkConsts.bigBufferSize];
-        Stream stream = new MemoryStream(buffer);
-        BinaryFormatter formatter = new BinaryFormatter();
-        formatter.Serialize(stream, message);
-        NetworkTransport.Send(socketId, connectionId, reliableChannelId, buffer, NetworkConsts.bigBufferSize, out error);
     }
 
     void LateUpdate()
@@ -168,28 +121,42 @@ public class Client : MonoBehaviour
         }
     }
 
+    #endregion
 
-    private string HoraMinuto()
+    #region Common
+
+    public void Connect()
     {
-        DateTime now = DateTime.Now;
-
-        string hora = now.Hour.ToString();
-        string minutos = now.Minute.ToString();
-        string segundos = now.Second.ToString();
-
-
-        if (minutos.Length == 1)
+        try
         {
-            minutos = "0" + minutos;
+            byte error;
+            connectionId = NetworkTransport.Connect(socketId, serverIp, port, 0, out error);
+        }
+        catch
+        {
+            Debug.Log("Connection to server failed");
+        }
+    }
+
+    public bool Connect(string ip, int port)
+    {
+        try
+        {
+
+            this.port = port;
+            socketId = NetworkTransport.AddHost(topology, port);
+
+            byte error;
+            serverIp = ip;
+            connectionId = NetworkTransport.Connect(socketId, ip, port, 0, out error);
+            return true;
+        }
+        catch
+        {
+            Debug.Log("Connection to server failed");
+            return false;
         }
 
-        if (segundos.Length == 1)
-        {
-            segundos = "0" + segundos;
-        }
-
-        string tiempo = " " + hora + ":" + minutos + ":" + segundos;
-        return tiempo;
     }
 
     private void Reconnect()
@@ -205,17 +172,56 @@ public class Client : MonoBehaviour
 
     }
 
+    public void StartFirstPlan()
+    {
+        Planner planner = FindObjectOfType<Planner>();
+        planner.FirstPlan();
+    }
+
+    #endregion
+
+    #region Messaging
+
+    public void SendMessageToServer(string message)
+    {
+        byte error;
+        byte[] buffer = new byte[NetworkConsts.bufferSize];
+        Stream stream = new MemoryStream(buffer);
+        BinaryFormatter formatter = new BinaryFormatter();
+        formatter.Serialize(stream, message);
+        NetworkTransport.Send(socketId, connectionId, unreliableChannelId, buffer, NetworkConsts.bufferSize, out error);
+    }
+
+    public void SendMessageToPlanner(string message)
+    {
+        byte error;
+        byte[] buffer = new byte[NetworkConsts.bigBufferSize];
+        Stream stream = new MemoryStream(buffer);
+        BinaryFormatter formatter = new BinaryFormatter();
+        formatter.Serialize(stream, message);
+        NetworkTransport.Send(socketId, connectionId, reliableChannelId, buffer, NetworkConsts.bigBufferSize, out error);
+    }
+
     private void ReceiveMessageFromPlanner(string message, int connectionId)
     {
         Planner planner = FindObjectOfType<Planner>();
         planner.SetPlanFromServer(message);
     }
 
-    public void StartFirstPlan()
+    public void SendNewChatMessageToServer(string newChatMessage)
     {
-        Planner planner = FindObjectOfType<Planner>();
-        planner.FirstPlan();
+        SendMessageToServer("NewChatMessage/" + newChatMessage);
     }
+
+    public void RequestCharIdToServer()
+    {
+        SendMessageToServer("RequestCharId");
+    }
+
+
+    #endregion
+
+    #region Utils
 
     public PlayerController GetPlayerController(int charId)
     {
@@ -261,6 +267,24 @@ public class Client : MonoBehaviour
         return null;
     }
 
+    public PlayerController GetById(int playerId)
+    {
+        if (playerId == 0)
+        {
+            return GetMage();
+        }
+
+        else if (playerId == 1)
+        {
+            return GetWarrior();
+        }
+
+        else
+        {
+            return GetEngineer();
+        }
+    }
+
     public PlayerController GetLocalPlayer()
     {
         GameObject player1 = GameObject.Find("Mage");
@@ -298,24 +322,6 @@ public class Client : MonoBehaviour
 
     }
 
-    public PlayerController GetById(int playerId)
-    {
-        if (playerId == 0)
-        {
-            return GetMage();
-        }
-
-        else if (playerId == 1)
-        {
-            return GetWarrior();
-        }
-
-        else
-        {
-            return GetEngineer();
-        }
-    }
-
     public MageController GetMage()
     {
         GameObject player = GameObject.Find("Mage");
@@ -337,13 +343,29 @@ public class Client : MonoBehaviour
         return script;
     }
 
-    public void SendNewChatMessageToServer(string newChatMessage)
+    private string HoraMinuto()
     {
-        SendMessageToServer("NewChatMessage/" + newChatMessage);
+        DateTime now = DateTime.Now;
+
+        string hora = now.Hour.ToString();
+        string minutos = now.Minute.ToString();
+        string segundos = now.Second.ToString();
+
+
+        if (minutos.Length == 1)
+        {
+            minutos = "0" + minutos;
+        }
+
+        if (segundos.Length == 1)
+        {
+            segundos = "0" + segundos;
+        }
+
+        string tiempo = " " + hora + ":" + minutos + ":" + segundos;
+        return tiempo;
     }
 
-    public void RequestCharIdToServer()
-    {
-        SendMessageToServer("RequestCharId");
-    }
+    #endregion
+
 }
