@@ -7,10 +7,13 @@ public class MovableObject : MonoBehaviour
     #region Attributes
 
     public PlannerObstacle obstacleObj = null;
-    protected Rigidbody2D rgbd;
 
     public string openningTrigger; // The trigger that makes dissapear the object
     public string openedPrefab; // How it looks when its opened
+
+    protected Dictionary<string, float> animLengths;
+    protected Rigidbody2D rgbd;
+    protected Animator animator;
 
     #endregion
 
@@ -20,7 +23,12 @@ public class MovableObject : MonoBehaviour
     // Use this for initialization
     protected virtual void Start()
     {
+        animLengths = new Dictionary<string, float>();
+        animator = GetComponent<Animator>();
         rgbd = GetComponent<Rigidbody2D>();
+        moveAnimTime = 1;
+
+        LoadAnimationLength();
     }
 
     #endregion
@@ -41,6 +49,12 @@ public class MovableObject : MonoBehaviour
                         name + "/" +
                         force.x + "/" +
                         force.y);
+            }
+
+            if (animator)
+            {
+                animator.SetBool("Moving", true);
+                StartCoroutine("Moving");
             }
         }
     }
@@ -77,20 +91,17 @@ public class MovableObject : MonoBehaviour
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-
+        // Prevents weird collisions with other game objects.
         if (!collision.gameObject || !collision.rigidbody)
         {
             return;
         }
 
+        // Counter the force of every other game object.
         if (!GameObjectIsPunch(collision.gameObject))
         {
             Vector2 counter = -collision.rigidbody.velocity;
             rgbd.AddForce(counter);
-        }
-        else
-        {
-            Debug.Log("Punch move me");
         }
     }
 
@@ -106,6 +117,26 @@ public class MovableObject : MonoBehaviour
     protected bool GameObjectIsPunch(GameObject other)
     {
         return other.GetComponent<PunchController>();
+    }
+
+
+    protected virtual void LoadAnimationLength()
+    {
+        RuntimeAnimatorController ac = animator.runtimeAnimatorController;
+
+        foreach (AnimationClip animationClip in ac.animationClips)
+        {
+            animLengths.Add(animationClip.name, animationClip.length);
+        }
+
+    }
+
+    public IEnumerator Moving()
+    {
+        float animLength = animLengths["Moving"];
+
+        yield return new WaitForSeconds(animLength);
+        animator.SetBool("Moving", false);
     }
 
     #endregion
