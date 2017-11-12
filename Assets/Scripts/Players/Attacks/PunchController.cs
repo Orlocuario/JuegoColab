@@ -50,7 +50,7 @@ public class PunchController : AttackController
 
         if (caster.isPowerOn)
         {
-            force *= 10;
+            force *= 100;
         }
 
         if (other.transform.position.x < transform.position.x)
