@@ -67,7 +67,7 @@ public class PlayerController : MonoBehaviour
     protected bool canMove;
     protected float speedX;
     protected float speedY;
-	public static float attackRate = .5f;
+	public static float attackRate = .25f;
 
     private int debuger;
 
