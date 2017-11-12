@@ -12,6 +12,8 @@ public class MovableObject : MonoBehaviour
     public string openedPrefab; // How it looks when its opened
 
     protected Vector3 lastPosition;
+    protected static int updateRate = 5;
+    protected int updateFrame;
 
     #endregion
 
@@ -21,22 +23,27 @@ public class MovableObject : MonoBehaviour
     // Use this for initialization
     protected virtual void Start()
     {
+        updateFrame = 0;
         lastPosition = transform.position;
     }
 
     protected void Update()
     {
 
-        if (transform.position != lastPosition)
+        if (++updateFrame % updateRate == 0)
         {
-            Client.instance.SendMessageToServer("ChangeObjectPosition/" +
-                name + "/" +
-                transform.position.x + "/" +
-                transform.position.y + "/" +
-                transform.position.z);
-        }
 
-        lastPosition = transform.position;
+            if (transform.position != lastPosition)
+            {
+                Client.instance.SendMessageToServer("ChangeObjectPosition/" +
+                    name + "/" +
+                    transform.position.x + "/" +
+                    transform.position.y + "/" +
+                    transform.position.z);
+            }
+
+            lastPosition = transform.position;
+        }
     }
 
     #endregion
