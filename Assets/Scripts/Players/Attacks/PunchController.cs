@@ -38,8 +38,11 @@ public class PunchController : AttackController
 
     protected void DestroyObject(GameObject other)
     {
-        DestroyableObject destroyable = other.GetComponent<DestroyableObject>();
-        destroyable.DestroyMe();
+        if (caster.isPowerOn)
+        {
+            DestroyableObject destroyable = other.GetComponent<DestroyableObject>();
+            destroyable.DestroyMe();
+        }
     }
 
     protected void MoveObject(GameObject other)
