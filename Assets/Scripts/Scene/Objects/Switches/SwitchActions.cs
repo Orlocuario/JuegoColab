@@ -97,14 +97,19 @@ public class SwitchActions : MonoBehaviour
 			GameObject feedbackswitch = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
 			feedbackswitch.GetComponent<Transform> ().position = new Vector2 (41.4f, -16.3f);
 
-			GameObject mageFilter = GameObject.Instantiate (Resources.Load ("FilterMage"));
+			GameObject mageFilter = GameObject.Find("FilterMage");
 
                 if (mageFilter)
                 {
+					Debug.Log ("Tengo un " + mageFilter);
                     PlayerFilter playerFilter = mageFilter.GetComponent<PlayerFilter>();
+					Debug.Log ("Ahora tengo un " + playerFilter);
+
 
                     if (playerFilter)
                     {
+					Debug.Log ("Por último tengo un " + playerFilter);
+
                         playerFilter.SetActive(true);
                     }
                 }

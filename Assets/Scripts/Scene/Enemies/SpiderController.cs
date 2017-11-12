@@ -103,6 +103,11 @@ public class SpiderController : EnemyController
         }
     }
 
+	protected override void Patroll()
+	{
+		//Spider can't Patroll
+	}
+		
     public override void TakeDamage(float damage)
     {
         // Spider doesn't take any damage boy

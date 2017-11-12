@@ -222,7 +222,7 @@ public class EnemyController : MonoBehaviour
         return enemyId;
     }
 
-    public void StartPatrolling()
+    public virtual void StartPatrolling()
     {
         Debug.Log("Enemy " + enemyId + " patrolling: " + transform.position.x + "," + transform.position.y + " to " + currentPatrolPoint.x + "," + currentPatrolPoint.y);
         patrolling = true;
