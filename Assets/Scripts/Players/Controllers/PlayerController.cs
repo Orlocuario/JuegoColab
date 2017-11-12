@@ -8,10 +8,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-    protected Vector3 lastPosition;
     public PlannerPlayer playerObj;
-    protected Transform transform;
-    protected Rigidbody2D rb2d;
     public Collider2D collider;
     public GameObject parent;
 
@@ -61,28 +58,26 @@ public class PlayerController : MonoBehaviour
     public bool isPowerOn;
     public bool mpDepleted;
 
+    protected AnimatorController animControl;
+    protected Vector3 lastPosition;
+    protected Rigidbody2D rb2d;
 
     protected static int attackSpeed = 4;
-    protected string currentAttackName;
     protected bool isAttacking;
-    private bool conectado;
-    private bool canMove;
+    protected bool conectado;
+    protected bool canMove;
     protected float speedX;
     protected float speedY;
 
     private int debuger;
 
-    protected Dictionary<String, float> attackAnimLength;
-    // protected string[] attackAnimNames;
-
     protected virtual void Start()
     {
+        animControl = GameObject.FindObjectOfType<AnimatorController>();
         hpAndMp = GameObject.Find("Canvas").GetComponent<HUDDisplay>();
 
-        attackAnimLength = new Dictionary<String, float>();
         levelManager = FindObjectOfType<LevelManager>();
         collider = GetComponent<Collider2D>();
-        transform = GetComponent<Transform>();
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
@@ -91,7 +86,7 @@ public class PlayerController : MonoBehaviour
         controlOverEnemies = false;
         isAttacking = false;
         localPlayer = false;
-        isGrounded = false; 
+        isGrounded = false;
         mpDepleted = false;
         isPowerOn = false;
         conectado = true;
@@ -109,18 +104,6 @@ public class PlayerController : MonoBehaviour
         SetGravity(gravity);
 
         IgnoreCollisionBetweenPlayers();
-        LoadAnimationLength();
-    }
-
-    protected virtual void LoadAnimationLength()
-    {
-        RuntimeAnimatorController ac = animator.runtimeAnimatorController;
-
-        foreach (AnimationClip animationClip in ac.animationClips)
-        {
-            attackAnimLength.Add(animationClip.name, animationClip.length);
-        }
-
     }
 
     protected virtual void Update()
@@ -307,7 +290,7 @@ public class PlayerController : MonoBehaviour
         canMove = false;
         animator.SetFloat("Speed", 0);
         animator.SetBool("IsGrounded", true);
-        animator.SetBool("IsAttacking", false);
+        animator.SetBool("Attacking", false);
     }
 
     public virtual void ResumeMoving()
@@ -503,6 +486,8 @@ public class PlayerController : MonoBehaviour
             Client.instance.SendMessageToServer(message);
         }
 
+        StartCoroutine(animControl.StartAnimation("TakingDamage", this.gameObject));
+
     }
 
     protected virtual void SetParticlesAnimationState(bool activo)
@@ -625,18 +610,6 @@ public class PlayerController : MonoBehaviour
     public void SendMPDataToServer()
     {
         Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + mpSpendRate);
-    }
-
-    public virtual IEnumerator Attacking()
-    {
-        float animLength = attackAnimLength[currentAttackName];
-
-        yield return new WaitForSeconds(animLength);
-
-        isAttacking = false;
-
-        animator.SetFloat("Speed", Mathf.Abs(speedX));
-        animator.SetBool("IsAttacking", isAttacking);
     }
 
 }

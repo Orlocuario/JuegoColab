@@ -25,23 +25,27 @@ public class WarriorController : PlayerController
     {
         isAttacking = true;
 
-        numHits++;
-        if (numHits % 2 == 0)
-        {
-            animator.SetBool("IsAttacking2", isAttacking);
-            currentAttackName = "WarriorAttack2";
-        }
-        else
-        {
-            animator.SetBool("IsAttacking", isAttacking);
-            currentAttackName = "WarriorAttack";
-        }
-
         GameObject punch = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Punch"));
         PunchController punchController = punch.GetComponent<PunchController>();
         punchController.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
 
-        StartCoroutine("Attacking");
+        if (!animControl)
+        {
+            Debug.Log("AnimatorControl not found in " + name);
+            return;
+        }
+
+        numHits++;
+        if (numHits % 2 == 0)
+        {
+            StartCoroutine(animControl.StartAnimation("Attacking2", this.gameObject));
+
+        }
+        else
+        {
+            StartCoroutine(animControl.StartAnimation("Attacking", this.gameObject));
+        }
+
     }
 
     public override void SetAttack()
@@ -52,19 +56,6 @@ public class WarriorController : PlayerController
     protected override void SetParticlesAnimationState(bool activo)
     {
         particulas.SetActive(activo);
-    }
-    
-    public override IEnumerator Attacking()
-    {
-        float animLength = attackAnimLength[currentAttackName];
-
-        yield return new WaitForSeconds(animLength);
-
-        isAttacking = false;
-
-        animator.SetFloat("Speed", Mathf.Abs(speedX));
-        animator.SetBool("IsAttacking", isAttacking);
-        animator.SetBool("IsAttacking2", isAttacking);
     }
 
 }

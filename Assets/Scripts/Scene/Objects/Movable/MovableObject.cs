@@ -11,9 +11,8 @@ public class MovableObject : MonoBehaviour
     public string openningTrigger; // The trigger that makes dissapear the object
     public string openedPrefab; // How it looks when its opened
 
-    protected Dictionary<string, float> animLengths;
+    protected AnimatorController animControl;
     protected Rigidbody2D rgbd;
-    protected Animator animator;
 
     #endregion
 
@@ -23,10 +22,8 @@ public class MovableObject : MonoBehaviour
     // Use this for initialization
     protected virtual void Start()
     {
-        animLengths = new Dictionary<string, float>();
-        animator = GetComponent<Animator>();
         rgbd = GetComponent<Rigidbody2D>();
-        LoadAnimationLength();
+
     }
 
     #endregion
@@ -49,11 +46,13 @@ public class MovableObject : MonoBehaviour
                         force.y);
             }
 
-            if (animator)
+            if (!animControl)
             {
-                animator.SetBool("Moving", true);
-                StartCoroutine("Moving");
+                Debug.Log("AnimatorControl not found in " + name);
+                return;
             }
+
+            StartCoroutine(animControl.StartAnimation("Moving", this.gameObject));
         }
     }
 
@@ -115,26 +114,6 @@ public class MovableObject : MonoBehaviour
     protected bool GameObjectIsPunch(GameObject other)
     {
         return other.GetComponent<PunchController>();
-    }
-
-
-    protected virtual void LoadAnimationLength()
-    {
-        RuntimeAnimatorController ac = animator.runtimeAnimatorController;
-
-        foreach (AnimationClip animationClip in ac.animationClips)
-        {
-            animLengths.Add(animationClip.name, animationClip.length);
-        }
-
-    }
-
-    public IEnumerator Moving()
-    {
-        float animLength = animLengths["Moving"];
-
-        yield return new WaitForSeconds(animLength);
-        animator.SetBool("Moving", false);
     }
 
     #endregion

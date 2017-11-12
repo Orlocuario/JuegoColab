@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
-
     public Vector2[] patrollingPoints;
     public CircleCollider2D alertZone;
 
@@ -14,13 +13,12 @@ public class EnemyController : MonoBehaviour
     public int directionX;  // 1 = derecha, -1 = izquierda
 
     protected Dictionary<string, bool> ignoresCollisions;
-    protected Vector2 force = new Vector2(0, 0);
+    protected AnimatorController animControl;
     protected PlayerController localPlayer;
     protected Vector2 currentPatrolPoint;
     protected LevelManager levelManager;
-    protected GameObject attackTarget;
-    protected Animator animator;
     protected Rigidbody2D rb2d;
+    protected Vector2 force;
 
     protected int currentPatrolPointCount;
     protected float maxHp = 100f;
@@ -37,7 +35,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Start()
     {
-        animator = this.gameObject.GetComponent<Animator>();
+        animControl = GameObject.FindObjectOfType<AnimatorController>();
         levelManager = FindObjectOfType<LevelManager>();
         rb2d = GetComponent<Rigidbody2D>();
 
@@ -70,12 +68,8 @@ public class EnemyController : MonoBehaviour
 
     protected void Attack(GameObject player)
     {
-        // Set the attacking property of the animator
-        if (!animator.GetBool("isAttacking"))
-        {
-            animator.SetBool("isAttacking", true);
-            attackTarget = player;
-        }
+        StartCoroutine(animControl.StartAnimation("Attacking", this.gameObject));
+        DealDamage(player);
     }
 
     protected virtual void Patroll()
@@ -107,7 +101,6 @@ public class EnemyController : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
-        animator.SetBool("isDamaged", true);
 
         if (Client.instance != null)
         {
@@ -122,6 +115,9 @@ public class EnemyController : MonoBehaviour
                 }
             }
         }
+
+        StartCoroutine(animControl.StartAnimation("TakingDamage", this.gameObject));
+
     }
 
     protected virtual void UpdateCollisionsWithPlayer(GameObject player, bool ignores)
@@ -183,7 +179,7 @@ public class EnemyController : MonoBehaviour
 
     public virtual void Die()
     {
-        animator.SetBool("isDead", true);
+        StartCoroutine(animControl.StartAnimation("Dying", this.gameObject));
     }
 
     #endregion
@@ -382,28 +378,12 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void OnDamageEnd(string s)
-    {
-        animator.SetBool("isDamaged", false);
-    }
-
     public void OnDiedEnd(string s)
     {
         this.gameObject.SetActive(false);
         Destroy(this.gameObject);
     }
 
-    // This is called from the animator
-    public virtual void OnAttackStarted(string s)
-    {
-        DealDamage(attackTarget);
-        attackTarget = null;
-    }
-
-    public virtual void OnAttackEnd(string s)
-    {
-        animator.SetBool("isAttacking", false);
-    }
     #endregion
 
 }
