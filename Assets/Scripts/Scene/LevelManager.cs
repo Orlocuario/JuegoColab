@@ -101,34 +101,33 @@ public class LevelManager : MonoBehaviour
 
     private void ReadNPCMessage(NPCtrigger NPC)
     {
-
-        if (NPC.activeParticles && NPC.activeParticles.isPlaying)
+        if (NPC.activeFeedback && NPC.activeFeedback.particles && NPC.activeFeedback.particles.isPlaying)
         {
-            NPC.activeParticles.Stop();
+            NPC.activeFeedback.particles.Stop();
         }
 
-        if (NPC.particles != null && NPC.particles.Length > 0)
+        if (NPC.feedbackCount++ >= NPC.feedbacks.Length)
         {
-            if (NPC.particles[NPC.messageCount])
+            npcLog.SetActive(false);
+            return;
+        }
+
+        NPC.activeFeedback = NPC.feedbacks[NPC.feedbackCount];
+
+        if (NPC.activeFeedback)
+        {
+            if (NPC.activeFeedback.particles != null)
             {
-                NPC.activeParticles = NPC.particles[NPC.messageCount];
-                NPC.activeParticles.Play();
+                NPC.activeFeedback.particles.Play();
+            }
+
+            if (NPC.activeFeedback.message != null)
+            {
+                npcLogText.text = NPC.activeFeedback.message;
             }
         }
 
-        if (NPC.messages[NPC.messageCount] != null)
-        {
-            npcLogText.text = NPC.messages[NPC.messageCount];
-        }
-
-        if (++NPC.messageCount >= NPC.messages.Length)
-        {
-            npcLog.SetActive(false);
-        }
-        else
-        {
-            StartCoroutine(WaitToReadNPCMessage(NPC));
-        }
+        StartCoroutine(WaitToReadNPCMessage(NPC));
 
     }
 
@@ -380,10 +379,10 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator WaitToReadNPCMessage(NPCtrigger NPC)
     {
-        yield return new WaitForSeconds(NPC.readTime);
+        yield return new WaitForSeconds(NPC.feedbackTime);
         ReadNPCMessage(NPC);
     }
 
     #endregion
-    
+
 }

@@ -7,18 +7,17 @@ public class NPCtrigger : MonoBehaviour
 
     private LevelManager theLevelManager;
 
-    public ParticleSystem activeParticles;
-    public ParticleSystem[] particles;
+    public NPCFeedback activeFeedback;
+    public NPCFeedback[] feedbacks;
 
-    public string[] messages;
-    public int messageCount;
-    public float readTime;
+    public float feedbackTime;
+    public int feedbackCount;
 
     // Use this for initialization
     void Start()
     {
         theLevelManager = FindObjectOfType<LevelManager>();
-        messageCount = 0;
+        feedbackCount = 0;
     }
 
     // Update is called once per frame
