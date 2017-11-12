@@ -9,16 +9,7 @@ public class DestroyableBox : DestroyableObject
     public Sprite brokenBox;
 
     #endregion
-
-    #region Start
-
-    protected override void Start()
-    {
-        destroyDelayTime = 2f;
-    }
-
-    #endregion
-
+      
     #region Common
 
     public override void DestroyMe(bool destroyedFromLocal)
