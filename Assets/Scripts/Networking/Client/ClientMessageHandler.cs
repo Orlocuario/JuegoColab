@@ -213,16 +213,17 @@ public class ClientMessageHandler
         int directionX = Int32.Parse(msg[3]);
         float posX = float.Parse(msg[4]);
         float posY = float.Parse(msg[5]);
+        bool registered = false;
 
-		if (!client.GetLocalPlayer ()) 
-		{
-			Debug.Log ("No existe el local player");
-		}
+        if (!client.GetLocalPlayer())
+        {
+            Debug.Log("No existe el local player");
+        }
 
-
-		if (client.GetLocalPlayer() && client.GetLocalPlayer().controlOverEnemies)
+        if (client.GetLocalPlayer() && client.GetLocalPlayer().controlOverEnemies)
         {
             registeredEnemies.Add(enemyId);
+            registered = true;
 
             if (registeredEnemies.Count == enemies.Length)
             {
@@ -240,12 +241,20 @@ public class ClientMessageHandler
 
             foreach (EnemyController enemy in enemies)
             {
+                Debug.Log(enemy.name + " iID " + enemy.gameObject.GetInstanceID() + " ==  " + instanceId + " : " + (enemy.gameObject.GetInstanceID() == instanceId));
                 if (enemy.gameObject.GetInstanceID() == instanceId)
                 {
                     enemy.Initialize(enemyId, directionX, posX, posY);
+                    registered = true;
                 }
             }
         }
+
+        if (!registered)
+        {
+            Debug.Log("Enemy with iID " + instanceId + " id " + enemyId + " NOT REGISTERED");
+        }
+
     }
 
     public void EnemiesStartPatrolling()
