@@ -34,7 +34,8 @@ public class MageController : PlayerController
         FireballController controller = fireball.GetComponent<FireballController>();
         controller.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
 
-        StartCoroutine("Attacking");
+        StartCoroutine(animControl.StartAnimation("Attacking", this.gameObject));
+
     }
 
     public bool ProtectedByShield(GameObject player)

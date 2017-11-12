@@ -26,8 +26,6 @@ public class MovableObject : MonoBehaviour
         animLengths = new Dictionary<string, float>();
         animator = GetComponent<Animator>();
         rgbd = GetComponent<Rigidbody2D>();
-        moveAnimTime = 1;
-
         LoadAnimationLength();
     }
 

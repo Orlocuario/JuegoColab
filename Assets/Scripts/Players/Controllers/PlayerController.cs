@@ -8,10 +8,7 @@ using UnityEngine;
 public class PlayerController : MonoBehaviour
 {
 
-    protected Vector3 lastPosition;
     public PlannerPlayer playerObj;
-    protected Transform transform;
-    protected Rigidbody2D rb2d;
     public Collider2D collider;
     public GameObject parent;
 
@@ -61,28 +58,30 @@ public class PlayerController : MonoBehaviour
     public bool isPowerOn;
     public bool mpDepleted;
 
+    protected AnimatorController animControl;
+    protected Vector3 lastPosition;
+    protected Rigidbody2D rb2d;
 
     protected static int attackSpeed = 4;
     protected string currentAttackName;
     protected bool isAttacking;
-    private bool conectado;
-    private bool canMove;
+    protected bool conectado;
+    protected bool canMove;
     protected float speedX;
     protected float speedY;
 
     private int debuger;
 
     protected Dictionary<String, float> attackAnimLength;
-    // protected string[] attackAnimNames;
 
     protected virtual void Start()
     {
+        animControl = GameObject.FindObjectOfType<AnimatorController>();
         hpAndMp = GameObject.Find("Canvas").GetComponent<HUDDisplay>();
 
         attackAnimLength = new Dictionary<String, float>();
         levelManager = FindObjectOfType<LevelManager>();
         collider = GetComponent<Collider2D>();
-        transform = GetComponent<Transform>();
         rb2d = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
 
