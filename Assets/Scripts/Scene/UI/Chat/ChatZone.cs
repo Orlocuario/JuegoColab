@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ChatZone : MonoBehaviour
 {
 
-    private GlobalDisplayHUD displayHudScript;
+    private HUDDisplay displayHudScript;
     public GameObject chatButtonOff;
     public GameObject chatButtonOn;
 
@@ -23,7 +23,7 @@ public class ChatZone : MonoBehaviour
         regenerationFrame = 0;
         activated = false;
         InitializeChatButtons();
-        displayHudScript = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
+        displayHudScript = GameObject.Find("Canvas").GetComponent<HUDDisplay>();
     }
 
     private void Update()

@@ -12,10 +12,6 @@ public class MovableObject : MonoBehaviour
     public string openningTrigger; // The trigger that makes dissapear the object
     public string openedPrefab; // How it looks when its opened
 
-    protected Vector3 lastPosition;
-    protected static int updateRate = 25;
-    protected int updateFrame;
-
     #endregion
 
     #region Start & Update
@@ -25,27 +21,6 @@ public class MovableObject : MonoBehaviour
     protected virtual void Start()
     {
         rgbd = GetComponent<Rigidbody2D>();
-        updateFrame = 0;
-        lastPosition = transform.position;
-    }
-
-    protected void Update()
-    {
-
-        if (transform.position != lastPosition)
-        {
-
-            if (++updateFrame % updateRate == 0)
-            {
-                Client.instance.SendMessageToServer("ChangeObjectPosition/" +
-                    name + "/" +
-                    transform.position.x + "/" +
-                    transform.position.y + "/" +
-                    transform.position.z);
-            }
-
-            lastPosition = transform.position;
-        }
     }
 
     #endregion
@@ -58,6 +33,15 @@ public class MovableObject : MonoBehaviour
         {
             Debug.Log(name + " moved with force " + force);
             rgbd.AddForce(force);
+
+            if (Client.instance)
+            {
+
+                Client.instance.SendMessageToServer("ObjectMoved/" +
+                        name + "/" +
+                        force.x + "/" +
+                        force.y);
+            }
         }
     }
 

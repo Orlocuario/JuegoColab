@@ -32,6 +32,9 @@ public class ClientMessageHandler
             case "SetCharId":
                 HandleSetCharId(msg);
                 break;
+            case "ObjectMoved":
+                HandleObjectMoved(msg);
+                break;
             case "ChangeObjectPosition":
                 HandleChangeObjectPosition(msg);
                 break;
@@ -370,7 +373,7 @@ public class ClientMessageHandler
         {
             return;
         }
-        GlobalDisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
+        HUDDisplay displayHudScript = GameObject.Find("Canvas").GetComponent<HUDDisplay>();
         displayHudScript.CurrentHP(msg[1]);
     }
 
@@ -381,7 +384,7 @@ public class ClientMessageHandler
         {
             return;
         }
-        GlobalDisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
+        HUDDisplay displayHudScript = GameObject.Find("Canvas").GetComponent<HUDDisplay>();
         displayHudScript.CurrentMP(msg[1]);
     }
 
@@ -392,7 +395,7 @@ public class ClientMessageHandler
         {
             return;
         }
-        GlobalDisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
+        HUDDisplay displayHudScript = GameObject.Find("Canvas").GetComponent<HUDDisplay>();
         displayHudScript.ExperienceBar(msg[1]);
     }
 
@@ -548,5 +551,34 @@ public class ClientMessageHandler
         }
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
         scriptLevel.ReloadLevel(array[1]);
+    }
+
+    private void HandleObjectMoved(string[] msg)
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "ClientScene")
+        {
+            return;
+        }
+
+        string name = msg[1];
+        float forceX = float.Parse(msg[2]);
+        float forceY = float.Parse(msg[3]);
+
+        Vector2 force = new Vector2(forceX, forceY);
+
+        GameObject movableObject = GameObject.Find(name);
+
+        if (!movableObject)
+        {
+            return;
+        }
+
+        MovableObject movableController = movableObject.GetComponent<MovableObject>();
+
+        if (movableController)
+        {
+            movableController.MoveMe(force);
+        }
     }
 }

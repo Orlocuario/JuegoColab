@@ -21,7 +21,7 @@ public class PlayerController : MonoBehaviour
     public Animator animator;
 
     private LevelManager levelManager;
-    private GlobalDisplayHUD hpAndMp;
+    private HUDDisplay hpAndMp;
     private SpriteRenderer sprite;
 
     public static float maxAcceleration = 1; //100% del speed
@@ -77,7 +77,7 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void Start()
     {
-        hpAndMp = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
+        hpAndMp = GameObject.Find("Canvas").GetComponent<HUDDisplay>();
 
         attackAnimLength = new Dictionary<String, float>();
         levelManager = FindObjectOfType<LevelManager>();

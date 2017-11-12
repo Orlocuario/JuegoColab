@@ -18,7 +18,6 @@ public class Inventory : MonoBehaviour
     public void Start()
     {
         new Items();
-        //instance setteada desde el bag button
     }
 
     public void AddItemToInventory(GameObject itemToAdd)
