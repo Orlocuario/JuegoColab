@@ -7,7 +7,6 @@ public class SceneAnimator : MonoBehaviour
 {
     #region Attributes
 
-    private Animator[] animators;
 
     #endregion
 
@@ -15,8 +14,6 @@ public class SceneAnimator : MonoBehaviour
 
     void Start()
     {
-        animators = GameObject.FindObjectsOfType<Animator>();
-        Debug.Log("Found " + animators.Length + " animators");
     }
 
     #endregion
@@ -25,7 +22,7 @@ public class SceneAnimator : MonoBehaviour
 
     public IEnumerator StartAnimation(string animName, GameObject gameObject)
     {
-        Animator animator = FindAnimator(gameObject.name);
+        Animator animator = gameObject.GetComponent<Animator>();
 
         Debug.Log(gameObject.name + " animator is " + animator);
 
@@ -41,9 +38,10 @@ public class SceneAnimator : MonoBehaviour
                 Debug.Log("Setting animation " + animName + " to false");
 
                 animator.SetBool(animName, false);
-            } else
+            }
+            else
             {
-                Debug.Log(animName  + " animation was not found in " + animator);
+                Debug.Log(animName + " animation was not found in " + animator);
             }
         }
     }
@@ -70,21 +68,6 @@ public class SceneAnimator : MonoBehaviour
         }
 
         return -1;
-    }
-
-    private Animator FindAnimator(string name)
-    {
-        Animator animator = null;
-
-        for (int i = 0; i < animators.Length; i++)
-        {
-            if (animators[i].gameObject.name == name)
-            {
-                animator = animators[i];
-            }
-        }
-
-        return animator;
     }
 
     #endregion
