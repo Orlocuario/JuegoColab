@@ -4,12 +4,17 @@ using UnityEngine;
 
 public class PunchController : AttackController
 {
+    #region Attributes
 
-    CircleCollider2D collider2d;
-    ParticleSystem particles;
+    private CircleCollider2D collider2d;
+    private ParticleSystem particles;
 
     private static Vector2 attackForce = new Vector2(2000f, 100f);
     private static float maxColliderRadius = .25f;
+
+    #endregion
+
+    #region Start & Update
 
     protected override void Start()
     {
@@ -26,23 +31,23 @@ public class PunchController : AttackController
         //particles.shape.radius = (currentDistance / maxDistance) * maxColliderRadius;
     }
 
-    protected bool CollidedWithDestroyable(GameObject other)
-    {
-        return other.GetComponent<DestroyableObject>();
-    }
+    #endregion
 
-    protected bool CollidedWithMovable(GameObject other)
-    {
-        return other.GetComponent<MovableObject>();
-    }
+    #region Common
 
     protected void DestroyObject(GameObject other)
     {
-        if (caster.isPowerOn)
+        DestroyableObject destroyable = other.GetComponent<DestroyableObject>();
+
+        if (destroyable.reinforced)
         {
-            DestroyableObject destroyable = other.GetComponent<DestroyableObject>();
-            destroyable.DestroyMe(true);
+            if (!caster.isPowerOn)
+            {
+                return;
+            }
         }
+
+        destroyable.DestroyMe(true);
     }
 
     protected void MoveObject(GameObject other)
@@ -63,6 +68,10 @@ public class PunchController : AttackController
 
         movable.MoveMe(force, true);
     }
+
+    #endregion
+
+    #region Events
 
     private new void OnCollisionEnter2D(Collision2D collision)
     {
@@ -87,5 +96,21 @@ public class PunchController : AttackController
 
         Destroy(this.gameObject, destroyDelayTime);
     }
+
+    #endregion
+
+    #region Utils
+
+    protected bool CollidedWithDestroyable(GameObject other)
+    {
+        return other.GetComponent<DestroyableObject>();
+    }
+
+    protected bool CollidedWithMovable(GameObject other)
+    {
+        return other.GetComponent<MovableObject>();
+    }
+
+    #endregion
 
 }

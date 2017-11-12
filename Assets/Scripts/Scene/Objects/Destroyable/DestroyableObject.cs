@@ -8,6 +8,7 @@ public class DestroyableObject : MonoBehaviour
     #region Attributes
 
     public float destroyDelayTime;
+    public bool reinforced;
 
     #endregion
 
