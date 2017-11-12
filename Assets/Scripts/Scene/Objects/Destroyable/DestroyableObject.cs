@@ -5,19 +5,47 @@ using UnityEngine;
 public class DestroyableObject : MonoBehaviour
 {
 
-    protected static float destroyDelayTime = .04f;
+    #region Attributes
 
-    // Use this for initialization
+    public float destroyDelayTime;
+
+    #endregion
+
+    #region Start
+
     protected virtual void Start()
     {
-
+        destroyDelayTime = .04f;
     }
 
-    public virtual void DestroyMe()
+    #endregion
+
+    #region Common
+
+    public virtual void DestroyMe(bool destroyedFromLocal)
     {
-        // Change sprites with smooth thing
+
+        if (destroyedFromLocal)
+        {
+            SendDestroyDataToServer();
+        }
+
         Destroy(this.gameObject, destroyDelayTime);
+    }
+
+    #endregion
+
+    #region Messaging
+
+    protected void SendDestroyDataToServer()
+    {
+        if (Client.instance)
+        {
+            Client.instance.SendMessageToServer("ObjectDestroyed/" + name + "/");
+        }
 
     }
+
+    #endregion
 
 }

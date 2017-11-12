@@ -41,7 +41,7 @@ public class PunchController : AttackController
         if (caster.isPowerOn)
         {
             DestroyableObject destroyable = other.GetComponent<DestroyableObject>();
-            destroyable.DestroyMe();
+            destroyable.DestroyMe(true);
         }
     }
 
@@ -61,7 +61,7 @@ public class PunchController : AttackController
             force.x *= -1;
         }
 
-        movable.MoveMe(force);
+        movable.MoveMe(force, true);
     }
 
     private new void OnCollisionEnter2D(Collision2D collision)
