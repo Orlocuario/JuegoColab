@@ -23,7 +23,11 @@ public class KillingObject : MonoBehaviour
     {
         particles = GetComponent<ParticleSystem>();
         levelManager = FindObjectOfType<LevelManager>();
-        SetActive(activated);
+
+        if (particles)
+        {
+            SetActive(activated);
+        }
     }
 
     #endregion
@@ -32,7 +36,14 @@ public class KillingObject : MonoBehaviour
 
     public virtual void SetActive(bool active)
     {
+  
         activated = active;
+
+        if (!particles)
+        {
+            Debug.Log("This killing object does not have particles");
+            return;
+        }
 
         if (active)
         {
