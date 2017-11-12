@@ -11,8 +11,10 @@ public class SceneAnimator : MonoBehaviour
 
     void Start()
     {
+		animLengths = new Dictionary<string, float>(); 
         animators = GameObject.FindObjectsOfType<Animator>();
-        LoadAnimatorsData();
+		Debug.Log ("Found " + animators.Length + " animators");
+		LoadAnimatorsData();
     }
 
     #region Common
@@ -21,12 +23,16 @@ public class SceneAnimator : MonoBehaviour
     {
         Animator animator = FindAnimator(gameObject.name);
 
+		Debug.Log (gameObject.name + " animator is " + animator);
+
         if (animator)
         {
             animator.SetBool(animName, true);
 
-            float animLength = animLengths[animName];
+			float animLength = animLengths[gameObject.GetInstanceID () + "/" + animName];
             yield return new WaitForSeconds(animLength);
+
+			Debug.Log ("Setting animation " + animName + " to false"); 
 
             animator.SetBool(animName, false);
         }
@@ -42,10 +48,12 @@ public class SceneAnimator : MonoBehaviour
         {
             RuntimeAnimatorController ac = animator.runtimeAnimatorController;
 
-            foreach (AnimationClip clip in ac.animationClips)
-            {
-                animLengths.Add(clip.name, clip.length);
-            }
+			if (ac) 
+				{
+					foreach (AnimationClip clip in ac.animationClips) {
+					animLengths.Add (animator.gameObject.GetInstanceID () + "/" + clip.name, clip.length);
+				}
+			}
         }
     }
 

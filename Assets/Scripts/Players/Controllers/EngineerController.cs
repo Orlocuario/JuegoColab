@@ -35,6 +35,8 @@ public class EngineerController : PlayerController
 
         StartCoroutine(animControl.StartAnimation("Attacking", this.gameObject));
 
+		StartCoroutine (WaitAttacking ());
+
     }
 
     protected override bool IsJumping(bool isGrounded)

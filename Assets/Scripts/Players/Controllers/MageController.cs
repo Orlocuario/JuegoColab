@@ -40,6 +40,8 @@ public class MageController : PlayerController
 
         StartCoroutine(animControl.StartAnimation("Attacking", this.gameObject));
 
+		StartCoroutine (WaitAttacking ());
+
     }
 
     public bool ProtectedByShield(GameObject player)

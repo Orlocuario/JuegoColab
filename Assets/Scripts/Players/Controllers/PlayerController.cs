@@ -67,6 +67,7 @@ public class PlayerController : MonoBehaviour
     protected bool canMove;
     protected float speedX;
     protected float speedY;
+	public static float attackRate = .5f;
 
     private int debuger;
 
@@ -610,5 +611,11 @@ public class PlayerController : MonoBehaviour
     {
         Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + mpSpendRate);
     }
+
+	public IEnumerator WaitAttacking ()
+	{
+		yield return new WaitForSeconds (attackRate);
+		isAttacking = false;
+	}
 
 }

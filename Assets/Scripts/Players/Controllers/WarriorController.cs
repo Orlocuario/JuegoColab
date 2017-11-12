@@ -46,6 +46,8 @@ public class WarriorController : PlayerController
             StartCoroutine(animControl.StartAnimation("Attacking", this.gameObject));
         }
 
+		StartCoroutine (WaitAttacking ());
+
     }
 
     public override void SetAttack()
