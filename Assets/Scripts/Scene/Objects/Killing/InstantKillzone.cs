@@ -6,11 +6,16 @@ public class InstantKillzone : MonoBehaviour {
 
 	private GameObject killZone;
 
+    public ParticleSystem particles;
+    publci 
+
     // TODO: REFACTOR THIS
 
 	// Use this for initialization
 	void Start () {
-		
+
+        particles = GetComponent<ParticleSystem>();
+
 	}
 		
 	public void OnTriggerEnter2D(Collider2D other)

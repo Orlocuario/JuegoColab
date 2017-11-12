@@ -6,7 +6,7 @@ using UnityEngine;
  * When a player touches this objects it loses health and respwans,
  * allows for some players to pass
  */
-public class PlayerBlocker : KillingObject
+public class PlayerFilter : KillingObject
 {
     #region Attributes
 

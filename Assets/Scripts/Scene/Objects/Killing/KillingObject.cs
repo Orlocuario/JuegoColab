@@ -10,6 +10,9 @@ public class KillingObject : MonoBehaviour
     #region Attributes
 
     protected LevelManager levelManager;
+
+    public ParticleSystem particles;
+    public bool activated;
     public string damage;
 
     #endregion
@@ -18,17 +21,40 @@ public class KillingObject : MonoBehaviour
 
     protected void Start()
     {
+        particles = GetComponent<ParticleSystem>();
         levelManager = FindObjectOfType<LevelManager>();
+        SetActive(activated);
     }
 
     #endregion
 
     #region Common
 
+    public virtual void SetActive(bool active)
+    {
+        activated = active;
+
+        if (active)
+        {
+            particles.Play();
+        }
+        else
+        {
+            particles.Stop();
+        }
+    }
+
     protected virtual void Kill()
     {
-        Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + damage);
-        levelManager.Respawn();
+        if (activated)
+        {
+            levelManager.Respawn();
+
+            if (Client.instance)
+            {
+                Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + damage);
+            }
+        }
     }
 
     #endregion
