@@ -192,7 +192,11 @@ public class CameraController : MonoBehaviour
         transform.position = new Vector3(x, y, transform.position.z);
 		if (sinChat) {
 			panelChat.SetActive (false);
-			inputChat.SetActive (false);			
+			if (inputChat) 
+			{
+				inputChat.SetActive (false);			
+
+			}
 		}
     }
 
@@ -229,13 +233,16 @@ public class CameraController : MonoBehaviour
     }
 
     private void SetDefaultValues()
-    {
-        smoothCamera = 3.9f;
-        followAhead = .9f;
-        followUp = 1f;
-        holiwix.orthographicSize = initialSize;
-        currentState = CameraState.Normal;
+	{
+		smoothCamera = 3.9f;
+		followAhead = .9f;
+		followUp = 1f;
+		holiwix.orthographicSize = initialSize;
+		currentState = CameraState.Normal;
 		panelChat.SetActive (true);
-		inputChat.SetActive (true);
-    }
+		if (inputChat) 
+		{
+			inputChat.SetActive (true);
+		}
+	}
 }

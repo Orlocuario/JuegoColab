@@ -32,7 +32,10 @@ public class SpiderController : EnemyController
 
         foreach (CircleCollider2D rockCollider in spiderRock.GetComponents<CircleCollider2D>())
         {
-            Physics2D.IgnoreCollision(rockCollider, gameObject.GetComponent<CircleCollider2D>());
+			foreach (CircleCollider2D spiderCollider in GetComponents<CircleCollider2D>())
+			{
+				Physics2D.IgnoreCollision(rockCollider, spiderCollider);
+			}
         }
     }
 
