@@ -18,10 +18,14 @@ public class SpiderController : EnemyController
         maxHp = 2000f;
         damage = 5;
 
-        upperTunnelPosition = new Vector3(73.38f, 0.73f);
-        bottomTunnelPosition = new Vector3(upperTunnelPosition.x, -3.14f);
+        upperTunnelPosition = new Vector3(73.38f, 0.73f, transform.position.z);
+        bottomTunnelPosition = new Vector3(upperTunnelPosition.x, -3.14f, transform.position.z);
 
         IgnoreCollisionsWithRock();
+
+        lastPosition = transform.position;
+
+        Debug.Log("SPIDER INITIAL POSITION " + lastPosition);
 
         base.Start();
     }
@@ -48,10 +52,10 @@ public class SpiderController : EnemyController
     // Update is called once per frame
     protected override void Update()
     {
-        lastPosition = transform.position;
-
         ProtectTunnel();
         UpdatePosition();
+
+        lastPosition = transform.position;
     }
 
     protected void UpdatePosition()
@@ -70,18 +74,15 @@ public class SpiderController : EnemyController
             return;
         }
 
-        GameObject player = null;
-
         bool playerIsInBottomTunnel = false;
 
-        foreach (GameObject _player in levelManager.players)
+        foreach (GameObject player in levelManager.players)
         {
-            if (Mathf.Abs(transform.position.x - _player.transform.position.x) < alertDistance)
+            if (Mathf.Abs(transform.position.x - player.transform.position.x) < alertDistance)
             {
-                if (_player.transform.position.y <= 0f) // Is in the bottom tunnel
+                if (player.transform.position.y <= 0f) // Is in the bottom tunnel
                 {
                     playerIsInBottomTunnel = true;
-                    player = _player;
                     break;
                 }
             }
@@ -115,7 +116,7 @@ public class SpiderController : EnemyController
 
     protected override void SendMessageToServer(string message)
     {
-        if (Client.instance.GetLocalPlayer().controlOverEnemies)
+        if (Client.instance && Client.instance.GetLocalPlayer() && Client.instance.GetLocalPlayer().controlOverEnemies)
         {
             Client.instance.SendMessageToServer(message);
         }
