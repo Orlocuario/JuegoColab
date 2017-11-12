@@ -26,6 +26,9 @@ public class ServerMessageHandler
             case "RequestCharId":
                 SendCharIdAndControl(connectionId);
                 break;
+            case "ObjectMoved":
+                SendObjectMoved(message, connectionId);
+                break;
             case "ChangeObjectPosition":
                 SendUpdatedObjectPosition(message, connectionId);
                 break;
@@ -403,6 +406,13 @@ public class ServerMessageHandler
         player.pressingRight = pressingRight;
 
         room.SendMessageToAllPlayersExceptOne(message, connectionID);
+    }
+
+    private void SendObjectMoved(string message, int connectionId)
+    {
+        NetworkPlayer player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 
     private void SendUpdatedObjectPosition(string message, int connectionId)

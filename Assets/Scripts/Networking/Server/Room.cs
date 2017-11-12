@@ -11,7 +11,7 @@ public class Room
     public ServerMessageHandler sender;
     public Server server;
 
-    public GlobalHpMpHUD hpManaGer;
+    public HUDHpMp hpManaGer;
 
     public List<NetworkPlayer> players;
     public List<NetworkEnemy> enemies;
@@ -37,7 +37,7 @@ public class Room
         this.maxJugadores = maxJugadores;
         this.id = id;
 
-        hpManaGer = new GlobalHpMpHUD(this);
+        hpManaGer = new HUDHpMp(this);
         switchs = new List<ServerSwitch>();
         players = new List<NetworkPlayer>();
         enemies = new List<NetworkEnemy>();
