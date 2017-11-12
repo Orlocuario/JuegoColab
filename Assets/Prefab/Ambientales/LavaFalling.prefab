@@ -105,6 +105,7 @@ GameObject:
   - component: {fileID: 4721229216633926}
   - component: {fileID: 114167679995267102}
   - component: {fileID: 61627450389889884}
+  - component: {fileID: 61260542637385460}
   m_Layer: 0
   m_Name: LavaFalling
   m_TagString: Untagged
@@ -171,7 +172,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1982893290950926}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 44.662216, y: -9.809, z: 0}
+  m_LocalPosition: {x: 16.860407, y: 2.3857877, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4349249242988598}
@@ -195,6 +196,20 @@ Transform:
   m_Father: {fileID: 4721229216633926}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!61 &61260542637385460
+BoxCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1982893290950926}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0.0041849613, y: -0.3306054}
+  serializedVersion: 2
+  m_Size: {x: 0.40574682, y: 1.4603364}
 --- !u!61 &61627450389889884
 BoxCollider2D:
   m_ObjectHideFlags: 1
