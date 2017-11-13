@@ -214,7 +214,13 @@ public class ClientMessageHandler
         float posX = float.Parse(msg[4]);
         float posY = float.Parse(msg[5]);
 
-        if (client.GetLocalPlayer().controlOverEnemies)
+		if (!client.GetLocalPlayer ()) 
+		{
+			Debug.Log ("No existe el local player");
+		}
+
+
+		if (client.GetLocalPlayer() && client.GetLocalPlayer().controlOverEnemies)
         {
             registeredEnemies.Add(enemyId);
 
