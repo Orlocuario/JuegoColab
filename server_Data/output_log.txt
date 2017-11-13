@@ -17,7 +17,7 @@ Platform assembly: C:\Users\cnsae\Downloads\JuegoColab\server_Data\Managed\Unity
 Loading C:\Users\cnsae\Downloads\JuegoColab\server_Data\Managed\UnityEngine.Networking.dll into Unity Child Domain
 Platform assembly: C:\Users\cnsae\Downloads\JuegoColab\server_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll (this message is harmless)
 Loading C:\Users\cnsae\Downloads\JuegoColab\server_Data\Managed\UnityEngine.PlaymodeTestsRunner.dll into Unity Child Domain
-- Completed reload, in  0.479 seconds
+- Completed reload, in  0.088 seconds
 Platform assembly: C:\Users\cnsae\Downloads\JuegoColab\server_Data\Managed\System.Core.dll (this message is harmless)
 Platform assembly: C:\Users\cnsae\Downloads\JuegoColab\server_Data\Managed\System.dll (this message is harmless)
 OnLevelWasLoaded was found on Reporter
@@ -30,7 +30,7 @@ desktop: 1366x768 60Hz; virtual: 1366x768 at 0,0
 <RI> Initializing input.
 <RI> Input initialized.
 <RI> Initialized touch support.
-UnloadTime: 41.808056 ms
+UnloadTime: 10.269128 ms
 Server listening on port 7777
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
@@ -55,1704 +55,1043 @@ Client 3 connected
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:44 - from(3): RequestCharId
+ 3:00:26 - from(1): RequestCharId
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:44 - from(1): RequestCharId
+ 3:00:26 - from(3): RequestCharId
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:44 - from(2): RequestCharId
+ 3:00:27 - from(2): RequestCharId
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:45 - from(3): NewChatMessage/Engineer: Ha Aparecido!
+ 3:00:27 - from(3): NewChatMessage/Engineer: Ha Aparecido!
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:45 - from(1): NewChatMessage/Mage: Ha Aparecido!
+ 3:00:27 - from(1): NewChatMessage/Mage: Ha Aparecido!
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:45 - from(2): NewChatMessage/Warrior: Ha Aparecido!
+ 3:00:27 - from(2): NewChatMessage/Warrior: Ha Aparecido!
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:46 - from(1): 2/pj1 - mage pj2 - warrior pj3 - inventor poi1 - poi poi2 - poi poi3 - poi poi4 - poi poi5 - poi poi6 - poi poi7 - poi poi8 - poi poi9 - poi poi10 - poi poi11 - poi poi12 - poi poi13 - poi poi14 - poi poi15 - poi poi16 - poi poi17 - poi poi18 - poi poi19 - poi poi20 - poi poi21 - poi poi22 - poi poi23 - poi door1 - door door2 - door door3 - door jump1 - jump jump2 - jump jump3 - jump jump4 - jump barrier1 - barrier enemy1 - enemy rollable1 - rollable obstacle1 - obstacle obstacle2 - obstacle obstacle3 - obstacle obstacle4 - obstacle obstacle5 - obstacle gear1 - gear rune1 - rune rune2 - rune rune3 - rune step1 - step step2 - step lever1 - lever machine1 - machine triple1 - triple doble1 - doble /(player-at pj1 poi1)(player-distinct pj1 pj2)(player-distinct pj1 pj3)(player-at pj2 poi1)(player-distinct pj2 pj1)(player-distinct pj2 pj3)(player-at pj3 poi1)(player-distinct pj3 pj1)(player-distinct pj3 pj2)(route-to poi1 poi2)(route-to poi2 poi1)(route-to poi2 poi3)(route-to poi2 poi4)(route-block poi2 poi3 jump1)(route-block poi2 poi4 obstacle1)(route-to poi3 poi2)(route-to poi4 poi2)(route-to poi4 poi5)(route-block poi4 poi5 obstacle2)(route-to poi5 poi2)(route-to poi5 poi4)(route-to poi5 poi6)(route-to poi5 poi8)(route-to poi5 poi14)(route-block poi5 poi4 obstacle2)(route-block poi5 poi6 jump2)(route-block poi5 poi8 obstacle3)(route-block poi5 poi14 door1)(route-to poi6 poi5)(route-to poi6 poi7)(route-to poi7 poi5)(route-to poi7 poi6)(route-to poi8 poi5)(route-to poi8 poi9)(route-to poi8 poi11)(route-block poi8 poi5 obstacle3)(route-block poi8 poi11 obstacle4)(route-to poi9 poi8)(route-to poi9 poi10)(route-to poi10 poi9)(route-to poi10 poi22)(route-block poi10 poi22 door3)(door-route poi10 poi22 door3)(route-to poi11 poi8)(route-to poi11 poi12)(route-block poi11 poi12 barrier1)(route-to poi12 poi11)(route-to poi12 poi13)(route-to poi12 poi23)(route-block poi12 poi11 barrier1)(route-to poi13 poi12)(route-to poi13 poi14)(route-block poi13 poi14 obstacle5)(route-to poi14 poi5)(route-to poi14 poi13)(route-to poi14 poi15)(route-to poi14 poi19)(route-block poi14 poi5 door1)(route-block poi14 poi15 jump3)(route-block poi14 poi19 enemy1)(door-route poi14 poi5 door1)(route-to poi15 poi14)(route-to poi15 poi16)(route-to poi15 poi17)(route-block poi15 poi16 jump4)(route-block poi15 poi17 enemy1)(route-to poi16 poi15)(route-to poi17 poi15)(route-to poi17 poi18)(route-block poi17 poi16 enemy1)(route-block poi17 poi18 enemy1)(route-to poi18 poi17)(route-to poi18 poi20)(route-block poi18 poi17 enemy1)(route-to poi19 poi14)(route-to poi19 poi20)(route-block poi19 poi14 enemy1)(route-block poi19 poi20 enemy1)(route-block poi19 poi20 rollable1)(route-to poi20 poi19)(route-to poi20 poi21)(route-block poi20 poi19 enemy1)(route-block poi20 poi19 rollable1)(route-block poi20 poi21 door2)(door-route poi20 poi21 door2)(route-to poi21 poi20)(route-block poi21 poi20 door2)(route-to poi22 poi10)(route-block poi22 poi10 door3)(route-to poi23 poi12)(blocked door1)(door-rune door1 rune1)(blocked door2)(door-rune door2 rune2)(blocked door3)(door-rune door3 rune3)(blocked jump1)(blocked jump2)(blocked jump3)(blocked jump4)(blocked barrier1)(enemy-at enemy1 poi17)(enemy-at enemy1 poi19)(enemy-edge enemy1 poi17 poi15)(enemy-edge enemy1 poi17 poi18)(enemy-edge enemy1 poi19 poi14)(enemy-edge enemy1 poi19 poi20)(blocked enemy1)(blocked rollable1)(rollable-locked rollable1)(blocked obstacle1)(blocked obstacle2)(blocked obstacle3)(blocked obstacle4)(blocked obstacle5)(item-at gear1 poi7)(item-assign gear1 pj3)(item-at rune1 poi13)(item-assign rune1 pj1)(item-at rune2 poi18)(item-assign rune2 pj3)(item-at rune3 poi9)(item-assign rune3 pj2)(switch-at step1 poi3)(linked-switch step1 obstacle1)(switch-assign step1 pj3)(switch-at step2 poi8)(linked-switch step2 obstacle4)(switch-assign step2 pj1)(switch-at lever1 poi10)(linked-switch lever1 obstacle5)(switch-assign lever1 pj2)(switch-at machine1 poi16)(linked-switch machine1 rollable1)(machine-gear machine1 gear1)(switch-assign machine1 pj3)(switch-at triple1 poi5)(linked-switch triple1 obstacle3)(switch-assign triple1 pj1)(switch-assign triple1 pj2)(switch-assign triple1 pj3)(switch-at doble1 poi4)(linked-switch doble1 obstacle2)(switch-assign doble1 pj1)(switch-assign doble1 pj3)/(player-at pj1 poi21)(player-at pj2 poi21)(player-at pj3 poi21)
+Client 4 connected
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-stack enter count:1
+Client 6 connected
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:46 - from(1): EnemyRegisterId/3494/0/2000/-1/73.38/0.73
+Log: connection {5} has been disconnected by timeout; address {::ffff:192.168.0.110:7777}
+Client 5 disconnected
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:46 - from(1): EnemyRegisterId/6908/1/20/-1/-15/-2.325/-16/-2.325
+Log: connection {7} has been disconnected by timeout; address {::ffff:192.168.0.110:7777}
+Client 7 disconnected
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:46 - from(1): EnemyRegisterId/8054/2/20/-1/16/-1.07/16/-1.07
+ 3:00:37 - from(1): PlayerChangePosition/0/-15.564/-0.2030802/1/1/0/True/False/False/True
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:46 - from(1): EnemyRegisterId/8282/3/20/-1/10.294/-0.661/10.294/-0.661
+Log: connection {5} has been disconnected by timeout; address {::ffff:192.168.0.110:7777}
+Client 5 disconnected
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:46 - from(1): EnemyRegisterId/8352/4/20/-1/-4.37/-0.548/-4.37/-0.548
+ 3:00:39 - from(1): PlayerChangePosition/0/-11.89936/-0.2030802/1/1/3.303801/True/False/False/False
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:46 - from(1): EnemyRegisterId/9222/5/20/-1/4.381/-4.16/4.381/-4.16
+ 3:00:39 - from(1): PlayerChangePosition/0/-11.89936/-0.2030802/1/1/0/True/False/False/True
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:46 - from(1): EnemyRegisterId/9278/6/20/-1/-0.512/0.5/-0.512/0.5
+ 3:00:40 - from(1): PlayerChangePosition/0/-10.59523/-0.2030802/1/1/3.303801/True/False/False/False
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-batch star
+Full room
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:46 - from(1): PlayerChangePosition/0/-20.96/-2.413567/1/1/0/True/True/False/False
+Client 5 connected
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:46 - from(1): PlayerChangePosition/0/-20.96/-2.122997/1/1/0/False/False/False/False
+Log: connection {7} has been disconnected by timeout; address {::ffff:192.168.0.110:7777}
+Client 7 disconnected
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:47 - from(1): PlayerChangePosition/0/-20.96/-2.413573/1/1/0/True/True/False/False
+ 3:00:42 - from(5): RequestCharId
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:47 - from(1): PlayerChangePosition/0/-20.96/-2.263383/1/1/0/False/False/False/False
+ 3:00:42 - from(4): RequestCharId
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:47 - from(1): PlayerChangePosition/0/-20.96/-2.175223/1/1/0/False/False/False/True
+ 3:00:42 - from(5): NewChatMessage/Engineer: Ha Aparecido!
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:49 - from(1): PlayerChangePosition/0/-16.74205/-2.413567/1/1/3.303801/True/True/False/True
+ 3:00:42 - from(4): NewChatMessage/Mage: Ha Aparecido!
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:49 - from(1): PlayerChangePosition/0/-16.53205/-1.992427/1/1/3.5/False/False/False/True
+ 3:00:45 - from(1): PlayerChangePosition/0/-10.59523/-0.2030802/1/1/0/True/False/False/True
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:49 - from(1): PlayerTookDamage/0/1500/200
+ 3:00:46 - from(1): PlayerChangePosition/0/-9.819707/-0.2030802/1/1/3.303801/True/False/False/False
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:49 - from(1): ChangeHpHUDToRoom/-5
+ 3:00:46 - from(1): PlayerChangePosition/0/-9.819707/-0.2030802/1/1/0/True/False/False/True
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:50 - from(1): PlayerChangePosition/0/-11.53663/-2.413567/1/1/2.911401/True/True/False/True
+ 3:00:48 - from(1): PlayerChangePosition/0/-4.022416/-0.2030802/1/1/3.5/True/False/False/False
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:50 - from(1): PlayerChangePosition/0/-11.39663/-2.122997/1/1/3.5/False/False/False/True
+ 3:00:48 - from(1): PlayerChangePosition/0/-4.022416/-0.2030802/1/1/0/True/True/False/False
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:50 - from(1): OthersDestroyObject/Exp (22)
+ 3:00:48 - from(1): PlayerChangePosition/0/-4.022416/-0.0528902/1/1/0/False/False/False/False
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:50 - from(1): GainExp/50
+ 3:00:49 - from(1): PlayerPower/0/True
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:51 - from(1): OthersDestroyObject/Exp (21)
+ 3:00:49 - from(1): ChangeMpHUDToRoom/-1
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:51 - from(1): GainExp/50
+ 3:00:49 - from(1): PlayerPower/0/False
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:51 - from(1): OthersDestroyObject/Exp (20)
+ 3:00:50 - from(1): PlayerChangePosition/0/-4.022416/-0.2030802/1/1/0/True/False/False/True
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:51 - from(1): GainExp/50
+ 3:00:52 - from(1): PlayerChangePosition/0/2.559947/-0.2030802/1/1/3.303801/True/False/False/False
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:45:51 - from(1): PlayerChangePosition/0/-7.025156/-1.405501/1/1/0.4617105/True/False/False/False
+ 3:00:52 - from(1): PlayerChangePosition/0/2.559947/-0.2030802/1/1/0/True/False/False/True
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
-Log: connection {1} has been disconnected by timeout; address {::ffff:192.168.0.131:7777}
+ 3:00:52 - from(1): ChangeHpAndMpHUDToRoom/1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:00:54 - from(1): PlayerChangePosition/0/8.499146/-0.2030802/1/1/3.303801/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:00:54 - from(1): PlayerChangePosition/0/8.569146/-0.0528902/1/1/3.5/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:00:55 - from(1): PlayerChangePosition/0/12.09647/-0.2030803/1/1/3.303801/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:00:56 - from(1): PlayerChangePosition/0/12.09647/-0.2030802/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:00:57 - from(1): PlayerChangePosition/0/12.14293/-0.2030802/1/1/0.6576/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:00:57 - from(1): PlayerChangePosition/0/12.14293/-0.2030802/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:00:57 - from(1): PlayerChangePosition/0/12.74038/-0.2030802/1/1/3.303801/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:00:57 - from(1): PlayerChangePosition/0/12.81038/-0.0528902/1/1/3.5/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:00:58 - from(1): PlayerChangePosition/0/14.70037/0.2940599/1/1/3.5/False/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:00:58 - from(1): PlayerChangePosition/0/14.70037/-0.1750013/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:00:58 - from(1): PlayerChangePosition/0/14.97836/-0.1750001/1/1/2.2538/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:00:58 - from(1): PlayerChangePosition/0/15.02736/-0.02481011/1/1/2.45/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:01 - from(1): PlayerChangePosition/0/24.18086/-0.1960903/1/1/0/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:05 - from(4): PlayerChangePosition/0/-15.564/-0.2030802/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:07 - from(4): PlayerChangePosition/0/-8.951386/-0.2030802/1/1/3.303801/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:08 - from(4): PlayerChangePosition/0/-8.951386/-0.2030802/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:09 - from(5): PlayerChangePosition/2/-15.007/-0.2030802/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:09 - from(4): PlayerPower/0/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:10 - from(4): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:11 - from(5): PlayerChangePosition/2/-8.860845/-0.2030802/1/1/3.5/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:11 - from(5): PlayerChangePosition/2/-8.790845/-0.0528902/1/1/3.5/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:11 - from(4): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:11 - from(4): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:11 - from(5): PlayerChangePosition/2/-6.049958/-0.2030809/1/1/3.303801/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:11 - from(5): PlayerChangePosition/2/-5.979958/-0.05289087/1/1/3.5/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:12 - from(4): ChangeHpAndMpHUDToRoom/1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:12 - from(5): PlayerChangePosition/2/-4.859955/1.015989/1/1/3.5/False/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:12 - from(4): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:12 - from(4): PlayerPower/0/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:13 - from(2): PlayerChangePosition/1/-14.472/-0.20201/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:14 - from(2): PlayerChangePosition/1/-13.50079/-0.20201/1/1/2.715201/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:14 - from(4): PlayerChangePosition/0/12.93728/-0.2030802/1/1/3.303801/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:14 - from(4): PlayerChangePosition/0/13.00728/-0.0528902/1/1/3.5/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:15 - from(4): PlayerChangePosition/0/15.54294/-0.175003/1/1/3.5/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:15 - from(4): PlayerChangePosition/0/15.61294/-0.02481298/1/1/3.5/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:15 - from(2): PlayerChangePosition/1/-13.50079/-0.20201/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:17 - from(2): PlayerChangePosition/1/-7.991855/-0.20201/1/1/3.303801/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:17 - from(4): PlayerChangePosition/0/22.45899/-0.1960903/1/1/3.303801/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:17 - from(2): PlayerChangePosition/1/-7.991855/-0.20201/1/1/3.5/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:18 - from(2): PlayerPower/1/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:18 - from(2): PlayerPower/1/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:19 - from(2): PlayerChangePosition/1/-3.524714/-0.2030802/1/1/3.303801/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:19 - from(2): PlayerChangePosition/1/-3.454715/-0.0528902/1/1/3.5/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:19 - from(2): PlayerAttack/1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:21 - from(2): PlayerChangePosition/1/4.704405/-0.2030802/1/1/3.303801/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:21 - from(2): PlayerChangePosition/1/4.774405/-0.0528902/1/1/3.5/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:23 - from(2): PlayerChangePosition/1/13.0553/-0.2030802/1/1/3.303801/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:23 - from(2): PlayerChangePosition/1/13.1253/-0.0528902/1/1/3.5/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:24 - from(2): PlayerChangePosition/1/15.33059/-0.1750271/1/1/3.5/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:24 - from(2): PlayerChangePosition/1/15.40059/-0.02483711/1/1/3.5/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:27 - from(2): PlayerChangePosition/1/24.16676/-0.1960903/1/1/3.303801/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:28 - from(2): PlayerChangePosition/1/24.16676/-0.1960903/1/1/0/True/True/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:28 - from(2): PlayerChangePosition/1/24.16676/-0.0459003/1/1/0/False/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:28 - from(2): PlayerChangePosition/1/24.16676/0.8643597/1/1/0/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:28 - from(2): PlayerChangePosition/1/24.49576/0.7763497/1/1/2.45/False/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:29 - from(2): PlayerChangePosition/1/24.49576/0.20996/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:29 - from(2): PlayerChangePosition/1/24.50276/0.20996/1/1/0/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:29 - from(2): PlayerChangePosition/1/24.50276/0.36015/1/1/0/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:29 - from(2): PlayerChangePosition/1/24.88775/1.3225/1/1/3.15/False/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:31 - from(2): PlayerChangePosition/1/24.88775/0.9899599/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:31 - from(2): PlayerChangePosition/1/24.89475/0.9899599/1/1/0.35/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:31 - from(2): PlayerChangePosition/1/24.90175/1.14015/1/1/0.35/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:32 - from(2): PlayerChangePosition/1/25.46175/2.21276/1/1/3.5/False/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Log: connection {6} has been disconnected by timeout; address {::ffff:192.168.0.113:7777}
+Client 6 disconnected
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:33 - from(2): PlayerChangePosition/1/25.46175/1.36996/1/1/0/True/False/True/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:34 - from(2): PlayerChangePosition/1/24.55876/1.0168/-1/1/3.5/False/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Client 6 reconnected
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Client 6 connected
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:46 - from(6): RequestCharId
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:47 - from(6): NewChatMessage/Warrior: Ha Aparecido!
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:48 - from(6): PlayerChangePosition/1/-14.472/-0.20201/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:48 - from(6): PlayerChangePosition/1/-13.17879/-0.20201/1/1/3.303801/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:49 - from(4): PlayerChangePosition/0/22.45899/-0.1960903/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:49 - from(4): PlayerChangePosition/0/22.55753/-0.1960903/1/1/1.2038/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:52 - from(5): PlayerChangePosition/2/-4.859955/-0.2030802/1/1/0/True/False/True/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:53 - from(5): PlayerChangePosition/2/-4.892412/-0.2030802/-1/1/1.05/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:53 - from(5): PlayerChangePosition/2/-4.892412/-0.2030802/-1/1/0/True/False/True/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:53 - from(5): PlayerChangePosition/2/-5.195323/-0.2030802/-1/1/2.2538/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:53 - from(5): PlayerChangePosition/2/-5.195323/-0.2030802/-1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:53 - from(5): PlayerChangePosition/2/-5.172095/-0.2030802/1/1/0.5038/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:54 - from(5): PlayerChangePosition/2/-5.172095/-0.2030802/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:54 - from(5): PlayerChangePosition/2/-5.165943/-0.2030802/1/1/0.1538/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:54 - from(6): PlayerChangePosition/1/-13.17879/-0.20201/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:56 - from(6): PlayerChangePosition/1/-8.42554/-0.20201/1/1/3.107601/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:56 - from(6): PlayerChangePosition/1/-8.35554/-0.05182001/1/1/3.5/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:01:56 - from(6): PlayerChangePosition/1/-8.285541/0.08855999/1/1/3.5/False/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:04 - from(4): PlayerChangePosition/0/22.55753/-0.1960903/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:05 - from(4): PlayerChangePosition/0/23.52736/-0.1960903/1/1/3.107601/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Log: connection {5} has been disconnected by timeout; address {::ffff:192.168.0.110:7777}
+Client 5 disconnected
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Log: connection {7} has been disconnected by timeout; address {::ffff:192.168.0.110:7777}
+Client 7 disconnected
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Client 5 reconnected
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Client 5 connected
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:29 - from(4): PlayerChangePosition/0/23.52736/-0.1960903/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:29 - from(4): PlayerChangePosition/0/23.53351/-0.1960903/1/1/0.1538/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:30 - from(4): PlayerChangePosition/0/23.54751/-0.0459003/1/1/0.7/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:30 - from(4): PlayerChangePosition/0/24.74008/0.5999599/1/1/0/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:38 - from(2): PlayerChangePosition/1/24.55876/0.60478/-1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:38 - from(2): PlayerChangePosition/1/24.74009/0.60478/1/1/0/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:39 - from(2): PlayerChangePosition/1/24.74008/0.60478/1/1/0/True/False/True/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:39 - from(2): PlayerChangePosition/1/22.89491/-0.1960905/-1/1/3.303801/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:40 - from(2): PlayerChangePosition/1/22.89491/-0.1960903/-1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:40 - from(2): PlayerChangePosition/1/22.96236/-0.1960903/1/1/1.2038/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:43 - from(1): PlayerAttack/0
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:43 - from(1): PlayerChangePosition/0/24.18086/-0.1960903/1/1/0/True/False/True/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:43 - from(1): PlayerChangePosition/0/23.91072/-0.1960903/-1/1/1.9038/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:44 - from(1): PlayerChangePosition/0/23.91072/-0.1960903/-1/1/0/True/True/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:44 - from(1): PlayerChangePosition/0/23.91072/-0.04590026/-1/1/0/False/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:48 - from(2): PlayerChangePosition/1/22.96236/-0.1960903/1/1/0/True/False/True/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:49 - from(3): PlayerPower/2/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:49 - from(3): PlayerAttack/2
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:49 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:50 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:50 - from(2): PlayerChangePosition/1/18.05203/-0.1960903/-1/1/3.303801/True/True/True/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:50 - from(2): PlayerChangePosition/1/18.05203/-0.1960903/-1/1/3.5/True/False/True/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:50 - from(3): PlayerPower/2/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:51 - from(2): PlayerChangePosition/1/13.69486/-10.36089/-1/1/3.5/False/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:53 - from(3): PlayerPower/2/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:53 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:54 - from(3): PlayerPower/2/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:54 - from(3): PlayerPower/2/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:54 - from(3): PlayerPower/2/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:54 - from(3): PlayerPower/2/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:54 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:54 - from(3): PlayerPower/2/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:55 - from(2): PlayerChangePosition/1/13.69486/-215.6727/-1/1/0/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:55 - from(3): PlayerPower/2/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:55 - from(3): PlayerPower/2/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:55 - from(3): PlayerPower/2/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:55 - from(2): PlayerChangePosition/1/14.52085/-256.6208/1/1/3.5/False/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:55 - from(3): PlayerPower/2/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:55 - from(3): PlayerPower/2/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:55 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:56 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Client 7 reconnected
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Client 7 connected
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:56 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Log: connection {5} has been disconnected by timeout; address {::ffff:192.168.0.110:7777}
+Client 5 disconnected
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:57 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:57 - from(6): PlayerChangePosition/1/-8.285541/-0.2030802/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:57 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:58 - from(6): PlayerChangePosition/1/-7.40587/-0.2030802/1/1/3.303801/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:58 - from(6): PlayerChangePosition/1/-7.40587/-0.2030802/1/1/0/True/True/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:58 - from(6): PlayerChangePosition/1/-7.40587/-0.0528902/1/1/0/False/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:58 - from(1): PlayerChangePosition/0/23.91072/-0.1960903/-1/1/0/True/False/True/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:58 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:58 - from(6): PlayerAttack/1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:59 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:59 - from(4): PlayerChangePosition/0/24.74008/0.5999599/1/1/0/True/False/True/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:02:59 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:00 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:00 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:01 - from(1): PlayerChangePosition/0/15.88451/-0.6375403/-1/1/3.5/False/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:01 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:01 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:02 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:02 - from(4): PlayerChangePosition/0/15.41028/-1.37329/-1/1/3.5/False/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:02 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:03 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:03 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:04 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:04 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:04 - from(3): PlayerPower/2/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:05 - from(3): PlayerChangePosition/2/-15.007/-0.2030802/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:06 - from(3): PlayerChangePosition/2/-12.05106/-0.2030802/1/1/3.107601/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:07 - from(3): PlayerChangePosition/2/-12.05106/-0.2030802/1/1/0/True/True/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:07 - from(3): PlayerChangePosition/2/-12.05106/-0.2030802/1/1/0/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:07 - from(3): PlayerChangePosition/2/-12.05106/-0.2030806/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:08 - from(3): PlayerChangePosition/2/-10.65985/-0.2030802/1/1/3.303801/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:08 - from(3): PlayerChangePosition/2/-10.58985/-0.0528902/1/1/3.5/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:09 - from(3): PlayerChangePosition/2/-7.911124/-0.2030813/1/1/3.5/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:09 - from(3): PlayerChangePosition/2/-7.841124/-0.05289125/1/1/3.5/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:10 - from(3): PlayerPower/2/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:10 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:10 - from(3): PlayerPower/2/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:11 - from(3): PlayerChangePosition/2/-1.676055/-0.2030802/1/1/3.303801/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:11 - from(3): PlayerChangePosition/2/-1.536055/0.0874898/1/1/3.5/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:11 - from(3): PlayerPower/2/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:11 - from(3): PlayerChangePosition/2/0.2139456/0.4087399/1/1/3.5/False/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:11 - from(3): PlayerChangePosition/2/0.2839456/0.5589298/1/1/3.5/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:12 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:12 - from(3): PlayerPower/2/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:12 - from(3): PlayerChangePosition/2/3.261904/-0.2030809/1/1/3.303801/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:12 - from(3): PlayerChangePosition/2/3.331904/-0.05289087/1/1/3.5/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:12 - from(3): PlayerPower/2/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:13 - from(6): PlayerChangePosition/1/-7.40587/-0.2030802/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:13 - from(6): PlayerChangePosition/1/-7.20711/-0.2030802/1/1/1.9038/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:13 - from(3): PlayerPower/2/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:13 - from(6): PlayerChangePosition/1/-7.20711/-0.2030802/1/1/0/True/False/True/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:13 - from(3): PlayerChangePosition/2/6.72178/-0.2030802/1/1/3.5/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:13 - from(3): PlayerChangePosition/2/6.79178/-0.0528902/1/1/3.5/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:13 - from(6): PlayerChangePosition/1/-7.947628/-0.2030802/-1/1/3.5/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:14 - from(6): PlayerChangePosition/1/-7.947628/-0.2030802/-1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:14 - from(6): PlayerChangePosition/1/-7.800944/-0.2030802/1/1/1.5538/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:14 - from(3): PlayerChangePosition/2/8.907977/0.4943867/1/1/3.303801/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:14 - from(6): PlayerChangePosition/1/-7.758945/-0.0528902/1/1/2.1/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:14 - from(3): PlayerChangePosition/2/9.047976/0.7849567/1/1/3.5/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:14 - from(3): PlayerPower/2/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:14 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:14 - from(3): PlayerChangePosition/2/10.23797/1.670487/1/1/3.5/False/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:14 - from(3): PlayerChangePosition/2/10.30797/1.820677/1/1/3.5/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:15 - from(3): ChangeMpHUDToRoom/-1
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:15 - from(3): PlayerPower/2/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:16 - from(3): PlayerChangePosition/2/16.02358/-7.099514/1/1/3.5/False/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:16 - from(6): PlayerChangePosition/1/0.756598/-0.2030802/1/1/3.303801/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:16 - from(6): PlayerChangePosition/1/0.756598/-0.2030802/1/1/3.5/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:17 - from(6): PlayerChangePosition/1/3.695714/-0.2030805/1/1/3.107601/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:17 - from(6): PlayerChangePosition/1/3.695714/-0.2030802/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:18 - from(6): PlayerChangePosition/1/4.171929/-0.2030802/1/1/2.9538/True/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:18 - from(6): PlayerPower/1/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:18 - from(6): PlayerPower/1/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:19 - from(6): PlayerChangePosition/1/4.171929/-0.2030802/1/1/0/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:19 - from(6): PlayerChangePosition/1/4.505917/-0.2030802/1/1/2.6038/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:19 - from(6): PlayerChangePosition/1/4.561917/-0.0528902/1/1/2.8/False/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:20 - from(6): PlayerChangePosition/1/8.246013/0.4943908/1/1/3.107601/True/True/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:20 - from(6): PlayerChangePosition/1/8.246013/0.4943908/1/1/3.5/True/False/False/True
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+ 3:03:22 - from(6): PlayerChangePosition/1/14.77336/-2.06698/1/1/3.5/False/False/False/False
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Log: connection {1} has been disconnected by timeout; address {::ffff:192.168.0.103:7777}
 Client 1 disconnected
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:46:00 - from(2): 2/pj1 - mage pj2 - warrior pj3 - inventor poi1 - poi poi2 - poi poi3 - poi poi4 - poi poi5 - poi poi6 - poi poi7 - poi poi8 - poi poi9 - poi poi10 - poi poi11 - poi poi12 - poi poi13 - poi poi14 - poi poi15 - poi poi16 - poi poi17 - poi poi18 - poi poi19 - poi poi20 - poi poi21 - poi poi22 - poi poi23 - poi door1 - door door2 - door door3 - door jump1 - jump jump2 - jump jump3 - jump jump4 - jump barrier1 - barrier enemy1 - enemy rollable1 - rollable obstacle1 - obstacle obstacle2 - obstacle obstacle3 - obstacle obstacle4 - obstacle obstacle5 - obstacle gear1 - gear rune1 - rune rune2 - rune rune3 - rune step1 - step step2 - step lever1 - lever machine1 - machine triple1 - triple doble1 - doble /(player-at pj1 poi1)(player-distinct pj1 pj2)(player-distinct pj1 pj3)(player-at pj2 poi1)(player-distinct pj2 pj1)(player-distinct pj2 pj3)(player-at pj3 poi1)(player-distinct pj3 pj1)(player-distinct pj3 pj2)(route-to poi1 poi2)(route-to poi2 poi1)(route-to poi2 poi3)(route-to poi2 poi4)(route-block poi2 poi3 jump1)(route-block poi2 poi4 obstacle1)(route-to poi3 poi2)(route-to poi4 poi2)(route-to poi4 poi5)(route-block poi4 poi5 obstacle2)(route-to poi5 poi2)(route-to poi5 poi4)(route-to poi5 poi6)(route-to poi5 poi8)(route-to poi5 poi14)(route-block poi5 poi4 obstacle2)(route-block poi5 poi6 jump2)(route-block poi5 poi8 obstacle3)(route-block poi5 poi14 door1)(route-to poi6 poi5)(route-to poi6 poi7)(route-to poi7 poi5)(route-to poi7 poi6)(route-to poi8 poi5)(route-to poi8 poi9)(route-to poi8 poi11)(route-block poi8 poi5 obstacle3)(route-block poi8 poi11 obstacle4)(route-to poi9 poi8)(route-to poi9 poi10)(route-to poi10 poi9)(route-to poi10 poi22)(route-block poi10 poi22 door3)(door-route poi10 poi22 door3)(route-to poi11 poi8)(route-to poi11 poi12)(route-block poi11 poi12 barrier1)(route-to poi12 poi11)(route-to poi12 poi13)(route-to poi12 poi23)(route-block poi12 poi11 barrier1)(route-to poi13 poi12)(route-to poi13 poi14)(route-block poi13 poi14 obstacle5)(route-to poi14 poi5)(route-to poi14 poi13)(route-to poi14 poi15)(route-to poi14 poi19)(route-block poi14 poi5 door1)(route-block poi14 poi15 jump3)(route-block poi14 poi19 enemy1)(door-route poi14 poi5 door1)(route-to poi15 poi14)(route-to poi15 poi16)(route-to poi15 poi17)(route-block poi15 poi16 jump4)(route-block poi15 poi17 enemy1)(route-to poi16 poi15)(route-to poi17 poi15)(route-to poi17 poi18)(route-block poi17 poi16 enemy1)(route-block poi17 poi18 enemy1)(route-to poi18 poi17)(route-to poi18 poi20)(route-block poi18 poi17 enemy1)(route-to poi19 poi14)(route-to poi19 poi20)(route-block poi19 poi14 enemy1)(route-block poi19 poi20 enemy1)(route-block poi19 poi20 rollable1)(route-to poi20 poi19)(route-to poi20 poi21)(route-block poi20 poi19 enemy1)(route-block poi20 poi19 rollable1)(route-block poi20 poi21 door2)(door-route poi20 poi21 door2)(route-to poi21 poi20)(route-block poi21 poi20 door2)(route-to poi22 poi10)(route-block poi22 poi10 door3)(route-to poi23 poi12)(blocked door1)(door-rune door1 rune1)(blocked door2)(door-rune door2 rune2)(blocked door3)(door-rune door3 rune3)(blocked jump1)(blocked jump2)(blocked jump3)(blocked jump4)(blocked barrier1)(enemy-at enemy1 poi17)(enemy-at enemy1 poi19)(enemy-edge enemy1 poi17 poi15)(enemy-edge enemy1 poi17 poi18)(enemy-edge enemy1 poi19 poi14)(enemy-edge enemy1 poi19 poi20)(blocked enemy1)(blocked rollable1)(rollable-locked rollable1)(blocked obstacle1)(blocked obstacle2)(blocked obstacle3)(blocked obstacle4)(blocked obstacle5)(item-at gear1 poi7)(item-assign gear1 pj3)(item-at rune1 poi13)(item-assign rune1 pj1)(item-at rune2 poi18)(item-assign rune2 pj3)(item-at rune3 poi9)(item-assign rune3 pj2)(switch-at step1 poi3)(linked-switch step1 obstacle1)(switch-assign step1 pj3)(switch-at step2 poi8)(linked-switch step2 obstacle4)(switch-assign step2 pj1)(switch-at lever1 poi10)(linked-switch lever1 obstacle5)(switch-assign lever1 pj2)(switch-at machine1 poi16)(linked-switch machine1 rollable1)(machine-gear machine1 gear1)(switch-assign machine1 pj3)(switch-at triple1 poi5)(linked-switch triple1 obstacle3)(switch-assign triple1 pj1)(switch-assign triple1 pj2)(switch-assign triple1 pj3)(switch-at doble1 poi4)(linked-switch doble1 obstacle2)(switch-assign doble1 pj1)(switch-assign doble1 pj3)/(player-at pj1 poi21)(player-at pj2 poi21)(player-at pj3 poi21)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-INFO     Running translator.
-INFO     translator input: ['misc/tests/benchmarks/gripper\\domain.pddl', 'misc/tests/benchmarks/gripper/prob2.pddl']
-INFO     translator arguments: []
-INFO     translator time limit: None
-INFO     translator memory limit: None
-INFO     callstring: 'C:\Python27\python.exe' 'C:\Users\cnsae\Downloads\FastDownward\builds\release32\bin\translate\translate.py' 'misc/tests/benchmarks/gripper\domain.pddl' misc/tests/benchmarks/gripper/prob2.pddl
-Parsing...
-Parsing: [0.203s CPU, 0.350s wall-clock]
-Normalizing task... [0.000s CPU, 0.006s wall-clock]
-Instantiating...
-Generating Datalog program... [0.031s CPU, 0.042s wall-clock]
-Normalizing Datalog program...
-Normalizing Datalog program: [0.156s CPU, 0.364s wall-clock]
-Preparing model... [0.078s CPU, 0.091s wall-clock]
-Generated 147 rules.
-Computing model... [0.953s CPU, 1.291s wall-clock]
-1355 relevant atoms
-2982 auxiliary atoms
-4337 final queue length
-5291 total queue pushes
-Completing instantiation... [0.953s CPU, 1.208s wall-clock]
-Instantiating: [2.172s CPU, 3.015s wall-clock]
-Computing fact groups...
-Finding invariants...
-23 initial candidates
-Finding invariants: [0.094s CPU, 0.159s wall-clock]
-Checking invariant weight... [0.000s CPU, 0.009s wall-clock]
-Instantiating groups... [0.016s CPU, 0.037s wall-clock]
-Collecting mutex groups... [0.000s CPU, 0.002s wall-clock]
-Choosing groups...
-60 uncovered facts
-Choosing groups: [0.000s CPU, 0.006s wall-clock]
-Building translation key... [0.000s CPU, 0.012s wall-clock]
-Computing fact groups: [0.125s CPU, 0.261s wall-clock]
-Building STRIPS to SAS dictionary... [0.000s CPU, 0.003s wall-clock]
-Building dictionary for full mutex groups... [0.000s CPU, 0.003s wall-clock]
-Building mutex information...
-Building mutex information: [0.016s CPU, 0.003s wall-clock]
-Translating task...
-Processing axioms...
-Simplifying axioms... [0.000s CPU, 0.003s wall-clock]
-Processing axioms: [0.031s CPU, 0.042s wall-clock]
-Translating task: [0.453s CPU, 0.542s wall-clock]
-31 effect conditions simplified
-0 implied preconditions added
-Detecting unreachable propositions...
-0 operators removed
-6 axioms removed
-15 propositions removed
-Detecting unreachable propositions: [0.234s CPU, 0.276s wall-clock]
-Reordering and filtering variables...
-53 of 61 variables necessary.
-0 of 7 mutex groups necessary.
-728 of 728 operators necessary.
-20 of 20 axiom rules necessary.
-Reordering and filtering variables: [0.062s CPU, 0.068s wall-clock]
-Translator variables: 53
-Translator derived variables: 26
-Translator facts: 269
-Translator goal facts: 3
-Translator mutex groups: 0
-Translator total mutex groups size: 0
-Translator operators: 728
-Translator axioms: 20
-Translator task size: 3272
-warning: could not determine peak memory
-Writing output... [0.094s CPU, 0.151s wall-clock]
-Done! [3.375s CPU, 4.696s wall-clock]
-INFO     Running search (release32).
-INFO     search input: output.sas
-INFO     search arguments: ['--search', 'astar(ff())']
-INFO     search time limit: None
-INFO     search memory limit: None
-INFO     search executable: C:\Users\cnsae\Downloads\FastDownward\builds\release32\bin\downward.exe
-INFO     callstring: 'C:\Users\cnsae\Downloads\FastDownward\builds\release32\bin\downward.exe' --search 'astar(ff())' --internal-plan-file output2.txt < output.sas
-reading input... [t=0.000181126s]
-done reading input! [t=0.0452085s]
-packing state variables...done! [t=0.0454011s]
-Variables: 53
-FactPairs: 269
-Bytes per state: 12
-Building successor generator...done! [t=0.100678s]
-peak memory difference during successor generator creation: 44 KB
-done initializing global data [t=0.100831s]
-Simplifying 784 unary operators... done! [769 unary operators]
-Initializing additive heuristic...
-Initializing FF heuristic...
-Conducting best first search with reopening closed nodes, (real) bound = 2147483647
-Switch from bucket-based to heap-based queue at key = 142, num_pushes = 93
-New best heuristic value for ff: 47
-[g=0, 1 evaluated, 0 expanded, t=0.11344s, 1056 KB]
-f = 47 [1 evaluated, 0 expanded, t=0.113572s, 1056 KB]
-Initial heuristic value for ff: 47
-pruning method: none
-New best heuristic value for ff: 46
-[g=1, 2 evaluated, 1 expanded, t=0.11418s, 1056 KB]
-New best heuristic value for ff: 45
-[g=2, 5 evaluated, 2 expanded, t=0.115192s, 1056 KB]
-New best heuristic value for ff: 44
-[g=3, 8 evaluated, 3 expanded, t=0.116232s, 1056 KB]
-f = 48 [12 evaluated, 8 expanded, t=0.118257s, 1056 KB]
-New best heuristic value for ff: 43
-[g=5, 13 evaluated, 9 expanded, t=0.118775s, 1056 KB]
-New best heuristic value for ff: 42
-[g=6, 14 evaluated, 10 expanded, t=0.119229s, 1056 KB]
-New best heuristic value for ff: 41
-[g=7, 19 evaluated, 11 expanded, t=0.121112s, 1056 KB]
-New best heuristic value for ff: 40
-[g=8, 22 evaluated, 12 expanded, t=0.123605s, 1056 KB]
-New best heuristic value for ff: 39
-[g=9, 23 evaluated, 13 expanded, t=0.124054s, 1056 KB]
-New best heuristic value for ff: 38
-[g=10, 27 evaluated, 14 expanded, t=0.125212s, 1056 KB]
-New best heuristic value for ff: 37
-[g=11, 29 evaluated, 15 expanded, t=0.125889s, 1056 KB]
-New best heuristic value for ff: 36
-[g=12, 35 evaluated, 16 expanded, t=0.127505s, 1056 KB]
-New best heuristic value for ff: 35
-[g=13, 39 evaluated, 17 expanded, t=0.128662s, 1056 KB]
-New best heuristic value for ff: 34
-[g=14, 45 evaluated, 18 expanded, t=0.130421s, 1056 KB]
-New best heuristic value for ff: 33
-[g=15, 53 evaluated, 19 expanded, t=0.132468s, 1056 KB]
-New best heuristic value for ff: 32
-[g=16, 62 evaluated, 20 expanded, t=0.134722s, 1056 KB]
-New best heuristic value for ff: 31
-[g=17, 72 evaluated, 21 expanded, t=0.137263s, 1056 KB]
-New best heuristic value for ff: 30
-[g=18, 84 evaluated, 22 expanded, t=0.141571s, 1056 KB]
-New best heuristic value for ff: 29
-[g=19, 92 evaluated, 23 expanded, t=0.145361s, 1056 KB]
-New best heuristic value for ff: 28
-[g=20, 98 evaluated, 24 expanded, t=0.148258s, 1056 KB]
-f = 49 [151 evaluated, 62 expanded, t=0.167531s, 1056 KB]
-New best heuristic value for ff: 27
-[g=22, 161 evaluated, 64 expanded, t=0.17024s, 1056 KB]
-New best heuristic value for ff: 26
-[g=23, 166 evaluated, 65 expanded, t=0.171677s, 1056 KB]
-New best heuristic value for ff: 25
-[g=24, 173 evaluated, 66 expanded, t=0.173588s, 1056 KB]
-f = 50 [431 evaluated, 129 expanded, t=0.265397s, 1056 KB]
-f = 51 [741 evaluated, 231 expanded, t=0.40219s, 1056 KB]
-New best heuristic value for ff: 24
-[g=27, 886 evaluated, 263 expanded, t=0.453854s, 1056 KB]
-New best heuristic value for ff: 23
-[g=28, 895 evaluated, 264 expanded, t=0.456294s, 1056 KB]
-New best heuristic value for ff: 22
-[g=29, 902 evaluated, 265 expanded, t=0.458045s, 1056 KB]
-New best heuristic value for ff: 21
-[g=30, 907 evaluated, 266 expanded, t=0.45975s, 1056 KB]
-New best heuristic value for ff: 20
-[g=31, 917 evaluated, 267 expanded, t=0.462489s, 1056 KB]
-New best heuristic value for ff: 19
-[g=32, 922 evaluated, 268 expanded, t=0.463825s, 1056 KB]
-f = 52 [1722 evaluated, 476 expanded, t=0.811276s, 1088 KB]
-New best heuristic value for ff: 18
-[g=34, 1728 evaluated, 478 expanded, t=0.818557s, 1088 KB]
-New best heuristic value for ff: 17
-[g=35, 1731 evaluated, 479 expanded, t=0.820232s, 1088 KB]
-New best heuristic value for ff: 16
-[g=36, 1734 evaluated, 480 expanded, t=0.821048s, 1088 KB]
-New best heuristic value for ff: 15
-[g=37, 1740 evaluated, 481 expanded, t=0.822415s, 1088 KB]
-New best heuristic value for ff: 14
-[g=38, 1748 evaluated, 482 expanded, t=0.82422s, 1088 KB]
-f = 53 [4246 evaluated, 1129 expanded, t=1.93058s, 1336 KB]
-New best heuristic value for ff: 13
-[g=40, 4251 evaluated, 1131 expanded, t=1.93204s, 1336 KB]
-New best heuristic value for ff: 12
-[g=41, 4255 evaluated, 1132 expanded, t=1.93314s, 1336 KB]
-New best heuristic value for ff: 11
-[g=42, 4259 evaluated, 1133 expanded, t=1.9342s, 1336 KB]
-New best heuristic value for ff: 10
-[g=43, 4265 evaluated, 1134 expanded, t=1.93563s, 1336 KB]
-New best heuristic value for ff: 9
-[g=44, 4266 evaluated, 1135 expanded, t=1.93608s, 1336 KB]
-New best heuristic value for ff: 8
-[g=45, 4272 evaluated, 1136 expanded, t=1.93782s, 1336 KB]
-New best heuristic value for ff: 7
-[g=46, 4279 evaluated, 1137 expanded, t=1.94116s, 1336 KB]
-New best heuristic value for ff: 6
-[g=47, 4284 evaluated, 1138 expanded, t=1.94297s, 1336 KB]
-New best heuristic value for ff: 5
-[g=48, 4287 evaluated, 1139 expanded, t=1.94638s, 1336 KB]
-New best heuristic value for ff: 4
-[g=49, 4289 evaluated, 1140 expanded, t=1.94766s, 1336 KB]
-New best heuristic value for ff: 3
-[g=50, 4290 evaluated, 1141 expanded, t=1.94833s, 1336 KB]
-New best heuristic value for ff: 2
-[g=51, 4293 evaluated, 1142 expanded, t=1.94894s, 1336 KB]
-New best heuristic value for ff: 1
-[g=52, 4297 evaluated, 1143 expanded, t=1.94992s, 1336 KB]
-New best heuristic value for ff: 0
-[g=53, 4300 evaluated, 1144 expanded, t=1.95083s, 1336 KB]
-Solution found!
-Actual search time: 1.83753s [t=1.95131s]
-move pj2 poi1 poi2 (1)
-move pj3 poi1 poi2 (1)
-move pj1 poi1 poi2 (1)
-move-jump pj3 poi2 poi3 jump1 (1)
-step-on pj3 step1 poi3 (1)
-move pj2 poi2 poi4 (1)
-move pj1 poi2 poi4 (1)
-move pj3 poi3 poi2 (1)
-move pj3 poi2 poi4 (1)
-doble-switch pj1 pj3 doble1 poi4 (1)
-move pj2 poi4 poi5 (1)
-move pj3 poi4 poi5 (1)
-move pj1 poi4 poi5 (1)
-triple-switch pj1 pj2 pj3 triple1 poi5 (1)
-move pj1 poi5 poi8 (1)
-step-on pj1 step2 poi8 (1)
-move pj1 poi8 poi11 (1)
-move-through pj1 poi11 poi12 barrier1 (1)
-move pj1 poi12 poi13 (1)
-item-pick pj1 rune1 poi13 (1)
-move pj2 poi5 poi8 (1)
-move pj2 poi8 poi9 (1)
-move pj2 poi9 poi10 (1)
-lever-on pj2 lever1 poi10 (1)
-move pj1 poi13 poi14 (1)
-rune-use pj1 rune1 poi14 door1 (1)
-move-distract pj1 poi14 poi19 enemy1 (1)
-move pj2 poi10 poi9 (1)
-move pj2 poi9 poi8 (1)
-move pj2 poi8 poi5 (1)
-move pj2 poi5 poi14 (1)
-move pj2 poi14 poi19 (1)
-move-jump pj3 poi5 poi6 jump2 (1)
-move pj3 poi6 poi7 (1)
-item-pick pj3 gear1 poi7 (1)
-move pj3 poi7 poi5 (1)
-move pj3 poi5 poi14 (1)
-move-jump pj3 poi14 poi15 jump3 (1)
-move-jump pj3 poi15 poi16 jump4 (1)
-gear-use pj3 gear1 poi16 machine1 (1)
-machine-on pj3 machine1 poi16 (1)
-push-boulder pj2 rollable1 poi19 poi20 (1)
-move pj3 poi16 poi15 (1)
-move pj3 poi15 poi17 (1)
-move pj3 poi17 poi18 (1)
-move pj2 poi19 poi20 (1)
-move pj1 poi19 poi20 (1)
-item-pick pj3 rune2 poi18 (1)
-move pj3 poi18 poi20 (1)
-rune-use pj3 rune2 poi20 door2 (1)
-move pj2 poi20 poi21 (1)
-move pj3 poi20 poi21 (1)
-move pj1 poi20 poi21 (1)
-Plan length: 53 step(s).
-Plan cost: 53
-Expanded 1145 state(s).
-Reopened 0 state(s).
-Evaluated 4301 state(s).
-Evaluations: 4301
-Generated 9532 state(s).
-Dead ends: 2 state(s).
-Expanded until last jump: 1129 state(s).
-Reopened until last jump: 0 state(s).
-Evaluated until last jump: 4246 state(s).
-Generated until last jump: 9462 state(s).
-Number of registered states: 4301
-Search time: 1.83892s
-Total time: 1.95136s
-Solution found.
-
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-batch ended
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-batch close
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-stack enter count:1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Client 1 reconnected
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Client 1 connected
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:31 - from(1): PlayerChangePosition/0/-7.037856/-1.414171/1/1/0/True/True/False/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:31 - from(1): PlayerChangePosition/0/-7.037856/-0.8722715/1/1/3.72529E-09/False/False/False/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:37 - from(1): PlayerChangePosition/0/-7.039176/-1.415617/1/1/0/True/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:38 - from(1): PlayerChangePosition/0/-7.033689/-1.409612/1/1/0.1549685/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:38 - from(1): PlayerChangePosition/0/-6.90769/-0.9884722/1/1/2.1/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:38 - from(1): PlayerChangePosition/0/-5.566711/-0.597862/1/1/1.5988/True/False/False/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:38 - from(1): PlayerChangePosition/0/-5.566711/-0.597862/1/1/0/True/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:39 - from(1): PlayerChangePosition/0/-5.560559/-0.597862/1/1/2.524355E-29/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:39 - from(1): PlayerChangePosition/0/-5.518559/-0.176722/1/1/0.7/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:39 - from(1): PlayerTookDamage/0/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:39 - from(1): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:42 - from(1): PlayerTookDamage/0/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:42 - from(1): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:42 - from(1): PlayerTookDamage/0/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:42 - from(1): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:42 - from(1): PlayerTookDamage/0/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:42 - from(1): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:42 - from(1): PlayerTookDamage/0/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:42 - from(1): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:43 - from(1): PlayerChangePosition/0/-5.496498/-0.6019821/1/1/2.715201/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:43 - from(1): PlayerChangePosition/0/-5.286498/-0.1808421/1/1/3.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:44 - from(1): PlayerChangePosition/0/-3.271275/-0.6019974/1/1/0.02920055/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:44 - from(1): PlayerChangePosition/0/-2.921276/0.05085263/1/1/3.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:45 - from(1): PlayerChangePosition/0/-0.7285591/-0.6019815/1/1/0/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:45 - from(1): PlayerChangePosition/0/-0.7285593/-0.06008152/1/1/0/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:45 - from(1): PlayerTookDamage/0/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:45 - from(1): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:46 - from(1): OthersDestroyObject/Exp (11)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:46 - from(1): GainExp/50
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:46 - from(2): ActivateNPCLog/Aun no han llegado, ¿Está todo bien?/2
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:46 - from(1): 2/pj1 - mage pj2 - warrior pj3 - inventor poi1 - poi poi2 - poi poi3 - poi poi4 - poi poi5 - poi poi6 - poi poi7 - poi poi8 - poi poi9 - poi poi10 - poi poi11 - poi poi12 - poi poi13 - poi poi14 - poi poi15 - poi poi16 - poi poi17 - poi poi18 - poi poi19 - poi poi20 - poi poi21 - poi poi22 - poi poi23 - poi door1 - door door2 - door door3 - door jump1 - jump jump2 - jump jump3 - jump jump4 - jump barrier1 - barrier enemy1 - enemy rollable1 - rollable obstacle1 - obstacle obstacle2 - obstacle obstacle3 - obstacle obstacle4 - obstacle obstacle5 - obstacle gear1 - gear rune1 - rune rune2 - rune rune3 - rune step1 - step step2 - step lever1 - lever machine1 - machine triple1 - triple doble1 - doble /(player-at pj1 poi2)(player-distinct pj1 pj2)(player-distinct pj1 pj3)(player-at pj2 poi1)(player-distinct pj2 pj1)(player-distinct pj2 pj3)(player-at pj3 poi1)(player-distinct pj3 pj1)(player-distinct pj3 pj2)(route-to poi1 poi2)(route-to poi2 poi1)(route-to poi2 poi3)(route-to poi2 poi4)(route-block poi2 poi3 jump1)(route-block poi2 poi4 obstacle1)(route-to poi3 poi2)(route-to poi4 poi2)(route-to poi4 poi5)(route-block poi4 poi5 obstacle2)(route-to poi5 poi2)(route-to poi5 poi4)(route-to poi5 poi6)(route-to poi5 poi8)(route-to poi5 poi14)(route-block poi5 poi4 obstacle2)(route-block poi5 poi6 jump2)(route-block poi5 poi8 obstacle3)(route-block poi5 poi14 door1)(route-to poi6 poi5)(route-to poi6 poi7)(route-to poi7 poi5)(route-to poi7 poi6)(route-to poi8 poi5)(route-to poi8 poi9)(route-to poi8 poi11)(route-block poi8 poi5 obstacle3)(route-block poi8 poi11 obstacle4)(route-to poi9 poi8)(route-to poi9 poi10)(route-to poi10 poi9)(route-to poi10 poi22)(route-block poi10 poi22 door3)(door-route poi10 poi22 door3)(route-to poi11 poi8)(route-to poi11 poi12)(route-block poi11 poi12 barrier1)(route-to poi12 poi11)(route-to poi12 poi13)(route-to poi12 poi23)(route-block poi12 poi11 barrier1)(route-to poi13 poi12)(route-to poi13 poi14)(route-block poi13 poi14 obstacle5)(route-to poi14 poi5)(route-to poi14 poi13)(route-to poi14 poi15)(route-to poi14 poi19)(route-block poi14 poi5 door1)(route-block poi14 poi15 jump3)(route-block poi14 poi19 enemy1)(door-route poi14 poi5 door1)(route-to poi15 poi14)(route-to poi15 poi16)(route-to poi15 poi17)(route-block poi15 poi16 jump4)(route-block poi15 poi17 enemy1)(route-to poi16 poi15)(route-to poi17 poi15)(route-to poi17 poi18)(route-block poi17 poi16 enemy1)(route-block poi17 poi18 enemy1)(route-to poi18 poi17)(route-to poi18 poi20)(route-block poi18 poi17 enemy1)(route-to poi19 poi14)(route-to poi19 poi20)(route-block poi19 poi14 enemy1)(route-block poi19 poi20 enemy1)(route-block poi19 poi20 rollable1)(route-to poi20 poi19)(route-to poi20 poi21)(route-block poi20 poi19 enemy1)(route-block poi20 poi19 rollable1)(route-block poi20 poi21 door2)(door-route poi20 poi21 door2)(route-to poi21 poi20)(route-block poi21 poi20 door2)(route-to poi22 poi10)(route-block poi22 poi10 door3)(route-to poi23 poi12)(blocked door1)(door-rune door1 rune1)(blocked door2)(door-rune door2 rune2)(blocked door3)(door-rune door3 rune3)(blocked jump1)(blocked jump2)(blocked jump3)(blocked jump4)(blocked barrier1)(enemy-at enemy1 poi17)(enemy-at enemy1 poi19)(enemy-edge enemy1 poi17 poi15)(enemy-edge enemy1 poi17 poi18)(enemy-edge enemy1 poi19 poi14)(enemy-edge enemy1 poi19 poi20)(blocked enemy1)(blocked rollable1)(rollable-locked rollable1)(blocked obstacle1)(blocked obstacle2)(blocked obstacle3)(blocked obstacle4)(blocked obstacle5)(item-at gear1 poi7)(item-assign gear1 pj3)(item-at rune1 poi13)(item-assign rune1 pj1)(item-at rune2 poi18)(item-assign rune2 pj3)(item-at rune3 poi9)(item-assign rune3 pj2)(switch-at step1 poi3)(linked-switch step1 obstacle1)(switch-assign step1 pj3)(switch-at step2 poi8)(linked-switch step2 obstacle4)(switch-assign step2 pj1)(switch-at lever1 poi10)(linked-switch lever1 obstacle5)(switch-assign lever1 pj2)(switch-at machine1 poi16)(linked-switch machine1 rollable1)(machine-gear machine1 gear1)(switch-assign machine1 pj3)(switch-at triple1 poi5)(linked-switch triple1 obstacle3)(switch-assign triple1 pj1)(switch-assign triple1 pj2)(switch-assign triple1 pj3)(switch-at doble1 poi4)(linked-switch doble1 obstacle2)(switch-assign doble1 pj1)(switch-assign doble1 pj3)/(player-at pj1 poi21)(player-at pj2 poi21)(player-at pj3 poi21)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-stack enter count:1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:46:46 - from(1): PlayerChangePosition/0/2.561224/-4.265103/1/1/0/True/False/False/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-batch star
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-INFO     Running translator.
-INFO     translator input: ['misc/tests/benchmarks/gripper\\domain.pddl', 'misc/tests/benchmarks/gripper/prob2.pddl']
-INFO     translator arguments: []
-INFO     translator time limit: None
-INFO     translator memory limit: None
-INFO     callstring: 'C:\Python27\python.exe' 'C:\Users\cnsae\Downloads\FastDownward\builds\release32\bin\translate\translate.py' 'misc/tests/benchmarks/gripper\domain.pddl' misc/tests/benchmarks/gripper/prob2.pddl
-Parsing...
-Parsing: [0.031s CPU, 0.040s wall-clock]
-Normalizing task... [0.000s CPU, 0.002s wall-clock]
-Instantiating...
-Generating Datalog program... [0.000s CPU, 0.010s wall-clock]
-Normalizing Datalog program...
-Normalizing Datalog program: [0.047s CPU, 0.042s wall-clock]
-Preparing model... [0.031s CPU, 0.025s wall-clock]
-Generated 147 rules.
-Computing model... [0.281s CPU, 0.336s wall-clock]
-1355 relevant atoms
-2982 auxiliary atoms
-4337 final queue length
-5291 total queue pushes
-Completing instantiation... [0.359s CPU, 0.368s wall-clock]
-Instantiating: [0.719s CPU, 0.792s wall-clock]
-Computing fact groups...
-Finding invariants...
-23 initial candidates
-Finding invariants: [0.031s CPU, 0.031s wall-clock]
-Checking invariant weight... [0.000s CPU, 0.001s wall-clock]
-Instantiating groups... [0.016s CPU, 0.008s wall-clock]
-Collecting mutex groups... [0.000s CPU, 0.001s wall-clock]
-Choosing groups...
-60 uncovered facts
-Choosing groups: [0.000s CPU, 0.003s wall-clock]
-Building translation key... [0.000s CPU, 0.004s wall-clock]
-Computing fact groups: [0.062s CPU, 0.056s wall-clock]
-Building STRIPS to SAS dictionary... [0.000s CPU, 0.001s wall-clock]
-Building dictionary for full mutex groups... [0.000s CPU, 0.002s wall-clock]
-Building mutex information...
-Building mutex information: [0.000s CPU, 0.002s wall-clock]
-Translating task...
-Processing axioms...
-Simplifying axioms... [0.000s CPU, 0.002s wall-clock]
-Processing axioms: [0.016s CPU, 0.014s wall-clock]
-Translating task: [0.156s CPU, 0.183s wall-clock]
-31 effect conditions simplified
-0 implied preconditions added
-Detecting unreachable propositions...
-0 operators removed
-6 axioms removed
-15 propositions removed
-Detecting unreachable propositions: [0.094s CPU, 0.088s wall-clock]
-Reordering and filtering variables...
-53 of 61 variables necessary.
-0 of 7 mutex groups necessary.
-728 of 728 operators necessary.
-20 of 20 axiom rules necessary.
-Reordering and filtering variables: [0.000s CPU, 0.029s wall-clock]
-Translator variables: 53
-Translator derived variables: 26
-Translator facts: 269
-Translator goal facts: 3
-Translator mutex groups: 0
-Translator total mutex groups size: 0
-Translator operators: 728
-Translator axioms: 20
-Translator task size: 3272
-warning: could not determine peak memory
-Writing output... [0.031s CPU, 0.049s wall-clock]
-Done! [1.109s CPU, 1.258s wall-clock]
-INFO     Running search (release32).
-INFO     search input: output.sas
-INFO     search arguments: ['--search', 'astar(ff())']
-INFO     search time limit: None
-INFO     search memory limit: None
-INFO     search executable: C:\Users\cnsae\Downloads\FastDownward\builds\release32\bin\downward.exe
-INFO     callstring: 'C:\Users\cnsae\Downloads\FastDownward\builds\release32\bin\downward.exe' --search 'astar(ff())' --internal-plan-file output2.txt < output.sas
-reading input... [t=9.72831e-05s]
-done reading input! [t=0.0176665s]
-packing state variables...done! [t=0.0179007s]
-Variables: 53
-FactPairs: 269
-Bytes per state: 12
-Building successor generator...done! [t=0.03715s]
-peak memory difference during successor generator creation: 44 KB
-done initializing global data [t=0.0372825s]
-Simplifying 784 unary operators... done! [769 unary operators]
-Initializing additive heuristic...
-Initializing FF heuristic...
-Conducting best first search with reopening closed nodes, (real) bound = 2147483647
-Switch from bucket-based to heap-based queue at key = 130, num_pushes = 91
-New best heuristic value for ff: 46
-[g=0, 1 evaluated, 0 expanded, t=0.0422887s, 1056 KB]
-f = 46 [1 evaluated, 0 expanded, t=0.0423457s, 1056 KB]
-Initial heuristic value for ff: 46
-pruning method: none
-New best heuristic value for ff: 45
-[g=1, 2 evaluated, 1 expanded, t=0.0425671s, 1056 KB]
-New best heuristic value for ff: 44
-[g=2, 5 evaluated, 2 expanded, t=0.0428852s, 1056 KB]
-f = 47 [10 evaluated, 4 expanded, t=0.043371s, 1056 KB]
-New best heuristic value for ff: 43
-[g=4, 11 evaluated, 5 expanded, t=0.0435176s, 1056 KB]
-New best heuristic value for ff: 42
-[g=5, 13 evaluated, 6 expanded, t=0.0440635s, 1056 KB]
-New best heuristic value for ff: 41
-[g=6, 18 evaluated, 7 expanded, t=0.0446171s, 1056 KB]
-New best heuristic value for ff: 40
-[g=7, 21 evaluated, 8 expanded, t=0.0449634s, 1056 KB]
-New best heuristic value for ff: 39
-[g=8, 22 evaluated, 9 expanded, t=0.0453538s, 1056 KB]
-New best heuristic value for ff: 38
-[g=9, 26 evaluated, 10 expanded, t=0.0457877s, 1056 KB]
-New best heuristic value for ff: 37
-[g=10, 28 evaluated, 11 expanded, t=0.0460271s, 1056 KB]
-New best heuristic value for ff: 36
-[g=11, 34 evaluated, 12 expanded, t=0.046678s, 1056 KB]
-New best heuristic value for ff: 35
-[g=12, 38 evaluated, 13 expanded, t=0.0470978s, 1056 KB]
-New best heuristic value for ff: 34
-[g=13, 44 evaluated, 14 expanded, t=0.0477641s, 1056 KB]
-New best heuristic value for ff: 33
-[g=14, 52 evaluated, 15 expanded, t=0.0486051s, 1056 KB]
-New best heuristic value for ff: 32
-[g=15, 61 evaluated, 16 expanded, t=0.0494928s, 1056 KB]
-New best heuristic value for ff: 31
-[g=16, 71 evaluated, 17 expanded, t=0.0505002s, 1056 KB]
-New best heuristic value for ff: 30
-[g=17, 83 evaluated, 18 expanded, t=0.0517021s, 1056 KB]
-New best heuristic value for ff: 29
-[g=18, 91 evaluated, 19 expanded, t=0.0524772s, 1056 KB]
-New best heuristic value for ff: 28
-[g=19, 97 evaluated, 20 expanded, t=0.0530756s, 1056 KB]
-f = 48 [148 evaluated, 47 expanded, t=0.0593568s, 1056 KB]
-New best heuristic value for ff: 27
-[g=21, 158 evaluated, 49 expanded, t=0.0605831s, 1056 KB]
-New best heuristic value for ff: 26
-[g=22, 163 evaluated, 50 expanded, t=0.0612282s, 1056 KB]
-New best heuristic value for ff: 25
-[g=23, 170 evaluated, 51 expanded, t=0.0619572s, 1056 KB]
-f = 49 [428 evaluated, 118 expanded, t=0.0971237s, 1056 KB]
-f = 50 [741 evaluated, 228 expanded, t=0.14282s, 1056 KB]
-New best heuristic value for ff: 24
-[g=26, 886 evaluated, 260 expanded, t=0.164299s, 1056 KB]
-New best heuristic value for ff: 23
-[g=27, 895 evaluated, 261 expanded, t=0.165275s, 1056 KB]
-New best heuristic value for ff: 22
-[g=28, 902 evaluated, 262 expanded, t=0.166009s, 1056 KB]
-New best heuristic value for ff: 21
-[g=29, 907 evaluated, 263 expanded, t=0.166729s, 1056 KB]
-New best heuristic value for ff: 20
-[g=30, 917 evaluated, 264 expanded, t=0.168035s, 1056 KB]
-New best heuristic value for ff: 19
-[g=31, 922 evaluated, 265 expanded, t=0.168659s, 1056 KB]
-f = 51 [1722 evaluated, 473 expanded, t=0.27434s, 1088 KB]
-New best heuristic value for ff: 18
-[g=33, 1728 evaluated, 475 expanded, t=0.275111s, 1088 KB]
-New best heuristic value for ff: 17
-[g=34, 1731 evaluated, 476 expanded, t=0.275531s, 1088 KB]
-New best heuristic value for ff: 16
-[g=35, 1734 evaluated, 477 expanded, t=0.276089s, 1088 KB]
-New best heuristic value for ff: 15
-[g=36, 1740 evaluated, 478 expanded, t=0.27695s, 1088 KB]
-New best heuristic value for ff: 14
-[g=37, 1748 evaluated, 479 expanded, t=0.277775s, 1088 KB]
-f = 52 [4246 evaluated, 1129 expanded, t=0.631793s, 1340 KB]
-New best heuristic value for ff: 13
-[g=39, 4251 evaluated, 1131 expanded, t=0.632491s, 1340 KB]
-New best heuristic value for ff: 12
-[g=40, 4255 evaluated, 1132 expanded, t=0.632974s, 1340 KB]
-New best heuristic value for ff: 11
-[g=41, 4259 evaluated, 1133 expanded, t=0.633444s, 1340 KB]
-New best heuristic value for ff: 10
-[g=42, 4265 evaluated, 1134 expanded, t=0.63405s, 1340 KB]
-New best heuristic value for ff: 9
-[g=43, 4266 evaluated, 1135 expanded, t=0.634217s, 1340 KB]
-New best heuristic value for ff: 8
-[g=44, 4272 evaluated, 1136 expanded, t=0.634772s, 1340 KB]
-New best heuristic value for ff: 7
-[g=45, 4279 evaluated, 1137 expanded, t=0.635417s, 1340 KB]
-New best heuristic value for ff: 6
-[g=46, 4284 evaluated, 1138 expanded, t=0.635919s, 1340 KB]
-New best heuristic value for ff: 5
-[g=47, 4287 evaluated, 1139 expanded, t=0.636204s, 1340 KB]
-New best heuristic value for ff: 4
-[g=48, 4289 evaluated, 1140 expanded, t=0.636433s, 1340 KB]
-New best heuristic value for ff: 3
-[g=49, 4290 evaluated, 1141 expanded, t=0.636653s, 1340 KB]
-New best heuristic value for ff: 2
-[g=50, 4293 evaluated, 1142 expanded, t=0.636987s, 1340 KB]
-New best heuristic value for ff: 1
-[g=51, 4297 evaluated, 1143 expanded, t=0.637252s, 1340 KB]
-New best heuristic value for ff: 0
-[g=52, 4300 evaluated, 1144 expanded, t=0.637485s, 1340 KB]
-Solution found!
-Actual search time: 0.595209s [t=0.637636s]
-move pj2 poi1 poi2 (1)
-move pj3 poi1 poi2 (1)
-move-jump pj3 poi2 poi3 jump1 (1)
-step-on pj3 step1 poi3 (1)
-move pj2 poi2 poi4 (1)
-move pj1 poi2 poi4 (1)
-move pj3 poi3 poi2 (1)
-move pj3 poi2 poi4 (1)
-doble-switch pj1 pj3 doble1 poi4 (1)
-move pj2 poi4 poi5 (1)
-move pj3 poi4 poi5 (1)
-move pj1 poi4 poi5 (1)
-triple-switch pj1 pj2 pj3 triple1 poi5 (1)
-move pj1 poi5 poi8 (1)
-step-on pj1 step2 poi8 (1)
-move pj1 poi8 poi11 (1)
-move-through pj1 poi11 poi12 barrier1 (1)
-move pj1 poi12 poi13 (1)
-item-pick pj1 rune1 poi13 (1)
-move pj2 poi5 poi8 (1)
-move pj2 poi8 poi9 (1)
-move pj2 poi9 poi10 (1)
-lever-on pj2 lever1 poi10 (1)
-move pj1 poi13 poi14 (1)
-rune-use pj1 rune1 poi14 door1 (1)
-move-distract pj1 poi14 poi19 enemy1 (1)
-move pj2 poi10 poi9 (1)
-move pj2 poi9 poi8 (1)
-move pj2 poi8 poi5 (1)
-move pj2 poi5 poi14 (1)
-move pj2 poi14 poi19 (1)
-move-jump pj3 poi5 poi6 jump2 (1)
-move pj3 poi6 poi7 (1)
-item-pick pj3 gear1 poi7 (1)
-move pj3 poi7 poi5 (1)
-move pj3 poi5 poi14 (1)
-move-jump pj3 poi14 poi15 jump3 (1)
-move-jump pj3 poi15 poi16 jump4 (1)
-gear-use pj3 gear1 poi16 machine1 (1)
-machine-on pj3 machine1 poi16 (1)
-push-boulder pj2 rollable1 poi19 poi20 (1)
-move pj3 poi16 poi15 (1)
-move pj3 poi15 poi17 (1)
-move pj3 poi17 poi18 (1)
-move pj2 poi19 poi20 (1)
-move pj1 poi19 poi20 (1)
-item-pick pj3 rune2 poi18 (1)
-move pj3 poi18 poi20 (1)
-rune-use pj3 rune2 poi20 door2 (1)
-move pj2 poi20 poi21 (1)
-move pj3 poi20 poi21 (1)
-move pj1 poi20 poi21 (1)
-Plan length: 52 step(s).
-Plan cost: 52
-Expanded 1145 state(s).
-Reopened 0 state(s).
-Evaluated 4301 state(s).
-Evaluations: 4301
-Generated 9532 state(s).
-Dead ends: 2 state(s).
-Expanded until last jump: 1129 state(s).
-Reopened until last jump: 0 state(s).
-Evaluated until last jump: 4246 state(s).
-Generated until last jump: 9462 state(s).
-Number of registered states: 4301
-Search time: 0.595673s
-Total time: 0.637653s
-Solution found.
-
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-batch ended
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-batch close
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:10 - from(1): PlayerChangePosition/0/2.561224/-4.265079/1/1/0/True/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:11 - from(1): PlayerTookDamage/0/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:11 - from(1): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:11 - from(1): PlayerTookDamage/0/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:11 - from(1): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:12 - from(1): PlayerChangePosition/0/3.497339/-4.265433/1/1/0.6178005/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:12 - from(1): PlayerChangePosition/0/3.777339/-3.723534/1/1/3.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:12 - from(1): PlayerTookDamage/0/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:12 - from(1): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:13 - from(1): PlayerTookDamage/0/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:13 - from(1): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:13 - from(1): PlayerTookDamage/0/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:13 - from(1): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:13 - from(1): PlayerChangePosition/0/3.399748/-4.265084/1/1/1.176/True/False/False/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:14 - from(1): PlayerChangePosition/0/3.399748/-4.265079/1/1/0/True/False/True/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:14 - from(1): PlayerChangePosition/0/3.037643/-4.265079/-1/1/0.9651999/True/False/False/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:14 - from(1): PlayerChangePosition/0/3.037643/-4.265079/-1/1/0/True/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:15 - from(1): PlayerChangePosition/0/3.043796/-4.265079/1/1/0/True/False/False/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:17 - from(2): ActivateNPCLog/Esperaba ver a Rojo por aquí, ¿sabes que le pasa?/2
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:40 - from(2): PlayerChangePosition/1/-20.46/-2.413567/1/1/0/True/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:42 - from(2): PlayerChangePosition/1/-16.31456/-2.413567/1/1/2.911401/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:42 - from(2): PlayerChangePosition/1/-16.03456/-1.871667/1/1/3.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:43 - from(2): PlayerChangePosition/1/-13.58094/-2.413567/1/1/3.107601/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:43 - from(2): PlayerChangePosition/1/-13.30094/-1.871667/1/1/3.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:44 - from(2): PlayerChangePosition/1/-10.79995/-1.4162/1/1/2.715201/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:44 - from(2): PlayerChangePosition/1/-10.65995/-1.12563/1/1/3.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:45 - from(2): PlayerChangePosition/1/-7.966162/-1.416201/1/1/2.715201/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:45 - from(2): PlayerChangePosition/1/-7.686161/-0.8743005/1/1/3.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:45 - from(2): PlayerChangePosition/1/-6.110558/-0.6017722/1/1/1.025641/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:45 - from(2): PlayerChangePosition/1/-5.830557/-0.05987225/1/1/3.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:46 - from(2): PlayerTookDamage/1/1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:46 - from(2): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:46 - from(2): PlayerChangePosition/1/-0.7285417/-0.5987221/1/1/0/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:46 - from(2): PlayerChangePosition/1/-0.7285564/-0.0568221/1/1/0/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:47 - from(2): PlayerTookDamage/1/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:47 - from(2): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:48 - from(1): ActivateNPCLog/Aun no han llegado, ¿Está todo bien?/1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:48 - from(2): ActivateNPCLog/Aun no han llegado, ¿Está todo bien?/0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:48 - from(2): PlayerChangePosition/1/2.574296/-4.265082/1/1/0/True/False/False/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:52 - from(2): PlayerChangePosition/1/2.574296/-4.265079/1/1/0/True/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:53 - from(2): PlayerTookDamage/1/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:53 - from(2): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:54 - from(2): PlayerTookDamage/1/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:54 - from(2): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:54 - from(2): PlayerTookDamage/1/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:54 - from(2): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:55 - from(2): PlayerTookDamage/1/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:55 - from(2): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:55 - from(2): PlayerTookDamage/1/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:55 - from(2): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:55 - from(2): PlayerChangePosition/1/3.430216/-4.267197/1/1/1.402601/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:55 - from(2): PlayerChangePosition/1/3.570216/-3.976627/1/1/3.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:56 - from(2): PlayerTookDamage/1/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:56 - from(2): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:56 - from(2): PlayerTookDamage/1/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:56 - from(2): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:56 - from(2): PlayerTookDamage/1/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:56 - from(2): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:56 - from(2): PlayerTookDamage/1/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:56 - from(2): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:56 - from(2): PlayerChangePosition/1/3.982022/-4.265094/1/1/1.568401/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:57 - from(2): PlayerChangePosition/1/1.862022/-3.403194/1/1/26.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:58 - from(2): PlayerChangePosition/1/5.133577/-4.264881/1/1/1.456968E-10/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:58 - from(2): PlayerChangePosition/1/5.25239/-3.854389/1/1/1.98144/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:58 - from(2): PlayerTookDamage/1/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:58 - from(2): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:59 - from(2): PlayerChangePosition/1/7.92981/-3.677154/1/1/2.715201/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:59 - from(2): PlayerChangePosition/1/8.13981/-3.256014/1/1/3.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:47:59 - from(2): PlayerChangePosition/1/10.8212/-4.961652/1/1/3.107601/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:00 - from(2): PlayerChangePosition/1/11.1012/-4.419753/1/1/3.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:00 - from(2): PlayerChangePosition/1/13.17223/-4.366061/1/1/0/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:00 - from(2): PlayerChangePosition/1/13.17222/-3.824161/1/1/0/True/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:01 - from(2): PlayerChangePosition/1/14.68559/-3.67623/1/1/2.911401/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:01 - from(2): PlayerChangePosition/1/14.82559/-3.385661/1/1/3.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:01 - from(2): PlayerChangePosition/1/15.06214/-2.450391/1/1/0/False/False/False/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:01 - from(2): PlayerChangePosition/1/15.06214/-2.726077/1/1/0/True/False/True/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:02 - from(2): PlayerChangePosition/1/15.03753/-2.726061/-1/1/0/True/True/True/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:02 - from(2): PlayerChangePosition/1/14.98153/-2.184161/-1/1/0.7/False/False/True/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:02 - from(2): PlayerChangePosition/1/14.89753/-1.799221/-1/1/1.05/False/False/False/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:02 - from(2): PlayerChangePosition/1/14.89449/-1.558639/-1/1/0/True/False/True/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:03 - from(2): PlayerChangePosition/1/14.76191/-1.558639/-1/1/0.2652/True/True/True/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:03 - from(2): PlayerChangePosition/1/14.64991/-1.016739/-1/1/1.4/False/False/True/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:04 - from(2): PlayerChangePosition/1/12.87192/-3.202838/-1/1/3.5/False/False/False/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:04 - from(2): PlayerChangePosition/1/12.87192/-4.366071/-1/1/0/True/True/False/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:04 - from(2): PlayerChangePosition/1/12.87192/-3.944932/-1/1/0/False/False/False/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:04 - from(2): PlayerChangePosition/1/12.87192/-3.944932/-1/1/0/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:05 - from(2): PlayerChangePosition/1/13.54243/-3.676225/1/1/1.3152/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:05 - from(2): PlayerChangePosition/1/13.71043/-3.134326/1/1/2.1/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:05 - from(2): PlayerChangePosition/1/14.32643/-2.450385/1/1/2.8/False/False/False/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:05 - from(2): PlayerChangePosition/1/14.32643/-2.726061/1/1/0/True/True/False/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:05 - from(2): PlayerChangePosition/1/14.32643/-2.304921/1/1/0/False/False/False/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:05 - from(2): PlayerChangePosition/1/14.32643/-2.304921/1/1/0/False/False/True/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:06 - from(2): PlayerChangePosition/1/14.28443/-1.727511/-1/1/0.35/True/False/False/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:06 - from(2): PlayerChangePosition/1/14.28443/-1.558639/-1/1/0/True/False/True/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:06 - from(2): PlayerChangePosition/1/14.28135/-1.558639/-1/1/0/True/True/True/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:06 - from(2): PlayerChangePosition/1/14.26035/-1.137499/-1/1/0.35/False/False/True/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:07 - from(2): PlayerChangePosition/1/12.83936/-3.958899/-1/1/3.15/False/False/False/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:19 - from(1): ActivateNPCLog/Esperaba ver a Azul por aquí, ¿sabes que le pasa?/1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:19 - from(2): ActivateNPCLog/Esperaba ver a Amarillo por aquí, ¿sabes que le pasa?/0
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:21 - from(3): PlayerChangePosition/2/-19.56/-2.413567/1/1/0/True/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:22 - from(3): PlayerChangePosition/2/-16.41409/-2.413567/1/1/3.107601/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:22 - from(3): PlayerChangePosition/2/-16.20409/-1.992427/1/1/3.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:23 - from(3): PlayerPower/2/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:23 - from(3): PlayerChangePosition/2/-12.44014/-2.413567/1/1/3.107601/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:23 - from(3): PlayerChangePosition/2/-12.30014/-2.122997/1/1/3.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:24 - from(3): ChangeMpHUDToRoom/-1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:25 - from(3): PlayerChangePosition/2/-8.301728/-1.4162/1/1/3.107601/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:25 - from(3): PlayerChangePosition/2/-8.161729/-1.12563/1/1/3.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:25 - from(3): ChangeMpHUDToRoom/-1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:25 - from(3): PlayerChangePosition/2/-6.434992/-0.7548844/1/1/0.04170026/False/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:25 - from(3): PlayerChangePosition/2/-6.364992/-0.6046944/1/1/3.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:26 - from(3): PlayerTookDamage/2/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:26 - from(3): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:26 - from(3): PlayerTookDamage/2/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:26 - from(3): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:26 - from(3): ChangeMpHUDToRoom/-1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:26 - from(3): PlayerTookDamage/2/-1500/200
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:26 - from(3): ChangeHpHUDToRoom/-5
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:26 - from(3): PlayerChangePosition/2/-6.183582/-0.112033/1/1/3.5/False/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:26 - from(3): PlayerChangePosition/2/-6.043582/0.178537/1/1/3.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:27 - from(3): ChangeMpHUDToRoom/-1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:28 - from(3): PlayerChangePosition/2/-2.291594/-0.6019815/1/1/3.303801/True/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:28 - from(3): PlayerChangePosition/2/-2.081594/-0.1808415/1/1/3.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:28 - from(3): PlayerChangePosition/2/-1.311594/0.6079685/1/1/3.5/False/True/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:28 - from(3): PlayerChangePosition/2/-1.171594/0.8985385/1/1/3.5/False/False/False/True
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:28 - from(3): ChangeMpHUDToRoom/-1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:29 - from(3): PlayerPower/2/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:29 - from(3): PlayerChangePosition/2/3.547681/-4.265079/1/1/3.107601/True/False/False/False
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:50 - from(1): ActivateNPCLog/Aun no han llegado, ¿Está todo bien?/1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:48:51 - from(2): ActivateNPCLog/Aun no han llegado, ¿Está todo bien?/1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:49:22 - from(1): ActivateNPCLog/Esperaba ver a Azul por aquí, ¿sabes que le pasa?/1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:49:22 - from(2): ActivateNPCLog/Esperaba ver a Azul por aquí, ¿sabes que le pasa?/1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:49:54 - from(1): ActivateNPCLog/¿Probaron ir hasta la torre del lago?/1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:49:54 - from(2): ActivateNPCLog/¿Probaron ir hasta la torre del lago?/1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:50:25 - from(1): ActivateNPCLog/Azul, debe ir desde el arbol del pequeño lago hasta la torre del lago/1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:50:26 - from(2): ActivateNPCLog/Azul, debe ir desde el arbol del pequeño lago hasta la torre del lago/1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:50:57 - from(1): ActivateNPCLog/Azul, debe ir desde el arbol del pequeño lago hasta la torre del lago/1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:50:57 - from(2): ActivateNPCLog/Azul, debe ir desde el arbol del pequeño lago hasta la torre del lago/1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Log: connection {2} has been disconnected by timeout; address {::ffff:192.168.0.107:7777}
+Log: connection {2} has been disconnected by timeout; address {::ffff:192.168.0.131:7777}
 Client 2 disconnected
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
- 1:51:14 - from(1): 2/pj1 - mage pj2 - warrior pj3 - inventor poi1 - poi poi2 - poi poi3 - poi poi4 - poi poi5 - poi poi6 - poi poi7 - poi poi8 - poi poi9 - poi poi10 - poi poi11 - poi poi12 - poi poi13 - poi poi14 - poi poi15 - poi poi16 - poi poi17 - poi poi18 - poi poi19 - poi poi20 - poi poi21 - poi poi22 - poi poi23 - poi door1 - door door2 - door door3 - door jump1 - jump jump2 - jump jump3 - jump jump4 - jump barrier1 - barrier enemy1 - enemy rollable1 - rollable obstacle1 - obstacle obstacle2 - obstacle obstacle3 - obstacle obstacle4 - obstacle obstacle5 - obstacle gear1 - gear rune1 - rune rune2 - rune rune3 - rune step1 - step step2 - step lever1 - lever machine1 - machine triple1 - triple doble1 - doble /(player-at pj1 poi2)(player-distinct pj1 pj2)(player-distinct pj1 pj3)(player-at pj2 poi2)(player-distinct pj2 pj1)(player-distinct pj2 pj3)(player-at pj3 poi2)(player-distinct pj3 pj1)(player-distinct pj3 pj2)(route-to poi1 poi2)(route-to poi2 poi1)(route-to poi2 poi3)(route-to poi2 poi4)(route-block poi2 poi3 jump1)(route-block poi2 poi4 obstacle1)(route-to poi3 poi2)(route-to poi4 poi2)(route-to poi4 poi5)(route-block poi4 poi5 obstacle2)(route-to poi5 poi2)(route-to poi5 poi4)(route-to poi5 poi6)(route-to poi5 poi8)(route-to poi5 poi14)(route-block poi5 poi4 obstacle2)(route-block poi5 poi6 jump2)(route-block poi5 poi8 obstacle3)(route-block poi5 poi14 door1)(route-to poi6 poi5)(route-to poi6 poi7)(route-to poi7 poi5)(route-to poi7 poi6)(route-to poi8 poi5)(route-to poi8 poi9)(route-to poi8 poi11)(route-block poi8 poi5 obstacle3)(route-block poi8 poi11 obstacle4)(route-to poi9 poi8)(route-to poi9 poi10)(route-to poi10 poi9)(route-to poi10 poi22)(route-block poi10 poi22 door3)(door-route poi10 poi22 door3)(route-to poi11 poi8)(route-to poi11 poi12)(route-block poi11 poi12 barrier1)(route-to poi12 poi11)(route-to poi12 poi13)(route-to poi12 poi23)(route-block poi12 poi11 barrier1)(route-to poi13 poi12)(route-to poi13 poi14)(route-block poi13 poi14 obstacle5)(route-to poi14 poi5)(route-to poi14 poi13)(route-to poi14 poi15)(route-to poi14 poi19)(route-block poi14 poi5 door1)(route-block poi14 poi15 jump3)(route-block poi14 poi19 enemy1)(door-route poi14 poi5 door1)(route-to poi15 poi14)(route-to poi15 poi16)(route-to poi15 poi17)(route-block poi15 poi16 jump4)(route-block poi15 poi17 enemy1)(route-to poi16 poi15)(route-to poi17 poi15)(route-to poi17 poi18)(route-block poi17 poi16 enemy1)(route-block poi17 poi18 enemy1)(route-to poi18 poi17)(route-to poi18 poi20)(route-block poi18 poi17 enemy1)(route-to poi19 poi14)(route-to poi19 poi20)(route-block poi19 poi14 enemy1)(route-block poi19 poi20 enemy1)(route-block poi19 poi20 rollable1)(route-to poi20 poi19)(route-to poi20 poi21)(route-block poi20 poi19 enemy1)(route-block poi20 poi19 rollable1)(route-block poi20 poi21 door2)(door-route poi20 poi21 door2)(route-to poi21 poi20)(route-block poi21 poi20 door2)(route-to poi22 poi10)(route-block poi22 poi10 door3)(route-to poi23 poi12)(blocked door1)(door-rune door1 rune1)(blocked door2)(door-rune door2 rune2)(blocked door3)(door-rune door3 rune3)(blocked jump1)(blocked jump2)(blocked jump3)(blocked jump4)(blocked barrier1)(enemy-at enemy1 poi17)(enemy-at enemy1 poi19)(enemy-edge enemy1 poi17 poi15)(enemy-edge enemy1 poi17 poi18)(enemy-edge enemy1 poi19 poi14)(enemy-edge enemy1 poi19 poi20)(blocked enemy1)(blocked rollable1)(rollable-locked rollable1)(blocked obstacle1)(blocked obstacle2)(blocked obstacle3)(blocked obstacle4)(blocked obstacle5)(item-at gear1 poi7)(item-assign gear1 pj3)(item-at rune1 poi13)(item-assign rune1 pj1)(item-at rune2 poi18)(item-assign rune2 pj3)(item-at rune3 poi9)(item-assign rune3 pj2)(switch-at step1 poi3)(linked-switch step1 obstacle1)(switch-assign step1 pj3)(switch-at step2 poi8)(linked-switch step2 obstacle4)(switch-assign step2 pj1)(switch-at lever1 poi10)(linked-switch lever1 obstacle5)(switch-assign lever1 pj2)(switch-at machine1 poi16)(linked-switch machine1 rollable1)(machine-gear machine1 gear1)(switch-assign machine1 pj3)(switch-at triple1 poi5)(linked-switch triple1 obstacle3)(switch-assign triple1 pj1)(switch-assign triple1 pj2)(switch-assign triple1 pj3)(switch-at doble1 poi4)(linked-switch doble1 obstacle2)(switch-assign doble1 pj1)(switch-assign doble1 pj3)/(player-at pj1 poi21)(player-at pj2 poi21)(player-at pj3 poi21)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-stack enter count:1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-batch star
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-INFO     Running translator.
-INFO     translator input: ['misc/tests/benchmarks/gripper\\domain.pddl', 'misc/tests/benchmarks/gripper/prob2.pddl']
-INFO     translator arguments: []
-INFO     translator time limit: None
-INFO     translator memory limit: None
-INFO     callstring: 'C:\Python27\python.exe' 'C:\Users\cnsae\Downloads\FastDownward\builds\release32\bin\translate\translate.py' 'misc/tests/benchmarks/gripper\domain.pddl' misc/tests/benchmarks/gripper/prob2.pddl
-Parsing...
-Parsing: [0.062s CPU, 0.071s wall-clock]
-Normalizing task... [0.000s CPU, 0.003s wall-clock]
-Instantiating...
-Generating Datalog program... [0.016s CPU, 0.013s wall-clock]
-Normalizing Datalog program...
-Normalizing Datalog program: [0.062s CPU, 0.064s wall-clock]
-Preparing model... [0.031s CPU, 0.033s wall-clock]
-Generated 147 rules.
-Computing model... [0.672s CPU, 0.873s wall-clock]
-1355 relevant atoms
-2982 auxiliary atoms
-4337 final queue length
-5291 total queue pushes
-Completing instantiation... [0.500s CPU, 0.569s wall-clock]
-Instantiating: [1.281s CPU, 1.565s wall-clock]
-Computing fact groups...
-Finding invariants...
-23 initial candidates
-Finding invariants: [0.047s CPU, 0.040s wall-clock]
-Checking invariant weight... [0.000s CPU, 0.001s wall-clock]
-Instantiating groups... [0.000s CPU, 0.009s wall-clock]
-Collecting mutex groups... [0.000s CPU, 0.002s wall-clock]
-Choosing groups...
-60 uncovered facts
-Choosing groups: [0.000s CPU, 0.003s wall-clock]
-Building translation key... [0.000s CPU, 0.010s wall-clock]
-Computing fact groups: [0.062s CPU, 0.076s wall-clock]
-Building STRIPS to SAS dictionary... [0.000s CPU, 0.001s wall-clock]
-Building dictionary for full mutex groups... [0.000s CPU, 0.001s wall-clock]
-Building mutex information...
-Building mutex information: [0.000s CPU, 0.002s wall-clock]
-Translating task...
-Processing axioms...
-Simplifying axioms... [0.000s CPU, 0.006s wall-clock]
-Processing axioms: [0.031s CPU, 0.034s wall-clock]
-Translating task: [0.359s CPU, 0.438s wall-clock]
-31 effect conditions simplified
-0 implied preconditions added
-Detecting unreachable propositions...
-0 operators removed
-6 axioms removed
-15 propositions removed
-Detecting unreachable propositions: [0.125s CPU, 0.186s wall-clock]
-Reordering and filtering variables...
-53 of 61 variables necessary.
-0 of 7 mutex groups necessary.
-728 of 728 operators necessary.
-20 of 20 axiom rules necessary.
-Reordering and filtering variables: [0.047s CPU, 0.035s wall-clock]
-Translator variables: 53
-Translator derived variables: 26
-Translator facts: 269
-Translator goal facts: 3
-Translator mutex groups: 0
-Translator total mutex groups size: 0
-Translator operators: 728
-Translator axioms: 20
-Translator task size: 3272
-warning: could not determine peak memory
-Writing output... [0.062s CPU, 0.091s wall-clock]
-Done! [2.016s CPU, 2.486s wall-clock]
-INFO     Running search (release32).
-INFO     search input: output.sas
-INFO     search arguments: ['--search', 'astar(ff())']
-INFO     search time limit: None
-INFO     search memory limit: None
-INFO     search executable: C:\Users\cnsae\Downloads\FastDownward\builds\release32\bin\downward.exe
-INFO     callstring: 'C:\Users\cnsae\Downloads\FastDownward\builds\release32\bin\downward.exe' --search 'astar(ff())' --internal-plan-file output2.txt < output.sas
-reading input... [t=0.000108803s]
-done reading input! [t=0.0311095s]
-packing state variables...done! [t=0.0312388s]
-Variables: 53
-FactPairs: 269
-Bytes per state: 12
-Building successor generator...done! [t=0.0652821s]
-peak memory difference during successor generator creation: 44 KB
-done initializing global data [t=0.0654363s]
-Simplifying 784 unary operators... done! [769 unary operators]
-Initializing additive heuristic...
-Initializing FF heuristic...
-Conducting best first search with reopening closed nodes, (real) bound = 2147483647
-Switch from bucket-based to heap-based queue at key = 143, num_pushes = 121
-New best heuristic value for ff: 44
-[g=0, 1 evaluated, 0 expanded, t=0.0742533s, 1060 KB]
-f = 44 [1 evaluated, 0 expanded, t=0.074339s, 1060 KB]
-Initial heuristic value for ff: 44
-pruning method: none
-f = 45 [5 evaluated, 1 expanded, t=0.0751045s, 1060 KB]
-New best heuristic value for ff: 43
-[g=2, 6 evaluated, 2 expanded, t=0.0756267s, 1060 KB]
-New best heuristic value for ff: 42
-[g=3, 9 evaluated, 3 expanded, t=0.0766111s, 1060 KB]
-New best heuristic value for ff: 41
-[g=4, 14 evaluated, 4 expanded, t=0.0775314s, 1060 KB]
-New best heuristic value for ff: 40
-[g=5, 17 evaluated, 5 expanded, t=0.0780601s, 1060 KB]
-New best heuristic value for ff: 39
-[g=6, 18 evaluated, 6 expanded, t=0.0783001s, 1060 KB]
-New best heuristic value for ff: 38
-[g=7, 22 evaluated, 7 expanded, t=0.0789785s, 1060 KB]
-New best heuristic value for ff: 37
-[g=8, 24 evaluated, 8 expanded, t=0.0793549s, 1060 KB]
-New best heuristic value for ff: 36
-[g=9, 30 evaluated, 9 expanded, t=0.080279s, 1060 KB]
-New best heuristic value for ff: 35
-[g=10, 34 evaluated, 10 expanded, t=0.080928s, 1060 KB]
-New best heuristic value for ff: 34
-[g=11, 40 evaluated, 11 expanded, t=0.0819437s, 1060 KB]
-New best heuristic value for ff: 33
-[g=12, 48 evaluated, 12 expanded, t=0.0831041s, 1060 KB]
-New best heuristic value for ff: 32
-[g=13, 57 evaluated, 13 expanded, t=0.0843912s, 1060 KB]
-New best heuristic value for ff: 31
-[g=14, 67 evaluated, 14 expanded, t=0.0857979s, 1060 KB]
-New best heuristic value for ff: 30
-[g=15, 79 evaluated, 15 expanded, t=0.0874902s, 1060 KB]
-New best heuristic value for ff: 29
-[g=16, 87 evaluated, 16 expanded, t=0.0888963s, 1060 KB]
-New best heuristic value for ff: 28
-[g=17, 93 evaluated, 17 expanded, t=0.0899453s, 1060 KB]
-f = 46 [132 evaluated, 33 expanded, t=0.101576s, 1060 KB]
-New best heuristic value for ff: 27
-[g=19, 142 evaluated, 35 expanded, t=0.103672s, 1060 KB]
-New best heuristic value for ff: 26
-[g=20, 147 evaluated, 36 expanded, t=0.104869s, 1060 KB]
-New best heuristic value for ff: 25
-[g=21, 154 evaluated, 37 expanded, t=0.105995s, 1060 KB]
-f = 47 [405 evaluated, 95 expanded, t=0.144303s, 1060 KB]
-f = 48 [719 evaluated, 204 expanded, t=0.202243s, 1060 KB]
-New best heuristic value for ff: 24
-[g=24, 864 evaluated, 236 expanded, t=0.230678s, 1060 KB]
-New best heuristic value for ff: 23
-[g=25, 873 evaluated, 237 expanded, t=0.231709s, 1060 KB]
-New best heuristic value for ff: 22
-[g=26, 880 evaluated, 238 expanded, t=0.232532s, 1060 KB]
-New best heuristic value for ff: 21
-[g=27, 885 evaluated, 239 expanded, t=0.233123s, 1060 KB]
-New best heuristic value for ff: 20
-[g=28, 895 evaluated, 240 expanded, t=0.234189s, 1060 KB]
-New best heuristic value for ff: 19
-[g=29, 900 evaluated, 241 expanded, t=0.234776s, 1060 KB]
-f = 49 [1695 evaluated, 452 expanded, t=0.359471s, 1092 KB]
-New best heuristic value for ff: 18
-[g=31, 1701 evaluated, 454 expanded, t=0.360853s, 1092 KB]
-New best heuristic value for ff: 17
-[g=32, 1704 evaluated, 455 expanded, t=0.361283s, 1092 KB]
-New best heuristic value for ff: 16
-[g=33, 1707 evaluated, 456 expanded, t=0.361715s, 1092 KB]
-New best heuristic value for ff: 15
-[g=34, 1713 evaluated, 457 expanded, t=0.362433s, 1092 KB]
-New best heuristic value for ff: 14
-[g=35, 1721 evaluated, 458 expanded, t=0.363366s, 1092 KB]
-f = 50 [4215 evaluated, 1107 expanded, t=0.719053s, 1340 KB]
-New best heuristic value for ff: 13
-[g=37, 4220 evaluated, 1109 expanded, t=0.719819s, 1340 KB]
-New best heuristic value for ff: 12
-[g=38, 4224 evaluated, 1110 expanded, t=0.720316s, 1340 KB]
-New best heuristic value for ff: 11
-[g=39, 4228 evaluated, 1111 expanded, t=0.720799s, 1340 KB]
-New best heuristic value for ff: 10
-[g=40, 4234 evaluated, 1112 expanded, t=0.721459s, 1340 KB]
-New best heuristic value for ff: 9
-[g=41, 4235 evaluated, 1113 expanded, t=0.721646s, 1340 KB]
-New best heuristic value for ff: 8
-[g=42, 4241 evaluated, 1114 expanded, t=0.722294s, 1340 KB]
-New best heuristic value for ff: 7
-[g=43, 4248 evaluated, 1115 expanded, t=0.723018s, 1340 KB]
-New best heuristic value for ff: 6
-[g=44, 4253 evaluated, 1116 expanded, t=0.723519s, 1340 KB]
-New best heuristic value for ff: 5
-[g=45, 4256 evaluated, 1117 expanded, t=0.723848s, 1340 KB]
-New best heuristic value for ff: 4
-[g=46, 4258 evaluated, 1118 expanded, t=0.724103s, 1340 KB]
-New best heuristic value for ff: 3
-[g=47, 4259 evaluated, 1119 expanded, t=0.724259s, 1340 KB]
-New best heuristic value for ff: 2
-[g=48, 4262 evaluated, 1120 expanded, t=0.724589s, 1340 KB]
-New best heuristic value for ff: 1
-[g=49, 4266 evaluated, 1121 expanded, t=0.725188s, 1340 KB]
-New best heuristic value for ff: 0
-[g=50, 4269 evaluated, 1122 expanded, t=0.725455s, 1340 KB]
-Solution found!
-Actual search time: 0.651181s [t=0.725645s]
-move-jump pj3 poi2 poi3 jump1 (1)
-step-on pj3 step1 poi3 (1)
-move pj2 poi2 poi4 (1)
-move pj1 poi2 poi4 (1)
-move pj3 poi3 poi2 (1)
-move pj3 poi2 poi4 (1)
-doble-switch pj1 pj3 doble1 poi4 (1)
-move pj2 poi4 poi5 (1)
-move pj3 poi4 poi5 (1)
-move pj1 poi4 poi5 (1)
-triple-switch pj1 pj2 pj3 triple1 poi5 (1)
-move pj1 poi5 poi8 (1)
-step-on pj1 step2 poi8 (1)
-move pj1 poi8 poi11 (1)
-move-through pj1 poi11 poi12 barrier1 (1)
-move pj1 poi12 poi13 (1)
-item-pick pj1 rune1 poi13 (1)
-move pj2 poi5 poi8 (1)
-move pj2 poi8 poi9 (1)
-move pj2 poi9 poi10 (1)
-lever-on pj2 lever1 poi10 (1)
-move pj1 poi13 poi14 (1)
-rune-use pj1 rune1 poi14 door1 (1)
-move-distract pj1 poi14 poi19 enemy1 (1)
-move pj2 poi10 poi9 (1)
-move pj2 poi9 poi8 (1)
-move pj2 poi8 poi5 (1)
-move pj2 poi5 poi14 (1)
-move pj2 poi14 poi19 (1)
-move-jump pj3 poi5 poi6 jump2 (1)
-move pj3 poi6 poi7 (1)
-item-pick pj3 gear1 poi7 (1)
-move pj3 poi7 poi5 (1)
-move pj3 poi5 poi14 (1)
-move-jump pj3 poi14 poi15 jump3 (1)
-move-jump pj3 poi15 poi16 jump4 (1)
-gear-use pj3 gear1 poi16 machine1 (1)
-machine-on pj3 machine1 poi16 (1)
-push-boulder pj2 rollable1 poi19 poi20 (1)
-move pj3 poi16 poi15 (1)
-move pj3 poi15 poi17 (1)
-move pj3 poi17 poi18 (1)
-move pj2 poi19 poi20 (1)
-move pj1 poi19 poi20 (1)
-item-pick pj3 rune2 poi18 (1)
-move pj3 poi18 poi20 (1)
-rune-use pj3 rune2 poi20 door2 (1)
-move pj2 poi20 poi21 (1)
-move pj3 poi20 poi21 (1)
-move pj1 poi20 poi21 (1)
-Plan length: 50 step(s).
-Plan cost: 50
-Expanded 1123 state(s).
-Reopened 0 state(s).
-Evaluated 4270 state(s).
-Evaluations: 4270
-Generated 9410 state(s).
-Dead ends: 2 state(s).
-Expanded until last jump: 1107 state(s).
-Reopened until last jump: 0 state(s).
-Evaluated until last jump: 4215 state(s).
-Generated until last jump: 9340 state(s).
-Number of registered states: 4270
-Search time: 0.65192s
-Total time: 0.72567s
-Solution found.
-
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-batch ended
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-batch close
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Log: connection {1} has been disconnected by timeout; address {::ffff:192.168.0.131:7777}
-Client 1 disconnected
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
- 1:51:19 - from(3): 2/pj1 - mage pj2 - warrior pj3 - inventor poi1 - poi poi2 - poi poi3 - poi poi4 - poi poi5 - poi poi6 - poi poi7 - poi poi8 - poi poi9 - poi poi10 - poi poi11 - poi poi12 - poi poi13 - poi poi14 - poi poi15 - poi poi16 - poi poi17 - poi poi18 - poi poi19 - poi poi20 - poi poi21 - poi poi22 - poi poi23 - poi door1 - door door2 - door door3 - door jump1 - jump jump2 - jump jump3 - jump jump4 - jump barrier1 - barrier enemy1 - enemy rollable1 - rollable obstacle1 - obstacle obstacle2 - obstacle obstacle3 - obstacle obstacle4 - obstacle obstacle5 - obstacle gear1 - gear rune1 - rune rune2 - rune rune3 - rune step1 - step step2 - step lever1 - lever machine1 - machine triple1 - triple doble1 - doble /(player-at pj1 poi2)(player-distinct pj1 pj2)(player-distinct pj1 pj3)(player-at pj2 poi2)(player-distinct pj2 pj1)(player-distinct pj2 pj3)(player-at pj3 poi2)(player-distinct pj3 pj1)(player-distinct pj3 pj2)(route-to poi1 poi2)(route-to poi2 poi1)(route-to poi2 poi3)(route-to poi2 poi4)(route-block poi2 poi3 jump1)(route-block poi2 poi4 obstacle1)(route-to poi3 poi2)(route-to poi4 poi2)(route-to poi4 poi5)(route-block poi4 poi5 obstacle2)(route-to poi5 poi2)(route-to poi5 poi4)(route-to poi5 poi6)(route-to poi5 poi8)(route-to poi5 poi14)(route-block poi5 poi4 obstacle2)(route-block poi5 poi6 jump2)(route-block poi5 poi8 obstacle3)(route-block poi5 poi14 door1)(route-to poi6 poi5)(route-to poi6 poi7)(route-to poi7 poi5)(route-to poi7 poi6)(route-to poi8 poi5)(route-to poi8 poi9)(route-to poi8 poi11)(route-block poi8 poi5 obstacle3)(route-block poi8 poi11 obstacle4)(route-to poi9 poi8)(route-to poi9 poi10)(route-to poi10 poi9)(route-to poi10 poi22)(route-block poi10 poi22 door3)(door-route poi10 poi22 door3)(route-to poi11 poi8)(route-to poi11 poi12)(route-block poi11 poi12 barrier1)(route-to poi12 poi11)(route-to poi12 poi13)(route-to poi12 poi23)(route-block poi12 poi11 barrier1)(route-to poi13 poi12)(route-to poi13 poi14)(route-block poi13 poi14 obstacle5)(route-to poi14 poi5)(route-to poi14 poi13)(route-to poi14 poi15)(route-to poi14 poi19)(route-block poi14 poi5 door1)(route-block poi14 poi15 jump3)(route-block poi14 poi19 enemy1)(door-route poi14 poi5 door1)(route-to poi15 poi14)(route-to poi15 poi16)(route-to poi15 poi17)(route-block poi15 poi16 jump4)(route-block poi15 poi17 enemy1)(route-to poi16 poi15)(route-to poi17 poi15)(route-to poi17 poi18)(route-block poi17 poi16 enemy1)(route-block poi17 poi18 enemy1)(route-to poi18 poi17)(route-to poi18 poi20)(route-block poi18 poi17 enemy1)(route-to poi19 poi14)(route-to poi19 poi20)(route-block poi19 poi14 enemy1)(route-block poi19 poi20 enemy1)(route-block poi19 poi20 rollable1)(route-to poi20 poi19)(route-to poi20 poi21)(route-block poi20 poi19 enemy1)(route-block poi20 poi19 rollable1)(route-block poi20 poi21 door2)(door-route poi20 poi21 door2)(route-to poi21 poi20)(route-block poi21 poi20 door2)(route-to poi22 poi10)(route-block poi22 poi10 door3)(route-to poi23 poi12)(blocked door1)(door-rune door1 rune1)(blocked door2)(door-rune door2 rune2)(blocked door3)(door-rune door3 rune3)(blocked jump1)(blocked jump2)(blocked jump3)(blocked jump4)(blocked barrier1)(enemy-at enemy1 poi17)(enemy-at enemy1 poi19)(enemy-edge enemy1 poi17 poi15)(enemy-edge enemy1 poi17 poi18)(enemy-edge enemy1 poi19 poi14)(enemy-edge enemy1 poi19 poi20)(blocked enemy1)(blocked rollable1)(rollable-locked rollable1)(blocked obstacle1)(blocked obstacle2)(blocked obstacle3)(blocked obstacle4)(blocked obstacle5)(item-at gear1 poi7)(item-assign gear1 pj3)(item-at rune1 poi13)(item-assign rune1 pj1)(item-at rune2 poi18)(item-assign rune2 pj3)(item-at rune3 poi9)(item-assign rune3 pj2)(switch-at step1 poi3)(linked-switch step1 obstacle1)(switch-assign step1 pj3)(switch-at step2 poi8)(linked-switch step2 obstacle4)(switch-assign step2 pj1)(switch-at lever1 poi10)(linked-switch lever1 obstacle5)(switch-assign lever1 pj2)(switch-at machine1 poi16)(linked-switch machine1 rollable1)(machine-gear machine1 gear1)(switch-assign machine1 pj3)(switch-at triple1 poi5)(linked-switch triple1 obstacle3)(switch-assign triple1 pj1)(switch-assign triple1 pj2)(switch-assign triple1 pj3)(switch-at doble1 poi4)(linked-switch doble1 obstacle2)(switch-assign doble1 pj1)(switch-assign doble1 pj3)/(player-at pj1 poi21)(player-at pj2 poi21)(player-at pj3 poi21)
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-stack enter count:1
- 
-(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
-
-Log: connection {3} has been disconnected by timeout; address {::ffff:192.168.0.103:7777}
+Log: connection {3} has been disconnected by timeout; address {::ffff:192.168.0.107:7777}
 Client 3 disconnected
  
 (Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
 
+Log: connection {7} has been disconnected by timeout; address {::ffff:192.168.0.110:7777}
+Client 7 disconnected
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
+Log: connection {4} has been disconnected by timeout; address {::ffff:192.168.0.108:7777}
+Client 4 disconnected
+ 
+(Filename: C:/buildslave/unity/build/artifacts/generated/common/runtime/DebugBindings.gen.cpp Line: 51)
+
 Setting up 1 worker threads for Enlighten.
-  Thread -> id: 408 -> priority: 1 
+  Thread -> id: 3900 -> priority: 1 
+Log: connection {6} has been disconnected by timeout; address {::ffff:192.168.0.113:7777}
