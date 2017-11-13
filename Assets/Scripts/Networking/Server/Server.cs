@@ -94,7 +94,7 @@ public class Server : MonoBehaviour
         planner = new Thread(new ThreadStart(this.Plan));
         planner.Start();
 
-        this.sceneToLoad = "Escena2";
+        this.sceneToLoad = "Escena1";
     }
 
     public void InitializeBroadcast()
