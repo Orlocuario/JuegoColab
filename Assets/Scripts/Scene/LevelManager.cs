@@ -9,6 +9,9 @@ using UnityEngine.UI;
 public class LevelManager : MonoBehaviour
 {
 
+    #region Attributes
+
+
     public PlayerController localPlayer;
     public GameObject[] players;
     public GameObject canvas;
@@ -26,12 +29,12 @@ public class LevelManager : MonoBehaviour
     private float waitToGrabItem;
 
     public float waitToRespawn;
-    public float NPCMessageReadTime;
 
-    private NPCtrigger NPCtrigger;
     private Text npcLogText;
 
-    private int npcMessageCount;
+    #endregion
+
+    #region Start
 
     void Start()
     {
@@ -57,113 +60,9 @@ public class LevelManager : MonoBehaviour
         reconnectText.SetActive(false);
     }
 
-    public void GoToNextScene()
-    {
-        string currentSceneName = SceneManager.GetActiveScene().name;
-        string currentSceneNumber = Regex.Match(currentSceneName, @"\d+").Value;
-        int nextSceneNumber = int.Parse(currentSceneNumber) + 1;
-        string nextSceneName = "Escena" + nextSceneNumber;
+    #endregion
 
-        Debug.Log("Changing to scene " + nextSceneName);
-
-        client.SendMessageToServer("ChangeScene/" + nextSceneName);
-    }
-
-    public GameObject GetLocalPlayer()
-    {
-        return localPlayer.gameObject;
-    }
-
-    public PlayerController GetLocalPlayerController()
-    {
-        return localPlayer;
-    }
-
-    public MageController GetMage()
-    {
-        if (players == null)
-        {
-            return null;
-        }
-
-        GameObject player = players[0];
-        MageController magecontroller = player.GetComponent<MageController>();
-        return magecontroller;
-    }
-
-    public WarriorController GetWarrior()
-    {
-        if (players == null)
-        {
-            return null;
-        }
-
-        GameObject player = players[1];
-        WarriorController script = player.GetComponent<WarriorController>();
-        return script;
-    }
-
-    public EngineerController GetEngineer()
-    {
-        if (players == null)
-        {
-            return null;
-        }
-
-        GameObject player = players[2];
-        EngineerController script = player.GetComponent<EngineerController>();
-        return script;
-    }
-
-    public void MostrarReconectando(bool valor)
-    {
-        reconnectText.SetActive(valor);
-    }
-
-    public void SetLocalPlayer(int id)
-    {
-        players = new GameObject[3];
-
-        players[0] = GameObject.Find("Mage");
-        players[1] = GameObject.Find("Warrior");
-        players[2] = GameObject.Find("Engineer");
-
-        switch (id)
-        {
-            case 0:
-                localPlayer = players[0].GetComponent<MageController>();
-                Debug.Log("Activating Mage local player");
-                break;
-            case 1:
-                Debug.Log("Activating Warrior local player");
-                localPlayer = players[1].GetComponent<WarriorController>();
-                break;
-            case 2:
-                Debug.Log("Activating Engineer local player");
-                localPlayer = players[2].GetComponent<EngineerController>();
-                break;
-        }
-
-        localPlayer.Activate(id);
-        Camera.main.GetComponent<CameraController>().SetTarget(localPlayer.gameObject);
-    }
-
-    public void Respawn()
-    {
-        StartCoroutine("Respawning");
-    }
-
-    public IEnumerator Respawning()
-    {
-        localPlayer.gameObject.SetActive(false);
-
-        yield return new WaitForSeconds(waitToRespawn);
-
-        localPlayer.transform.position = localPlayer.respawnPosition + Vector3.up * .1f;
-        localPlayer.gameObject.SetActive(true);
-        localPlayer.IgnoreCollisionBetweenPlayers();
-        localPlayer.SendPlayerDataToServer();
-    }
+    #region Common
 
     public void MoveItemInGame(string itemName, string posX, string posY, string rotZ)
     {
@@ -200,24 +99,37 @@ public class LevelManager : MonoBehaviour
         doorSpriteRenderer.sprite = door.GetComponent<RuneSystem>().doorIsOpen;
     }
 
-    private void ReadNPCMessage()
+    private void ReadNPCMessage(NPCtrigger NPC)
     {
-        if (npcMessageCount >= NPCtrigger.messages.Length)
+
+        if (NPC.activeParticles && NPC.activeParticles.isPlaying)
+        {
+            NPC.activeParticles.Stop();
+        }
+
+        if (NPC.particles != null && NPC.particles.Length > 0)
+        {
+            if (NPC.particles[NPC.messageCount])
+            {
+                NPC.activeParticles = NPC.particles[NPC.messageCount];
+                NPC.activeParticles.Play();
+            }
+        }
+
+        if (NPC.messages[NPC.messageCount] != null)
+        {
+            npcLogText.text = NPC.messages[NPC.messageCount];
+        }
+
+        if (++NPC.messageCount >= NPC.messages.Length)
         {
             npcLog.SetActive(false);
-            NPCtrigger = null;
-            return;
         }
-
-        npcLogText.text = NPCtrigger.messages[npcMessageCount];
-
-        if (!npcLog.activeInHierarchy)
+        else
         {
-            npcLog.SetActive(true);
+            StartCoroutine(WaitToReadNPCMessage(NPC));
         }
 
-        StartCoroutine("WaitToReadNPCMessage");
-        npcMessageCount += 1;
     }
 
     public void ActivateNPCLog(string message)
@@ -230,48 +142,65 @@ public class LevelManager : MonoBehaviour
 
     public void ActivateNPCLog(NPCtrigger NPCtrigger)
     {
+        npcLogText = GameObject.Find("NPCLogText").GetComponent<Text>();
 
-        npcLog.SetActive(true);
-        this.npcLogText = GameObject.Find("NPCLogText").GetComponent<Text>();
-        this.NPCtrigger = NPCtrigger;
-        this.npcMessageCount = 0;
+        if (!npcLog.activeInHierarchy)
+        {
+            npcLog.SetActive(true);
+        }
 
-        NPCMessageReadTime = NPCtrigger.readTime;
-
-        ReadNPCMessage();
+        ReadNPCMessage(NPCtrigger);
     }
 
-    public void IgnoreCollisionBetweenObjects(string[] array)
+    public void SetLocalPlayer(int id)
     {
-        bool ignores = bool.Parse(array[1]);
+        players = new GameObject[3];
 
-        GameObject objectA = GameObject.Find(array[2]);
-        GameObject objectB = GameObject.Find(array[3]);
+        players[0] = GameObject.Find("Mage");
+        players[1] = GameObject.Find("Warrior");
+        players[2] = GameObject.Find("Engineer");
 
-        if (!objectA || !objectB)
+        switch (id)
         {
-            return;
+            case 0:
+                localPlayer = players[0].GetComponent<MageController>();
+                Debug.Log("Activating Mage local player");
+                break;
+            case 1:
+                Debug.Log("Activating Warrior local player");
+                localPlayer = players[1].GetComponent<WarriorController>();
+                break;
+            case 2:
+                Debug.Log("Activating Engineer local player");
+                localPlayer = players[2].GetComponent<EngineerController>();
+                break;
         }
 
-        Collider2D[] collidersA = objectA.GetComponents<Collider2D>();
-        Collider2D[] collidersB = objectB.GetComponents<Collider2D>();
-
-        foreach (Collider2D colliderA in collidersA)
-        {
-            if (!colliderA.isTrigger)
-            {
-                foreach (Collider2D colliderB in collidersB)
-                {
-                    if (!colliderB.isTrigger)
-                    {
-                        Physics2D.IgnoreCollision(colliderA, colliderB, ignores);
-                    }
-                }
-            }
-        }
-
+        localPlayer.Activate(id);
+        Camera.main.GetComponent<CameraController>().SetTarget(localPlayer.gameObject);
     }
 
+    public void Respawn()
+    {
+        StartCoroutine("Respawning");
+    }
+
+    public void GoToNextScene()
+    {
+        string currentSceneName = SceneManager.GetActiveScene().name;
+        string currentSceneNumber = Regex.Match(currentSceneName, @"\d+").Value;
+        int nextSceneNumber = int.Parse(currentSceneNumber) + 1;
+        string nextSceneName = "Escena" + nextSceneNumber;
+
+        Debug.Log("Changing to scene " + nextSceneName);
+
+        client.SendMessageToServer("ChangeScene/" + nextSceneName);
+    }
+
+    public void MostrarReconectando(bool valor)
+    {
+        reconnectText.SetActive(valor);
+    }
     public void ActivateMachine(string machineName)
     {
         GameObject machine = GameObject.Find(machineName);
@@ -335,6 +264,108 @@ public class LevelManager : MonoBehaviour
         createGameObject = (GameObject)Instantiate(Resources.Load(objectName));
     }
 
+    public void ReloadLevel(string sceneName)
+    {
+        SceneManager.LoadScene(sceneName);
+    }
+
+    #endregion
+
+    #region Utils
+
+    public GameObject GetLocalPlayer()
+    {
+        return localPlayer.gameObject;
+    }
+
+    public PlayerController GetLocalPlayerController()
+    {
+        return localPlayer;
+    }
+
+    public MageController GetMage()
+    {
+        if (players == null)
+        {
+            return null;
+        }
+
+        GameObject player = players[0];
+        MageController magecontroller = player.GetComponent<MageController>();
+        return magecontroller;
+    }
+
+    public WarriorController GetWarrior()
+    {
+        if (players == null)
+        {
+            return null;
+        }
+
+        GameObject player = players[1];
+        WarriorController script = player.GetComponent<WarriorController>();
+        return script;
+    }
+
+    public EngineerController GetEngineer()
+    {
+        if (players == null)
+        {
+            return null;
+        }
+
+        GameObject player = players[2];
+        EngineerController script = player.GetComponent<EngineerController>();
+        return script;
+    }
+
+    public void IgnoreCollisionBetweenObjects(string[] array)
+    {
+        bool ignores = bool.Parse(array[1]);
+
+        GameObject objectA = GameObject.Find(array[2]);
+        GameObject objectB = GameObject.Find(array[3]);
+
+        if (!objectA || !objectB)
+        {
+            return;
+        }
+
+        Collider2D[] collidersA = objectA.GetComponents<Collider2D>();
+        Collider2D[] collidersB = objectB.GetComponents<Collider2D>();
+
+        foreach (Collider2D colliderA in collidersA)
+        {
+            if (!colliderA.isTrigger)
+            {
+                foreach (Collider2D colliderB in collidersB)
+                {
+                    if (!colliderB.isTrigger)
+                    {
+                        Physics2D.IgnoreCollision(colliderA, colliderB, ignores);
+                    }
+                }
+            }
+        }
+
+    }
+
+    #endregion
+
+    #region Coroutines
+
+    public IEnumerator Respawning()
+    {
+        localPlayer.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(waitToRespawn);
+
+        localPlayer.transform.position = localPlayer.respawnPosition + Vector3.up * .1f;
+        localPlayer.gameObject.SetActive(true);
+        localPlayer.IgnoreCollisionBetweenPlayers();
+        localPlayer.SendPlayerDataToServer();
+    }
+
     private IEnumerator WaitForCollision()
     {
         yield return new WaitForSeconds(waitToGrabItem);
@@ -345,18 +376,14 @@ public class LevelManager : MonoBehaviour
     {
         yield return new WaitForSeconds(waitToGrabItem);
         npcLog.SetActive(false);
-        NPCtrigger = null;
     }
 
-    private IEnumerator WaitToReadNPCMessage()
+    private IEnumerator WaitToReadNPCMessage(NPCtrigger NPC)
     {
-        yield return new WaitForSeconds(NPCMessageReadTime);
-        ReadNPCMessage();
+        yield return new WaitForSeconds(NPC.readTime);
+        ReadNPCMessage(NPC);
     }
 
-
-    public void ReloadLevel(string sceneName)
-    {
-        SceneManager.LoadScene(sceneName);
-    }
+    #endregion
+    
 }
