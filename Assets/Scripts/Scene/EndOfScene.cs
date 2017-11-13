@@ -25,24 +25,24 @@ public class EndOfScene : MonoBehaviour
     {
         if (GameObjectIsPlayer(other.gameObject))
         {
-            PlayerController playerController = other.gameObject.GetComponent<PlayerController>();
+           
 			levelManager.ActivateNPCLog ("Asegúrate de que lleguen todos tus amigos");
             Debug.Log(other.gameObject.name + " reached the end of the scene");
 
 			if (++playersWhoArrived == playersToArrive) 
 			{
-				playerController.StopMoving ();
 				Debug.Log ("All players reached the end of the scene");
 				levelManager.GoToNextScene ();
 			} 
         }
     }
-	/*private void OnTriggerExit2D(Collider2D other)
+	private void OnTriggerExit2D(Collider2D other)
 	{
-		if (GameObjectIsPlayer (other.gameObject)) {
-			PlayerController playerController = other.gameObject.GetComponent<PlayerController> ();
+		if (GameObjectIsPlayer (other.gameObject)) 
+		
+		{
 			Debug.Log (other.gameObject.name + " left the end of the scene");
 			--playersWhoArrived; 
 		}
-	*/
+	}
 }
