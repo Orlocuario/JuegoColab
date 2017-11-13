@@ -126,8 +126,8 @@ public class Planner : MonoBehaviour {
 						int minimo = 0;
 						foreach (string personaje in this.etapaCumplidaParcial.Keys.ToList()) {
 							bool dependant = false;
-							if(reverseConstraintsPerAction.ContainsKey(PlanParcial[personajeFeedback] [etapaCumplidaParcial[personajeFeedback]])){
-								List<string> conditions = reverseConstraintsPerAction [PlanParcial [personajeFeedback] [etapaCumplidaParcial [personajeFeedback]]];
+							if(reverseConstraintsPerAction.ContainsKey(PlanParcial[personaje] [etapaCumplidaParcial[personaje]])){
+								List<string> conditions = reverseConstraintsPerAction [PlanParcial [personaje] [etapaCumplidaParcial [personaje]]];
 								foreach (string action in conditions) {
 									if (!PlanParcial [personaje].Contains (action)) {
 										dependant = true;
@@ -147,7 +147,15 @@ public class Planner : MonoBehaviour {
 						}
 					}
 					//Falta seleccionar la accion a aplicar feedback
-					this.RequestActivateNPCLog (GetFeedback (PlanParcial[personajeFeedback] [etapaCumplidaParcial[personajeFeedback]]));
+					if (!personajeFeedback.Equals ("")) {
+						string action = PlanParcial [personajeFeedback] [etapaCumplidaParcial [personajeFeedback]];
+						if (action.Substring (0, 1).Equals ("x")) {
+							Debug.Log (personajeFeedback+"test5: " + PlanParcial [personajeFeedback] [etapaCumplidaParcial [personajeFeedback] + 1]);
+							this.RequestActivateNPCLog (GetFeedback (PlanParcial [personajeFeedback] [etapaCumplidaParcial [personajeFeedback] + 1]));
+						} else {
+							this.RequestActivateNPCLog (GetFeedback (action));
+						}
+					}
 				} else if (tipoPlanificacion == 4) {
 					string player = "";
 					int nivel = 0;
@@ -170,7 +178,7 @@ public class Planner : MonoBehaviour {
 	}
 
 	//Metodo de replanificacion, toma el estado actual y lo envía al servidor.
-	void Replanificar(){
+	public void Replanificar(){
 		if (control && Client.instance != null && Client.instance.GetLocalPlayer () != null && Client.instance.GetLocalPlayer ().controlOverEnemies) {
 			Debug.Log ("Inicio replanificacion");
 			//send message (estado actual) al server para planificar
@@ -187,7 +195,10 @@ public class Planner : MonoBehaviour {
 			this.Plan = new List<string> (parameters);
 			etapaCumplida = 0;
 			foreach (PlannerPlayer item in playerList) {
-				etapaCumplidaParcial.Add (item.name, 0);
+				if (!etapaCumplidaParcial.ContainsKey (item.name)) {
+					etapaCumplidaParcial.Add (item.name, 0);
+				}
+				etapaCumplidaParcial [item.name] = 0;
 			}
 			if (tipoPlanificacion == 3) {
 				foreach (string personaje in this.PlanParcial.Keys.ToList()) {
@@ -841,6 +852,24 @@ public class Planner : MonoBehaviour {
 				if (!estadoActual.Contains ("(switch-at " + parametros [3] + " " + parametros [4] + ")")) {
 					estadoActual.Add ("(switch-at " + parametros [3] + " " + parametros [4] + ")");
 				}
+				if (!estadoActual.Contains ("(switch-assign " + parametros [3] + " " + parametros [0] + ")")) {
+					estadoActual.Add ("(switch-assign " + parametros [3] + " " + parametros [0] + ")");
+				}
+				if (!estadoActual.Contains ("(switch-assign " + parametros [3] + " " + parametros [1] + ")")) {
+					estadoActual.Add ("(switch-assign " + parametros [3] + " " + parametros [1] + ")");
+				}
+				if (!estadoActual.Contains ("(switch-assign " + parametros [3] + " " + parametros [2] + ")")) {
+					estadoActual.Add ("(switch-assign " + parametros [3] + " " + parametros [2] + ")");
+				}
+				if (!estadoActual.Contains ("(player-distinct " + parametros [0] + " " + parametros [1] + ")")) {
+					estadoActual.Add ("(player-distinct " + parametros [0] + " " + parametros [1] + ")");
+				}
+				if (!estadoActual.Contains ("(player-distinct " + parametros [1] + " " + parametros [2] + ")")) {
+					estadoActual.Add ("(player-distinct " + parametros [1] + " " + parametros [2] + ")");
+				}
+				if (!estadoActual.Contains ("(player-distinct " + parametros [0] + " " + parametros [2] + ")")) {
+					estadoActual.Add ("(player-distinct " + parametros [0] + " " + parametros [2] + ")");
+				}
 				foreach (PlannerObstacle obstacle in obstacleList) {
 					if (initDef.Contains ("(linked-switch " + parametros [3] + " " + obstacle.name + ")") && !estadoActual.Contains ("(blocked " + obstacle.name + ")")) {
 						if (!estadoActual.Contains ("(linked-switch " + parametros [3] + " " + obstacle.name + ")")) {
@@ -864,6 +893,15 @@ public class Planner : MonoBehaviour {
 				}
 				if (!estadoActual.Contains ("(switch-at " + parametros [2] + " " + parametros [3] + ")")) {
 					estadoActual.Add ("(switch-at " + parametros [2] + " " + parametros [3] + ")");
+				}
+				if (!estadoActual.Contains ("(switch-assign " + parametros [2] + " " + parametros [0] + ")")) {
+					estadoActual.Add ("(switch-assign " + parametros [2] + " " + parametros [1] + ")");
+				}
+				if (!estadoActual.Contains ("(switch-assign " + parametros [2] + " " + parametros [1] + ")")) {
+					estadoActual.Add ("(switch-assign " + parametros [2] + " " + parametros [1] + ")");
+				}
+				if (!estadoActual.Contains ("(player-distinct " + parametros [0] + " " + parametros [1] + ")")) {
+					estadoActual.Add ("(player-distinct " + parametros [0] + " " + parametros [1] + ")");
 				}
 				foreach (PlannerObstacle obstacle in obstacleList) {
 					if (initDef.Contains ("(linked-switch " + parametros [2] + " " + obstacle.name + ")") && !estadoActual.Contains ("(blocked " + obstacle.name + ")")) {
@@ -1025,6 +1063,24 @@ public class Planner : MonoBehaviour {
 				if (!estadoActual.Contains ("(switch-at " + parametros [3] + " " + parametros [4] + ")")) {
 					estadoActual.Add ("(switch-at " + parametros [3] + " " + parametros [4] + ")");
 				}
+				if (!estadoActual.Contains ("(switch-assign " + parametros [3] + " " + parametros [0] + ")")) {
+					estadoActual.Add ("(switch-assign " + parametros [3] + " " + parametros [0] + ")");
+				}
+				if (!estadoActual.Contains ("(switch-assign " + parametros [3] + " " + parametros [1] + ")")) {
+					estadoActual.Add ("(switch-assign " + parametros [3] + " " + parametros [1] + ")");
+				}
+				if (!estadoActual.Contains ("(switch-assign " + parametros [3] + " " + parametros [2] + ")")) {
+					estadoActual.Add ("(switch-assign " + parametros [3] + " " + parametros [2] + ")");
+				}
+				if (!estadoActual.Contains ("(player-distinct " + parametros [0] + " " + parametros [1] + ")")) {
+					estadoActual.Add ("(player-distinct " + parametros [0] + " " + parametros [1] + ")");
+				}
+				if (!estadoActual.Contains ("(player-distinct " + parametros [1] + " " + parametros [2] + ")")) {
+					estadoActual.Add ("(player-distinct " + parametros [1] + " " + parametros [2] + ")");
+				}
+				if (!estadoActual.Contains ("(player-distinct " + parametros [0] + " " + parametros [2] + ")")) {
+					estadoActual.Add ("(player-distinct " + parametros [0] + " " + parametros [2] + ")");
+				}
 				foreach (PlannerObstacle obstacle in obstacleList) {
 					if (initDef.Contains ("(linked-switch " + parametros [3] + " " + obstacle.name + ")") && !estadoActual.Contains ("(blocked " + obstacle.name + ")")) {
 						if (!estadoActual.Contains ("(linked-switch " + parametros [3] + " " + obstacle.name + ")")) {
@@ -1048,6 +1104,15 @@ public class Planner : MonoBehaviour {
 				}
 				if (!estadoActual.Contains ("(switch-at " + parametros [2] + " " + parametros [3] + ")")) {
 					estadoActual.Add ("(switch-at " + parametros [2] + " " + parametros [3] + ")");
+				}
+				if (!estadoActual.Contains ("(switch-assign " + parametros [2] + " " + parametros [0] + ")")) {
+					estadoActual.Add ("(switch-assign " + parametros [2] + " " + parametros [0] + ")");
+				}
+				if (!estadoActual.Contains ("(switch-assign " + parametros [2] + " " + parametros [1] + ")")) {
+					estadoActual.Add ("(switch-assign " + parametros [2] + " " + parametros [1] + ")");
+				}
+				if (!estadoActual.Contains ("(player-distinct " + parametros [0] + " " + parametros [1] + ")")) {
+					estadoActual.Add ("(player-distinct " + parametros [0] + " " + parametros [1] + ")");
 				}
 				foreach (PlannerObstacle obstacle in obstacleList) {
 					if (initDef.Contains ("(linked-switch " + parametros [2] + " " + obstacle.name + ")") && !estadoActual.Contains ("(blocked " + obstacle.name + ")")) {
@@ -2224,6 +2289,48 @@ public class Planner : MonoBehaviour {
 					actionPerPrecondition ["(switch-at " + parametros [3] + " " + parametros [4] + ")"].Add (accion);
 				}
 
+				if (!actionPerPrecondition.ContainsKey ("(switch-assign " + parametros [3] + " " + parametros [0] + ")")) {
+					actionPerPrecondition.Add ("(switch-assign " + parametros [3] + " " + parametros [0] + ")", new List<string> ());
+				}
+				if (!actionPerPrecondition ["(switch-assign " + parametros [3] + " " + parametros [0] + ")"].Contains (accion)) {
+					actionPerPrecondition ["(switch-assign " + parametros [3] + " " + parametros [0] + ")"].Add (accion);
+				}
+
+				if (!actionPerPrecondition.ContainsKey ("(switch-assign " + parametros [3] + " " + parametros [1] + ")")) {
+					actionPerPrecondition.Add ("(switch-assign " + parametros [3] + " " + parametros [1] + ")", new List<string> ());
+				}
+				if (!actionPerPrecondition ["(switch-assign " + parametros [3] + " " + parametros [1] + ")"].Contains (accion)) {
+					actionPerPrecondition ["(switch-assign " + parametros [3] + " " + parametros [1] + ")"].Add (accion);
+				}
+
+				if (!actionPerPrecondition.ContainsKey ("(switch-assign " + parametros [3] + " " + parametros [2] + ")")) {
+					actionPerPrecondition.Add ("(switch-assign " + parametros [3] + " " + parametros [2] + ")", new List<string> ());
+				}
+				if (!actionPerPrecondition ["(switch-assign " + parametros [3] + " " + parametros [2] + ")"].Contains (accion)) {
+					actionPerPrecondition ["(switch-assign " + parametros [3] + " " + parametros [2] + ")"].Add (accion);
+				}
+
+				if (!actionPerPrecondition.ContainsKey ("(player-distinct " + parametros [0] + " " + parametros [1] + ")")) {
+					actionPerPrecondition.Add ("(player-distinct " + parametros [0] + " " + parametros [1] + ")", new List<string> ());
+				}
+				if (!actionPerPrecondition ["(player-distinct " + parametros [0] + " " + parametros [1] + ")"].Contains (accion)) {
+					actionPerPrecondition ["(player-distinct " + parametros [0] + " " + parametros [1] + ")"].Add (accion);
+				}
+
+				if (!actionPerPrecondition.ContainsKey ("(player-distinct " + parametros [1] + " " + parametros [2] + ")")) {
+					actionPerPrecondition.Add ("(player-distinct " + parametros [1] + " " + parametros [2] + ")", new List<string> ());
+				}
+				if (!actionPerPrecondition ["(player-distinct " + parametros [1] + " " + parametros [2] + ")"].Contains (accion)) {
+					actionPerPrecondition ["(player-distinct " + parametros [1] + " " + parametros [2] + ")"].Add (accion);
+				}
+
+				if (!actionPerPrecondition.ContainsKey ("(player-distinct " + parametros [0] + " " + parametros [2] + ")")) {
+					actionPerPrecondition.Add ("(player-distinct " + parametros [0] + " " + parametros [2] + ")", new List<string> ());
+				}
+				if (!actionPerPrecondition ["(player-distinct " + parametros [0] + " " + parametros [2] + ")"].Contains (accion)) {
+					actionPerPrecondition ["(player-distinct " + parametros [0] + " " + parametros [2] + ")"].Add (accion);
+				}
+
 				foreach (PlannerObstacle obstacle in obstacleList) {
 					if (initDef.Contains ("(linked-switch " + parametros [3] + " " + obstacle.name + ")")) {
 						if (!actionPerPrecondition.ContainsKey ("(linked-switch " + parametros [3] + " " + obstacle.name + ")")) {
@@ -2283,6 +2390,27 @@ public class Planner : MonoBehaviour {
 				}
 				if (!actionPerPrecondition ["(switch-at " + parametros [2] + " " + parametros [3] + ")"].Contains (accion)) {
 					actionPerPrecondition ["(switch-at " + parametros [2] + " " + parametros [3] + ")"].Add (accion);
+				}
+
+				if (!actionPerPrecondition.ContainsKey ("(switch-assign " + parametros [2] + " " + parametros [0] + ")")) {
+					actionPerPrecondition.Add ("(switch-assign " + parametros [2] + " " + parametros [0] + ")", new List<string> ());
+				}
+				if (!actionPerPrecondition ["(switch-assign " + parametros [2] + " " + parametros [0] + ")"].Contains (accion)) {
+					actionPerPrecondition ["(switch-assign " + parametros [2] + " " + parametros [0] + ")"].Add (accion);
+				}
+
+				if (!actionPerPrecondition.ContainsKey ("(switch-assign " + parametros [2] + " " + parametros [1] + ")")) {
+					actionPerPrecondition.Add ("(switch-assign " + parametros [2] + " " + parametros [1] + ")", new List<string> ());
+				}
+				if (!actionPerPrecondition ["(switch-assign " + parametros [2] + " " + parametros [1] + ")"].Contains (accion)) {
+					actionPerPrecondition ["(switch-assign " + parametros [2] + " " + parametros [1] + ")"].Add (accion);
+				}
+
+				if (!actionPerPrecondition.ContainsKey ("(player-distinct " + parametros [0] + " " + parametros [1] + ")")) {
+					actionPerPrecondition.Add ("(player-distinct " + parametros [0] + " " + parametros [1] + ")", new List<string> ());
+				}
+				if (!actionPerPrecondition ["(player-distinct " + parametros [0] + " " + parametros [1] + ")"].Contains (accion)) {
+					actionPerPrecondition ["(player-distinct " + parametros [0] + " " + parametros [1] + ")"].Add (accion);
 				}
 
 				foreach (PlannerObstacle obstacle in obstacleList) {

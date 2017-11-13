@@ -361,73 +361,66 @@ public class Server : MonoBehaviour
                 string def = parameters[0];
                 string init = parameters[1];
                 string goal = parameters[2];
-                if (!cacheOutput.ContainsKey(init))
-                {
-                    List<string> data = new List<string>();
-                    data.Add(def);
-                    data.Add(")");
-                    data.Add("(:init");
-                    data.Add(init);
-                    data.Add(")");
-                    data.Add("(:goal (and");
-                    data.Add(goal);
-                    string tempFileName = templateFileName + level + ".txt";
-                    string probFileName = problemFileName + level + ".pddl";
-                    string batFileName = batchFileName + level + ".bat";
-                    string outFileName = outputFileName + level + ".txt";
-                    List<string> lines = new List<string>(System.IO.File.ReadAllLines(tempFileName));
-                    lines.InsertRange(startLinePerLevel[level - 1], data);
-                    using (StreamWriter writer = new StreamWriter(probFileName, false))
-                    {
-                        foreach (string line in lines)
-                        {
-                            writer.WriteLine(line);
-                        }
-                    }
-                    Process batchProcess = new Process();
-                    batchProcess.StartInfo.UseShellExecute = false;
-                    batchProcess.StartInfo.RedirectStandardOutput = true;
-                    batchProcess.StartInfo.CreateNoWindow = true;
-                    batchProcess.StartInfo.FileName = batFileName;
-                    string output = null;
-                    try
-                    {
-                        batchProcess.Start();
-                        UnityEngine.Debug.Log("batch star");
-                        output = batchProcess.StandardOutput.ReadToEnd();
-                        UnityEngine.Debug.Log(output);
-                        batchProcess.WaitForExit();
-                        UnityEngine.Debug.Log("batch ended");
-                        batchProcess.Close();
-                        UnityEngine.Debug.Log("batch close");
-                        List<string> linesOutput = new List<string>(System.IO.File.ReadAllLines(outFileName));
-                        if (linesOutput.Count > 0)
-                        {
-                            output = linesOutput[0];
-                            linesOutput.RemoveAt(0);
-                            linesOutput.RemoveAt(linesOutput.Count - 1);
-                            foreach (string line in linesOutput)
-                            {
-                                output += "/" + line;
-                            }
+				if (!cacheOutput.ContainsKey (init)) {
+					List<string> data = new List<string> ();
+					data.Add (def);
+					data.Add (")");
+					data.Add ("(:init");
+					data.Add (init);
+					data.Add (")");
+					data.Add ("(:goal (and");
+					data.Add (goal);
+					string tempFileName = templateFileName + level + ".txt";
+					string probFileName = problemFileName + level + ".pddl";
+					string batFileName = batchFileName + level + ".bat";
+					string outFileName = outputFileName + level + ".txt";
+					List<string> lines = new List<string> (System.IO.File.ReadAllLines (tempFileName));
+					lines.InsertRange (startLinePerLevel [level - 1], data);
+					using (StreamWriter writer = new StreamWriter (probFileName, false)) {
+						foreach (string line in lines) {
+							writer.WriteLine (line);
+						}
+					}
+					Process batchProcess = new Process ();
+					batchProcess.StartInfo.UseShellExecute = false;
+					batchProcess.StartInfo.RedirectStandardOutput = true;
+					batchProcess.StartInfo.CreateNoWindow = true;
+					batchProcess.StartInfo.FileName = batFileName;
+					string output = null;
+					try {
+						batchProcess.Start ();
+						UnityEngine.Debug.Log ("batch star");
+						output = batchProcess.StandardOutput.ReadToEnd ();
+						UnityEngine.Debug.Log (output);
+						batchProcess.WaitForExit ();
+						UnityEngine.Debug.Log ("batch ended");
+						batchProcess.Close ();
+						UnityEngine.Debug.Log ("batch close");
+						List<string> linesOutput = new List<string> (System.IO.File.ReadAllLines (outFileName));
+						if (linesOutput.Count > 0) {
+							output = linesOutput [0];
+							linesOutput.RemoveAt (0);
+							linesOutput.RemoveAt (linesOutput.Count - 1);
+							foreach (string line in linesOutput) {
+								output += "/" + line;
+							}
 
-                        }
-                    }
-                    catch (FileNotFoundException e)
-                    {
-                        output = "ERROR";
-                        UnityEngine.Debug.Log(output);
-                    }
-                    catch (Exception e)
-                    {
-                        output = e.ToString();
-                        UnityEngine.Debug.Log(output);
-                    }
-                    //Send output
-                    connectionIdStack.Add(connectionId);
-                    outputStack.Add(output);
-                    cacheOutput.Add(init, output);
-                }
+						}
+					} catch (FileNotFoundException e) {
+						output = "ERROR";
+						UnityEngine.Debug.Log (output);
+					} catch (Exception e) {
+						output = e.ToString ();
+						UnityEngine.Debug.Log (output);
+					}
+					//Send output
+					connectionIdStack.Add (connectionId);
+					outputStack.Add (output);
+					cacheOutput.Add (init, output);
+				} else {
+					connectionIdStack.Add (connectionId);
+					outputStack.Add (cacheOutput [init]);
+				}
             }
         }
     }

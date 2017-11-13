@@ -252,6 +252,7 @@ public class Room
     //Set current controller to False, and find a new one that is connected
     public void ChangeControlEnemies()
     {
+		
         foreach (NetworkPlayer player in players)
         {
             if (player.controlOverEnemies == true)
@@ -265,6 +266,7 @@ public class Room
             {
                 player.controlOverEnemies = true;
                 SendControlSignal(player);
+				break;
             }
         }
     }
