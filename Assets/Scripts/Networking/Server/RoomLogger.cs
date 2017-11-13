@@ -15,6 +15,27 @@ public class RoomLogger
         return new StreamWriter(File.Open(roomId + ".txt", FileMode.Append));
     }
 
+    public void WriteAttack(int playerId)
+    {
+        StreamWriter writer = GetWriter();
+        writer.WriteLine(playerId + " attacked");
+        writer.Close();
+    }
+
+
+    public void WritePower(int playerId, bool powerState)
+    {
+        StreamWriter writer = GetWriter();
+        if (powerState)
+        {
+            writer.WriteLine(playerId + " used his power");
+        }
+        else
+        {
+            writer.WriteLine(playerId + "stopped using his power");
+        }
+        writer.Close();
+    }
     public void WriteNewPosition(int playerId, float positionX, float positionY, bool pressingJump, bool pressingLeft, bool pressingRight)
     {
         StreamWriter writer = GetWriter();

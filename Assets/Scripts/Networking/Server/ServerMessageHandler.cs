@@ -385,6 +385,7 @@ public class ServerMessageHandler
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
+        room.log.WriteAttack(player.charId);
         room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 
@@ -393,6 +394,7 @@ public class ServerMessageHandler
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         player.power = bool.Parse(data[2]);
+        room.log.WritePower(player.charId, player.power);
         room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 }
