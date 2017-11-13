@@ -346,8 +346,8 @@ public class ServerMessageHandler
         player.pressingJump = pressingJump;
         player.pressingLeft = pressingLeft;
         player.pressingRight = pressingRight;
-
         room.SendMessageToAllPlayersExceptOne(message, connectionID);
+        room.log.WriteNewPosition(player.charId, positionX, positionY, pressingJump, pressingLeft, pressingRight);
     }
 
     private void SendUpdatedObjectPosition(string message, int connectionId)
