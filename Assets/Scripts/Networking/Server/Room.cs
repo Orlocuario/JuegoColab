@@ -9,6 +9,7 @@ public class Room
 {
 
     public ServerMessageHandler sender;
+    public RoomLogger log;
     public Server server;
 
     public HUDHpMp hpManaGer;
@@ -17,7 +18,6 @@ public class Room
     public List<NetworkEnemy> enemies;
     public List<ServerSwitch> switchs;
     public List<int> activatedGroups; //guarda los numeros de los grupos de switchs activados
-
     public string sceneToLoad;
     public string actualChat;
     public int numJugadores;
@@ -36,8 +36,8 @@ public class Room
         this.doorManager = new ServerDoorsManager();
         this.maxJugadores = maxJugadores;
         this.id = id;
-
         hpManaGer = new HUDHpMp(this);
+        log = new RoomLogger(this.id);
         switchs = new List<ServerSwitch>();
         players = new List<NetworkPlayer>();
         enemies = new List<NetworkEnemy>();
