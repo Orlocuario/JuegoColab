@@ -106,7 +106,7 @@ public class LevelManager : MonoBehaviour
             NPC.activeFeedback.particles.Stop();
         }
 
-        if (NPC.feedbackCount++ >= NPC.feedbacks.Length)
+        if (NPC.feedbackCount >= NPC.feedbacks.Length)
         {
             npcLog.SetActive(false);
             return;
@@ -127,8 +127,9 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-        StartCoroutine(WaitToReadNPCMessage(NPC));
+		NPC.feedbackCount += 1;
 
+        StartCoroutine(WaitToReadNPCMessage(NPC));
     }
 
     public void ActivateNPCLog(string message)
@@ -141,12 +142,12 @@ public class LevelManager : MonoBehaviour
 
     public void ActivateNPCLog(NPCtrigger NPCtrigger)
     {
-        npcLogText = GameObject.Find("NPCLogText").GetComponent<Text>();
-
-        if (!npcLog.activeInHierarchy)
+		if (!npcLog.activeInHierarchy)
         {
             npcLog.SetActive(true);
         }
+
+		npcLogText = GameObject.Find("NPCLogText").GetComponent<Text>();
 
         ReadNPCMessage(NPCtrigger);
     }
