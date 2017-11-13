@@ -247,13 +247,13 @@ public class Client : MonoBehaviour
 
     public EnemyController GetEnemy(int enemyId)
     {
-        GameObject[] enemies = GameObject.FindGameObjectsWithTag("Enemy");
-        foreach (GameObject enemy in enemies)
+        EnemyController[] enemies = GameObject.FindObjectsOfType<EnemyController>();
+
+        foreach (EnemyController enemy in enemies)
         {
-            EnemyController script = enemy.GetComponent<EnemyController>();
-            if (script.GetEnemyId() == enemyId)
+            if (enemy.GetEnemyId() == enemyId)
             {
-                return script;
+                return enemy;
             }
         }
 

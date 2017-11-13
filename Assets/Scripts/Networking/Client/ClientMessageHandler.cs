@@ -11,7 +11,7 @@ public class ClientMessageHandler
 
     private List<int> registeredEnemies;
 
-    GameObject[] enemies;
+    EnemyController[] enemies;
     Client client;
 
     public ClientMessageHandler()
@@ -229,16 +229,14 @@ public class ClientMessageHandler
         {
             if (enemies == null)
             {
-                enemies = GameObject.FindGameObjectsWithTag("Enemy");
+                enemies = GameObject.FindObjectsOfType<EnemyController>();
             }
 
-            foreach (GameObject enemy in enemies)
+            foreach (EnemyController enemy in enemies)
             {
-
-                if (enemy.GetInstanceID() == instanceId)
+                if (enemy.gameObject.GetInstanceID() == instanceId)
                 {
-                    EnemyController enemyController = enemy.GetComponent<EnemyController>();
-                    enemyController.Initialize(enemyId, directionX, posX, posY);
+                    enemy.Initialize(enemyId, directionX, posX, posY);
                 }
             }
         }
@@ -255,15 +253,13 @@ public class ClientMessageHandler
         int enemyId = 0;
 
         // Agregar al enemigo local al networking
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        enemies = GameObject.FindObjectsOfType<EnemyController>();
 
         Debug.Log("Activating " + enemies.Length + " enemies");
 
-        foreach (GameObject enemy in enemies)
+        foreach (EnemyController enemy in enemies)
         {
-            EnemyController enemyController = enemy.GetComponent<EnemyController>();
-
-            enemyController.Register(enemyId++);
+            enemy.Register(enemyId++);
         }
     }
 
