@@ -246,6 +246,7 @@ public class ServerMessageHandler
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
         player.InventoryUpdate(message);
+        player.room.log.WriteInventory(player.charId, message);
     }
 
     private void SendDestroyObject(string message, int connectionId)

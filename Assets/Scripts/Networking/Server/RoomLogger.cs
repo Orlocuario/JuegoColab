@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.IO;
+using System;
 
 public class RoomLogger
 {
@@ -35,6 +36,28 @@ public class RoomLogger
             writer.WriteLine(playerId + "stopped using his power");
         }
         writer.Close();
+    }
+
+    //Modificar si se cambia el sistema de inventario
+    public void WriteInventory(int charId, string message)
+    {
+        char[] separator = new char[1];
+        separator[0] = '/';
+        string[] msg = message.Split(separator);
+        int index = Int32.Parse(msg[2]);
+
+        StreamWriter writer = GetWriter();
+
+        if (msg[1] == "Add")
+        {
+            writer.WriteLine(charId + " picked stored " + msg[3] + " in the slot " + index);
+        }
+        else
+        {
+            writer.WriteLine(charId + " tossed item in slot " + index);
+        }
+        writer.Close();
+
     }
     public void WriteNewPosition(int playerId, float positionX, float positionY, bool pressingJump, bool pressingLeft, bool pressingRight)
     {
