@@ -11,7 +11,7 @@ public class ClientMessageHandler
 
     private List<int> registeredEnemies;
 
-    GameObject[] enemies;
+    EnemyController[] enemies;
     Client client;
 
     public ClientMessageHandler()
@@ -31,6 +31,12 @@ public class ClientMessageHandler
                 break;
             case "SetCharId":
                 HandleSetCharId(msg);
+                break;
+            case "ObjectMoved":
+                HandleObjectMoved(msg);
+                break;
+            case "ObjectDestroyed":
+                HandleObjectDestroyed(msg);
                 break;
             case "ChangeObjectPosition":
                 HandleChangeObjectPosition(msg);
@@ -61,6 +67,9 @@ public class ClientMessageHandler
                 break;
             case "EnemyChangePosition":
                 ChangeEnemyPosition(msg);
+                break;
+            case "EnemyPatrollingPoint":
+                ChangeEnemyPatrollingPoint(msg);
                 break;
             case "SetControlOverEnemies":
                 SetControlOverEnemies();
@@ -104,7 +113,7 @@ public class ClientMessageHandler
             case "ActivateNPCLog":
                 HandleActivationNpcLog(msg);
                 break;
-            case "IgnoreBoxCircleCollision":
+            case "IgnoreCollisionBetweenObjects":
                 HandleIgnoreCollision(msg);
                 break;
             default:
@@ -115,7 +124,7 @@ public class ClientMessageHandler
     private void HandleIgnoreCollision(string[] msg)
     {
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.IgnoreBoxCircleCollision(msg);
+        scriptLevel.IgnoreCollisionBetweenObjects(msg);
     }
 
     private void HandleActivationNpcLog(string[] msg)
@@ -205,12 +214,14 @@ public class ClientMessageHandler
         int instanceId = int.Parse(msg[1]);
         int enemyId = int.Parse(msg[2]);
         int directionX = Int32.Parse(msg[3]);
-        float posX = float.Parse(msg[3]);
-        float posY = float.Parse(msg[4]);
+        float posX = float.Parse(msg[4]);
+        float posY = float.Parse(msg[5]);
+        bool registered = false;
 
-        if (client.GetLocalPlayer().controlOverEnemies)
+        if (client.GetLocalPlayer() && client.GetLocalPlayer().controlOverEnemies)
         {
             registeredEnemies.Add(enemyId);
+            registered = true;
 
             if (registeredEnemies.Count == enemies.Length)
             {
@@ -223,18 +234,24 @@ public class ClientMessageHandler
         {
             if (enemies == null)
             {
-                enemies = GameObject.FindGameObjectsWithTag("Enemy");
+                enemies = GameObject.FindObjectsOfType<EnemyController>();
             }
 
-            foreach (GameObject enemy in enemies)
+            foreach (EnemyController enemy in enemies)
             {
-                if(enemy.GetInstanceID() == instanceId)
+                if (enemy.gameObject.GetInstanceID() == instanceId)
                 {
-                    EnemyController enemyController = enemy.GetComponent<EnemyController>();
-                    enemyController.Initialize(enemyId, directionX, posX, posY);
+                    enemy.Initialize(enemyId, directionX, posX, posY);
+                    registered = true;
                 }
             }
         }
+
+        if (!registered)
+        {
+            Debug.Log("Enemy with iID " + instanceId + " id " + enemyId + " NOT REGISTERED");
+        }
+
     }
 
     public void EnemiesStartPatrolling()
@@ -248,16 +265,13 @@ public class ClientMessageHandler
         int enemyId = 0;
 
         // Agregar al enemigo local al networking
-        enemies = GameObject.FindGameObjectsWithTag("Enemy");
+        enemies = GameObject.FindObjectsOfType<EnemyController>();
 
         Debug.Log("Activating " + enemies.Length + " enemies");
 
-        foreach (GameObject enemy in enemies)
+        foreach (EnemyController enemy in enemies)
         {
-            EnemyController enemyController = enemy.GetComponent<EnemyController>();
-
-            enemyController.enemyId = enemyId++;
-            enemyController.SendIdToRegister(enemy.GetInstanceID());
+            enemy.Register(enemyId++);
         }
     }
 
@@ -284,8 +298,19 @@ public class ClientMessageHandler
     private void EnemyStartPatrolling(string[] msg)
     {
         int enemyId = Int32.Parse(msg[1]);
-        EnemyController enemyController = client.GetEnemy(enemyId);
-        enemyController.StartPatrolling();
+        int directionX = Int32.Parse(msg[2]);
+        float posX = float.Parse(msg[3]);
+        float posY = float.Parse(msg[4]);
+        float patrolX = float.Parse(msg[5]);
+        float patrolY = float.Parse(msg[6]);
+
+        EnemyController enemy = client.GetEnemy(enemyId);
+
+        if (enemy)
+        {
+            enemy.SetPatrollingPoint(directionX, posX, posY, patrolX, patrolY);
+            enemy.StartPatrolling();
+        }
     }
 
     private void ChangeEnemyPosition(string[] msg)
@@ -297,14 +322,40 @@ public class ClientMessageHandler
         }
 
         int enemyId = Int32.Parse(msg[1]);
-        int directionX = Int32.Parse(msg[3]);
+        int directionX = Int32.Parse(msg[2]);
         float posX = float.Parse(msg[3]);
         float posY = float.Parse(msg[4]);
 
-        EnemyController enemyScript = client.GetEnemy(enemyId);
-        enemyScript.SetPosition(directionX, posX, posY);
+        EnemyController enemy = client.GetEnemy(enemyId);
+
+        if (enemy)
+        {
+            enemy.SetPosition(directionX, posX, posY);
+        }
     }
 
+    private void ChangeEnemyPatrollingPoint(string[] msg)
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "ClientScene")
+        {
+            return;
+        }
+
+        int enemyId = Int32.Parse(msg[1]);
+        int directionX = Int32.Parse(msg[2]);
+        float posX = float.Parse(msg[3]);
+        float posY = float.Parse(msg[4]);
+        float patrolX = float.Parse(msg[5]);
+        float patrolY = float.Parse(msg[6]);
+
+        EnemyController enemy = client.GetEnemy(enemyId);
+
+        if (enemy)
+        {
+            enemy.SetPatrollingPoint(directionX, posX, posY, patrolX, patrolY);
+        }
+    }
 
     private void EnemyDie(string[] msg)
     {
@@ -315,10 +366,11 @@ public class ClientMessageHandler
         }
         int enemyId = Int32.Parse(msg[1]);
 
-        EnemyController enemyController = client.GetEnemy(enemyId);
-        if (enemyController != null)
+        EnemyController enemy = client.GetEnemy(enemyId);
+
+        if (enemy)
         {
-            enemyController.Die();
+            enemy.Die();
         }
     }
 
@@ -329,7 +381,7 @@ public class ClientMessageHandler
         {
             return;
         }
-        GlobalDisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
+        HUDDisplay displayHudScript = GameObject.Find("Canvas").GetComponent<HUDDisplay>();
         displayHudScript.CurrentHP(msg[1]);
     }
 
@@ -340,7 +392,7 @@ public class ClientMessageHandler
         {
             return;
         }
-        GlobalDisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
+        HUDDisplay displayHudScript = GameObject.Find("Canvas").GetComponent<HUDDisplay>();
         displayHudScript.CurrentMP(msg[1]);
     }
 
@@ -351,7 +403,7 @@ public class ClientMessageHandler
         {
             return;
         }
-        GlobalDisplayHUD displayHudScript = GameObject.Find("Canvas").GetComponent<GlobalDisplayHUD>();
+        HUDDisplay displayHudScript = GameObject.Find("Canvas").GetComponent<HUDDisplay>();
         displayHudScript.ExperienceBar(msg[1]);
     }
 
@@ -507,5 +559,68 @@ public class ClientMessageHandler
         }
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
         scriptLevel.ReloadLevel(array[1]);
+    }
+
+    private void HandleObjectMoved(string[] msg)
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "ClientScene")
+        {
+            return;
+        }
+
+        string name = msg[1];
+        float forceX = float.Parse(msg[2]);
+        float forceY = float.Parse(msg[3]);
+
+        Vector2 force = new Vector2(forceX, forceY);
+
+        GameObject movableObject = GameObject.Find(name);
+
+        if (!movableObject)
+        {
+            Debug.Log("Movable " + name + " does not exists");
+            return;
+        }
+
+        MovableObject movableController = movableObject.GetComponent<MovableObject>();
+
+        if (!movableController)
+        {
+            Debug.Log(name + " is not movable");
+            return;
+        }
+
+        movableController.MoveMe(force, false);
+
+    }
+
+    private void HandleObjectDestroyed(string[] msg)
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "ClientScene")
+        {
+            return;
+        }
+
+        string name = msg[1];
+
+        GameObject destroyableObject = GameObject.Find(name);
+
+        if (!destroyableObject)
+        {
+            Debug.Log("Destroyable " + name + " does not exists");
+            return;
+        }
+
+        DestroyableObject destroyableController = destroyableObject.GetComponent<DestroyableObject>();
+
+        if (!destroyableController)
+        {
+            Debug.Log(name + " is not destroyable");
+            return;
+        }
+
+        destroyableController.DestroyMe(false);
     }
 }

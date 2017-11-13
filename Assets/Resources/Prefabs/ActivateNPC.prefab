@@ -66,4 +66,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 179e288c780c04ace8931923bab48658, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mensajeNPC: 
+  messages:
+  - 
+  readTime: 0

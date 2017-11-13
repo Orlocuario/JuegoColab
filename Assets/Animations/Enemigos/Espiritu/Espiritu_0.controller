@@ -8,19 +8,19 @@ AnimatorController:
   m_Name: Espiritu_0
   serializedVersion: 5
   m_AnimatorParameters:
-  - m_Name: isDamaged
+  - m_Name: TakingDamage
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: isAttacking
+  - m_Name: Attacking
     m_Type: 4
     m_DefaultFloat: 0
     m_DefaultInt: 0
     m_DefaultBool: 0
     m_Controller: {fileID: 9100000}
-  - m_Name: isDead
+  - m_Name: Dying
     m_Type: 9
     m_DefaultFloat: 0
     m_DefaultInt: 0
@@ -58,10 +58,10 @@ AnimatorStateTransition:
   m_Name: AttackToIdle
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isAttacking
+    m_ConditionEvent: Attacking
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isDamaged
+    m_ConditionEvent: TakingDamage
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102959230405701752}
@@ -106,7 +106,7 @@ AnimatorStateTransition:
   m_Name: DamageToDead
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isDead
+    m_ConditionEvent: Dying
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102537582573854212}
@@ -130,7 +130,7 @@ AnimatorStateTransition:
   m_Name: DamageToDamage
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isDamaged
+    m_ConditionEvent: TakingDamage
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102200977515158780}
@@ -154,10 +154,10 @@ AnimatorStateTransition:
   m_Name: DamageToIdle
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isDamaged
+    m_ConditionEvent: TakingDamage
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isAttacking
+    m_ConditionEvent: Attacking
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102959230405701752}
@@ -181,10 +181,10 @@ AnimatorStateTransition:
   m_Name: IdleToAttack
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isAttacking
+    m_ConditionEvent: Attacking
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isDamaged
+    m_ConditionEvent: TakingDamage
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102790111899178310}
@@ -208,10 +208,10 @@ AnimatorStateTransition:
   m_Name: IdleToDamage
   m_Conditions:
   - m_ConditionMode: 1
-    m_ConditionEvent: isDamaged
+    m_ConditionEvent: TakingDamage
     m_EventTreshold: 0
   - m_ConditionMode: 2
-    m_ConditionEvent: isAttacking
+    m_ConditionEvent: Attacking
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102200977515158780}
@@ -256,10 +256,10 @@ AnimatorStateTransition:
   m_Name: DameToAttack
   m_Conditions:
   - m_ConditionMode: 2
-    m_ConditionEvent: isDamaged
+    m_ConditionEvent: TakingDamage
     m_EventTreshold: 0
   - m_ConditionMode: 1
-    m_ConditionEvent: isAttacking
+    m_ConditionEvent: Attacking
     m_EventTreshold: 0
   m_DstStateMachine: {fileID: 0}
   m_DstState: {fileID: 1102790111899178310}
@@ -281,7 +281,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Damage
+  m_Name: TakingDamage
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -308,7 +308,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Dead
+  m_Name: Dying
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -332,7 +332,7 @@ AnimatorState:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Attack
+  m_Name: Attacking
   m_Speed: 1
   m_CycleOffset: 0
   m_Transitions:
@@ -401,8 +401,8 @@ AnimatorStateMachine:
   m_EntryTransitions: []
   m_StateMachineTransitions: {}
   m_StateMachineBehaviours: []
-  m_AnyStatePosition: {x: 0, y: -72, z: 0}
-  m_EntryPosition: {x: -108, y: 108, z: 0}
+  m_AnyStatePosition: {x: -108, y: 168, z: 0}
+  m_EntryPosition: {x: -108, y: 96, z: 0}
   m_ExitPosition: {x: 792, y: 120, z: 0}
   m_ParentStateMachinePosition: {x: 800, y: 20, z: 0}
   m_DefaultState: {fileID: 1102959230405701752}

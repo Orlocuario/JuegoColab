@@ -20,7 +20,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4101700835687490}
   m_Layer: 10
-  m_Name: GameObject
+  m_Name: WhatIsGround
   m_TagString: whatIsGround
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -58,7 +58,7 @@ GameObject:
   - component: {fileID: 114658916424741128}
   m_Layer: 10
   m_Name: Mage
-  m_TagString: Player1
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -126,7 +126,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1883630760672116}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 23.2, y: 10.1, z: 1}
+  m_LocalPosition: {x: -20.391, y: -2.296, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4101700835687490}
@@ -153,7 +153,7 @@ Rigidbody2D:
   m_Material: {fileID: 0}
   m_Interpolate: 0
   m_SleepingMode: 1
-  m_CollisionDetection: 0
+  m_CollisionDetection: 1
   m_Constraints: 4
 --- !u!61 &61371132755451122
 BoxCollider2D:
@@ -200,35 +200,33 @@ MonoBehaviour:
   playerObj: {fileID: 0}
   collider: {fileID: 0}
   parent: {fileID: 0}
-  groundCheck: {fileID: 4101700835687490}
-  myAnim: {fileID: 0}
   respawnPosition: {x: 0, y: 0, z: 0}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 512
+  groundCheck: {fileID: 4101700835687490}
+  animator: {fileID: 0}
   acceleration: 0
   canAccelerate: 0
   groundCheckRadius: 0.25
   actualSpeed: 0
-  speed: 0
-  isGrounded: 0
-  leftPressed: 0
-  rightPressed: 0
-  upPressed: 0
-  jumpPressed: 0
-  localPlayer: 0
   remoteAttacking: 0
   remoteJumping: 0
   remoteRight: 0
-  remotePower: 0
   remoteLeft: 0
   remoteUp: 0
+  rightPressed: 0
+  leftPressed: 0
+  jumpPressed: 0
+  localPlayer: 0
+  isGrounded: 0
+  upPressed: 0
+  controlOverEnemies: 0
   mpUpdateFrame: 0
   gravity: 1
+  directionY: 1
   directionX: 1
-  controlOverEnemies: 0
   sortingOrder: 0
-  saltarDoble: 0
   characterId: 0
   isPowerOn: 0
   mpDepleted: 0
@@ -287,7 +285,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -14233111
+  randomSeed: -243710456
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -2924,7 +2922,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -1826303090
+  randomSeed: 980526683
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -3334,7 +3332,7 @@ ParticleSystem:
         m_RotationOrder: 4
       minMaxState: 0
     randomizeRotationDirection: 0
-    maxNumParticles: 5002
+    maxNumParticles: 369
     size3D: 0
     rotation3D: 0
     gravityModifier:
@@ -3380,7 +3378,7 @@ ParticleSystem:
     serializedVersion: 3
     enabled: 1
     type: 11
-    radius: 0.76935786
+    radius: 1.28
     angle: 0.44625235
     length: 5
     boxX: 1
@@ -3403,7 +3401,7 @@ ParticleSystem:
     enabled: 1
     serializedVersion: 3
     rateOverTime:
-      scalar: 231.3
+      scalar: 529.6
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -5635,8 +5633,8 @@ SpriteRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: -477427129
-  m_SortingOrder: 0
+  m_SortingLayerID: -1897596871
+  m_SortingOrder: 1
   m_Sprite: {fileID: 21300034, guid: 740b40ae1db274a57ae2a167878b3037, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0

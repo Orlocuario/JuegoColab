@@ -89,5 +89,6 @@ public enum SwitchType{
 	step = 1,
 	lever = 2,
 	machine = 3,
-	triple = 4
+	triple = 4,
+	doble = 5
 }

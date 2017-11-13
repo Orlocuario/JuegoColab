@@ -5,24 +5,28 @@ using System;
 
 public class NetworkPlayer
 {
-    public int connectionId;
+
+    public string[] inventory = new string[8];
     public Room room;
-    public bool connected;
-    public int charId;
+
+    public bool controlOverEnemies;
+    public int connectionId;
+    public string ipAddress;
     public float positionX;
     public float positionY;
     public bool isGrounded;
-    public float speedX;
     public int directionX;
     public int directionY;
+    public bool connected;
+    public float speedX;
+    public int charId;
+    public bool power;
+
     public bool pressingJump;
     public bool pressingRight;
     public bool pressingLeft;
     public bool attacking;
-    public bool power;
-    public bool controlOverEnemies;
-    public string[] inventory = new string[8];
-    public string ipAddress;
+
 
     public NetworkPlayer(int connectionId, int charId, Room room, string address)
     {

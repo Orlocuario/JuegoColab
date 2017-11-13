@@ -9,15 +9,15 @@ public class Room
 {
 
     public ServerMessageHandler sender;
+    public RoomLogger log;
     public Server server;
 
-    public GlobalHpMpHUD hpManaGer;
+    public HUDHpMp hpManaGer;
 
     public List<NetworkPlayer> players;
     public List<NetworkEnemy> enemies;
     public List<ServerSwitch> switchs;
     public List<int> activatedGroups; //guarda los numeros de los grupos de switchs activados
-    public RoomLogger log;
     public string sceneToLoad;
     public string actualChat;
     public int numJugadores;
@@ -36,8 +36,8 @@ public class Room
         this.doorManager = new ServerDoorsManager();
         this.maxJugadores = maxJugadores;
         this.id = id;
+        hpManaGer = new HUDHpMp(this);
         log = new RoomLogger(this.id);
-        hpManaGer = new GlobalHpMpHUD(this);
         switchs = new List<ServerSwitch>();
         players = new List<NetworkPlayer>();
         enemies = new List<NetworkEnemy>();
@@ -108,8 +108,18 @@ public class Room
     {
         foreach (NetworkEnemy enemy in enemies)
         {
-            string message = "EnemyStartPatrolling/" + enemy.id;
-            SendMessageToAllPlayers(message);
+            if (enemy.patrollingPointX != default(float) & enemy.patrollingPointY != default(float))
+            {
+                string message = "EnemyStartPatrolling/" +
+                    enemy.id + "/" +
+                    enemy.directionX + "/" +
+                    enemy.positionX + "/" +
+                    enemy.positionY + "/" +
+                    enemy.patrollingPointX + "/" +
+                    enemy.patrollingPointY;
+
+                SendMessageToAllPlayers(message);
+            }
         }
     }
 
@@ -156,8 +166,7 @@ public class Room
 
     public void SendMessageToAllPlayers(string message)
     {
-        char[] separator = new char[1];
-        separator[0] = '/';
+        char[] separator = new char[1] { '/' };
         string[] msg = message.Split(separator);
 
         if (msg[0] == "NewChatMessage")
@@ -312,4 +321,5 @@ public class Room
     {
         historial += "\r\n" + message + HoraMinuto();
     }
+
 }

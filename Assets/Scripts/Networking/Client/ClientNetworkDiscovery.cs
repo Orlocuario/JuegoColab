@@ -6,13 +6,23 @@ using UnityEngine.UI;
 
 public class ClientNetworkDiscovery : NetworkDiscovery
 {
-    Client scriptClient;
-    // Use this for initialization
+    #region Attributes
+
+    private Client client;
+
+    #endregion
+
+    #region Start   
+
     void Start()
     {
         Initialize();
-        scriptClient = GetComponent<Client>();
+        client = GetComponent<Client>();
     }
+
+    #endregion
+
+    #region Common
 
     public void InitializeListening()
     {
@@ -24,6 +34,10 @@ public class ClientNetworkDiscovery : NetworkDiscovery
         }
 
     }
+
+    #endregion
+
+    #region Events
 
     public override void OnReceivedBroadcast(string fromAddress, string data)
     {
@@ -45,7 +59,7 @@ public class ClientNetworkDiscovery : NetworkDiscovery
 
             while (!connected)
             {
-                connected = scriptClient.Connect(serverIp, port);
+                connected = client.Connect(serverIp, port);
             }
 
             GameObject.Find("ConnectText").GetComponent<Text>().text = "Esperando...";
@@ -53,5 +67,7 @@ public class ClientNetworkDiscovery : NetworkDiscovery
         }
 
     }
+
+    #endregion
 
 }

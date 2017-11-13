@@ -3,7 +3,7 @@ using System.Collections;
 using System.IO;
 using System;
 
-public class RoomLogger
+public class RoomLogger 
 {
     int roomId;
     public RoomLogger(int id)
@@ -22,7 +22,6 @@ public class RoomLogger
         writer.WriteLine(playerId + " attacked");
         writer.Close();
     }
-
 
     public void WritePower(int playerId, bool powerState)
     {
