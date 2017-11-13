@@ -42,27 +42,31 @@ public class SwitchActions : MonoBehaviour {
 
 		case 0:
 			GameObject platEscaleraEng = (GameObject)Instantiate (Resources.Load ("Prefabs/EnginPlath1"));
-			platEscaleraEng.GetComponent<Transform> ().position = new Vector2 (12.9f, -1.3f);
+			    platEscaleraEng.GetComponent<Transform> ().position = new Vector2 (12.9f, -1.3f);
 			GameObject feedbackswitchEng = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
-			feedbackswitchEng.GetComponent<Transform> ().position = new Vector2 (13.2f, -1.3f);
-			Destroy (feedbackswitchEng, 3f);
+			    feedbackswitchEng.GetComponent<Transform> ().position = new Vector2 (13.2f, -1.3f);
+			    Destroy (feedbackswitchEng, 3f);
 			MuereParticula hintPart = GameObject.FindGameObjectWithTag ("SwitchEnginPart").GetComponent <MuereParticula> ();
-			hintPart.living = false;
+			    hintPart.living = false;
 
 			break; 
 
 		case 1: 
 			
 			GameObject rejaEng = GameObject.FindGameObjectWithTag ("RejaRocaEng");		
-			rejaEng.SetActive (false);
+			    rejaEng.SetActive (false);
 			Roca roca = GameObject.FindGameObjectWithTag ("rocaCaida").GetComponent <Roca> ();
-			roca.isReady = true;
+    			roca.isReady = true;
 			GameObject particleRoca = (GameObject)Instantiate (Resources.Load ("Prefabs/ParticulasMageRoca"));			
 			CajaSwitch caja = GameObject.FindGameObjectWithTag ("CajaSwitchFierro").GetComponent <CajaSwitch> ();
-			caja.meVoy = true; 
-			caja.ahoraMeVoy = true;
+			    caja.meVoy = true; 
+			    caja.ahoraMeVoy = true;
+			CameraController mainCamera1 = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent <CameraController> ();
+			    mainCamera1.ChangeState (CameraState.TargetZoom, 5, 34.9f, -3.06f, false);
 			GameObject spikes = GameObject.FindGameObjectWithTag ("KillPlaneSpikes");
-			Destroy (spikes);
+			    Destroy (spikes);
+            GameObject lavaPool = GameObject.Find("LavaPool");
+                Destroy(lavaPool, 1f);
 
 
             break;
@@ -70,18 +74,17 @@ public class SwitchActions : MonoBehaviour {
 		
 		case 2:
 
-			GameObject rocaGrande = GameObject.FindGameObjectWithTag ("rocaCaida");
 			Roca rocaGigante = GameObject.FindGameObjectWithTag ("rocaCaida").GetComponent <Roca> (); 
-			rocaGigante.caidaOn = true;
+			    rocaGigante.caidaOn = true;
 			CameraController mainCamera = GameObject.FindGameObjectWithTag ("MainCamera").GetComponent <CameraController> ();
-			mainCamera.ChangeState (CameraState.TargetZoom, 5, 34.9f, -3.06f, false);
+			    mainCamera.ChangeState (CameraState.TargetZoom, 5, 34.9f, -3.06f, false);
 			GameObject arbolGigante = GameObject.FindGameObjectWithTag ("ArbolCaida");
 			caidArbol arbool = arbolGigante.GetComponent <caidArbol> ();
-			arbool.colliderOn = true;//arbol
+			    arbool.colliderOn = true;//arbol
 			Animator arbolQl = arbolGigante.GetComponent<Animator> ();
-			arbolQl.SetBool ("RockBottom", true); //activa camino arbol
+			    arbolQl.SetBool ("RockBottom", true); //activa camino arbol
 			PathSub abreteSesamo = GameObject.FindGameObjectWithTag ("openPathSub").GetComponent <PathSub>();//destruyePasadizo
-			abreteSesamo.killMe = true;
+			    abreteSesamo.killMe = true;
 			Debug.Log ("wiiiiiii");
 
 			               
@@ -95,11 +98,15 @@ public class SwitchActions : MonoBehaviour {
             break;
 		
 		case 4:
-            GameObject platparaMage = (GameObject)Instantiate(Resources.Load("Prefabs/plathParaMageWarrior"));
-            platparaMage.GetComponent<Transform>().position = new Vector2(61f, -9.5f);
-            GameObject feedbackswitchwarr = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
-            feedbackswitchwarr.GetComponent<Transform>().position = new Vector2(72.86f, -19.3f);
+			GameObject platparaMage = (GameObject)Instantiate (Resources.Load ("Prefabs/plathParaMageWarrior"));
+			platparaMage.GetComponent<Transform> ().position = new Vector2 (61f, -9.5f);
+			GameObject feedbackswitchwarr = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
+			feedbackswitchwarr.GetComponent<Transform> ().position = new Vector2 (72.86f, -19.3f);
 			Destroy (feedbackswitchwarr, 4f);
+			GameObject comebackMessage = (GameObject)Instantiate (Resources.Load ("Prefabs/ActivateNPC"));
+			comebackMessage.transform.position = new Vector2 (70f, -19.2f); 
+			ActivateNPC mensajeReal = comebackMessage.GetComponent <ActivateNPC> ();
+			mensajeReal.mensajeNPC = "Ahora Debes Regresar. Tal vez alguien te abra la puerta";
             break;
                 
 		case 5:

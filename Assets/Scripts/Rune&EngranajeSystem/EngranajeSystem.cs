@@ -18,12 +18,14 @@ public class EngranajeSystem : MonoBehaviour
     private bool lockValue;
     private bool engranajeHasBeenChecked;
 	public PlannerSwitch switchObj = null;
+    Animator machineAnim;
 
 
     private void Start()
     {
         lockValue = false;
         engranajeHasBeenChecked = false;
+        machineAnim = this.gameObject.GetComponent<Animator>();
         myPosition = gameObject.transform.position;
         levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
         engranajesThatMaquinaRequiresArray = engranajeThatMaquinaRequires.ToArray();
@@ -92,6 +94,7 @@ public class EngranajeSystem : MonoBehaviour
             {
                 SpriteRenderer engranajeSlotSprite = maquinaSlots[i].GetComponent<SpriteRenderer>();
                 engranajeSlotSprite.sprite = spriteImage.sprite;
+
             }
         }
         return;
@@ -122,6 +125,7 @@ public class EngranajeSystem : MonoBehaviour
                 maquinaSlotSpriteRenderer[i].sprite = null;
             }
             maquinaSpriteRenderer.sprite = maquinaIsOpen;
+            machineAnim.SetBool("startMovingMAchine", true);
             GameObject viga = GameObject.Find("GiantBlocker");
             GameObject viga2 = GameObject.Find("GiantBlocker (1)");
             viga.SetActive(false);
