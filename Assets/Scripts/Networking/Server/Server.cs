@@ -30,6 +30,7 @@ public class Server : MonoBehaviour
     public int maxJugadores;
     public string sceneToLoad;
     public string NPCsLastMessage;
+    public bool debug;
 
     //Planner Thread
     Thread planner;
@@ -101,7 +102,7 @@ public class Server : MonoBehaviour
     {
         if (!listening)
         {
-          UnityEngine.Debug.Log("Server is not listening yet");
+            UnityEngine.Debug.Log("Server is not listening yet");
             return;
         }
 
@@ -157,9 +158,6 @@ public class Server : MonoBehaviour
                 Stream stream = new MemoryStream(recBuffer);
                 BinaryFormatter formatter = new BinaryFormatter();
                 string message = formatter.Deserialize(stream) as string;
-                string hora = HoraMinuto();
-
-                UnityEngine.Debug.Log(hora + " - from(" + recConnectionId + "): " + message);
 
                 if (recChannelId == channelId)
                 {
@@ -171,6 +169,11 @@ public class Server : MonoBehaviour
                 {
                     //Mensaje largo. Planner
                     SendMessagToPlanner(message, recConnectionId);
+                }
+
+                if (debug)
+                {
+                    UnityEngine.Debug.Log(HoraMinuto() + " - from(" + recConnectionId + "): " + message);
                 }
 
                 break;
