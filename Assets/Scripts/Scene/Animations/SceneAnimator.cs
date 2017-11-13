@@ -5,26 +5,12 @@ using System.Reflection.Emit;
 
 public class SceneAnimator : MonoBehaviour
 {
-    #region Attributes
-
-
-    #endregion
-
-    #region Start
-
-    void Start()
-    {
-    }
-
-    #endregion
 
     #region Common
 
     public IEnumerator StartAnimation(string animName, GameObject gameObject)
     {
         Animator animator = gameObject.GetComponent<Animator>();
-
-        Debug.Log(gameObject.name + " animator is " + animator);
 
         if (animator)
         {
@@ -34,9 +20,6 @@ public class SceneAnimator : MonoBehaviour
             if (animLength != -1)
             {
                 yield return new WaitForSeconds(animLength);
-
-                Debug.Log("Setting animation " + animName + " to false");
-
                 animator.SetBool(animName, false);
             }
             else
@@ -44,9 +27,11 @@ public class SceneAnimator : MonoBehaviour
                 Debug.Log(animName + " animation was not found in " + animator);
             }
         }
+        else
+        {
+            Debug.Log(gameObject.name + " has no animator ");
+        }
     }
-
-
 
     #endregion
 

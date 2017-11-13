@@ -28,8 +28,9 @@ public class EnemyController : MonoBehaviour
     protected float hp;
 
     protected static float alertDistanceFactor = 1.5f;
-    protected static float maxYSpeed = 0f;
     protected static float maxXSpeed = .5f;
+    protected static float WaitToDie = 1f;
+    protected static float maxYSpeed = 0f;
 
     #region Update & Start
 
@@ -180,6 +181,7 @@ public class EnemyController : MonoBehaviour
     public virtual void Die()
     {
         StartCoroutine(animControl.StartAnimation("Dying", this.gameObject));
+        StartCoroutine(WaitDying());
     }
 
     #endregion
@@ -378,8 +380,9 @@ public class EnemyController : MonoBehaviour
         }
     }
 
-    public void OnDiedEnd(string s)
+    public IEnumerator WaitDying()
     {
+        yield return new WaitForSeconds(WaitToDie);
         this.gameObject.SetActive(false);
         Destroy(this.gameObject);
     }
