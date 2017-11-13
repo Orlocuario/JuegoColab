@@ -246,8 +246,8 @@ public class SwitchActions : MonoBehaviour
                 lilPlatform2.transform.position = new Vector2(40.03f, 12.17f);
                 GameObject lilPlatform3 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
                 lilPlatform3.transform.position = new Vector2(38.6f, 11.58f);
-                GameObject hojasArbol = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/HojasPlat"));
-                hojasArbol.transform.position = new Vector2(35.55f, 12.03f);
+                //GameObject hojasArbol = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/HojasPlat"));
+                //hojasArbol.transform.position = new Vector2(35.55f, 12.03f);
                 break;
 
             case 16:
