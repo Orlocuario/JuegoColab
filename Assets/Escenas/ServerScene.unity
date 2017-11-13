@@ -2625,10 +2625,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   port: 0
-  maxConnections: 29
+  maxConnections: 40
   maxJugadores: 0
   sceneToLoad: 
   NPCsLastMessage: 
+  debug: 1
   templateFileName: C:\Users\cnsae\Downloads\FastDownward\misc\tests\benchmarks\gripper\template
   problemFileName: C:\Users\cnsae\Downloads\FastDownward\misc\tests\benchmarks\gripper\prob
   batchFileName: C:\Users\cnsae\Downloads\FastDownward\batch
