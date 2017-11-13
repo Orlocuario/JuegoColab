@@ -29,7 +29,9 @@ public class Client : MonoBehaviour
     private string serverIp;
     private int socketId; // Host ID
     private int port;
-    
+
+    public bool debug;
+
     #endregion
 
     #region Start & Update
@@ -102,8 +104,11 @@ public class Client : MonoBehaviour
                     ReceiveMessageFromPlanner(message, recConnectionId);
                 }
 
-                string hora = HoraMinuto();
-                Debug.Log(hora + " - " + message);
+                if (debug)
+                {
+                    Debug.Log(HoraMinuto() + " - " + message);
+                }
+
                 break;
 
             case NetworkEventType.DisconnectEvent:
