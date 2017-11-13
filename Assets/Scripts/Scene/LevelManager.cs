@@ -101,7 +101,7 @@ public class LevelManager : MonoBehaviour
 
     private void ReadNPCMessage(NPCtrigger NPC)
     {
-        if (NPC.activeFeedback && NPC.activeFeedback.particles && NPC.activeFeedback.particles.isPlaying)
+		if (NPC.activeFeedback != null && NPC.activeFeedback.particles != null && NPC.activeFeedback.particles.isPlaying)
         {
             NPC.activeFeedback.particles.Stop();
         }
@@ -114,7 +114,7 @@ public class LevelManager : MonoBehaviour
 
         NPC.activeFeedback = NPC.feedbacks[NPC.feedbackCount];
 
-        if (NPC.activeFeedback)
+		if (NPC.activeFeedback != null)
         {
             if (NPC.activeFeedback.particles != null)
             {
