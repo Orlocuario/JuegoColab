@@ -17,7 +17,7 @@ public class Room
     public List<NetworkEnemy> enemies;
     public List<ServerSwitch> switchs;
     public List<int> activatedGroups; //guarda los numeros de los grupos de switchs activados
-
+    public RoomLogger log;
     public string sceneToLoad;
     public string actualChat;
     public int numJugadores;
@@ -36,7 +36,7 @@ public class Room
         this.doorManager = new ServerDoorsManager();
         this.maxJugadores = maxJugadores;
         this.id = id;
-
+        log = new RoomLogger(this.id);
         hpManaGer = new GlobalHpMpHUD(this);
         switchs = new List<ServerSwitch>();
         players = new List<NetworkPlayer>();
