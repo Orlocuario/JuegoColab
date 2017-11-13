@@ -22,7 +22,7 @@ GameObject:
   - component: {fileID: 198796130062097294}
   - component: {fileID: 199667058881082538}
   m_Layer: 0
-  m_Name: "Barreraenerg\xE8tica"
+  m_Name: "Barreraenerge\u0300tica"
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
