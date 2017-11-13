@@ -19,7 +19,7 @@ public class RoomLogger
     public void WriteAttack(int playerId)
     {
         StreamWriter writer = GetWriter();
-        writer.WriteLine(playerId + " attacked");
+        writer.WriteLine("Player " + playerId + " attacked\n");
         writer.Close();
     }
 
@@ -28,11 +28,11 @@ public class RoomLogger
         StreamWriter writer = GetWriter();
         if (powerState)
         {
-            writer.WriteLine(playerId + " used his power");
+            writer.WriteLine("Player " + playerId + " used his power\n");
         }
         else
         {
-            writer.WriteLine(playerId + "stopped using his power");
+            writer.WriteLine("Player " + playerId + "stopped using his power\n");
         }
         writer.Close();
     }
@@ -49,11 +49,11 @@ public class RoomLogger
 
         if (msg[1] == "Add")
         {
-            writer.WriteLine(charId + " picked stored " + msg[3] + " in the slot " + index);
+            writer.WriteLine("Player " + charId + " picked stored " + msg[3] + " in the slot " + index +"\n");
         }
         else
         {
-            writer.WriteLine(charId + " tossed item in slot " + index);
+            writer.WriteLine("Player " + charId + " tossed item in slot " + index + "\n");
         }
         writer.Close();
 
@@ -64,22 +64,23 @@ public class RoomLogger
         string line = "";
         if (pressingJump)
         {
-            line = "Player " + playerId + " jumped from (" + positionX + "," + positionY + ")"; 
+            line = "Player " + playerId + " jumped from (" + positionX + "," + positionY + ")\n"; 
         }
         else if(pressingLeft && !pressingRight)
         {
-            line = "Player " + playerId + " is going left from (" + positionX + "," + positionY + ")";
+            line = "Player " + playerId + " is going left from (" + positionX + "," + positionY + ")\n";
         }
         else if (!pressingLeft && pressingRight)
         {
-            line = "Player " + playerId + " is going right from (" + positionX + "," + positionY + ")";
+            line = "Player " + playerId + " is going right from (" + positionX + "," + positionY + ")\n";
         }
         else if(pressingRight && pressingLeft)
         {
-            line = "Player " + playerId + " is pressing right AND left while standing in (" + positionX + "," + positionY + ")";
+            line = "Player " + playerId + " is pressing right AND left while standing in (" + positionX + "," + positionY + ")\n";
         }
         else
         {
+            writer.Close();
             return;
         }
         writer.WriteLine(line);
