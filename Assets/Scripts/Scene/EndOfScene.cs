@@ -17,15 +17,13 @@ public class EndOfScene : MonoBehaviour
 
     protected bool GameObjectIsPlayer(GameObject other)
     {
-        PlayerController playerController = other.GetComponent<PlayerController>();
-        return playerController && playerController.localPlayer;
+        return other.GetComponent<PlayerController>();
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (GameObjectIsPlayer(other.gameObject))
         {
-           
 			levelManager.ActivateNPCLog ("Asegúrate de que lleguen todos tus amigos");
             Debug.Log(other.gameObject.name + " reached the end of the scene");
 
