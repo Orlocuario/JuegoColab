@@ -35,6 +35,9 @@ public class ClientMessageHandler
             case "ObjectMoved":
                 HandleObjectMoved(msg);
                 break;
+            case "ObjectDestroyed":
+                HandleObjectDestroyed(msg);
+                break;
             case "ChangeObjectPosition":
                 HandleChangeObjectPosition(msg);
                 break;
@@ -576,14 +579,48 @@ public class ClientMessageHandler
 
         if (!movableObject)
         {
+            Debug.Log("Movable " + name + " does not exists");
             return;
         }
 
         MovableObject movableController = movableObject.GetComponent<MovableObject>();
 
-        if (movableController)
+        if (!movableController)
         {
-            movableController.MoveMe(force);
+            Debug.Log(name + " is not movable");
+            return;
         }
+
+        movableController.MoveMe(force, false);
+
+    }
+
+    private void HandleObjectDestroyed(string[] msg)
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "ClientScene")
+        {
+            return;
+        }
+
+        string name = msg[1];
+
+        GameObject destroyableObject = GameObject.Find(name);
+
+        if (!destroyableObject)
+        {
+            Debug.Log("Destroyable " + name + " does not exists");
+            return;
+        }
+
+        DestroyableObject destroyableController = destroyableObject.GetComponent<DestroyableObject>();
+
+        if (!destroyableController)
+        {
+            Debug.Log(name + " is not destroyable");
+            return;
+        }
+
+        destroyableController.DestroyMe(false);
     }
 }

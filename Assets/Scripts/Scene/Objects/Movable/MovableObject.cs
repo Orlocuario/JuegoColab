@@ -30,20 +30,15 @@ public class MovableObject : MonoBehaviour
 
     #region Common
 
-    public virtual void MoveMe(Vector2 force)
+    public virtual void MoveMe(Vector2 force, bool movedFromLocal)
     {
         if (rgbd)
         {
-            Debug.Log(name + " moved with force " + force);
             rgbd.AddForce(force);
 
-            if (Client.instance)
+            if (movedFromLocal)
             {
-
-                Client.instance.SendMessageToServer("ObjectMoved/" +
-                        name + "/" +
-                        force.x + "/" +
-                        force.y);
+                SendMovableDataToServer(force);
             }
 
             if (!animControl)
@@ -114,6 +109,23 @@ public class MovableObject : MonoBehaviour
     protected bool GameObjectIsPunch(GameObject other)
     {
         return other.GetComponent<PunchController>();
+    }
+
+    #endregion
+
+    #region Messaging
+
+    protected void SendMovableDataToServer(Vector2 force)
+    {
+
+        if (Client.instance)
+        {
+            Client.instance.SendMessageToServer("ObjectMoved/" +
+                    name + "/" +
+                    force.x + "/" +
+                    force.y);
+        }
+
     }
 
     #endregion

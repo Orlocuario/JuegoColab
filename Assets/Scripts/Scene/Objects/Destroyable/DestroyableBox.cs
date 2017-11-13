@@ -4,14 +4,24 @@ using UnityEngine;
 
 public class DestroyableBox : DestroyableObject
 {
+    #region Attributes
+
     public Sprite brokenBox;
 
-    // Use this for initialization
+    #endregion
+
+    #region Start
+
     protected override void Start()
     {
+        destroyDelayTime = 2f;
     }
 
-    public override void DestroyMe()
+    #endregion
+
+    #region Common
+
+    public override void DestroyMe(bool destroyedFromLocal)
     {
 
         Collider2D collider = GetComponent<Collider2D>();
@@ -20,8 +30,10 @@ public class DestroyableBox : DestroyableObject
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = brokenBox;
 
-        Destroy(this.gameObject, 2f);
+        base.DestroyMe(destroyedFromLocal);
 
     }
+
+    #endregion
 
 }
