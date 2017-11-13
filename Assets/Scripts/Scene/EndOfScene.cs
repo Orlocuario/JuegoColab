@@ -11,7 +11,7 @@ public class EndOfScene : MonoBehaviour
     private void Start()
     {
         levelManager = FindObjectOfType<LevelManager>();
-        playersWhoArrived = 0;    
+        playersWhoArrived = 0;
         playersToArrive = 3; // This could be managed dinamically
     }
 
@@ -24,23 +24,28 @@ public class EndOfScene : MonoBehaviour
     {
         if (GameObjectIsPlayer(other.gameObject))
         {
-			levelManager.ActivateNPCLog ("Asegúrate de que lleguen todos tus amigos");
+
             Debug.Log(other.gameObject.name + " reached the end of the scene");
 
-			if (++playersWhoArrived == playersToArrive) 
-			{
-				Debug.Log ("All players reached the end of the scene");
-				levelManager.GoToNextScene ();
-			} 
+            if (++playersWhoArrived == playersToArrive)
+            {
+                Debug.Log("All players reached the end of the scene");
+                levelManager.GoToNextScene();
+            }
+
+            else if (other.gameObject.GetComponent<PlayerController>().localPlayer)
+            {
+                levelManager.ActivateNPCLog("Asegúrate de que lleguen todos tus amigos");
+            }
         }
     }
-	private void OnTriggerExit2D(Collider2D other)
-	{
-		if (GameObjectIsPlayer (other.gameObject)) 
-		
-		{
-			Debug.Log (other.gameObject.name + " left the end of the scene");
-			--playersWhoArrived; 
-		}
-	}
+    private void OnTriggerExit2D(Collider2D other)
+    {
+        if (GameObjectIsPlayer(other.gameObject))
+
+        {
+            Debug.Log(other.gameObject.name + " left the end of the scene");
+            --playersWhoArrived;
+        }
+    }
 }
