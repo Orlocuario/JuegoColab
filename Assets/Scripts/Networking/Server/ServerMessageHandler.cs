@@ -307,6 +307,7 @@ public class ServerMessageHandler
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
         player.InventoryUpdate(message);
+        player.room.log.WriteInventory(player.charId, message);
     }
 
     private void SendDestroyObject(string message, int connectionId)
@@ -407,8 +408,8 @@ public class ServerMessageHandler
         player.pressingJump = pressingJump;
         player.pressingLeft = pressingLeft;
         player.pressingRight = pressingRight;
-
         room.SendMessageToAllPlayersExceptOne(message, connectionID);
+        room.log.WriteNewPosition(player.charId, positionX, positionY, pressingJump, pressingLeft, pressingRight);
     }
 
     private void SendObjectMoved(string message, int connectionId)
@@ -460,6 +461,7 @@ public class ServerMessageHandler
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
+        room.log.WriteAttack(player.charId);
         room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 
@@ -468,6 +470,7 @@ public class ServerMessageHandler
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         player.power = bool.Parse(data[2]);
+        room.log.WritePower(player.charId, player.power);
         room.SendMessageToAllPlayersExceptOne(message, connectionId);
     }
 }
