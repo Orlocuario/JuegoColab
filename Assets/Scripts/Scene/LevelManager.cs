@@ -356,6 +356,7 @@ public class LevelManager : MonoBehaviour
 
     public IEnumerator Respawning()
     {
+        localPlayer.StopMoving();
         localPlayer.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(waitToRespawn);
@@ -364,6 +365,7 @@ public class LevelManager : MonoBehaviour
         localPlayer.gameObject.SetActive(true);
         localPlayer.IgnoreCollisionBetweenPlayers();
         localPlayer.SendPlayerDataToServer();
+        localPlayer.ResumeMoving();
     }
 
     private IEnumerator WaitForCollision()

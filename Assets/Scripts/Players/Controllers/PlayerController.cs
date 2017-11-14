@@ -288,6 +288,7 @@ public class PlayerController : MonoBehaviour
     public virtual void StopMoving()
     {
         canMove = false;
+        isAttacking = false;
         animator.SetFloat("Speed", 0);
         animator.SetBool("IsGrounded", true);
         animator.SetBool("Attacking", false);
