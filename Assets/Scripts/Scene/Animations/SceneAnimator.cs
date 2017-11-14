@@ -8,17 +8,43 @@ public class SceneAnimator : MonoBehaviour
 
     #region Common
 
+    public void SetBool(string parameter, bool value, GameObject gameObject)
+    {
+        Animator animator = gameObject.GetComponent<Animator>();
+
+        if (!animator)
+        {
+            Debug.Log(gameObject.name + " has no animator ");
+            return;
+        }
+
+        animator.SetBool(parameter, value);
+    }
+
+    public void SetFloat(string parameter, float value, GameObject gameObject)
+    {
+        Animator animator = gameObject.GetComponent<Animator>();
+
+        if (!animator)
+        {
+            Debug.Log(gameObject.name + " has no animator ");
+            return;
+        }
+
+        animator.SetFloat(parameter, value);
+    }
+
     public IEnumerator StartAnimation(string animName, GameObject gameObject)
     {
         Animator animator = gameObject.GetComponent<Animator>();
 
         if (animator)
         {
-            animator.SetBool(animName, true);
 
             float animLength = FindAnimLength(animator, animName);
             if (animLength != -1)
             {
+                animator.SetBool(animName, true);
                 yield return new WaitForSeconds(animLength);
                 animator.SetBool(animName, false);
             }
@@ -30,6 +56,7 @@ public class SceneAnimator : MonoBehaviour
         else
         {
             Debug.Log(gameObject.name + " has no animator ");
+
         }
     }
 

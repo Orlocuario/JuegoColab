@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour
     public Vector3 respawnPosition;
     public LayerMask whatIsGround;
     public Transform groundCheck;
-    public Animator animator;
 
     private LevelManager levelManager;
     private HUDDisplay hpAndMp;
@@ -45,7 +44,7 @@ public class PlayerController : MonoBehaviour
     public bool upPressed;
 
     public static string mpSpendRate = "-1"; // Cuanto mp se gasta cada vez
-	public static float attackRate = .25f;
+    public static float attackRate = .25f;
     public static int mpUpdateRate = 30; // Cada cuantos frames se actualiza el HP y MP display
 
     public bool controlOverEnemies;
@@ -58,7 +57,7 @@ public class PlayerController : MonoBehaviour
     public int characterId;
     public bool isPowerOn;
 
-    protected SceneAnimator animControl;
+    protected SceneAnimator sceneAnimator;
     protected Vector3 lastPosition;
     protected Rigidbody2D rb2d;
 
@@ -74,13 +73,17 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void Start()
     {
-        animControl = GameObject.FindObjectOfType<SceneAnimator>();
         hpAndMp = GameObject.Find("Canvas").GetComponent<HUDDisplay>();
+        sceneAnimator = GameObject.FindObjectOfType<SceneAnimator>();
+
+        if (!sceneAnimator)
+        {
+            Debug.Log(name + " did not found the SceneAnimator");
+        }
 
         levelManager = FindObjectOfType<LevelManager>();
         collider = GetComponent<Collider2D>();
         rb2d = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
 
         respawnPosition = transform.position;
 
@@ -290,9 +293,9 @@ public class PlayerController : MonoBehaviour
     {
         canMove = false;
         isAttacking = false;
-        animator.SetFloat("Speed", 0);
-        animator.SetBool("IsGrounded", true);
-        animator.SetBool("Attacking", false);
+        sceneAnimator.SetFloat("Speed", 0, this.gameObject);
+        sceneAnimator.SetBool("IsGrounded", true, this.gameObject);
+        sceneAnimator.SetBool("Attacking", false, this.gameObject);
     }
 
     public virtual void ResumeMoving()
@@ -393,8 +396,8 @@ public class PlayerController : MonoBehaviour
 
         if (lastPosition != transform.position)
         {
-            animator.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
-            animator.SetBool("IsGrounded", isGrounded);
+            sceneAnimator.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x), this.gameObject);
+            sceneAnimator.SetBool("IsGrounded", isGrounded, this.gameObject);
         }
 
         rb2d.velocity = new Vector2(speedX, speedY);
@@ -488,7 +491,7 @@ public class PlayerController : MonoBehaviour
             Client.instance.SendMessageToServer(message);
         }
 
-        StartCoroutine(animControl.StartAnimation("TakingDamage", this.gameObject));
+        StartCoroutine(sceneAnimator.StartAnimation("TakingDamage", this.gameObject));
 
     }
 
@@ -563,8 +566,8 @@ public class PlayerController : MonoBehaviour
         this.directionY = directionY;
         this.speedX = speedX;
 
-        animator.SetFloat("Speed", Mathf.Abs(speedX));
-        animator.SetBool("IsGrounded", isGrounded);
+        sceneAnimator.SetFloat("Speed", Mathf.Abs(speedX), this.gameObject);
+        sceneAnimator.SetBool("IsGrounded", isGrounded, this.gameObject);
 
         transform.position = new Vector3(positionX, positionY, transform.position.z);
         transform.localScale = new Vector3(directionX, directionY, 1f);
@@ -614,21 +617,20 @@ public class PlayerController : MonoBehaviour
         Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + mpSpendRate);
     }
 
-	public IEnumerator WaitAttacking ()
-	{
-		yield return new WaitForSeconds (attackRate);
-		isAttacking = false;
-	}
+    public IEnumerator WaitAttacking()
+    {
+        yield return new WaitForSeconds(attackRate);
+        isAttacking = false;
+    }
 
-    protected void AnimateAttack() {
+    protected void AnimateAttack()
+    {
 
-        if (!animControl)
+        if (sceneAnimator && currentAttack != null)
         {
-            Debug.Log("AnimatorControl not found in " + name);
-            return;
+            StartCoroutine(sceneAnimator.StartAnimation(currentAttack, this.gameObject));
         }
 
-        StartCoroutine(animControl.StartAnimation(currentAttack, this.gameObject));
     }
 
 }
