@@ -45,29 +45,30 @@ public class PlayerController : MonoBehaviour
     public bool upPressed;
 
     public static string mpSpendRate = "-1"; // Cuanto mp se gasta cada vez
+	public static float attackRate = .25f;
     public static int mpUpdateRate = 30; // Cada cuantos frames se actualiza el HP y MP display
 
     public bool controlOverEnemies;
-    public int mpUpdateFrame;
+    public int sortingOrder = 0;
     public bool gravity = true; // true = normal, false = invertida
     public int directionY = 1; // 1 = de pie, -1 = de cabeza
     public int directionX = 1;  // 1 = derecha, -1 = izquierda
-    public int sortingOrder = 0;
+    public int mpUpdateFrame;
+    public bool mpDepleted;
     public int characterId;
     public bool isPowerOn;
-    public bool mpDepleted;
 
     protected SceneAnimator animControl;
     protected Vector3 lastPosition;
     protected Rigidbody2D rb2d;
 
     protected static int attackSpeed = 4;
+    protected string currentAttack;
     protected bool isAttacking;
     protected bool conectado;
     protected bool canMove;
     protected float speedX;
     protected float speedY;
-	public static float attackRate = .25f;
 
     private int debuger;
 
@@ -618,5 +619,16 @@ public class PlayerController : MonoBehaviour
 		yield return new WaitForSeconds (attackRate);
 		isAttacking = false;
 	}
+
+    protected void AnimateAttack() {
+
+        if (!animControl)
+        {
+            Debug.Log("AnimatorControl not found in " + name);
+            return;
+        }
+
+        StartCoroutine(animControl.StartAnimation(currentAttack, this.gameObject));
+    }
 
 }

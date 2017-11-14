@@ -27,21 +27,14 @@ public class MageController : PlayerController
     public override void CastLocalAttack()
     {
         isAttacking = true;
+        currentAttack = "Attacking";
 
         GameObject fireball = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Fireball"));
         FireballController controller = fireball.GetComponent<FireballController>();
         controller.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
 
-        if (!animControl)
-        {
-            Debug.Log("AnimatorControl not found in " + name);
-            return;
-        }
-
-        StartCoroutine(animControl.StartAnimation("Attacking", this.gameObject));
-
-		StartCoroutine (WaitAttacking ());
-
+        StartCoroutine(WaitAttacking());
+        AnimateAttack();
     }
 
     public bool ProtectedByShield(GameObject player)

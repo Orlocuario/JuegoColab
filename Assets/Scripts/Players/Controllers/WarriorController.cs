@@ -29,25 +29,18 @@ public class WarriorController : PlayerController
         PunchController punchController = punch.GetComponent<PunchController>();
         punchController.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
 
-        if (!animControl)
-        {
-            Debug.Log("AnimatorControl not found in " + name);
-            return;
-        }
+        StartCoroutine(WaitAttacking());
 
-        numHits++;
-        if (numHits % 2 == 0)
+        if (numHits++ % 2 == 0)
         {
-            StartCoroutine(animControl.StartAnimation("Attacking2", this.gameObject));
-
+            currentAttack = "Attacking2";
         }
         else
         {
-            StartCoroutine(animControl.StartAnimation("Attacking", this.gameObject));
+            currentAttack = "Attacking";
         }
 
-		StartCoroutine (WaitAttacking ());
-
+        AnimateAttack();
     }
 
     public override void SetAttack()

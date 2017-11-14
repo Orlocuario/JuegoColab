@@ -22,28 +22,21 @@ public class EngineerController : PlayerController
     public override void CastLocalAttack()
     {
         isAttacking = true;
+        currentAttack = "Attacking";
 
         GameObject proyectile = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Arrow"));
         ProyectileController controller = proyectile.GetComponent<ProyectileController>();
         controller.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
 
-        if (!animControl)
-        {
-            Debug.Log("AnimatorControl not found in " + name);
-            return;
-        }
-
-        StartCoroutine(animControl.StartAnimation("Attacking", this.gameObject));
-
-		StartCoroutine (WaitAttacking ());
-
+        StartCoroutine(WaitAttacking());
+        AnimateAttack();
     }
 
     protected override bool IsJumping(bool isGrounded)
     {
         if (localPlayer)
         {
-            
+
             if (!isPowerOn)
             {
                 return base.IsJumping(isGrounded);
