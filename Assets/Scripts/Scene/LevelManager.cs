@@ -11,7 +11,6 @@ public class LevelManager : MonoBehaviour
 
     #region Attributes
 
-
     public PlayerController localPlayer;
     public GameObject[] players;
     public GameObject canvas;
@@ -30,7 +29,7 @@ public class LevelManager : MonoBehaviour
 
     public float waitToRespawn;
 
-    private Text npcLogText;
+    private Text NPCFeedbackText;
 
     #endregion
 
@@ -45,19 +44,25 @@ public class LevelManager : MonoBehaviour
 
         canvas.SetActive(true); // 8=D
 
+        StorePlayers();
+
         itemsOriginalPositions = new List<Vector3>();
 
-        waitToKillNPCCountdown = 10f;
+        waitToKillNPCCountdown = 5f;
         waitToGrabItem = 5f;
 
         npcLog = GameObject.Find("NPCLog");
         npcLog.SetActive(false);
 
-        client = GameObject.Find("ClientObject").GetComponent<Client>();
-        client.RequestCharIdToServer();
-
         reconnectText = GameObject.Find("ReconnectingText");
         reconnectText.SetActive(false);
+
+        if (GameObject.Find("ClientObject"))
+        {
+            client = GameObject.Find("ClientObject").GetComponent<Client>();
+            client.RequestCharIdToServer();
+        }
+
     }
 
     #endregion
@@ -99,66 +104,41 @@ public class LevelManager : MonoBehaviour
         doorSpriteRenderer.sprite = door.GetComponent<RuneSystem>().doorIsOpen;
     }
 
-    private void ReadNPCMessage(NPCtrigger NPC)
+    public void ActivateNPCFeedback(string message)
     {
-		if (NPC.activeFeedback != null && NPC.activeFeedback.particles != null && NPC.activeFeedback.particles.isPlaying)
-        {
-            NPC.activeFeedback.particles.Stop();
-        }
-
-        if (NPC.feedbackCount >= NPC.feedbacks.Length)
-        {
-            npcLog.SetActive(false);
-            return;
-        }
-
-        NPC.activeFeedback = NPC.feedbacks[NPC.feedbackCount];
-
-		if (NPC.activeFeedback != null)
-        {
-            if (NPC.activeFeedback.particles != null)
-            {
-                NPC.activeFeedback.particles.Play();
-            }
-
-            if (NPC.activeFeedback.message != null)
-            {
-                npcLogText.text = NPC.activeFeedback.message;
-            }
-        }
-
-		NPC.feedbackCount += 1;
-
-        StartCoroutine(WaitToReadNPCMessage(NPC));
+        SetNPCText(message);
+        ShutNPCFeedback();
     }
 
-    public void ActivateNPCLog(string message)
+    public void ShutNPCFeedback()
     {
-        npcLog.SetActive(true);
-        Text npcLogText = GameObject.Find("NPCLogText").GetComponent<Text>();
-        npcLogText.text = message;
         StartCoroutine("WaitToKillNPC");
     }
 
-    public void ActivateNPCLog(NPCtrigger NPCtrigger)
+    public void SetNPCText(string message)
     {
-		if (!npcLog.activeInHierarchy)
+        if (!npcLog.activeInHierarchy)
         {
             npcLog.SetActive(true);
         }
 
-		npcLogText = GameObject.Find("NPCLogText").GetComponent<Text>();
+        if (!NPCFeedbackText)
+        {
+            if (GameObject.Find("NPCLogText"))
+            {
+                NPCFeedbackText = GameObject.Find("NPCLogText").GetComponent<Text>();
 
-        ReadNPCMessage(NPCtrigger);
+                if (NPCFeedbackText)
+                {
+                    NPCFeedbackText.text = message;
+                }
+            }
+        }
+
     }
 
     public void SetLocalPlayer(int id)
     {
-        players = new GameObject[3];
-
-        players[0] = GameObject.Find("Mage");
-        players[1] = GameObject.Find("Warrior");
-        players[2] = GameObject.Find("Engineer");
 
         switch (id)
         {
@@ -273,6 +253,15 @@ public class LevelManager : MonoBehaviour
 
     #region Utils
 
+    protected void StorePlayers()
+    {
+        players = new GameObject[3];
+
+        players[0] = GameObject.Find("Mage");
+        players[1] = GameObject.Find("Warrior");
+        players[2] = GameObject.Find("Engineer");
+    }
+
     public GameObject GetLocalPlayer()
     {
         return localPlayer.gameObject;
@@ -281,6 +270,16 @@ public class LevelManager : MonoBehaviour
     public PlayerController GetLocalPlayerController()
     {
         return localPlayer;
+    }
+
+    public GameObject GetPlayer(int position)
+    {
+        if (position < players.Length)
+        {
+            return players[position];
+        }
+
+        return null;
     }
 
     public MageController GetMage()
@@ -376,14 +375,14 @@ public class LevelManager : MonoBehaviour
 
     private IEnumerator WaitToKillNPC()
     {
-        yield return new WaitForSeconds(waitToGrabItem);
-        npcLog.SetActive(false);
-    }
+        yield return new WaitForSeconds(waitToKillNPCCountdown);
 
-    private IEnumerator WaitToReadNPCMessage(NPCtrigger NPC)
-    {
-        yield return new WaitForSeconds(NPC.feedbackTime);
-        ReadNPCMessage(NPC);
+        if (NPCFeedbackText)
+        {
+            NPCFeedbackText.text = "";
+        }
+
+        npcLog.SetActive(false);
     }
 
     #endregion

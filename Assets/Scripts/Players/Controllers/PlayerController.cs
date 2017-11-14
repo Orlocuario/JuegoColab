@@ -134,9 +134,9 @@ public class PlayerController : MonoBehaviour
 
     public void IgnoreCollisionBetweenPlayers()
     {
-        GameObject player1 = Client.instance.GetPlayerController(0).gameObject;
-        GameObject player2 = Client.instance.GetPlayerController(1).gameObject;
-        GameObject player3 = Client.instance.GetPlayerController(2).gameObject;
+        GameObject player1 = GameObject.Find("Mage");
+        GameObject player2 = GameObject.Find("Warrior");
+        GameObject player3 = GameObject.Find("Engineer");
         Physics2D.IgnoreCollision(collider, player1.GetComponent<Collider2D>());
         Physics2D.IgnoreCollision(collider, player2.GetComponent<Collider2D>());
         Physics2D.IgnoreCollision(collider, player3.GetComponent<Collider2D>());
@@ -293,9 +293,13 @@ public class PlayerController : MonoBehaviour
     {
         canMove = false;
         isAttacking = false;
-        sceneAnimator.SetFloat("Speed", 0, this.gameObject);
-        sceneAnimator.SetBool("IsGrounded", true, this.gameObject);
-        sceneAnimator.SetBool("Attacking", false, this.gameObject);
+
+        if (sceneAnimator)
+        {
+            sceneAnimator.SetFloat("Speed", 0, this.gameObject);
+            sceneAnimator.SetBool("IsGrounded", true, this.gameObject);
+            sceneAnimator.SetBool("Attacking", false, this.gameObject);
+        }
     }
 
     public virtual void ResumeMoving()
@@ -396,8 +400,11 @@ public class PlayerController : MonoBehaviour
 
         if (lastPosition != transform.position)
         {
-            sceneAnimator.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x), this.gameObject);
-            sceneAnimator.SetBool("IsGrounded", isGrounded, this.gameObject);
+            if (sceneAnimator)
+            {
+                sceneAnimator.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x), this.gameObject);
+                sceneAnimator.SetBool("IsGrounded", isGrounded, this.gameObject);
+            }
         }
 
         rb2d.velocity = new Vector2(speedX, speedY);
@@ -491,7 +498,10 @@ public class PlayerController : MonoBehaviour
             Client.instance.SendMessageToServer(message);
         }
 
-        StartCoroutine(sceneAnimator.StartAnimation("TakingDamage", this.gameObject));
+        if (sceneAnimator)
+        {
+            StartCoroutine(sceneAnimator.StartAnimation("TakingDamage", this.gameObject));
+        }
 
     }
 
@@ -566,8 +576,11 @@ public class PlayerController : MonoBehaviour
         this.directionY = directionY;
         this.speedX = speedX;
 
-        sceneAnimator.SetFloat("Speed", Mathf.Abs(speedX), this.gameObject);
-        sceneAnimator.SetBool("IsGrounded", isGrounded, this.gameObject);
+        if (sceneAnimator)
+        {
+            sceneAnimator.SetFloat("Speed", Mathf.Abs(speedX), this.gameObject);
+            sceneAnimator.SetBool("IsGrounded", isGrounded, this.gameObject);
+        }
 
         transform.position = new Vector3(positionX, positionY, transform.position.z);
         transform.localScale = new Vector3(directionX, directionY, 1f);
