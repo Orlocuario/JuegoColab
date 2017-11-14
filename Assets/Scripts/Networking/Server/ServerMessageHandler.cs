@@ -451,10 +451,11 @@ public class ServerMessageHandler
 
     public void SendChangeScene(string sceneName, Room room)
     {
-        string command = "ChangeScene/" + sceneName;
-        room.SendMessageToAllPlayers(command);
         room.sceneToLoad = sceneName;
         room.doorManager.Reset();
+
+        string command = "ChangeScene/" + sceneName;
+        room.SendMessageToAllPlayers(command);
     }
 
     public void SendAttackState(string message, int connectionId, string[] data)
