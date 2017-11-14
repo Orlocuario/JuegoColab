@@ -56,7 +56,7 @@ GameObject:
   - component: {fileID: 50605600596791322}
   - component: {fileID: 212050566988256744}
   m_Layer: 9
-  m_Name: "CajaMeta\u0301lica"
+  m_Name: "CajaMet\xE1lica"
   m_TagString: Destroyable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
