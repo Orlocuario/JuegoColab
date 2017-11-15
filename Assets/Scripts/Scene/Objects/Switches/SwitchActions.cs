@@ -53,8 +53,8 @@ public class SwitchActions : MonoBehaviour
                 GameObject feedbackswitchEng = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
                 feedbackswitchEng.GetComponent<Transform>().position = new Vector2(13.2f, -1.3f);
                 Destroy(feedbackswitchEng, 3f);
-                MuereParticula hintPart = GameObject.FindGameObjectWithTag("SwitchEnginPart").GetComponent<MuereParticula>();
-                hintPart.living = false;
+                //MuereParticula hintPart = GameObject.FindGameObjectWithTag("SwitchEnginPart").GetComponent<MuereParticula>();
+                //hintPart.living = false;
                 break;
 
             case 1:
