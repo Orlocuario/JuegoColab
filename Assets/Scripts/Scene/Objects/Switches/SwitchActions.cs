@@ -45,16 +45,16 @@ public class SwitchActions : MonoBehaviour
 
             case 0:
                 GameObject firstPlatform = (GameObject)Instantiate(Resources.Load("Prefabs/MovPlatform"));
-                firstPlatform.GetComponent<Transform>().position = new Vector2(13.3f, -1f);
+                firstPlatform.GetComponent<Transform>().position = new Vector2(13.3f, -1.5f);
                 MovingObject firstPlatformScript = firstPlatform.GetComponent<MovingObject>();
-                firstPlatformScript.startPoint = new Vector2(13.3f, -1f);
+                firstPlatformScript.startPoint = new Vector2(13.3f, -1.5f);
                 firstPlatformScript.endPoint = new Vector2(13.3f, 0.3f);
                 firstPlatformScript.moveSpeed = 1f;
                 GameObject feedbackswitchEng = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
                 feedbackswitchEng.GetComponent<Transform>().position = new Vector2(13.2f, -1.3f);
                 Destroy(feedbackswitchEng, 3f);
-                MuereParticula hintPart = GameObject.FindGameObjectWithTag("SwitchEnginPart").GetComponent<MuereParticula>();
-                hintPart.living = false;
+                //MuereParticula hintPart = GameObject.FindGameObjectWithTag("SwitchEnginPart").GetComponent<MuereParticula>();
+                //hintPart.living = false;
                 break;
 
             case 1:
@@ -66,7 +66,7 @@ public class SwitchActions : MonoBehaviour
                 CajaSwitch caja = GameObject.FindGameObjectWithTag("CajaSwitchFierro").GetComponent<CajaSwitch>();
                 caja.meVoy = true;
                 caja.ahoraMeVoy = true;
-                GameObject spikes = GameObject.FindGameObjectWithTag("KillPlaneSpikes");
+                GameObject spikes = GameObject.Find("SpikesDead");
                 Destroy(spikes);
                 GameObject lavaPool = GameObject.Find("LavaPool");
                 Destroy(lavaPool, 1f);
@@ -89,10 +89,10 @@ public class SwitchActions : MonoBehaviour
 
 		case 3:
 			GameObject platescalera = (GameObject)Instantiate (Resources.Load ("Prefabs/MovPlatform"));
-			platescalera.GetComponent<Transform> ().position = new Vector2 (43f, -16f);
+			platescalera.GetComponent<Transform> ().position = new Vector2 (43f, -16.8f);
 			MovingObject secondPlatform = platescalera.GetComponent<MovingObject> ();
 			secondPlatform.startPoint = new Vector2 (platescalera.transform.position.x, platescalera.transform.position.y);
-			secondPlatform.endPoint = new Vector2 (platescalera.transform.position.x, platescalera.transform.position.y + 3.9f);
+			secondPlatform.endPoint = new Vector2 (platescalera.transform.position.x, platescalera.transform.position.y + 4.4f);
 			secondPlatform.moveSpeed = 1f;
 			GameObject feedbackswitch = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
 			feedbackswitch.GetComponent<Transform> ().position = new Vector2 (41.4f, -16.3f);
