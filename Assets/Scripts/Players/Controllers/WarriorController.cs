@@ -6,17 +6,12 @@ public class WarriorController : PlayerController
 {
     GameObject particulas;
 
-    // TODO: refactor this
-    private double force = 0;
-    private int numHits = 0;
-    private int hits = 0;
-    private float damage;
+    private int attacks = 0;
 
     protected override void Start()
     {
         base.Start();
 
-        damage = 3;
         particulas = GameObject.Find("ParticulasWarrior");
         particulas.SetActive(false);
     }
@@ -29,25 +24,18 @@ public class WarriorController : PlayerController
         PunchController punchController = punch.GetComponent<PunchController>();
         punchController.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
 
-        if (!animControl)
-        {
-            Debug.Log("AnimatorControl not found in " + name);
-            return;
-        }
+        StartCoroutine(WaitAttacking());
 
-        numHits++;
-        if (numHits % 2 == 0)
+        if (attacks++ % 2 == 0)
         {
-            StartCoroutine(animControl.StartAnimation("Attacking2", this.gameObject));
-
+            currentAttack = "Attacking2";
         }
         else
         {
-            StartCoroutine(animControl.StartAnimation("Attacking", this.gameObject));
+            currentAttack = "Attacking";
         }
 
-		StartCoroutine (WaitAttacking ());
-
+        AnimateAttack();
     }
 
     public override void SetAttack()

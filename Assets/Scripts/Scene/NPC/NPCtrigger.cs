@@ -1,47 +1,103 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class NPCtrigger : MonoBehaviour
 {
 
-    private LevelManager theLevelManager;
+    #region Attributes
 
-    public NPCFeedback activeFeedback;
+    [System.Serializable]
+    public struct NPCFeedback
+    {
+        public ParticleSystem particles;
+        public string message;
+    };
+
     public NPCFeedback[] feedbacks;
 
     public float feedbackTime;
-    public int feedbackCount;
 
-    // Use this for initialization
+    private NPCFeedback activeFeedback;
+    private LevelManager levelManager;
+
+    private int feedbackCount;
+
+    #endregion
+
+    #region Start 
+
     void Start()
     {
-        theLevelManager = FindObjectOfType<LevelManager>();
+        levelManager = FindObjectOfType<LevelManager>();
         feedbackCount = 0;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
+    #endregion
 
+    #region Common
+
+    public void ReadNextFeedback()
+    {
+        // Always shut the last particles
+        if (IsThereActiveFeedback() && activeFeedback.particles && activeFeedback.particles.isPlaying)
+        {
+            activeFeedback.particles.Stop();
+        }
+
+        // Exit if every feedback was read
+        if (feedbackCount >= feedbacks.Length)
+        {
+            EndFeedback();
+            return;
+        }
+
+        activeFeedback = feedbacks[feedbackCount];
+
+        if (IsThereActiveFeedback())
+        {
+            // Activate particles
+            if (activeFeedback.particles)
+            {
+                activeFeedback.particles.Play();
+            }
+
+            // Set feedback text
+            if (activeFeedback.message != null)
+            {
+                levelManager.SetNPCText(activeFeedback.message);
+            }
+        }
+
+        feedbackCount += 1;
     }
+
+    #endregion
+
+    #region Events
 
     public void OnTriggerEnter2D(Collider2D other)
     {
         if (GameObjectIsPlayer(other.gameObject))
         {
-            Debug.Log(other.name + " is in the npc trigger");
-            OnEnter();
+            ReadNextFeedback();
         }
     }
 
-    public void OnTriggerExit2D(Collider2D other)
+    #endregion
+
+    #region Utils
+
+    protected void EndFeedback()
     {
-        if (GameObjectIsPlayer(other.gameObject))
-        {
-            Debug.Log(other.name + " left npc trigger");
-            OnExit();
-        }
+        levelManager.ShutNPCFeedback();
+        Destroy(this.gameObject);
+    }
+
+    protected bool IsThereActiveFeedback()
+    {
+        return !activeFeedback.Equals(default(NPCFeedback));
     }
 
     protected bool GameObjectIsPlayer(GameObject other)
@@ -50,13 +106,16 @@ public class NPCtrigger : MonoBehaviour
         return playerController && playerController.localPlayer;
     }
 
-    private void OnEnter()
+    #endregion
+
+    #region Coroutines
+
+    private IEnumerator WaitToReadNPCMessage()
     {
-        theLevelManager.ActivateNPCLog(this);
+        yield return new WaitForSeconds(feedbackTime);
+        ReadNextFeedback();
     }
 
-    private void OnExit()
-    {
-        Destroy(this.gameObject);
-    }
+    #endregion
+
 }

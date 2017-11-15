@@ -14,7 +14,6 @@ public class PlayerController : MonoBehaviour
     public Vector3 respawnPosition;
     public LayerMask whatIsGround;
     public Transform groundCheck;
-    public Animator animator;
 
     private LevelManager levelManager;
     private HUDDisplay hpAndMp;
@@ -45,41 +44,46 @@ public class PlayerController : MonoBehaviour
     public bool upPressed;
 
     public static string mpSpendRate = "-1"; // Cuanto mp se gasta cada vez
+    public static float attackRate = .25f;
     public static int mpUpdateRate = 30; // Cada cuantos frames se actualiza el HP y MP display
 
     public bool controlOverEnemies;
-    public int mpUpdateFrame;
+    public int sortingOrder = 0;
     public bool gravity = true; // true = normal, false = invertida
     public int directionY = 1; // 1 = de pie, -1 = de cabeza
     public int directionX = 1;  // 1 = derecha, -1 = izquierda
-    public int sortingOrder = 0;
+    public int mpUpdateFrame;
+    public bool mpDepleted;
     public int characterId;
     public bool isPowerOn;
-    public bool mpDepleted;
 
-    protected SceneAnimator animControl;
+    protected SceneAnimator sceneAnimator;
     protected Vector3 lastPosition;
     protected Rigidbody2D rb2d;
 
     protected static int attackSpeed = 4;
+    protected string currentAttack;
     protected bool isAttacking;
     protected bool conectado;
     protected bool canMove;
     protected float speedX;
     protected float speedY;
-	public static float attackRate = .25f;
 
     private int debuger;
 
     protected virtual void Start()
     {
-        animControl = GameObject.FindObjectOfType<SceneAnimator>();
         hpAndMp = GameObject.Find("Canvas").GetComponent<HUDDisplay>();
+        sceneAnimator = GameObject.FindObjectOfType<SceneAnimator>();
+
+        if (!sceneAnimator)
+        {
+            Debug.Log(name + " did not found the SceneAnimator");
+        }
 
         levelManager = FindObjectOfType<LevelManager>();
         collider = GetComponent<Collider2D>();
         rb2d = GetComponent<Rigidbody2D>();
-        animator = GetComponent<Animator>();
 
         respawnPosition = transform.position;
 
@@ -130,9 +134,9 @@ public class PlayerController : MonoBehaviour
 
     public void IgnoreCollisionBetweenPlayers()
     {
-        GameObject player1 = Client.instance.GetPlayerController(0).gameObject;
-        GameObject player2 = Client.instance.GetPlayerController(1).gameObject;
-        GameObject player3 = Client.instance.GetPlayerController(2).gameObject;
+        GameObject player1 = GameObject.Find("Mage");
+        GameObject player2 = GameObject.Find("Warrior");
+        GameObject player3 = GameObject.Find("Engineer");
         Physics2D.IgnoreCollision(collider, player1.GetComponent<Collider2D>());
         Physics2D.IgnoreCollision(collider, player2.GetComponent<Collider2D>());
         Physics2D.IgnoreCollision(collider, player3.GetComponent<Collider2D>());
@@ -288,9 +292,14 @@ public class PlayerController : MonoBehaviour
     public virtual void StopMoving()
     {
         canMove = false;
-        animator.SetFloat("Speed", 0);
-        animator.SetBool("IsGrounded", true);
-        animator.SetBool("Attacking", false);
+        isAttacking = false;
+
+        if (sceneAnimator)
+        {
+            sceneAnimator.SetFloat("Speed", 0, this.gameObject);
+            sceneAnimator.SetBool("IsGrounded", true, this.gameObject);
+            sceneAnimator.SetBool("Attacking", false, this.gameObject);
+        }
     }
 
     public virtual void ResumeMoving()
@@ -391,8 +400,11 @@ public class PlayerController : MonoBehaviour
 
         if (lastPosition != transform.position)
         {
-            animator.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x));
-            animator.SetBool("IsGrounded", isGrounded);
+            if (sceneAnimator)
+            {
+                sceneAnimator.SetFloat("Speed", Mathf.Abs(rb2d.velocity.x), this.gameObject);
+                sceneAnimator.SetBool("IsGrounded", isGrounded, this.gameObject);
+            }
         }
 
         rb2d.velocity = new Vector2(speedX, speedY);
@@ -486,7 +498,10 @@ public class PlayerController : MonoBehaviour
             Client.instance.SendMessageToServer(message);
         }
 
-        StartCoroutine(animControl.StartAnimation("TakingDamage", this.gameObject));
+        if (sceneAnimator)
+        {
+            StartCoroutine(sceneAnimator.StartAnimation("TakingDamage", this.gameObject));
+        }
 
     }
 
@@ -561,8 +576,11 @@ public class PlayerController : MonoBehaviour
         this.directionY = directionY;
         this.speedX = speedX;
 
-        animator.SetFloat("Speed", Mathf.Abs(speedX));
-        animator.SetBool("IsGrounded", isGrounded);
+        if (sceneAnimator)
+        {
+            sceneAnimator.SetFloat("Speed", Mathf.Abs(speedX), this.gameObject);
+            sceneAnimator.SetBool("IsGrounded", isGrounded, this.gameObject);
+        }
 
         transform.position = new Vector3(positionX, positionY, transform.position.z);
         transform.localScale = new Vector3(directionX, directionY, 1f);
@@ -612,10 +630,20 @@ public class PlayerController : MonoBehaviour
         Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + mpSpendRate);
     }
 
-	public IEnumerator WaitAttacking ()
-	{
-		yield return new WaitForSeconds (attackRate);
-		isAttacking = false;
-	}
+    public IEnumerator WaitAttacking()
+    {
+        yield return new WaitForSeconds(attackRate);
+        isAttacking = false;
+    }
+
+    protected void AnimateAttack()
+    {
+
+        if (sceneAnimator && currentAttack != null)
+        {
+            StartCoroutine(sceneAnimator.StartAnimation(currentAttack, this.gameObject));
+        }
+
+    }
 
 }

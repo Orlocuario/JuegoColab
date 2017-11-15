@@ -135,7 +135,7 @@ public class ClientMessageHandler
             return;
         }
         LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.ActivateNPCLog(msg[1]);
+        scriptLevel.ActivateNPCFeedback(msg[1]);
     }
 
     private void HandleActivationMachine(string[] msg)
