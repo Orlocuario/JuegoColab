@@ -53,8 +53,8 @@ public class SwitchActions : MonoBehaviour
                 GameObject feedbackswitchEng = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
                 feedbackswitchEng.GetComponent<Transform>().position = new Vector2(13.2f, -1.3f);
                 Destroy(feedbackswitchEng, 3f);
-                MuereParticula hintPart = GameObject.FindGameObjectWithTag("SwitchEnginPart").GetComponent<MuereParticula>();
-                hintPart.living = false;
+                //MuereParticula hintPart = GameObject.FindGameObjectWithTag("SwitchEnginPart").GetComponent<MuereParticula>();
+                //hintPart.living = false;
                 break;
 
             case 1:
@@ -192,24 +192,21 @@ public class SwitchActions : MonoBehaviour
 
             /* Aquí Comienzan Acciones Escena Tutorial*/
 
-            case 9:     // Primeros grandes peldaños
+            /* Switches Mage */
+
+            case 9:     // Primeros peldaños para mage
                 GameObject particleFeedback = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
-                particleFeedback.transform.position = new Vector2(25.72f, 0.1f);
+                particleFeedback.transform.position = new Vector2(26.5f, -43.6f);
                 GameObject primerPlat = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                primerPlat.transform.position = new Vector2(21.8f, .7f);
+                primerPlat.transform.position = new Vector2(23f, -43.5f);
                 GameObject primerPlat2 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                primerPlat2.transform.position = new Vector2(20.1f, 1.4f);
-                GameObject primerPlat3 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                primerPlat3.transform.position = new Vector2(18.7f, 2.1f);
-                GameObject primerPlat4 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                primerPlat4.transform.position = new Vector2(18.7f, 3.5f);
-                GameObject primerPlat5 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                primerPlat5.transform.position = new Vector2(20.1f, 2.8f);
+                primerPlat2.transform.position = new Vector2(23f, -42.8f);
+                
                 break;
 
             case 10:    // peldaño
-                GameObject secondPlat0 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                secondPlat0.transform.position = new Vector2(18f, 4.8f);
+
+
                 break;
 
             case 11:    // peldaño para players 

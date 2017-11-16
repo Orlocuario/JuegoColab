@@ -96,7 +96,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1297910846561336}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.858, y: -2.271, z: 1}
+  m_LocalPosition: {x: -20.839, y: -2.403, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4178390081971338}
@@ -174,7 +174,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 512
   groundCheck: {fileID: 4178390081971338}
-  animator: {fileID: 0}
   acceleration: 0
   canAccelerate: 0
   groundCheckRadius: 0.25
@@ -191,14 +190,14 @@ MonoBehaviour:
   isGrounded: 0
   upPressed: 0
   controlOverEnemies: 0
-  mpUpdateFrame: 0
+  sortingOrder: 0
   gravity: 1
   directionY: 1
   directionX: 1
-  sortingOrder: 0
+  mpUpdateFrame: 0
+  mpDepleted: 0
   characterId: 0
   isPowerOn: 0
-  mpDepleted: 0
 --- !u!198 &198702002981555530
 ParticleSystem:
   m_ObjectHideFlags: 1
