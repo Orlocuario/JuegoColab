@@ -123,8 +123,8 @@ public class ClientMessageHandler
 
     private void HandleIgnoreCollision(string[] msg)
     {
-        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.IgnoreCollisionBetweenObjects(msg);
+        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+        levelManager.IgnoreCollisionBetweenObjects(msg);
     }
 
     private void HandleActivationNpcLog(string[] msg)
@@ -134,8 +134,8 @@ public class ClientMessageHandler
         {
             return;
         }
-        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.ActivateNPCFeedback(msg[1]);
+        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+        levelManager.ActivateNPCFeedback(msg[1]);
     }
 
     private void HandleActivationMachine(string[] msg)
@@ -145,8 +145,8 @@ public class ClientMessageHandler
         {
             return;
         }
-        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.ActivateMachine(msg[1]);
+        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+        levelManager.ActivateMachine(msg[1]);
     }
 
     private void HandleActivationDoor(string[] msg)
@@ -156,8 +156,8 @@ public class ClientMessageHandler
         {
             return;
         }
-        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.ActivateRuneDoor(msg[1]);
+        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+        levelManager.ActivateRuneDoor(msg[1]);
     }
 
     private void HandleChangeObjectPosition(string[] msg)
@@ -167,8 +167,8 @@ public class ClientMessageHandler
         {
             return;
         }
-        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.MoveItemInGame(msg[1], msg[2], msg[3], msg[4]);
+        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+        levelManager.MoveItemInGame(msg[1], msg[2], msg[3], msg[4]);
     }
 
     private void HandleInstantiateObject(string[] msg)
@@ -178,8 +178,8 @@ public class ClientMessageHandler
         {
             return;
         }
-        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.InsantiateGameObject(msg);
+        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+        levelManager.InsantiateGameObject(msg);
     }
 
     private void HandleSwitchGroupReady(string[] msg)
@@ -382,8 +382,8 @@ public class ClientMessageHandler
         {
             return;
         }
-        HUDDisplay displayHudScript = GameObject.Find("Canvas").GetComponent<HUDDisplay>();
-        displayHudScript.CurrentHP(msg[1]);
+        HUDDisplay hpAndMp = GameObject.FindObjectOfType<LevelManager>().hpAndMp;
+        hpAndMp.CurrentHP(msg[1]);
     }
 
     private void HandleChangeMpHUDToClient(string[] msg)
@@ -393,8 +393,8 @@ public class ClientMessageHandler
         {
             return;
         }
-        HUDDisplay displayHudScript = GameObject.Find("Canvas").GetComponent<HUDDisplay>();
-        displayHudScript.CurrentMP(msg[1]);
+        HUDDisplay hpAndMp = GameObject.FindObjectOfType<LevelManager>().hpAndMp;
+        hpAndMp.CurrentMP(msg[1]);
     }
 
     private void HandleChangeExpHUDToClient(string[] msg)
@@ -404,8 +404,8 @@ public class ClientMessageHandler
         {
             return;
         }
-        HUDDisplay displayHudScript = GameObject.Find("Canvas").GetComponent<HUDDisplay>();
-        displayHudScript.ExperienceBar(msg[1]);
+        HUDDisplay hpAndMp = GameObject.FindObjectOfType<LevelManager>().hpAndMp;
+        hpAndMp.ExperienceBar(msg[1]);
     }
 
     private void HandleCreateGameObject(string[] msg)
@@ -415,9 +415,9 @@ public class ClientMessageHandler
         {
             return;
         }
-        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
         int charId = Int32.Parse(msg[2]);
-        scriptLevel.CreateGameObject(msg[1], charId);
+        levelManager.CreateGameObject(msg[1], charId);
     }
 
     private void HandleDestroyObject(string[] msg)
@@ -427,9 +427,10 @@ public class ClientMessageHandler
         {
             return;
         }
-        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+
+        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
         GameObject objectToDestroy = GameObject.Find(msg[1]);
-        scriptLevel.DestroyObjectInGame(objectToDestroy);
+        levelManager.DestroyObjectInGame(objectToDestroy);
     }
 
     private void HandleChangeScene(string[] msg)
@@ -456,7 +457,7 @@ public class ClientMessageHandler
         bool controlOverEnemies = bool.Parse(msg[2]);
         int charIdint = Convert.ToInt32(charId);
 
-        LevelManager levelManager = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
+        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
         levelManager.SetLocalPlayer(charIdint);
 
         PlayerController scriptPlayer = client.GetLocalPlayer();
@@ -558,8 +559,8 @@ public class ClientMessageHandler
         {
             return;
         }
-        LevelManager scriptLevel = GameObject.FindGameObjectsWithTag("LevelManager")[0].GetComponent<LevelManager>();
-        scriptLevel.ReloadLevel(array[1]);
+        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+        levelManager.ReloadLevel(array[1]);
     }
 
     private void HandleObjectMoved(string[] msg)

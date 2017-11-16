@@ -16,7 +16,6 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheck;
 
     private LevelManager levelManager;
-    private HUDDisplay hpAndMp;
     private SpriteRenderer sprite;
 
     public static float maxAcceleration = 1; //100% del speed
@@ -73,7 +72,7 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void Start()
     {
-        hpAndMp = GameObject.Find("Canvas").GetComponent<HUDDisplay>();
+
         sceneAnimator = GameObject.FindObjectOfType<SceneAnimator>();
 
         if (!sceneAnimator)
@@ -418,8 +417,14 @@ public class PlayerController : MonoBehaviour
         if (localPlayer)
         {
 
+            if (!levelManager.hpAndMp)
+            {
+                Debug.Log("Levelmanager HpAndMp is not set");
+                return false;
+            }
+
             bool powerButtonPressed = CnInputManager.GetButtonDown("Power Button");
-            float mpCurrentPercentage = hpAndMp.mpCurrentPercentage;
+            float mpCurrentPercentage = levelManager.hpAndMp.mpCurrentPercentage;
 
             // Se acabó el maná
             if (mpCurrentPercentage <= 0f)
