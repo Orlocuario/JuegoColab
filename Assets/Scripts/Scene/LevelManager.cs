@@ -107,12 +107,16 @@ public class LevelManager : MonoBehaviour
     public void ActivateNPCFeedback(string message)
     {
         SetNPCText(message);
-        ShutNPCFeedback();
+        ShutNPCFeedback(false);
     }
 
-    public void ShutNPCFeedback()
+	public void ShutNPCFeedback(bool now)
     {
-        StartCoroutine("WaitToKillNPC");
+		if (now) {
+			KillNPC();
+		} else {
+			StartCoroutine(WaitToKillNPC());
+		}
     }
 
     public void SetNPCText(string message)
@@ -127,14 +131,13 @@ public class LevelManager : MonoBehaviour
             if (GameObject.Find("NPCLogText"))
             {
                 NPCFeedbackText = GameObject.Find("NPCLogText").GetComponent<Text>();
-
-                if (NPCFeedbackText)
-                {
-                    NPCFeedbackText.text = message;
-                }
             }
         }
 
+		if (NPCFeedbackText)
+		{
+			NPCFeedbackText.text = message;
+		}
     }
 
     public void SetLocalPlayer(int id)
@@ -376,14 +379,18 @@ public class LevelManager : MonoBehaviour
     private IEnumerator WaitToKillNPC()
     {
         yield return new WaitForSeconds(waitToKillNPCCountdown);
-
-        if (NPCFeedbackText)
-        {
-            NPCFeedbackText.text = "";
-        }
-
-        npcLog.SetActive(false);
+		KillNPC ();
     }
+
+	private void KillNPC() {
+		
+		if (NPCFeedbackText)
+		{
+			NPCFeedbackText.text = "";
+		}
+
+		npcLog.SetActive(false);
+	}
 
     #endregion
 

@@ -180,8 +180,10 @@ public class Client : MonoBehaviour
     public void StartFirstPlan()
     {
         Planner planner = FindObjectOfType<Planner>();
-        planner.FirstPlan();
-    }
+		if (planner) {
+			planner.FirstPlan ();
+		}
+	}
 
     #endregion
 
