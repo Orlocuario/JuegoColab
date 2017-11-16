@@ -12,7 +12,7 @@ public class ChatZone : MonoBehaviour
     public GameObject chatButtonOn;
     
     private static string regenerationUnits = "1";
-    private static int regenerationFrameRate = 30;
+    private static int regenerationFrameRate = 25;
     private static float activationDistance = 2f;
 
     private int regenerationFrame;
