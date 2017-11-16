@@ -7,10 +7,10 @@ using UnityEngine.UI;
 public class ChatZone : MonoBehaviour
 {
 
-    private HUDDisplay displayHudScript;
+    private HUDDisplay hpAndMp;
     public GameObject chatButtonOff;
     public GameObject chatButtonOn;
-
+    
     private static string regenerationUnits = "1";
     private static int regenerationFrameRate = 30;
     private static float activationDistance = 2f;
@@ -23,7 +23,6 @@ public class ChatZone : MonoBehaviour
         regenerationFrame = 0;
         activated = false;
         InitializeChatButtons();
-        displayHudScript = GameObject.Find("Canvas").GetComponent<HUDDisplay>();
     }
 
     private void Update()
@@ -62,7 +61,12 @@ public class ChatZone : MonoBehaviour
 
     protected bool CanRegenerateHPorMP()
     {
-        return displayHudScript.hpCurrentPercentage < 1f || displayHudScript.mpCurrentPercentage < 1f;
+        if (!hpAndMp)
+        {
+            hpAndMp = GameObject.FindObjectOfType<LevelManager>().hpAndMp;
+        }
+
+        return hpAndMp.hpCurrentPercentage < 1f || hpAndMp.mpCurrentPercentage < 1f;
     }
 
 

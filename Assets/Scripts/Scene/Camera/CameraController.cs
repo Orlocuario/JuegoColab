@@ -21,8 +21,8 @@ public class CameraController : MonoBehaviour
     private GameObject target;
     private Vector3 saltitos;
     private Camera holiwix;
-	private GameObject panelChat;
-	private GameObject inputChat;
+    private GameObject panelChat;
+    private GameObject inputChat;
 
     private float limitForUpperY = 100;
     public float limitForBottomY = 0;
@@ -43,10 +43,10 @@ public class CameraController : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-		panelChat= GameObject.Find ("PanelChat");
-		inputChat = GameObject.Find ("PanelInput");
+        panelChat = GameObject.Find("PanelChat");
+        inputChat = GameObject.Find("PanelInput");
         holiwix = this.gameObject.GetComponent<Camera>();
-		ChangeState(CameraState.Normal, 10, 0, 0, false);
+        ChangeState(CameraState.Normal, 10, 0, 0, false);
     }
 
     // Update is called once per frame
@@ -157,7 +157,7 @@ public class CameraController : MonoBehaviour
         this.target = target;
     }
 
-	public void ChangeState(CameraState state, float ortographicsize, float x, float y, bool sinChat)
+    public void ChangeState(CameraState state, float ortographicsize, float x, float y, bool sinChat)
     {
         switch (state)
         {
@@ -165,7 +165,7 @@ public class CameraController : MonoBehaviour
                 SetDefaultValues();
                 break;
             case CameraState.Zoomed:
-			SetZoomedValues(ortographicsize, x, y, sinChat);
+                SetZoomedValues(ortographicsize, x, y, sinChat);
                 break;
             case CameraState.FixedX:
                 SetFixedX();
@@ -185,19 +185,20 @@ public class CameraController : MonoBehaviour
         }
     }
 
-	public void SetZoomedValues(float size, float x, float y, bool sinChat)
+    public void SetZoomedValues(float size, float x, float y, bool sinChat)
     {
         currentState = CameraState.Zoomed;
         holiwix.orthographicSize = size;
         transform.position = new Vector3(x, y, transform.position.z);
-		if (sinChat) {
-			panelChat.SetActive (false);
-			if (inputChat) 
-			{
-				inputChat.SetActive (false);			
+        if (sinChat)
+        {
+            panelChat.SetActive(false);
+            if (inputChat)
+            {
+                inputChat.SetActive(false);
 
-			}
-		}
+            }
+        }
     }
 
     private void TargetedZoom(float size, float x, float y)
@@ -233,16 +234,21 @@ public class CameraController : MonoBehaviour
     }
 
     private void SetDefaultValues()
-	{
-		smoothCamera = 3.9f;
-		followAhead = .9f;
-		followUp = 1f;
-		holiwix.orthographicSize = initialSize;
-		currentState = CameraState.Normal;
-		panelChat.SetActive (true);
-		if (inputChat) 
-		{
-			inputChat.SetActive (true);
-		}
-	}
+    {
+        smoothCamera = 3.9f;
+        followAhead = .9f;
+        followUp = 1f;
+        holiwix.orthographicSize = initialSize;
+        currentState = CameraState.Normal;
+
+        if (panelChat)
+        {
+            panelChat.SetActive(true);
+        }
+
+        if (inputChat)
+        {
+            inputChat.SetActive(true);
+        }
+    }
 }
