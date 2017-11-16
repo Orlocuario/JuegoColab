@@ -12,7 +12,7 @@ public class Room
     public RoomLogger log;
     public Server server;
 
-    public HUDHpMp hpManaGer;
+    public RoomHpMp hpManaGer;
 
     public List<NetworkPlayer> players;
     public List<NetworkEnemy> enemies;
@@ -36,7 +36,7 @@ public class Room
         this.doorManager = new ServerDoorsManager();
         this.maxJugadores = maxJugadores;
         this.id = id;
-        hpManaGer = new HUDHpMp(this);
+        hpManaGer = new RoomHpMp(this);
         log = new RoomLogger(this.id);
         switchs = new List<ServerSwitch>();
         players = new List<NetworkPlayer>();
