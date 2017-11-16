@@ -60,7 +60,7 @@ public class GroupOfSwitchs{
     private void SendNewEventToServer()
     {
         string message = "SwitchGroupReady/" + groupId;
-        Client.instance.SendMessageToServer(message);
+		Client.instance.SendMessageToServer(message, true);
     }
 
     public void CallAction()

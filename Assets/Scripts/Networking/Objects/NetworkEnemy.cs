@@ -61,7 +61,7 @@ public class NetworkEnemy
 
     private void Die()
     {
-        room.SendMessageToAllPlayers("EnemyDie/" + id);
+        room.SendMessageToAllPlayers("EnemyDie/" + id,true);
     }
 
     #endregion

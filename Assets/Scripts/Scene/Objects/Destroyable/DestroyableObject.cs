@@ -42,7 +42,7 @@ public class DestroyableObject : MonoBehaviour
     {
         if (Client.instance)
         {
-            Client.instance.SendMessageToServer("ObjectDestroyed/" + name + "/");
+            Client.instance.SendMessageToServer("ObjectDestroyed/" + name + "/", true);
         }
 
     }

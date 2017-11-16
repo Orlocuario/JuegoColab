@@ -54,14 +54,14 @@ public class HUDHpMp {
         else if (currentHP <= 0)
         {
             currentHP = 0;
-            room.SendMessageToAllPlayers("PlayersAreDead/" + Server.instance.sceneToLoad);
+            room.SendMessageToAllPlayers("PlayersAreDead/" + Server.instance.sceneToLoad,false);
             currentHP = maxHP;
             currentMP = maxMP;
-            room.SendMessageToAllPlayers("NewChatMessage/" + room.actualChat);
+            room.SendMessageToAllPlayers("NewChatMessage/" + room.actualChat,false);
         }
 
         percentageHP = currentHP / maxHP;
-        room.SendMessageToAllPlayers("DisplayChangeHPToClient/" + percentageHP);
+        room.SendMessageToAllPlayers("DisplayChangeHPToClient/" + percentageHP,false);
     }
 
     public void ChangeMaxHP(string NewMaxHP)
@@ -101,7 +101,7 @@ public class HUDHpMp {
             mpAtLimit = false;
         }
 
-        room.SendMessageToAllPlayers("DisplayChangeMPToClient/" + percentageMP.ToString());
+        room.SendMessageToAllPlayers("DisplayChangeMPToClient/" + percentageMP.ToString(),false);
     }
 
     public void ChangeMaxMP(string NewMaxMP)
@@ -123,7 +123,7 @@ public class HUDHpMp {
         }
 
         percentageExp = currentExp / maxExp;
-        room.SendMessageToAllPlayers("DisplayChangeExpToClient/" + percentageExp);
+        room.SendMessageToAllPlayers("DisplayChangeExpToClient/" + percentageExp,false);
     }
 
     public void ChangeMaxExp(string NewMaxExp)

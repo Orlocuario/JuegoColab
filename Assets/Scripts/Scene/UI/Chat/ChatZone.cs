@@ -36,7 +36,7 @@ public class ChatZone : MonoBehaviour
                 if (regenerationFrame == regenerationFrameRate)
                 {
                     regenerationFrame = 0;
-                    Client.instance.SendMessageToServer("ChangeHpAndMpHUDToRoom/" + regenerationUnits);
+                    Client.instance.SendMessageToServer("ChangeHpAndMpHUDToRoom/" + regenerationUnits,false);
                 }
             }
         }

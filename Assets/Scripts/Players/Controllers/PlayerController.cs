@@ -487,7 +487,7 @@ public class PlayerController : MonoBehaviour
             rb2d.AddForce(force);
 
             string message = "PlayerTookDamage/" + characterId + "/" + force.x + "/" + force.y;
-            Client.instance.SendMessageToServer(message);
+            Client.instance.SendMessageToServer(message,false);
         }
 
         if (damage != 0)
@@ -500,7 +500,7 @@ public class PlayerController : MonoBehaviour
             }
 
             string message = "ChangeHpHUDToRoom/" + damage;
-            Client.instance.SendMessageToServer(message);
+            Client.instance.SendMessageToServer(message,false);
         }
 
         if (sceneAnimator)
@@ -615,24 +615,24 @@ public class PlayerController : MonoBehaviour
             remoteLeft + "/" +
             remoteRight;
 
-        Client.instance.SendMessageToServer(message);
+        Client.instance.SendMessageToServer(message,false);
     }
 
     protected virtual void SendAttackDataToServer()
     {
         string message = "PlayerAttack/" + characterId;
-        Client.instance.SendMessageToServer(message);
+        Client.instance.SendMessageToServer(message,false);
     }
 
     protected void SendPowerDataToServer()
     {
         string message = "PlayerPower/" + characterId + "/" + isPowerOn;
-        Client.instance.SendMessageToServer(message);
+        Client.instance.SendMessageToServer(message,true);
     }
 
     public void SendMPDataToServer()
     {
-        Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + mpSpendRate);
+        Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + mpSpendRate, false);
     }
 
     public IEnumerator WaitAttacking()

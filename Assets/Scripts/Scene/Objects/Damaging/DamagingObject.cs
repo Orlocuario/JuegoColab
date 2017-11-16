@@ -78,12 +78,12 @@ public class DamagingObject : MonoBehaviour
 
     private void SendIgnoreCollisionDataToServer(GameObject player, bool collision)
     {
-        SendMessageToServer("IgnoreCollisionBetweenObjects/" + collision + "/" + player.name + "/" + gameObject.name);
+        SendMessageToServer("IgnoreCollisionBetweenObjects/" + collision + "/" + player.name + "/" + gameObject.name, true);
     }
 
-    protected virtual void SendMessageToServer(string message)
+	protected virtual void SendMessageToServer(string message, bool secure)
     {
-        Client.instance.SendMessageToServer(message);
+        Client.instance.SendMessageToServer(message, secure);
     }
 
     #endregion

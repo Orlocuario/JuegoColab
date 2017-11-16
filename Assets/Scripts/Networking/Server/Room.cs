@@ -96,9 +96,9 @@ public class Room
             Debug.Log("Full room");
             sender.SendChangeScene(sceneToLoad, this);
             started = true;
-            SendMessageToAllPlayers("Mago: Conectado");
-            SendMessageToAllPlayers("Guerrero: Conectado");
-            SendMessageToAllPlayers("Ingeniero: Conectado");
+            SendMessageToAllPlayers("Mago: Conectado",false);
+            SendMessageToAllPlayers("Guerrero: Conectado",false);
+            SendMessageToAllPlayers("Ingeniero: Conectado",false);
         }
 
         return true;
@@ -118,7 +118,7 @@ public class Room
                     enemy.patrollingPointX + "/" +
                     enemy.patrollingPointY;
 
-                SendMessageToAllPlayers(message);
+                SendMessageToAllPlayers(message,true);
             }
         }
     }
@@ -164,7 +164,7 @@ public class Room
         return null;
     }
 
-    public void SendMessageToAllPlayers(string message)
+	public void SendMessageToAllPlayers(string message, bool secure)
     {
         char[] separator = new char[1] { '/' };
         string[] msg = message.Split(separator);
@@ -179,29 +179,29 @@ public class Room
         {
             if (player.connected)
             {
-                server.SendMessageToClient(player.connectionId, message);
+                server.SendMessageToClient(player.connectionId, message, secure);
             }
         }
     }
 
-    public void SendMessageToAllPlayersExceptOne(string message, int connectionId)
+	public void SendMessageToAllPlayersExceptOne(string message, int connectionId, bool secure)
     {
         foreach (NetworkPlayer player in players)
         {
             if (player.connected && player.connectionId != connectionId)
             {
-                server.SendMessageToClient(player.connectionId, message);
+                server.SendMessageToClient(player.connectionId, message, secure);
             }
         }
     }
 
-    public void SendMessageToPlayer(string message, int connectionId)
+    public void SendMessageToPlayer(string message, int connectionId, bool secure)
     {
         foreach (NetworkPlayer player in players)
         {
             if (player.connected && player.connectionId == connectionId)
             {
-                server.SendMessageToClient(player.connectionId, message);
+                server.SendMessageToClient(player.connectionId, message, secure);
             }
         }
     }
@@ -274,7 +274,7 @@ public class Room
     private void SendControlSignal(NetworkPlayer player)
     {
         string message = "SetControlOverEnemies";
-        Server.instance.SendMessageToClient(player, message);
+        Server.instance.SendMessageToClient(player, message, true);
     }
 
     public ServerSwitch AddSwitch(int groupId, int individualId)
