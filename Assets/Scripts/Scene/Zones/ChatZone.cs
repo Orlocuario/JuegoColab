@@ -12,6 +12,7 @@ public class ChatZone : MonoBehaviour
     public GameObject chatButtonOff;
     public GameObject chatButtonOn;
 
+    private GameObject[] particles;
     private HUDDisplay hpAndMp;
 
     private static string regenerationUnits = "1";
@@ -29,7 +30,9 @@ public class ChatZone : MonoBehaviour
     {
         regenerationFrame = 0;
         activated = false;
+
         InitializeChatButtons();
+        InitializeParticles();
     }
 
     private void Update()
@@ -53,7 +56,38 @@ public class ChatZone : MonoBehaviour
 
     #region Utils
 
-    public void InitializeChatButtons()
+    protected void InitializeParticles()
+    {
+        ParticleSystem[] _particles = gameObject.GetComponentsInChildren<ParticleSystem>();
+
+        if(_particles.Length <= 0)
+        {
+            return;
+        }
+
+        particles = new GameObject[_particles.Length];
+
+        for (int i = 0; i < particles.Length; i++)
+        {
+            particles[i] = _particles[i].gameObject;
+        }
+
+        ToogleParticles(false);
+
+    }
+
+    protected void ToogleParticles(bool activate)
+    {
+        if (particles != null && particles.Length > 0)
+        {
+            for (int i = 0; i < particles.Length; i++)
+            {
+                particles[i].SetActive(activate);
+            }
+        }
+    }
+
+    protected void InitializeChatButtons()
     {
         chatButtonOn = GameObject.Find("ToggleChatOn");
         chatButtonOff = GameObject.Find("ToggleChatOff");
@@ -80,9 +114,9 @@ public class ChatZone : MonoBehaviour
         return hpAndMp.hpCurrentPercentage < 1f || hpAndMp.mpCurrentPercentage < 1f;
     }
 
-    private void ToogleChatButtons(bool activate)
+    protected void ToogleChatButtons(bool activate)
     {
-        if (chatButtonOn != null && chatButtonOff != null)
+        if (chatButtonOn && chatButtonOff)
         {
             chatButtonOn.SetActive(activate);
             chatButtonOff.SetActive(activate);
@@ -105,6 +139,7 @@ public class ChatZone : MonoBehaviour
         if (GameObjectIsPlayer(other.gameObject))
         {
             ToogleChatButtons(true);
+            ToogleParticles(true);
             activated = true;
         }
     }
@@ -115,6 +150,7 @@ public class ChatZone : MonoBehaviour
         {
             regenerationFrame = 0;
             ToogleChatButtons(false);
+            ToogleParticles(false);
             activated = false;
         }
     }
