@@ -7,16 +7,23 @@ using UnityEngine.UI;
 public class ChatZone : MonoBehaviour
 {
 
-    private HUDDisplay hpAndMp;
+    #region Attributes
+
     public GameObject chatButtonOff;
     public GameObject chatButtonOn;
-    
+
+    private HUDDisplay hpAndMp;
+
     private static string regenerationUnits = "1";
     private static int regenerationFrameRate = 25;
     private static float activationDistance = 2f;
 
     private int regenerationFrame;
     private bool activated;
+
+    #endregion
+
+    #region Start & Update
 
     private void Start()
     {
@@ -41,6 +48,10 @@ public class ChatZone : MonoBehaviour
             }
         }
     }
+
+    #endregion
+
+    #region Utils
 
     public void InitializeChatButtons()
     {
@@ -69,6 +80,24 @@ public class ChatZone : MonoBehaviour
         return hpAndMp.hpCurrentPercentage < 1f || hpAndMp.mpCurrentPercentage < 1f;
     }
 
+    private void ToogleChatButtons(bool activate)
+    {
+        if (chatButtonOn != null && chatButtonOff != null)
+        {
+            chatButtonOn.SetActive(activate);
+            chatButtonOff.SetActive(activate);
+        }
+    }
+
+    protected bool GameObjectIsPlayer(GameObject other)
+    {
+        PlayerController playerController = other.GetComponent<PlayerController>();
+        return playerController && playerController.localPlayer;
+    }
+
+    #endregion
+
+    #region Events
 
     // Attack those who enter the alert zone
     private void OnTriggerEnter2D(Collider2D other)
@@ -90,19 +119,6 @@ public class ChatZone : MonoBehaviour
         }
     }
 
-    private void ToogleChatButtons(bool activate)
-    {
-        if (chatButtonOn != null && chatButtonOff != null)
-        {
-            chatButtonOn.SetActive(activate);
-            chatButtonOff.SetActive(activate);
-        }
-    }
-
-    protected bool GameObjectIsPlayer(GameObject other)
-    {
-        PlayerController playerController = other.GetComponent<PlayerController>();
-        return playerController && playerController.localPlayer;
-    }
+    #endregion
 
 }
