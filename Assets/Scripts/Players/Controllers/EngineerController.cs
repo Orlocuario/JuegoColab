@@ -5,19 +5,14 @@ using UnityEngine;
 
 public class EngineerController : PlayerController
 {
-    private GameObject particulas;
+
+    #region Attributes
 
     private bool jumpedInAir;
 
-    protected override void Start()
-    {
-        base.Start();
+    #endregion
 
-        jumpedInAir = false;
-
-        particulas = GameObject.Find("ParticulasEngin");
-        particulas.SetActive(false);
-    }
+    #region Common
 
     public override void CastLocalAttack()
     {
@@ -31,6 +26,10 @@ public class EngineerController : PlayerController
         StartCoroutine(WaitAttacking());
         AnimateAttack();
     }
+
+    #endregion
+
+    #region Utils
 
     protected override bool IsJumping(bool isGrounded)
     {
@@ -76,15 +75,7 @@ public class EngineerController : PlayerController
         return remoteJumping;
     }
 
-    public override void SetAttack()
-    {
-        CastLocalAttack();
-    }
-
-    protected override void SetParticlesAnimationState(bool activo)
-    {
-        particulas.SetActive(activo);
-    }
+    #endregion
 
 }
 

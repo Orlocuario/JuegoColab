@@ -7,35 +7,31 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    public PlannerPlayer playerObj;
-    public Collider2D collider;
-    public GameObject parent;
 
+    #region Attributes
+
+    public PlannerPlayer playerObj;
     public Vector3 respawnPosition;
     public LayerMask whatIsGround;
+    public GameObject[] particles;
     public Transform groundCheck;
-
-    private LevelManager levelManager;
-    private HUDDisplay hpAndMp;
-    private SpriteRenderer sprite;
+    public GameObject parent;
 
     public static float maxAcceleration = 1; //100% del speed
+    public static float attackRate = .25f;
+    public static float mpSpendRate = -1; // Cuanto mp se gasta cada vez
     public static float maxXSpeed = 3.5f;
-    private static float maxYSpeed = 8f;
+    public static float maxYSpeed = 8f;
+    public static int mpUpdateRate = 30; // Cada cuantos frames se actualiza el HP y MP display
 
-    public float acceleration = 0f;
-    public bool canAccelerate = false; //Limita la aceleración a la mitad de los frames
-
-    public float groundCheckRadius;
-    public float actualSpeed;
-
-    //Used to synchronize data from the server
+    // Used to synchronize data from the server
     public bool remoteAttacking;
     public bool remoteJumping;
     public bool remoteRight;
     public bool remoteLeft;
     public bool remoteUp;
 
+    // Local data
     public bool rightPressed;
     public bool leftPressed;
     public bool jumpPressed;
@@ -43,21 +39,23 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded;
     public bool upPressed;
 
-    public static string mpSpendRate = "-1"; // Cuanto mp se gasta cada vez
-    public static float attackRate = .25f;
-    public static int mpUpdateRate = 30; // Cada cuantos frames se actualiza el HP y MP display
-
     public bool controlOverEnemies;
-    public int sortingOrder = 0;
-    public bool gravity = true; // true = normal, false = invertida
-    public int directionY = 1; // 1 = de pie, -1 = de cabeza
-    public int directionX = 1;  // 1 = derecha, -1 = izquierda
+    public float groundCheckRadius;
+    public bool canAccelerate; //Limita la aceleración a la mitad de los frames
+    public float acceleration;
+    public float actualSpeed;
     public int mpUpdateFrame;
-    public bool mpDepleted;
+    public int sortingOrder;
     public int characterId;
+    public bool mpDepleted;
     public bool isPowerOn;
+    public int directionY; // 1 = de pie, -1 = de cabeza
+    public int directionX;  // 1 = derecha, -1 = izquierda
+    public bool gravity; // true = normal, false = invertida
 
     protected SceneAnimator sceneAnimator;
+    protected LevelManager levelManager;
+    protected SpriteRenderer sprite;
     protected Vector3 lastPosition;
     protected Rigidbody2D rb2d;
 
@@ -69,11 +67,15 @@ public class PlayerController : MonoBehaviour
     protected float speedX;
     protected float speedY;
 
-    private int debuger;
+    protected int debuger;
+
+    #endregion
+
+    #region Start & Update
 
     protected virtual void Start()
     {
-        hpAndMp = GameObject.Find("Canvas").GetComponent<HUDDisplay>();
+
         sceneAnimator = GameObject.FindObjectOfType<SceneAnimator>();
 
         if (!sceneAnimator)
@@ -82,12 +84,12 @@ public class PlayerController : MonoBehaviour
         }
 
         levelManager = FindObjectOfType<LevelManager>();
-        collider = GetComponent<Collider2D>();
         rb2d = GetComponent<Rigidbody2D>();
 
         respawnPosition = transform.position;
 
         controlOverEnemies = false;
+        canAccelerate = false;
         isAttacking = false;
         localPlayer = false;
         isGrounded = false;
@@ -95,6 +97,7 @@ public class PlayerController : MonoBehaviour
         isPowerOn = false;
         conectado = true;
         canMove = true;
+        gravity = true;
 
         remoteAttacking = false;
         remoteJumping = false;
@@ -103,10 +106,14 @@ public class PlayerController : MonoBehaviour
         remoteUp = false;
 
         mpUpdateFrame = 0;
+        acceleration = 0f;
+        sortingOrder = 0;
+        directionY = 1;
+        directionX = 1;
         debuger = 0;
 
         SetGravity(gravity);
-
+        InitializeParticles();
         IgnoreCollisionBetweenPlayers();
     }
 
@@ -127,19 +134,13 @@ public class PlayerController : MonoBehaviour
         UpdatePowerState();
     }
 
+    #endregion
+
+    #region Common
+
     public void Conectar(bool valor)
     {
         conectado = valor;
-    }
-
-    public void IgnoreCollisionBetweenPlayers()
-    {
-        GameObject player1 = GameObject.Find("Mage");
-        GameObject player2 = GameObject.Find("Warrior");
-        GameObject player3 = GameObject.Find("Engineer");
-        Physics2D.IgnoreCollision(collider, player1.GetComponent<Collider2D>());
-        Physics2D.IgnoreCollision(collider, player2.GetComponent<Collider2D>());
-        Physics2D.IgnoreCollision(collider, player3.GetComponent<Collider2D>());
     }
 
     public void Activate(int charId)
@@ -167,100 +168,6 @@ public class PlayerController : MonoBehaviour
         }
 
     }
-
-    protected bool IsGoingRight()
-    {
-        if (localPlayer)
-        {
-
-            bool buttonRightPressed = CnInputManager.GetAxisRaw("Horizontal") == 1;
-
-            // si el wn esta apuntando hacia arriba/abajo con menor inclinacion que hacia la derecha, start moving
-            if (buttonRightPressed && !remoteRight)
-            {
-                remoteRight = true;
-                remoteLeft = false;
-                SendPlayerDataToServer();
-            }
-
-            // si no se esta apretando el joystick
-            else if (!buttonRightPressed && remoteRight)
-            {
-                remoteRight = false;
-                SendPlayerDataToServer();
-            }
-
-        }
-
-        return remoteRight;
-
-    }
-
-    protected bool IsGoingLeft()
-    {
-        if (localPlayer)
-        {
-
-            bool buttonLeftPressed = CnInputManager.GetAxisRaw("Horizontal") == -1f;
-
-            // si el wn esta apuntando hacia arriba/abajo con menor inclinacion que hacia la derecha, start moving
-            if (buttonLeftPressed && !remoteLeft)
-            {
-                remoteLeft = true;
-                remoteRight = false;
-                SendPlayerDataToServer();
-            }
-
-            // si no se esta apretando el joystick
-            else if (!buttonLeftPressed && remoteLeft)
-            {
-                remoteLeft = false;
-                SendPlayerDataToServer();
-            }
-
-        }
-
-        return remoteLeft;
-    }
-
-
-    public bool IsGoingUp()
-    {
-        return false;
-    }
-
-    protected bool IsItGrounded()
-    {
-        // El radio del groundChecker debe ser menor a la medida del collider del player/2 para que no haga contactos laterales.
-        groundCheckRadius = collider.bounds.extents.x * .9f;
-        return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
-    }
-
-    protected virtual bool IsJumping(bool isGrounded)
-    {
-        if (localPlayer)
-        {
-            bool pressedJump = CnInputManager.GetButtonDown("Jump Button");
-            bool isJumping = pressedJump && isGrounded;
-
-            if (isJumping && !remoteJumping)
-            {
-                remoteJumping = true;
-                SendPlayerDataToServer();
-            }
-
-            else if (!isJumping && remoteJumping)
-            {
-                remoteJumping = false;
-                SendPlayerDataToServer();
-            }
-
-        }
-
-        return remoteJumping;
-
-    }
-
     protected void Attack()
     {
 
@@ -418,8 +325,14 @@ public class PlayerController : MonoBehaviour
         if (localPlayer)
         {
 
+            if (!levelManager.hpAndMp)
+            {
+                Debug.Log("Levelmanager HpAndMp is not set");
+                return false;
+            }
+
             bool powerButtonPressed = CnInputManager.GetButtonDown("Power Button");
-            float mpCurrentPercentage = hpAndMp.mpCurrentPercentage;
+            float mpCurrentPercentage = levelManager.hpAndMp.mpCurrentPercentage;
 
             // Se acabó el maná
             if (mpCurrentPercentage <= 0f)
@@ -432,7 +345,7 @@ public class PlayerController : MonoBehaviour
                     mpDepleted = true;
 
                     SendPowerDataToServer();
-                    SetParticlesAnimationState(isPowerOn);
+                    ActivateParticles(isPowerOn);
                 }
             }
 
@@ -451,7 +364,7 @@ public class PlayerController : MonoBehaviour
                     isPowerOn = !isPowerOn;
 
                     SendPowerDataToServer();
-                    SetParticlesAnimationState(isPowerOn);
+                    ActivateParticles(isPowerOn);
                 }
 
                 if (isPowerOn)
@@ -459,7 +372,8 @@ public class PlayerController : MonoBehaviour
 
                     if (mpUpdateFrame == mpUpdateRate)
                     {
-                        SendMPDataToServer();
+                        levelManager.hpAndMp.ChangeMP(mpSpendRate); // Change local
+                        SendMPDataToServer(); // Change remote
                         mpUpdateFrame = 0;
                     }
 
@@ -473,7 +387,6 @@ public class PlayerController : MonoBehaviour
         return isPowerOn;
     }
 
-
     public void TakeDamage(int damage, Vector2 force)
     {
 
@@ -482,7 +395,7 @@ public class PlayerController : MonoBehaviour
             rb2d.AddForce(force);
 
             string message = "PlayerTookDamage/" + characterId + "/" + force.x + "/" + force.y;
-            Client.instance.SendMessageToServer(message,false);
+            SendMessageToServer(message);
         }
 
         if (damage != 0)
@@ -494,26 +407,235 @@ public class PlayerController : MonoBehaviour
                 damage *= -1;
             }
 
+            levelManager.hpAndMp.ChangeHP(damage); // Change local
             string message = "ChangeHpHUDToRoom/" + damage;
-            Client.instance.SendMessageToServer(message,false);
+            SendMessageToServer(message); // Change remote
+
         }
 
-        if (sceneAnimator)
-        {
-            StartCoroutine(sceneAnimator.StartAnimation("TakingDamage", this.gameObject));
-        }
+        AnimateDamage();
 
     }
 
-    protected virtual void SetParticlesAnimationState(bool activo)
-    {
+    #endregion
 
+    #region Utils
+
+    protected void DebugDrawDistance(float distance)
+    {
+        DebugDrawDistance(distance, Color.blue);
+    }
+
+    protected void DebugDrawDistance(float distance, Color color)
+    {
+        Vector2 left = new Vector3(transform.position.x - distance, transform.position.y, transform.position.z);
+        Vector2 up = new Vector3(transform.position.x, transform.position.y + distance, transform.position.z);
+        Vector2 right = new Vector3(transform.position.x + distance, transform.position.y, transform.position.z);
+        Vector2 down = new Vector3(transform.position.x, transform.position.y - distance, transform.position.z);
+
+        Debug.DrawLine(transform.position, left, color);
+        Debug.DrawLine(transform.position, up, color);
+        Debug.DrawLine(transform.position, right, color);
+        Debug.DrawLine(transform.position, down, color);
+    }
+
+    protected bool IsGoingRight()
+    {
+        if (localPlayer)
+        {
+
+            bool buttonRightPressed = CnInputManager.GetAxisRaw("Horizontal") == 1;
+
+            // si el wn esta apuntando hacia arriba/abajo con menor inclinacion que hacia la derecha, start moving
+            if (buttonRightPressed && !remoteRight)
+            {
+                remoteRight = true;
+                remoteLeft = false;
+                SendPlayerDataToServer();
+            }
+
+            // si no se esta apretando el joystick
+            else if (!buttonRightPressed && remoteRight)
+            {
+                remoteRight = false;
+                SendPlayerDataToServer();
+            }
+
+        }
+
+        return remoteRight;
+
+    }
+
+    protected bool IsGoingLeft()
+    {
+        if (localPlayer)
+        {
+
+            bool buttonLeftPressed = CnInputManager.GetAxisRaw("Horizontal") == -1f;
+
+            // si el wn esta apuntando hacia arriba/abajo con menor inclinacion que hacia la derecha, start moving
+            if (buttonLeftPressed && !remoteLeft)
+            {
+                remoteLeft = true;
+                remoteRight = false;
+                SendPlayerDataToServer();
+            }
+
+            // si no se esta apretando el joystick
+            else if (!buttonLeftPressed && remoteLeft)
+            {
+                remoteLeft = false;
+                SendPlayerDataToServer();
+            }
+
+        }
+
+        return remoteLeft;
+    }
+
+    public bool IsGoingUp()
+    {
+        return false;
+    }
+
+    protected bool IsItGrounded()
+    {
+        // El radio del groundChecker debe ser menor a la medida del collider del player/2 para que no haga contactos laterales.
+        groundCheckRadius = GetComponent<Collider2D>().bounds.extents.x * .9f;
+        return Physics2D.OverlapCircle(groundCheck.position, groundCheckRadius, whatIsGround);
+    }
+
+    protected virtual bool IsJumping(bool isGrounded)
+    {
+        if (localPlayer)
+        {
+            bool pressedJump = CnInputManager.GetButtonDown("Jump Button");
+            bool isJumping = pressedJump && isGrounded;
+
+            if (isJumping && !remoteJumping)
+            {
+                remoteJumping = true;
+                SendPlayerDataToServer();
+            }
+
+            else if (!isJumping && remoteJumping)
+            {
+                remoteJumping = false;
+                SendPlayerDataToServer();
+            }
+
+        }
+
+        return remoteJumping;
+
+    }
+
+    public void IgnoreCollisionBetweenPlayers()
+    {
+        Collider2D collider = GetComponent<Collider2D>();
+
+        GameObject player1 = GameObject.Find("Mage");
+        GameObject player2 = GameObject.Find("Warrior");
+        GameObject player3 = GameObject.Find("Engineer");
+        Physics2D.IgnoreCollision(collider, player1.GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(collider, player2.GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(collider, player3.GetComponent<Collider2D>());
     }
 
     protected bool GameObjectIsPOI(GameObject other)
     {
         return other.GetComponent<PlannerPoi>();
     }
+
+    public void SetPowerState(bool power)
+    {
+        ActivateParticles(power);
+        isPowerOn = power;
+    }
+
+    public void SetDamageFromServer(Vector2 force)
+    {
+        rb2d.AddForce(force);
+    }
+
+    public void SetPlayerDataFromServer(float positionX, float positionY, int directionX, int directionY, float speedX, bool isGrounded, bool remoteJumping, bool remoteLeft, bool remoteRight)
+    {
+
+        this.remoteJumping = remoteJumping;
+        this.remoteRight = remoteRight;
+        this.remoteLeft = remoteLeft;
+        this.isGrounded = isGrounded;
+        this.directionX = directionX;
+        this.directionY = directionY;
+        this.speedX = speedX;
+
+        if (sceneAnimator)
+        {
+            sceneAnimator.SetFloat("Speed", Mathf.Abs(speedX), this.gameObject);
+            sceneAnimator.SetBool("IsGrounded", isGrounded, this.gameObject);
+        }
+
+        transform.position = new Vector3(positionX, positionY, transform.position.z);
+        transform.localScale = new Vector3(directionX, directionY, 1f);
+    }
+
+    public virtual void SetAttack()
+    {
+        CastLocalAttack();
+    }
+
+    protected void InitializeParticles()
+    {
+        ParticleSystem[] _particles = GetComponentsInChildren<ParticleSystem>();
+
+        if (_particles == null || _particles.Length == 0)
+        {
+            return;
+        }
+
+        particles = new GameObject[_particles.Length];
+
+        for (int i = 0; i < particles.Length; i++)
+        {
+            particles[i] = _particles[i].gameObject;
+        }
+
+        ActivateParticles(false);
+
+    }
+
+    protected virtual void ActivateParticles(bool active)
+    {
+        if (particles != null && particles.Length > 0)
+        {
+            for (int i = 0; i < particles.Length; i++)
+            {
+                particles[i].SetActive(active);
+            }
+        }
+    }
+
+    protected void AnimateAttack()
+    {
+
+        if (sceneAnimator && currentAttack != null)
+        {
+            StartCoroutine(sceneAnimator.StartAnimation(currentAttack, this.gameObject));
+        }
+    }
+
+    protected void AnimateDamage()
+    {
+        if (sceneAnimator)
+        {
+            StartCoroutine(sceneAnimator.StartAnimation("TakingDamage", this.gameObject));
+        }
+    }
+
+    #endregion
+
+    #region Events
 
     protected void OnTriggerStay2D(Collider2D other)
     {
@@ -554,42 +676,9 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    public void SetPowerState(bool power)
-    {
-        SetParticlesAnimationState(power);
-        isPowerOn = power;
-    }
+    #endregion
 
-    public void SetDamageFromServer(Vector2 force)
-    {
-        rb2d.AddForce(force);
-    }
-
-    public void SetPlayerDataFromServer(float positionX, float positionY, int directionX, int directionY, float speedX, bool isGrounded, bool remoteJumping, bool remoteLeft, bool remoteRight)
-    {
-
-        this.remoteJumping = remoteJumping;
-        this.remoteRight = remoteRight;
-        this.remoteLeft = remoteLeft;
-        this.isGrounded = isGrounded;
-        this.directionX = directionX;
-        this.directionY = directionY;
-        this.speedX = speedX;
-
-        if (sceneAnimator)
-        {
-            sceneAnimator.SetFloat("Speed", Mathf.Abs(speedX), this.gameObject);
-            sceneAnimator.SetBool("IsGrounded", isGrounded, this.gameObject);
-        }
-
-        transform.position = new Vector3(positionX, positionY, transform.position.z);
-        transform.localScale = new Vector3(directionX, directionY, 1f);
-    }
-
-    public virtual void SetAttack()
-    {
-        throw new NotImplementedException("Implement the remote set attack method in each player");
-    }
+    #region Messaging
 
     public void SendPlayerDataToServer()
     {
@@ -610,25 +699,37 @@ public class PlayerController : MonoBehaviour
             remoteLeft + "/" +
             remoteRight;
 
-        Client.instance.SendMessageToServer(message,false);
+        SendMessageToServer(message);
     }
 
     protected virtual void SendAttackDataToServer()
     {
         string message = "PlayerAttack/" + characterId;
-        Client.instance.SendMessageToServer(message,false);
+        SendMessageToServer(message);
     }
 
     protected void SendPowerDataToServer()
     {
         string message = "PlayerPower/" + characterId + "/" + isPowerOn;
-        Client.instance.SendMessageToServer(message,true);
+        SendMessageToServer(message);
     }
 
     public void SendMPDataToServer()
     {
-        Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + mpSpendRate, false);
+        SendMessageToServer("ChangeMpHUDToRoom/" + mpSpendRate);
     }
+
+    protected void SendMessageToServer(string message)
+    {
+        if (Client.instance)
+        {
+            Client.instance.SendMessageToServer(message, false);
+        }
+    }
+
+    #endregion
+
+    #region Coroutines
 
     public IEnumerator WaitAttacking()
     {
@@ -636,14 +737,6 @@ public class PlayerController : MonoBehaviour
         isAttacking = false;
     }
 
-    protected void AnimateAttack()
-    {
-
-        if (sceneAnimator && currentAttack != null)
-        {
-            StartCoroutine(sceneAnimator.StartAnimation(currentAttack, this.gameObject));
-        }
-
-    }
+    #endregion
 
 }

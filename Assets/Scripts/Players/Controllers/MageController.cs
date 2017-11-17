@@ -7,22 +7,30 @@ using UnityEngine;
 public class MageController : PlayerController
 {
 
-    GameObject particulas1;
-    GameObject particulas2;
+    #region Attributes
 
     protected static float shieldArea;
+
+    #endregion
+
+    #region Start & Update
 
     protected override void Start()
     {
         base.Start();
-
-        particulas1 = GameObject.Find("ParticulasMage");
-        particulas1.SetActive(false);
-        particulas2 = GameObject.Find("ParticulasMage2");
-        particulas2.SetActive(false);
-
-        shieldArea = particulas1.GetComponent<ParticleSystem>().shape.radius;
+        shieldArea = 0;
+        LoadShieldArea();
     }
+
+    protected override void Update()
+    {
+        base.Update();
+        DebugDrawDistance(shieldArea);
+    }
+
+    #endregion
+
+    #region Common
 
     public override void CastLocalAttack()
     {
@@ -47,15 +55,22 @@ public class MageController : PlayerController
         return false;
     }
 
-    protected override void SetParticlesAnimationState(bool activo)
+    #endregion
+
+    #region Utils
+
+    protected void LoadShieldArea()
     {
-        particulas1.SetActive(activo);
-        particulas2.SetActive(activo);
+        foreach (GameObject particle in particles)
+        {
+            float radius = particle.GetComponent<ParticleSystem>().shape.radius;
+            if (shieldArea < radius)
+            {
+                shieldArea = radius;
+            }
+        }
     }
 
-    public override void SetAttack()
-    {
-        CastLocalAttack();
-    }
+    #endregion
 
 }

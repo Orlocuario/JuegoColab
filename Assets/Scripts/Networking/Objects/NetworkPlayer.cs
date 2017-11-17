@@ -101,7 +101,10 @@ public class NetworkPlayer
            directionX + "/" +
            directionY + "/" +
            speedX + "/" +
-           isGrounded;
+           isGrounded + "/" +
+           false + "/" +
+           false + "/" +
+           false;
     }
 
 }

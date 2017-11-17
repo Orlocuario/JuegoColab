@@ -23,7 +23,7 @@ public class PlayerFilter : KillingObject
         {
             if (!GameObjectCanPass(other.gameObject))
             {
-                Kill();
+                Kill(other.gameObject);
             }
         }
     }

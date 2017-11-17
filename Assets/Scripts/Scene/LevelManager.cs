@@ -13,6 +13,7 @@ public class LevelManager : MonoBehaviour
 
     public PlayerController localPlayer;
     public GameObject[] players;
+    public HUDDisplay hpAndMp;
     public GameObject canvas;
     public GameObject npcLog;
 
@@ -37,12 +38,17 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        if (canvas == null)
+        if (!canvas)
         {
             canvas = GameObject.Find("Canvas");
         }
 
-        canvas.SetActive(true); // 8=D
+        if (!canvas.activeInHierarchy)
+        {
+            canvas.SetActive(true); 
+        }
+
+        hpAndMp = canvas.GetComponent<HUDDisplay>();
 
         StorePlayers();
 
@@ -110,13 +116,16 @@ public class LevelManager : MonoBehaviour
         ShutNPCFeedback(false);
     }
 
-	public void ShutNPCFeedback(bool now)
+    public void ShutNPCFeedback(bool now)
     {
-		if (now) {
-			KillNPC();
-		} else {
-			StartCoroutine(WaitToKillNPC());
-		}
+        if (now)
+        {
+            KillNPC();
+        }
+        else
+        {
+            StartCoroutine(WaitToKillNPC());
+        }
     }
 
     public void SetNPCText(string message)
@@ -134,10 +143,10 @@ public class LevelManager : MonoBehaviour
             }
         }
 
-		if (NPCFeedbackText)
-		{
-			NPCFeedbackText.text = message;
-		}
+        if (NPCFeedbackText)
+        {
+            NPCFeedbackText.text = message;
+        }
     }
 
     public void SetLocalPlayer(int id)
@@ -379,18 +388,19 @@ public class LevelManager : MonoBehaviour
     private IEnumerator WaitToKillNPC()
     {
         yield return new WaitForSeconds(waitToKillNPCCountdown);
-		KillNPC ();
+        KillNPC();
     }
 
-	private void KillNPC() {
-		
-		if (NPCFeedbackText)
-		{
-			NPCFeedbackText.text = "";
-		}
+    private void KillNPC()
+    {
 
-		npcLog.SetActive(false);
-	}
+        if (NPCFeedbackText)
+        {
+            NPCFeedbackText.text = "";
+        }
+
+        npcLog.SetActive(false);
+    }
 
     #endregion
 

@@ -255,9 +255,7 @@ public class Server : MonoBehaviour
         {
             player.connected = true;
             player.connectionId = connectionId;
-
-            SendMessageToClient(connectionId, "ChangeScene/" + sceneToLoad, true);
-
+            SendMessageToClient(connectionId, "ChangeScene/" + player.room.sceneToLoad, true);
             timesScene1IsLoaded += 1;
             messageHandler.SendAllData(connectionId, player.room, true);
             UnityEngine.Debug.Log("Client " + connectionId + " reconnected");
