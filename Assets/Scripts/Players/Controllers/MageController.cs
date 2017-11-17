@@ -47,7 +47,7 @@ public class MageController : PlayerController
         return false;
     }
 
-    protected override void SetParticlesAnimationState(bool activo)
+    protected override void ActivateParticles(bool activo)
     {
         particulas1.SetActive(activo);
         particulas2.SetActive(activo);

@@ -43,7 +43,7 @@ public class WarriorController : PlayerController
         CastLocalAttack();
     }
 
-    protected override void SetParticlesAnimationState(bool activo)
+    protected override void ActivateParticles(bool activo)
     {
         particulas.SetActive(activo);
     }
