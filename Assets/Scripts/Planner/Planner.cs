@@ -1428,7 +1428,7 @@ public class Planner : MonoBehaviour {
 
 	void RequestActivateNPCLog(string feedbackMessage)
 	{
-		Client.instance.SendMessageToServer ("ActivateNPCLog/" + feedbackMessage + "/" + feedbackPlayer);
+		Client.instance.SendMessageToServer ("ActivateNPCLog/" + feedbackMessage + "/" + feedbackPlayer, true);
 	}
 
 	public void FirstPlan(){

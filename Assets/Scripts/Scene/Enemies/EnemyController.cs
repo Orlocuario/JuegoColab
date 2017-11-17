@@ -205,7 +205,7 @@ public class EnemyController : MonoBehaviour
             message += ("/" + patrollingPoints[0].x + "/" + patrollingPoints[0].y);
         }
 
-        SendMessageToServer(message);
+        SendMessageToServer(message,true);
     }
 
     public void Initialize(int enemyId, int directionX, float posX, float posY)
@@ -250,7 +250,7 @@ public class EnemyController : MonoBehaviour
     protected virtual void SendHpDataToServer(float damage)
     {
         string message = "EnemyHpChange/" + enemyId + "/" + damage;
-        SendMessageToServer(message);
+        SendMessageToServer(message,false);
     }
 
     protected virtual void SendPositionToServer()
@@ -261,7 +261,7 @@ public class EnemyController : MonoBehaviour
             transform.position.x + "/" +
             transform.position.y;
 
-        SendMessageToServer(message);
+        SendMessageToServer(message,false);
     }
 
     protected void SendPatrollingPoint()
@@ -274,19 +274,19 @@ public class EnemyController : MonoBehaviour
             currentPatrolPoint.x + "/" +
             currentPatrolPoint.y;
 
-        SendMessageToServer(message);
+        SendMessageToServer(message,true);
     }
 
     private void SendIgnoreCollisionDataToServer(GameObject player, bool collision)
     {
-        SendMessageToServer("IgnoreCollisionBetweenObjects/" + collision + "/" + player.name + "/" + gameObject.name);
+        SendMessageToServer("IgnoreCollisionBetweenObjects/" + collision + "/" + player.name + "/" + gameObject.name,true);
     }
 
-    protected virtual void SendMessageToServer(string message)
+	protected virtual void SendMessageToServer(string message,bool secure)
     {
         if (Client.instance)
         {
-            Client.instance.SendMessageToServer(message);
+            Client.instance.SendMessageToServer(message, secure);
         }
     }
 

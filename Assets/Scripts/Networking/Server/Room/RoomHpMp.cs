@@ -35,7 +35,7 @@ public class RoomHpMp
 
     public void StopChangeHpAndMpHUD(int player)
     {
-        room.SendMessageToAllPlayersExceptOne("DisplayStopChangeHPMPToClient/", player);
+        room.SendMessageToAllPlayersExceptOne("DisplayStopChangeHPMPToClient/", player, false);
     }
 
     public void RecieveHpAndMpHUD(string changeRate, int player)
@@ -60,14 +60,14 @@ public class RoomHpMp
         else if (currentHP <= 0)
         {
             currentHP = 0;
-            room.SendMessageToAllPlayers("PlayersAreDead/" + Server.instance.sceneToLoad);
+            room.SendMessageToAllPlayers("PlayersAreDead/" + Server.instance.sceneToLoad,false);
             currentHP = maxHP;
             currentMP = maxMP;
-            room.SendMessageToAllPlayers("NewChatMessage/" + room.actualChat);
+            room.SendMessageToAllPlayers("NewChatMessage/" + room.actualChat,false);
         }
 
         percentageHP = currentHP / maxHP;
-        room.SendMessageToAllPlayersExceptOne("DisplayChangeHPToClient/" + percentageHP, player);
+        room.SendMessageToAllPlayersExceptOne("DisplayChangeHPToClient/" + percentageHP, player, false);
     }
 
     public void ChangeMaxHP(string NewMaxHP, int player)
@@ -107,7 +107,7 @@ public class RoomHpMp
             mpAtLimit = false;
         }
 
-        room.SendMessageToAllPlayersExceptOne("DisplayChangeMPToClient/" + percentageMP, player);
+        room.SendMessageToAllPlayersExceptOne("DisplayChangeMPToClient/" + percentageMP, player, false);
     }
 
     public void ChangeMaxMP(string NewMaxMP, int player)
@@ -129,7 +129,7 @@ public class RoomHpMp
         }
 
         percentageExp = currentExp / maxExp;
-        room.SendMessageToAllPlayers("DisplayChangeExpToClient/" + percentageExp);
+        room.SendMessageToAllPlayers("DisplayChangeExpToClient/" + percentageExp,false);
     }
 
     public void ChangeMaxExp(string NewMaxExp)

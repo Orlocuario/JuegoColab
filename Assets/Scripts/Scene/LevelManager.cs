@@ -186,7 +186,7 @@ public class LevelManager : MonoBehaviour
 
         Debug.Log("Changing to scene " + nextSceneName);
 
-        client.SendMessageToServer("ChangeScene/" + nextSceneName);
+        client.SendMessageToServer("ChangeScene/" + nextSceneName, true);
     }
 
     public void MostrarReconectando(bool valor)

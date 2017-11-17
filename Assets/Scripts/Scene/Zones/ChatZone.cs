@@ -168,7 +168,7 @@ public class ChatZone : MonoBehaviour
     {
         if (Client.instance)
         {
-            Client.instance.SendMessageToServer(message);
+            Client.instance.SendMessageToServer(message, false);
         }
     }
 

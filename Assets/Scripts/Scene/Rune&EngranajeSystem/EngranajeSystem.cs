@@ -117,7 +117,7 @@ public class EngranajeSystem : MonoBehaviour
     {
         if (maquinaName == "MaquinaEngranajeA")
         {
-            Client.instance.SendMessageToServer("ActivateMachine/" + this.gameObject.name);
+            Client.instance.SendMessageToServer("ActivateMachine/" + this.gameObject.name,true);
             SpriteRenderer maquinaSpriteRenderer = this.gameObject.GetComponent<SpriteRenderer>();
             SpriteRenderer[] maquinaSlotSpriteRenderer = this.gameObject.GetComponentsInChildren<SpriteRenderer>();
             for (int i = 0; i < maquinaSlotSpriteRenderer.Length; i++)

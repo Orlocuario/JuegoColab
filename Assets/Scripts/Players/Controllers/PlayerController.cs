@@ -503,6 +503,7 @@ public class PlayerController : MonoBehaviour
             levelManager.hpAndMp.ChangeHP(damage); // Change local
             string message = "ChangeHpHUDToRoom/" + damage;
             SendMessageToServer(message); // Change remote
+
         }
 
         AnimateDamage();
@@ -661,7 +662,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Client.instance)
         {
-            Client.instance.SendMessageToServer(message);
+            Client.instance.SendMessageToServer(message, false);
         }
     }
 }

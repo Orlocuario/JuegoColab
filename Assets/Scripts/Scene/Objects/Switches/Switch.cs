@@ -261,7 +261,7 @@ public class Switch : MonoBehaviour
             return;
         }
         string message = "ChangeSwitchStatus/" + groupId + "/" + individualId + "/" + data;
-        Client.instance.SendMessageToServer(message);
+        Client.instance.SendMessageToServer(message, true);
     }
 
     private void SetSprite()

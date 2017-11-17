@@ -19,6 +19,7 @@ public class Server : MonoBehaviour
     private int socketId;
     private int channelId;
     private int bigChannelId;
+	private int secureChannel;
     private int timesScene1IsLoaded;
     private bool listening;
 
@@ -71,7 +72,7 @@ public class Server : MonoBehaviour
 
         channelId = config.AddChannel(QosType.Unreliable);
         bigChannelId = config.AddChannel(QosType.ReliableFragmented);
-
+		secureChannel = config.AddChannel (QosType.Reliable);
         HostTopology topology = new HostTopology(config, maxConnections);
 
         int[] connectionData = serverNetworkDiscovery.CreateServer(topology);
@@ -159,7 +160,7 @@ public class Server : MonoBehaviour
                 BinaryFormatter formatter = new BinaryFormatter();
                 string message = formatter.Deserialize(stream) as string;
 
-                if (recChannelId == channelId)
+			if (recChannelId == channelId || recChannelId == secureChannel)
                 {
                     //Mensaje corto normal
                     messageHandler.HandleMessage(message, recConnectionId);
@@ -207,7 +208,7 @@ public class Server : MonoBehaviour
         return tiempo;
     }
 
-    public void SendMessageToClient(int clientId, string message)
+	public void SendMessageToClient(int clientId, string message, bool secure)
     {
         byte error;
         //int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
@@ -215,8 +216,13 @@ public class Server : MonoBehaviour
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, message);
-        NetworkTransport.Send(socketId, clientId, channelId, buffer, NetworkConsts.bufferSize, out error);
+		int channel = channelId;
+		if (secure) {
+			channel = secureChannel;
+		}
+        NetworkTransport.Send(socketId, clientId, channel, buffer, NetworkConsts.bufferSize, out error);
     }
+
 
     public void SendPlannerInfoToClient(int clientId, string message)
     {
@@ -229,9 +235,9 @@ public class Server : MonoBehaviour
         NetworkTransport.Send(socketId, clientId, bigChannelId, buffer, NetworkConsts.bigBufferSize, out error);
     }
 
-    public void SendMessageToClient(NetworkPlayer player, string message)
+	public void SendMessageToClient(NetworkPlayer player, string message, bool secure)
     {
-        SendMessageToClient(player.connectionId, message);
+        SendMessageToClient(player.connectionId, message, secure);
     }
 
     private void AddConnection(int connectionId)
@@ -249,7 +255,7 @@ public class Server : MonoBehaviour
         {
             player.connected = true;
             player.connectionId = connectionId;
-            SendMessageToClient(connectionId, "ChangeScene/" + player.room.sceneToLoad);
+            SendMessageToClient(connectionId, "ChangeScene/" + player.room.sceneToLoad, true);
             timesScene1IsLoaded += 1;
             messageHandler.SendAllData(connectionId, player.room, true);
             UnityEngine.Debug.Log("Client " + connectionId + " reconnected");
@@ -287,7 +293,7 @@ public class Server : MonoBehaviour
             {
                 role = "Engineer: Has Disconnected";
             }
-            player.room.SendMessageToAllPlayers("NewChatMessage/" + role);
+            player.room.SendMessageToAllPlayers("NewChatMessage/" + role, false);
             if (player.controlOverEnemies == true)
             {
                 player.room.ChangeControlEnemies();

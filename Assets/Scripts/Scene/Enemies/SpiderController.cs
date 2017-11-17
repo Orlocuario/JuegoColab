@@ -114,11 +114,11 @@ public class SpiderController : EnemyController
         // Spider doesn't take any damage boy
     }
 
-    protected override void SendMessageToServer(string message)
+	protected override void SendMessageToServer(string message, bool secure)
     {
         if (Client.instance && Client.instance.GetLocalPlayer() && Client.instance.GetLocalPlayer().controlOverEnemies)
         {
-            Client.instance.SendMessageToServer(message);
+			Client.instance.SendMessageToServer(message, secure);
         }
     }
 
