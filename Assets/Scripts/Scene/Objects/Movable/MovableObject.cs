@@ -61,8 +61,8 @@ public class MovableObject : MonoBehaviour
 
         if (openedPrefab != null)
         {
-            Client.instance.SendMessageToServer("InstantiateObject/Prefabs/" + openedPrefab);
-            Client.instance.SendMessageToServer("DestroyObject/" + name);
+            Client.instance.SendMessageToServer("InstantiateObject/Prefabs/" + openedPrefab,false);
+            Client.instance.SendMessageToServer("DestroyObject/" + name,false);
         }
     }
 
@@ -123,7 +123,7 @@ public class MovableObject : MonoBehaviour
             Client.instance.SendMessageToServer("ObjectMoved/" +
                     name + "/" +
                     force.x + "/" +
-                    force.y);
+                    force.y,false);
         }
 
     }

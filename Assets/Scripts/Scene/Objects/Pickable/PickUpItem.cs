@@ -42,7 +42,7 @@ public class PickUpItem : MonoBehaviour
     public void PickUp()
     {
 		Destroy (this.gameObject);
-		Client.instance.SendMessageToServer("OthersDestroyObject/" + this.gameObject.name);
+		Client.instance.SendMessageToServer("OthersDestroyObject/" + this.gameObject.name,true);
         Inventory.instance.AddItemToInventory(this.gameObject);
 		if (itemObj != null) {
 			itemObj.PickUp (Client.instance.GetLocalPlayer ().playerObj);
@@ -54,8 +54,8 @@ public class PickUpItem : MonoBehaviour
     public void PickUpExp()
     {
 		Destroy (this.gameObject);
-		Client.instance.SendMessageToServer("OthersDestroyObject/" + this.gameObject.name);
-        Client.instance.SendMessageToServer("GainExp/" + "50");
+		Client.instance.SendMessageToServer("OthersDestroyObject/" + this.gameObject.name,false);
+		Client.instance.SendMessageToServer ("GainExp/" + "50", false);
     }
 
     protected bool GameObjectIsPlayer(GameObject other)

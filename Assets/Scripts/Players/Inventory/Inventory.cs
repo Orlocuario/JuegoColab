@@ -32,7 +32,7 @@ public class Inventory : MonoBehaviour
                     items[i].sprite = itemToAdd.GetComponent<SpriteRenderer>().sprite;
                     items[i].enabled = true;
 
-                    Client.instance.SendMessageToServer("InventoryUpdate/Add/" + i.ToString() + "/" + items[i].sprite.name);
+                    Client.instance.SendMessageToServer("InventoryUpdate/Add/" + i.ToString() + "/" + items[i].sprite.name, true);
                     UpdateInventory(items[i], i);
                     return;
                 }
@@ -59,7 +59,7 @@ public class Inventory : MonoBehaviour
                     actualItemSlot.SetActive(false);
                     displayPanel.SetActive(false);
 
-                    Client.instance.SendMessageToServer("InventoryUpdate/Remove/" + i.ToString());
+                    Client.instance.SendMessageToServer("InventoryUpdate/Remove/" + i.ToString(),true);
                     UpdateInventory(items[i], i);
                     return;
                 }
@@ -98,7 +98,7 @@ public class Inventory : MonoBehaviour
         displayPanel.SetActive(false);
         RemoveItemFromInventory(GameObject.Find("SlotSprite" + numSlot).GetComponent<Image>());
         string actualItemSpriteName = Items.instance.itemSprite.name;
-        Client.instance.SendMessageToServer("CreateGameObject/" + actualItemSpriteName);
+        Client.instance.SendMessageToServer("CreateGameObject/" + actualItemSpriteName,true);
     }
 
     public void UnselectItem()

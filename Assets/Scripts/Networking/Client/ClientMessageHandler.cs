@@ -257,7 +257,7 @@ public class ClientMessageHandler
     public void EnemiesStartPatrolling()
     {
         string message = "EnemiesStartPatrolling/true";
-        Client.instance.SendMessageToServer(message);
+        Client.instance.SendMessageToServer(message,true);
     }
 
     public void EnemiesRegisterOnRoom()

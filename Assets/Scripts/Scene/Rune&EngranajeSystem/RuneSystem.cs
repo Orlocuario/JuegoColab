@@ -137,7 +137,7 @@ public class RuneSystem : MonoBehaviour
     {
 		if (!messageSent) {
 			messageSent = true;
-			Client.instance.SendMessageToServer("ActivateRuneDoor/" + this.gameObject.name);
+			Client.instance.SendMessageToServer("ActivateRuneDoor/" + this.gameObject.name,true);
 			if (obstacleObj != null) {
 				obstacleObj.OpenDoor ();
 			}

@@ -63,7 +63,7 @@ public class KillingObject : MonoBehaviour
 
             if (Client.instance)
             {
-                Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + damage);
+                Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + damage, true);
             }
         }
     }

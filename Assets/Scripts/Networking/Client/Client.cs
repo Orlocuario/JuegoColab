@@ -24,7 +24,8 @@ public class Client : MonoBehaviour
     private static int maxConnections = 12;
 
     private int unreliableChannelId;
-    private int reliableChannelId;
+    private int reliableBigChannelId;
+	private int reliableLittleChannelId;
     private int connectionId;
     private string serverIp;
     private int socketId; // Host ID
@@ -47,7 +48,8 @@ public class Client : MonoBehaviour
         ConnectionConfig config = new ConnectionConfig();
 
         unreliableChannelId = config.AddChannel(QosType.Unreliable);
-        reliableChannelId = config.AddChannel(QosType.ReliableFragmented);
+        reliableBigChannelId = config.AddChannel(QosType.ReliableFragmented);
+		reliableLittleChannelId = config.AddChannel (QosType.Reliable);
 
         topology = new HostTopology(config, maxConnections);
 
@@ -94,12 +96,12 @@ public class Client : MonoBehaviour
                 BinaryFormatter formatter = new BinaryFormatter();
                 string message = formatter.Deserialize(stream) as string;
 
-                if (recChannelId == unreliableChannelId)
+			if (recChannelId == unreliableChannelId || recChannelId==reliableLittleChannelId)
                 {
                     handler.HandleMessage(message);
                 }
 
-                if (recChannelId == reliableChannelId)
+                if (recChannelId == reliableBigChannelId)
                 {
                     ReceiveMessageFromPlanner(message, recConnectionId);
                 }
@@ -189,16 +191,20 @@ public class Client : MonoBehaviour
 
     #region Messaging
 
-    public void SendMessageToServer(string message)
+	public void SendMessageToServer(string message, bool secure)
     {
         byte error;
         byte[] buffer = new byte[NetworkConsts.bufferSize];
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, message);
-        NetworkTransport.Send(socketId, connectionId, unreliableChannelId, buffer, NetworkConsts.bufferSize, out error);
+		int channel = unreliableChannelId;
+		if (secure) {
+			channel = reliableLittleChannelId;
+		}
+        NetworkTransport.Send(socketId, connectionId, channel, buffer, NetworkConsts.bufferSize, out error);
     }
-
+		
     public void SendMessageToPlanner(string message)
     {
         byte error;
@@ -206,7 +212,7 @@ public class Client : MonoBehaviour
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, message);
-        NetworkTransport.Send(socketId, connectionId, reliableChannelId, buffer, NetworkConsts.bigBufferSize, out error);
+        NetworkTransport.Send(socketId, connectionId, reliableBigChannelId, buffer, NetworkConsts.bigBufferSize, out error);
     }
 
     private void ReceiveMessageFromPlanner(string message, int connectionId)
@@ -217,12 +223,12 @@ public class Client : MonoBehaviour
 
     public void SendNewChatMessageToServer(string newChatMessage)
     {
-        SendMessageToServer("NewChatMessage/" + newChatMessage);
+        SendMessageToServer("NewChatMessage/" + newChatMessage,false);
     }
 
     public void RequestCharIdToServer()
     {
-        SendMessageToServer("RequestCharId");
+        SendMessageToServer("RequestCharId",true);
     }
 
 
