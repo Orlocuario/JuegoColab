@@ -292,7 +292,7 @@ public class HUDDisplay : MonoBehaviour
     {
         if (Client.instance)
         {
-            Client.instance.SendMessageToServer(message);
+            Client.instance.SendMessageToServer(message, false);
         }
     }
 

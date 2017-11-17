@@ -4,17 +4,14 @@ using UnityEngine;
 
 public class WarriorController : PlayerController
 {
-    GameObject particulas;
 
-    private int attacks = 0;
+    #region Attributes
 
-    protected override void Start()
-    {
-        base.Start();
+    protected int attacks = 0;
 
-        particulas = GameObject.Find("ParticulasWarrior");
-        particulas.SetActive(false);
-    }
+    #endregion
+
+    #region Common
 
     public override void CastLocalAttack()
     {
@@ -37,15 +34,7 @@ public class WarriorController : PlayerController
 
         AnimateAttack();
     }
-
-    public override void SetAttack()
-    {
-        CastLocalAttack();
-    }
-
-    protected override void ActivateParticles(bool activo)
-    {
-        particulas.SetActive(activo);
-    }
+    
+    #endregion
 
 }

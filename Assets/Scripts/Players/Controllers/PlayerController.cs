@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     public PlannerPlayer playerObj;
     public Vector3 respawnPosition;
     public LayerMask whatIsGround;
+    public GameObject[] particles;
     public Transform groundCheck;
     public GameObject parent;
 
@@ -112,7 +113,7 @@ public class PlayerController : MonoBehaviour
         debuger = 0;
 
         SetGravity(gravity);
-
+        InitializeParticles();
         IgnoreCollisionBetweenPlayers();
     }
 
@@ -420,6 +421,24 @@ public class PlayerController : MonoBehaviour
 
     #region Utils
 
+    protected void DebugDrawDistance(float distance)
+    {
+        DebugDrawDistance(distance, Color.blue);
+    }
+
+    protected void DebugDrawDistance(float distance, Color color)
+    {
+        Vector2 left = new Vector3(transform.position.x - distance, transform.position.y, transform.position.z);
+        Vector2 up = new Vector3(transform.position.x, transform.position.y + distance, transform.position.z);
+        Vector2 right = new Vector3(transform.position.x + distance, transform.position.y, transform.position.z);
+        Vector2 down = new Vector3(transform.position.x, transform.position.y - distance, transform.position.z);
+
+        Debug.DrawLine(transform.position, left, color);
+        Debug.DrawLine(transform.position, up, color);
+        Debug.DrawLine(transform.position, right, color);
+        Debug.DrawLine(transform.position, down, color);
+    }
+
     protected bool IsGoingRight()
     {
         if (localPlayer)
@@ -563,12 +582,38 @@ public class PlayerController : MonoBehaviour
 
     public virtual void SetAttack()
     {
-        throw new NotImplementedException("Implement the remote set attack method in each player");
+        CastLocalAttack();
+    }
+
+    protected void InitializeParticles()
+    {
+        ParticleSystem[] _particles = GetComponentsInChildren<ParticleSystem>();
+
+        if (_particles == null || _particles.Length == 0)
+        {
+            return;
+        }
+
+        particles = new GameObject[_particles.Length];
+
+        for (int i = 0; i < particles.Length; i++)
+        {
+            particles[i] = _particles[i].gameObject;
+        }
+
+        ActivateParticles(false);
+
     }
 
     protected virtual void ActivateParticles(bool active)
     {
-
+        if (particles != null && particles.Length > 0)
+        {
+            for (int i = 0; i < particles.Length; i++)
+            {
+                particles[i].SetActive(active);
+            }
+        }
     }
 
     protected void AnimateAttack()
@@ -693,4 +738,5 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
+
 }
