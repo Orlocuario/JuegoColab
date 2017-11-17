@@ -15,9 +15,8 @@ public class ChatZone : MonoBehaviour
     private GameObject[] particles;
     private HUDDisplay hpAndMp;
 
-    private static string regenerationUnits = "1";
+    private static float regenerationUnits = 1;
     private static int regenerationFrameRate = 25;
-    private static float activationDistance = 2f;
 
     private int regenerationFrame;
     private bool activated;
@@ -46,7 +45,8 @@ public class ChatZone : MonoBehaviour
                 if (regenerationFrame == regenerationFrameRate)
                 {
                     regenerationFrame = 0;
-                    Client.instance.SendMessageToServer("ChangeHpAndMpHUDToRoom/" + regenerationUnits);
+                    hpAndMp.ChangeHPAndMP(regenerationUnits);
+                    SendMessageToServer("ChangeHpAndMpHUDToRoom/" + regenerationUnits);
                 }
             }
         }
@@ -60,7 +60,7 @@ public class ChatZone : MonoBehaviour
     {
         ParticleSystem[] _particles = gameObject.GetComponentsInChildren<ParticleSystem>();
 
-        if(_particles.Length <= 0)
+        if (_particles.Length <= 0)
         {
             return;
         }
@@ -123,10 +123,18 @@ public class ChatZone : MonoBehaviour
         }
     }
 
-    protected bool GameObjectIsPlayer(GameObject other)
+    protected bool GameObjectIsPlayer(GameObject other, bool isLocal)
     {
         PlayerController playerController = other.GetComponent<PlayerController>();
-        return playerController && playerController.localPlayer;
+
+        if (isLocal)
+        {
+            return playerController && playerController.localPlayer;
+        }
+        else
+        {
+            return playerController;
+        }
     }
 
     #endregion
@@ -136,7 +144,7 @@ public class ChatZone : MonoBehaviour
     // Attack those who enter the alert zone
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (GameObjectIsPlayer(other.gameObject))
+        if (GameObjectIsPlayer(other.gameObject, true))
         {
             ToogleChatButtons(true);
             ToogleParticles(true);
@@ -146,12 +154,21 @@ public class ChatZone : MonoBehaviour
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (GameObjectIsPlayer(other.gameObject))
+        if (GameObjectIsPlayer(other.gameObject, true))
         {
             regenerationFrame = 0;
             ToogleChatButtons(false);
             ToogleParticles(false);
             activated = false;
+            hpAndMp.StopParticles();
+        }
+    }
+
+    private void SendMessageToServer(string message)
+    {
+        if (Client.instance)
+        {
+            Client.instance.SendMessageToServer(message);
         }
     }
 

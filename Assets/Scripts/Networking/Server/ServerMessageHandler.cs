@@ -47,6 +47,9 @@ public class ServerMessageHandler
             case "ChangeMpHUDToRoom":
                 SendMpHUDToRoom(msg, connectionId);
                 break;
+            case "StopChangeHpAndMpHUDToRoom":
+                StopChangeHPMpHUDToRoom(msg, connectionId);
+                break;
             case "ChangeHpAndMpHUDToRoom": //Necessary coz' ChatZone changes both at the same rate
                 SendHpHAndMpHUDToRoom(msg, connectionId);
                 break;
@@ -328,21 +331,29 @@ public class ServerMessageHandler
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
-        room.hpManaGer.ChangeHP(msg[1]);
+        room.hpManaGer.ChangeHP(msg[1], connectionId);
     }
 
     private void SendMpHUDToRoom(string[] msg, int connectionId)
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
-        room.hpManaGer.ChangeMP(msg[1]);
+        room.hpManaGer.ChangeMP(msg[1], connectionId);
+    }
+
+
+    private void StopChangeHPMpHUDToRoom(string[] msg, int connectionId)
+    {
+        NetworkPlayer player = server.GetPlayer(connectionId);
+        Room room = player.room;
+        room.hpManaGer.StopChangeHpAndMpHUD(connectionId);
     }
 
     private void SendHpHAndMpHUDToRoom(string[] msg, int connectionId)
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
-        room.hpManaGer.RecieveHpAndMpHUD(msg[1]);
+        room.hpManaGer.RecieveHpAndMpHUD(msg[1], connectionId);
     }
 
     private void SendExpToRoom(string[] msg, int connectionId)

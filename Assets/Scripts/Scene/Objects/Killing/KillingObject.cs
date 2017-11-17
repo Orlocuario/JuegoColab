@@ -13,7 +13,7 @@ public class KillingObject : MonoBehaviour
 
     public ParticleSystem particles;
     public bool activated;
-    public string damage;
+    public int damage;
 
     #endregion
 
@@ -55,16 +55,12 @@ public class KillingObject : MonoBehaviour
         }
     }
 
-    protected virtual void Kill()
+    protected virtual void Kill(GameObject player)
     {
         if (activated)
         {
+            player.GetComponent<PlayerController>().TakeDamage(damage, new Vector2(0, 0));
             levelManager.Respawn();
-
-            if (Client.instance)
-            {
-                Client.instance.SendMessageToServer("ChangeHpHUDToRoom/" + damage);
-            }
         }
     }
 
@@ -77,7 +73,7 @@ public class KillingObject : MonoBehaviour
     {
         if (GameObjectIsPlayer(other.gameObject))
         {
-            Kill();
+            Kill(other.gameObject);
         }
     }
 

@@ -42,7 +42,7 @@ public class PlayerController : MonoBehaviour
     public bool isGrounded;
     public bool upPressed;
 
-    public static string mpSpendRate = "-1"; // Cuanto mp se gasta cada vez
+    public static float mpSpendRate = -1; // Cuanto mp se gasta cada vez
     public static float attackRate = .25f;
     public static int mpUpdateRate = 30; // Cada cuantos frames se actualiza el HP y MP display
 
@@ -464,7 +464,8 @@ public class PlayerController : MonoBehaviour
 
                     if (mpUpdateFrame == mpUpdateRate)
                     {
-                        SendMPDataToServer();
+                        levelManager.hpAndMp.ChangeMP(mpSpendRate); // Change local
+                        SendMPDataToServer(); // Change remote
                         mpUpdateFrame = 0;
                     }
 
@@ -487,7 +488,7 @@ public class PlayerController : MonoBehaviour
             rb2d.AddForce(force);
 
             string message = "PlayerTookDamage/" + characterId + "/" + force.x + "/" + force.y;
-            Client.instance.SendMessageToServer(message);
+            SendMessageToServer(message);
         }
 
         if (damage != 0)
@@ -499,14 +500,12 @@ public class PlayerController : MonoBehaviour
                 damage *= -1;
             }
 
+            levelManager.hpAndMp.ChangeHP(damage); // Change local
             string message = "ChangeHpHUDToRoom/" + damage;
-            Client.instance.SendMessageToServer(message);
+            SendMessageToServer(message); // Change remote
         }
 
-        if (sceneAnimator)
-        {
-            StartCoroutine(sceneAnimator.StartAnimation("TakingDamage", this.gameObject));
-        }
+        AnimateDamage();
 
     }
 
@@ -615,24 +614,24 @@ public class PlayerController : MonoBehaviour
             remoteLeft + "/" +
             remoteRight;
 
-        Client.instance.SendMessageToServer(message);
+        SendMessageToServer(message);
     }
 
     protected virtual void SendAttackDataToServer()
     {
         string message = "PlayerAttack/" + characterId;
-        Client.instance.SendMessageToServer(message);
+        SendMessageToServer(message);
     }
 
     protected void SendPowerDataToServer()
     {
         string message = "PlayerPower/" + characterId + "/" + isPowerOn;
-        Client.instance.SendMessageToServer(message);
+        SendMessageToServer(message);
     }
 
     public void SendMPDataToServer()
     {
-        Client.instance.SendMessageToServer("ChangeMpHUDToRoom/" + mpSpendRate);
+       SendMessageToServer("ChangeMpHUDToRoom/" + mpSpendRate);
     }
 
     public IEnumerator WaitAttacking()
@@ -648,7 +647,21 @@ public class PlayerController : MonoBehaviour
         {
             StartCoroutine(sceneAnimator.StartAnimation(currentAttack, this.gameObject));
         }
-
     }
 
+    protected void AnimateDamage()
+    {
+        if (sceneAnimator)
+        {
+            StartCoroutine(sceneAnimator.StartAnimation("TakingDamage", this.gameObject));
+        }
+    }
+
+    protected void SendMessageToServer(string message)
+    {
+        if (Client.instance)
+        {
+            Client.instance.SendMessageToServer(message);
+        }
+    }
 }

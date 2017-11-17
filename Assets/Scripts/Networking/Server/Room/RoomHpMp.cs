@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class RoomHpMp {
+public class RoomHpMp
+{
 
     public float maxHP;
     public float maxMP;
@@ -19,7 +20,7 @@ public class RoomHpMp {
     Room room;
 
     public RoomHpMp(Room room)
-    {                         
+    {
         this.room = room;
         maxHP = 250;
         maxMP = 250;
@@ -32,13 +33,18 @@ public class RoomHpMp {
         percentageExp = 0;
     }
 
-    public void RecieveHpAndMpHUD(string changeRate)
+    public void StopChangeHpAndMpHUD(int player)
     {
-        ChangeHP(changeRate);
-        ChangeMP(changeRate);
+        room.SendMessageToAllPlayersExceptOne("DisplayStopChangeHPMPToClient/", player);
     }
 
-    public void ChangeHP(string deltaHP)
+    public void RecieveHpAndMpHUD(string changeRate, int player)
+    {
+        ChangeHP(changeRate, player);
+        ChangeMP(changeRate, player);
+    }
+
+    public void ChangeHP(string deltaHP, int player)
     {
         float valueDeltaHP = float.Parse(deltaHP);
         if (valueDeltaHP == 0)
@@ -61,17 +67,17 @@ public class RoomHpMp {
         }
 
         percentageHP = currentHP / maxHP;
-        room.SendMessageToAllPlayers("DisplayChangeHPToClient/" + percentageHP);
+        room.SendMessageToAllPlayersExceptOne("DisplayChangeHPToClient/" + percentageHP, player);
     }
 
-    public void ChangeMaxHP(string NewMaxHP)
+    public void ChangeMaxHP(string NewMaxHP, int player)
     {
         float valueMaxHP = float.Parse(NewMaxHP);
         maxHP = valueMaxHP;
-        ChangeHP(NewMaxHP);
+        ChangeHP(NewMaxHP, player);
     }
 
-    public void ChangeMP(string deltaMP)
+    public void ChangeMP(string deltaMP, int player)
     {
         float valueDeltaMP = float.Parse(deltaMP);
 
@@ -88,7 +94,7 @@ public class RoomHpMp {
 
         percentageMP = currentMP / maxMP;
 
-        if(percentageMP == 1 || percentageMP == 0)
+        if (percentageMP == 1 || percentageMP == 0)
         {
             if (mpAtLimit)
             {
@@ -101,14 +107,14 @@ public class RoomHpMp {
             mpAtLimit = false;
         }
 
-        room.SendMessageToAllPlayers("DisplayChangeMPToClient/" + percentageMP.ToString());
+        room.SendMessageToAllPlayersExceptOne("DisplayChangeMPToClient/" + percentageMP, player);
     }
 
-    public void ChangeMaxMP(string NewMaxMP)
+    public void ChangeMaxMP(string NewMaxMP, int player)
     {
         float valueMaxMP = float.Parse(NewMaxMP);
         maxMP = valueMaxMP;
-        ChangeMP(NewMaxMP);
+        ChangeMP(NewMaxMP, player);
     }
 
     public void ChangeExp(string deltaExp)
@@ -130,6 +136,6 @@ public class RoomHpMp {
     {
         float valueMaxExp = float.Parse(NewMaxExp);
         maxExp = valueMaxExp;
-        ChangeMP(NewMaxExp);
+        ChangeExp(NewMaxExp);
     }
 }

@@ -56,6 +56,9 @@ public class ClientMessageHandler
             case "DisplayChangeExpToClient":
                 HandleChangeExpHUDToClient(msg);
                 break;
+            case "DisplayStopChangeHPMPToClient":
+                StopChangeHPMPToClient(msg);
+                break;
             case "EnemyDie":
                 EnemyDie(msg);
                 break;
@@ -383,7 +386,7 @@ public class ClientMessageHandler
             return;
         }
         HUDDisplay hpAndMp = GameObject.FindObjectOfType<LevelManager>().hpAndMp;
-        hpAndMp.CurrentHP(msg[1]);
+        hpAndMp.CurrentHPPercentage(float.Parse(msg[1]));
     }
 
     private void HandleChangeMpHUDToClient(string[] msg)
@@ -394,7 +397,18 @@ public class ClientMessageHandler
             return;
         }
         HUDDisplay hpAndMp = GameObject.FindObjectOfType<LevelManager>().hpAndMp;
-        hpAndMp.CurrentMP(msg[1]);
+        hpAndMp.CurrentMPPercentage(float.Parse(msg[1]));
+    }
+
+    private void StopChangeHPMPToClient(string[] msg)
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        if (currentScene.name == "ClientScene")
+        {
+            return;
+        }
+        HUDDisplay hpAndMp = GameObject.FindObjectOfType<LevelManager>().hpAndMp;
+        hpAndMp.StopLocalParticles(); // Only stop local particles
     }
 
     private void HandleChangeExpHUDToClient(string[] msg)
@@ -405,7 +419,7 @@ public class ClientMessageHandler
             return;
         }
         HUDDisplay hpAndMp = GameObject.FindObjectOfType<LevelManager>().hpAndMp;
-        hpAndMp.ExperienceBar(msg[1]);
+        hpAndMp.CurrentExpPercentage(msg[1]);
     }
 
     private void HandleCreateGameObject(string[] msg)
