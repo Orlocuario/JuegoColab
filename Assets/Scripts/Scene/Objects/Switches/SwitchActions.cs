@@ -200,8 +200,8 @@ public class SwitchActions : MonoBehaviour
                 GameObject primerPlat = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
                 primerPlat.transform.position = new Vector2(23f, -43.5f);
                 GameObject primerPlat2 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                primerPlat2.transform.position = new Vector2(23f, -42.8f);
-                
+                primerPlat2.transform.position = new Vector2(23f, -42.3f);
+                    
                 break;
 
             case 10:    // peldaño

@@ -6,23 +6,61 @@ public class ShootableTutorial : MonoBehaviour {
 
 	public Sprite wasShot;
 	private SpriteRenderer spriteRenderer;
-	public Vector2 instantiatePoints;
+	public Vector2[] instantiatePoints;
 
 
 	void Start () {
 		spriteRenderer = this.gameObject.GetComponent <SpriteRenderer> ();
 	}
 	
-	private void OnCollisionEnter2D (Collision2D other)
+	private void OnCollisionEnter2D (Collision2D collision)
 	{
-		if (other.gameObject.name == "Fireball" || name == "Arrow" || name == "Punch") 
-		{
-			GameObject platform = (GameObject)Instantiate (Resources.Load ("Prefabs/SueloMetalFlotante"));
-			platform.transform.position = new Vector2 (this.gameObject.transform.position.x - 3f, this.gameObject.transform.position.y);
-			GameObject platform2 = (GameObject)Instantiate (Resources.Load ("Prefabs/SueloMetalFlotante"));
-			platform2.transform.position = new Vector2 (instantiatePoints.x, instantiatePoints.y);
-			spriteRenderer.sprite = wasShot;
-		}
-	}
+        CheckDisparando(collision);
+    }
 
+    private void CheckDisparando(Collision2D collision)
+    {
+        if (CheckIfColliderIsAttack(collision))
+        { 
+            Activate();
+        }
+    }
+    private void Activate()
+    {
+
+    }
+
+    private bool CheckIfColliderIsAttack(Collision2D collision)
+    {
+        GameObject colliderGameObject = collision.collider.gameObject;
+
+        string objectName = colliderGameObject.tag;
+        {
+            switch (objectName)
+            {
+                case "Fireball":
+                    Destroy(colliderGameObject);
+                    if (Client.instance.GetLocalPlayer().name == "Mage")
+                    {
+                        return true;
+                    }
+                    break;
+                case "Arrow":
+                    Destroy(colliderGameObject);
+                    if (Client.instance.GetLocalPlayer().name == "Engineer")
+                    {
+                        return true;
+                    }
+                    break;
+                case "Punch":
+                    if (Client.instance.GetLocalPlayer().name == "Warrior")
+                    {
+                        return true;
+                    }
+                    break;
+
+            }
+        }
+        return false;
+    }
 }
