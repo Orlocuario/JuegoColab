@@ -96,7 +96,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1297910846561336}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -20.839, y: -2.403, z: 1}
+  m_LocalPosition: {x: 9.222, y: -4.296, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4178390081971338}
@@ -167,17 +167,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerObj: {fileID: 0}
-  collider: {fileID: 0}
-  parent: {fileID: 0}
   respawnPosition: {x: 0, y: 0, z: 0}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 512
+  particles: []
   groundCheck: {fileID: 4178390081971338}
-  acceleration: 0
-  canAccelerate: 0
-  groundCheckRadius: 0.25
-  actualSpeed: 0
+  parent: {fileID: 0}
   remoteAttacking: 0
   remoteJumping: 0
   remoteRight: 0
@@ -190,14 +186,18 @@ MonoBehaviour:
   isGrounded: 0
   upPressed: 0
   controlOverEnemies: 0
+  groundCheckRadius: 0.25
+  canAccelerate: 0
+  acceleration: 0
+  actualSpeed: 0
+  mpUpdateFrame: 0
   sortingOrder: 0
-  gravity: 1
+  characterId: 0
+  mpDepleted: 0
+  isPowerOn: 0
   directionY: 1
   directionX: 1
-  mpUpdateFrame: 0
-  mpDepleted: 0
-  characterId: 0
-  isPowerOn: 0
+  gravity: 1
 --- !u!198 &198702002981555530
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -253,7 +253,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 506909175
+  randomSeed: 278384345
   InitialModule:
     serializedVersion: 3
     enabled: 1
