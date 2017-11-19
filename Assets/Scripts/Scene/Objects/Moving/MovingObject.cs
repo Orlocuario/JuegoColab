@@ -18,7 +18,7 @@ public class MovingObject : MonoBehaviour
     {
         if (dontCollideWithPlayers)
         {
-            IgnoreCollisionWithPlayers();
+            IgnoreCollisionWithPlayers();   
         }
 
         if (endPoint != null)
