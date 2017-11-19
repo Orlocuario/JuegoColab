@@ -11,9 +11,15 @@ public class MovingObject : MonoBehaviour
 
     private Vector3 currentTarget;
 
+    public bool dontCollideWithPlayers; 
+
     // Use this for initialization
     protected virtual void Start()
     {
+        if (dontCollideWithPlayers)
+        {
+            IgnoreCollisionWithPlayers();
+        }
 
         if (endPoint != null)
         {
@@ -42,6 +48,18 @@ public class MovingObject : MonoBehaviour
 
         transform.position = Vector3.MoveTowards(transform.position, currentTarget, moveSpeed * Time.deltaTime);
 
+    }
+
+    private void IgnoreCollisionWithPlayers()
+    {
+        Collider2D collider = GetComponent<Collider2D>();
+
+        GameObject player1 = GameObject.Find("Mage");
+        GameObject player2 = GameObject.Find("Warrior");
+        GameObject player3 = GameObject.Find("Engineer");
+        Physics2D.IgnoreCollision(collider, player1.GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(collider, player2.GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(collider, player3.GetComponent<Collider2D>());
     }
 
 }
