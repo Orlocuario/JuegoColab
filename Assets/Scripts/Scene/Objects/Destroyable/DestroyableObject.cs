@@ -16,7 +16,7 @@ public class DestroyableObject : MonoBehaviour
 
     protected virtual void Start()
     {
-        destroyDelayTime = .04f;
+        destroyDelayTime = .4f;
     }
 
     #endregion
