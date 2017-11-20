@@ -37,9 +37,8 @@ public class MageController : PlayerController
         isAttacking = true;
         currentAttack = "Attacking";
 
-        GameObject fireball = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Fireball"));
-        FireballController controller = fireball.GetComponent<FireballController>();
-        controller.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
+        FireballController fireball = InstatiateAttack().GetComponent<FireballController>();
+        fireball.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
 
         StartCoroutine(WaitAttacking());
         AnimateAttack();
@@ -58,6 +57,12 @@ public class MageController : PlayerController
     #endregion
 
     #region Utils
+
+    protected GameObject InstatiateAttack()
+    {
+        string attackName = "Fireball";
+        return (GameObject)Instantiate(Resources.Load(attackPrefabName + attackName));
+    }
 
     protected void LoadShieldArea()
     {

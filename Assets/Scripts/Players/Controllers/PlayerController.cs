@@ -59,6 +59,8 @@ public class PlayerController : MonoBehaviour
     protected static float maxXSpeed = 3.5f;
     protected static float maxYSpeed = 8f;
 
+    protected static string attackPrefabName = "Prefabs/Attacks/";
+
     protected static int mpUpdateFrameRate = 30;
     protected static int mpSpendRate = -1;
     protected static int attackSpeed = 4;
@@ -72,7 +74,6 @@ public class PlayerController : MonoBehaviour
     protected float speedY;
 
     protected int debuger;
-
     #endregion
 
     #region Start & Update

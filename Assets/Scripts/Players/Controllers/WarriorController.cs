@@ -17,12 +17,6 @@ public class WarriorController : PlayerController
     {
         isAttacking = true;
 
-        GameObject punch = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Punch"));
-        PunchController punchController = punch.GetComponent<PunchController>();
-        punchController.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
-
-        StartCoroutine(WaitAttacking());
-
         if (attacks++ % 2 == 0)
         {
             currentAttack = "Attacking2";
@@ -32,9 +26,23 @@ public class WarriorController : PlayerController
             currentAttack = "Attacking";
         }
 
+        PunchController punch = InstatiateAttack().GetComponent<PunchController>();
+        punch.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
+
+        StartCoroutine(WaitAttacking());
         AnimateAttack();
     }
-    
+
+    #endregion
+
+    #region Utils
+
+    protected GameObject InstatiateAttack()
+    {
+        string attackName = (isPowerOn) ? "SuperPunch" : "Punch";
+        return (GameObject)Instantiate(Resources.Load(attackPrefabName + attackName));
+    }
+
     #endregion
 
 }
