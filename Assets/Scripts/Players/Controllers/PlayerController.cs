@@ -386,13 +386,17 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage, Vector2 force)
     {
+        if (isTakingDamage)
+        {
+            return;
+        }
+
+        isTakingDamage = true;
 
         if (force.x != 0 || force.y != 0)
         {
-            rb2d.AddForce(force);
-
-            string message = "PlayerTookDamage/" + characterId + "/" + force.x + "/" + force.y;
-            SendMessageToServer(message);
+            rb2d.AddForce(force); // Take force local
+            SendMessageToServer("PlayerTookDamage/" + characterId + "/" + force.x + "/" + force.y); // Take force remote
         }
 
         if (damage != 0)
@@ -404,13 +408,13 @@ public class PlayerController : MonoBehaviour
                 damage *= -1;
             }
 
-            levelManager.hpAndMp.ChangeHP(damage); // Change local
-            string message = "ChangeHpHUDToRoom/" + damage;
-            SendMessageToServer(message); // Change remote
+            levelManager.hpAndMp.ChangeHP(damage); // Change local HP
+            SendMessageToServer("ChangeHpHUDToRoom/" + damage); // Change remote HP
 
         }
 
-        AnimateDamage();
+        StartCoroutine(WaitTakingDamage());
+        AnimateTakingDamage();
 
     }
 
@@ -622,7 +626,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    protected void AnimateDamage()
+    protected void AnimateTakingDamage()
     {
         if (sceneAnimator)
         {
