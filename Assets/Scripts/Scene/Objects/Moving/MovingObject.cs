@@ -14,7 +14,7 @@ public class MovingObject : MonoBehaviour
     public float moveSpeed;
 
     private Vector3 currentTarget;
-    
+
     #endregion
 
     #region Start & Update
@@ -23,7 +23,7 @@ public class MovingObject : MonoBehaviour
     {
         if (dontCollideWithPlayers)
         {
-            IgnoreCollisionWithPlayers();   
+            IgnoreCollisionWithPlayers();
         }
 
         if (endPoint != null)
@@ -83,7 +83,7 @@ public class MovingObject : MonoBehaviour
     {
         if (GameObjectIsPlayer(other.gameObject))
         {
-            transform.parent = other.transform;
+            other.transform.parent = transform;
         }
     }
 
@@ -91,7 +91,7 @@ public class MovingObject : MonoBehaviour
     {
         if (GameObjectIsPlayer(other.gameObject))
         {
-            transform.parent = null;
+            other.transform.parent = null;
         }
     }
 
