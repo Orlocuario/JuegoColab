@@ -422,6 +422,9 @@ public class PlayerController : MonoBehaviour
 
     #region Utils
 
+    // All related with debugging processes
+    #region Debugging
+
     protected void DebugDrawDistance(float distance)
     {
         DebugDrawDistance(distance, Color.blue);
@@ -439,6 +442,29 @@ public class PlayerController : MonoBehaviour
         Debug.DrawLine(transform.position, right, color);
         Debug.DrawLine(transform.position, down, color);
     }
+
+    #endregion
+    
+    // Set variables in their default state
+    #region Initializers
+
+    public void IgnoreCollisionBetweenPlayers()
+    {
+        Collider2D collider = GetComponent<Collider2D>();
+
+        GameObject player1 = GameObject.Find("Mage");
+        GameObject player2 = GameObject.Find("Warrior");
+        GameObject player3 = GameObject.Find("Engineer");
+        Physics2D.IgnoreCollision(collider, player1.GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(collider, player2.GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(collider, player3.GetComponent<Collider2D>());
+    }
+
+    #endregion
+
+    // Validate for player conditions
+    #region Validations
+
 
     protected bool IsGoingRight()
     {
@@ -532,22 +558,15 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void IgnoreCollisionBetweenPlayers()
-    {
-        Collider2D collider = GetComponent<Collider2D>();
-
-        GameObject player1 = GameObject.Find("Mage");
-        GameObject player2 = GameObject.Find("Warrior");
-        GameObject player3 = GameObject.Find("Engineer");
-        Physics2D.IgnoreCollision(collider, player1.GetComponent<Collider2D>());
-        Physics2D.IgnoreCollision(collider, player2.GetComponent<Collider2D>());
-        Physics2D.IgnoreCollision(collider, player3.GetComponent<Collider2D>());
-    }
-
     protected bool GameObjectIsPOI(GameObject other)
     {
         return other.GetComponent<PlannerPoi>();
     }
+
+    #endregion
+
+    // Set player data from other classes
+    #region Remote Setters
 
     public void SetPowerState(bool power)
     {
@@ -586,6 +605,11 @@ public class PlayerController : MonoBehaviour
         CastLocalAttack();
     }
 
+    #endregion
+
+    // Manage particles
+    #region Particles
+
     protected void InitializeParticles()
     {
         ParticleSystem[] _particles = GetComponentsInChildren<ParticleSystem>();
@@ -617,9 +641,13 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    #endregion
+
+    // Manage animations
+    #region Animations
+
     protected void AnimateAttack()
     {
-
         if (sceneAnimator && currentAttack != null)
         {
             StartCoroutine(sceneAnimator.StartAnimation(currentAttack, this.gameObject));
@@ -633,6 +661,8 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(sceneAnimator.StartAnimation("TakingDamage", this.gameObject));
         }
     }
+    
+    #endregion
 
     #endregion
 
@@ -657,23 +687,6 @@ public class PlayerController : MonoBehaviour
                 Planner planner = FindObjectOfType<Planner>();
                 planner.Monitor();
             }
-        }
-    }
-
-    protected void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.tag == "MovingPlatform")
-        {
-            Debug.Log(other.gameObject.name);
-            transform.parent = other.transform;
-        }
-    }
-
-    protected void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.gameObject.tag == "MovingPlatform")
-        {
-            transform.parent = null;
         }
     }
 
