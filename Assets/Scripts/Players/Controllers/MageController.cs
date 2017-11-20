@@ -32,18 +32,6 @@ public class MageController : PlayerController
 
     #region Common
 
-    public override void CastLocalAttack()
-    {
-        isAttacking = true;
-        currentAttack = "Attacking";
-
-        FireballController fireball = InstatiateAttack().GetComponent<FireballController>();
-        fireball.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
-
-        StartCoroutine(WaitAttacking());
-        AnimateAttack();
-    }
-
     public bool ProtectedByShield(GameObject player)
     {
         if (isPowerOn)
@@ -58,10 +46,15 @@ public class MageController : PlayerController
 
     #region Utils
 
-    protected GameObject InstatiateAttack()
+    protected override AttackController GetAttack()
     {
+        var attackType = new FireballController().GetType();
         string attackName = "Fireball";
-        return (GameObject)Instantiate(Resources.Load(attackPrefabName + attackName));
+
+        GameObject attackObject = (GameObject)Instantiate(Resources.Load(attackPrefabName + attackName));
+        FireballController attackController = (FireballController)attackObject.GetComponent(attackType);
+
+        return attackController;
     }
 
     protected void LoadShieldArea()

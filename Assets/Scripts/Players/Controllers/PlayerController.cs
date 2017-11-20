@@ -65,7 +65,7 @@ public class PlayerController : MonoBehaviour
     protected static int mpSpendRate = -1;
     protected static int attackSpeed = 4;
 
-    protected string currentAttack;
+    protected string attackAnimName;
     protected bool isTakingDamage;
     protected bool isAttacking;
     protected bool conectado;
@@ -92,6 +92,8 @@ public class PlayerController : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
 
         respawnPosition = transform.position;
+
+        attackAnimName = "Attacking";
 
         controlOverEnemies = false;
         canAccelerate = false;
@@ -191,7 +193,13 @@ public class PlayerController : MonoBehaviour
 
     public virtual void CastLocalAttack()
     {
-        throw new NotImplementedException("Every player must implement a public CastLocalAttack method");
+        isAttacking = true;
+
+        AttackController attack = GetAttack();
+        attack.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
+
+        StartCoroutine(WaitAttacking());
+        AnimateAttack();
     }
 
     public virtual void StopMoving()
@@ -445,7 +453,7 @@ public class PlayerController : MonoBehaviour
     }
 
     #endregion
-    
+
     // Set variables in their default state
     #region Initializers
 
@@ -649,9 +657,9 @@ public class PlayerController : MonoBehaviour
 
     protected void AnimateAttack()
     {
-        if (sceneAnimator && currentAttack != null)
+        if (sceneAnimator && attackAnimName != null)
         {
-            StartCoroutine(sceneAnimator.StartAnimation(currentAttack, this.gameObject));
+            StartCoroutine(sceneAnimator.StartAnimation(attackAnimName, this.gameObject));
         }
     }
 
@@ -662,7 +670,17 @@ public class PlayerController : MonoBehaviour
             StartCoroutine(sceneAnimator.StartAnimation("TakingDamage", this.gameObject));
         }
     }
-    
+
+    #endregion
+
+    // Doh...
+    #region Attacks
+
+    protected virtual AttackController GetAttack()
+    {
+        throw new NotImplementedException("Every player must implement a GetAttack method");
+    }
+
     #endregion
 
     #endregion
