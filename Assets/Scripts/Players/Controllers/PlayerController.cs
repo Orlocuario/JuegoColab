@@ -17,14 +17,7 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheck;
     public GameObject parent;
 
-    public static float maxAcceleration = 1; //100% del speed
-    public static float attackRate = .25f;
-    public static float mpSpendRate = -1; // Cuanto mp se gasta cada vez
-    public static float maxXSpeed = 3.5f;
-    public static float maxYSpeed = 8f;
-    public static int mpUpdateRate = 30; // Cada cuantos frames se actualiza el HP y MP display
-
-    // Used to synchronize data from the server
+    // Remote data
     public bool remoteAttacking;
     public bool remoteJumping;
     public bool remoteRight;
@@ -41,7 +34,7 @@ public class PlayerController : MonoBehaviour
 
     public bool controlOverEnemies;
     public float groundCheckRadius;
-    public bool canAccelerate; //Limita la aceleración a la mitad de los frames
+    public bool canAccelerate;
     public float acceleration;
     public float actualSpeed;
     public int mpUpdateFrame;
@@ -59,8 +52,19 @@ public class PlayerController : MonoBehaviour
     protected Vector3 lastPosition;
     protected Rigidbody2D rb2d;
 
+    // Statics
+    protected static float maxAcceleration = 1;
+    protected static float takeDamageRate = 1f;
+    protected static float attackRate = .25f;
+    protected static float maxXSpeed = 3.5f;
+    protected static float maxYSpeed = 8f;
+
+    protected static int mpUpdateFrameRate = 30;
+    protected static int mpSpendRate = -1;
     protected static int attackSpeed = 4;
+
     protected string currentAttack;
+    protected bool isTakingDamage;
     protected bool isAttacking;
     protected bool conectado;
     protected bool canMove;
@@ -149,25 +153,18 @@ public class PlayerController : MonoBehaviour
         this.characterId = charId;
         sprite = GetComponent<SpriteRenderer>();
 
-        if (this.characterId == 0)
-        {
-            Chat.instance.EnterFunction("Mage: Ha Aparecido!");
-        }
-        if (this.characterId == 1)
-        {
-            Chat.instance.EnterFunction("Warrior: Ha Aparecido!");
-        }
-        else if (this.characterId == 2)
-        {
-            Chat.instance.EnterFunction("Engineer: Ha Aparecido!");
-        }
-
         if (sprite)
         {
             sprite.sortingOrder = sortingOrder + 1;
         }
 
+        if (Chat.instance)
+        {
+            Chat.instance.EnterFunction(name + ": Ha Aparecido!");
+        }
+
     }
+
     protected void Attack()
     {
 
@@ -370,7 +367,7 @@ public class PlayerController : MonoBehaviour
                 if (isPowerOn)
                 {
 
-                    if (mpUpdateFrame == mpUpdateRate)
+                    if (mpUpdateFrame == mpUpdateFrameRate)
                     {
                         levelManager.hpAndMp.ChangeMP(mpSpendRate); // Change local
                         SendMPDataToServer(); // Change remote
@@ -735,6 +732,12 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(attackRate);
         isAttacking = false;
+    }
+
+    public IEnumerator WaitTakingDamage()
+    {
+        yield return new WaitForSeconds(takeDamageRate);
+        isTakingDamage = false;
     }
 
     #endregion
