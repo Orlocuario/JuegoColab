@@ -9,7 +9,7 @@ public class SpiderController : EnemyController
     private Vector3 upperTunnelPosition;
     private Vector3 lastPosition;
 
-    private static float alertDistance = 3.8f;
+    private static float alertDistance = 2.1f;
     private static float movingSteps = .6f;
 
     protected override void Start()

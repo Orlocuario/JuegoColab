@@ -8,6 +8,7 @@ public class NPCtrigger : MonoBehaviour
 
     #region Attributes
 
+
 	public bool freezesPlayer;
 	public float feedbackTime;
 
@@ -19,7 +20,10 @@ public class NPCtrigger : MonoBehaviour
     };
 
     public NPCFeedback[] feedbacks;
-  
+
+    public bool teleport;
+    public Vector3 whereToRespawn;
+
 
     private NPCFeedback activeFeedback;
     private LevelManager levelManager;
@@ -114,6 +118,12 @@ public class NPCtrigger : MonoBehaviour
 		if (freezesPlayer) {
 			levelManager.localPlayer.ResumeMoving ();
 		}
+
+        if (teleport)
+        {
+            levelManager.localPlayer.respawnPosition = whereToRespawn;
+            levelManager.Respawn();
+        }
 
         levelManager.ShutNPCFeedback(true);
         Destroy(this.gameObject);

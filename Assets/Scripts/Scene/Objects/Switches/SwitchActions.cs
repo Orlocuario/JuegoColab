@@ -47,8 +47,8 @@ public class SwitchActions : MonoBehaviour
                 GameObject firstPlatform = (GameObject)Instantiate(Resources.Load("Prefabs/MovPlatform"));
                 firstPlatform.GetComponent<Transform>().position = new Vector2(13.3f, -1f);
                 MovingObject firstPlatformScript = firstPlatform.GetComponent<MovingObject>();
-                firstPlatformScript.startPoint = new Vector2(13.3f, -1f);
-                firstPlatformScript.endPoint = new Vector2(13.3f, 0.3f);
+                firstPlatformScript.startPoint = new Vector2(13.5f, -1.77f);
+                firstPlatformScript.endPoint = new Vector2(13.5f, 0.36f);
                 firstPlatformScript.moveSpeed = 1f;
                 GameObject feedbackswitchEng = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
                 feedbackswitchEng.GetComponent<Transform>().position = new Vector2(13.2f, -1.3f);
@@ -192,7 +192,7 @@ public class SwitchActions : MonoBehaviour
 
             /* Aquí Comienzan Acciones Escena Tutorial*/
 
-            /* Switches Mage */
+            /* Start Switches Mage */
 
             case 9:     // Primeros peldaños para mage
                 GameObject particleFeedback = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
@@ -200,18 +200,25 @@ public class SwitchActions : MonoBehaviour
                 GameObject primerPlat = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
                 primerPlat.transform.position = new Vector2(23f, -43.5f);
                 GameObject primerPlat2 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                primerPlat2.transform.position = new Vector2(23f, -42.3f);
+                primerPlat2.transform.position = new Vector2(23.4f, -42.3f);
                     
                 break;
 
-            case 10:    // peldaño
+            case 10:    // peldaño switch 2
+
+                GameObject particleFeedback2 = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
+                particleFeedback2.transform.position = new Vector2(26.5f, -42.11f);
+                GameObject secondPlat = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
+                secondPlat.transform.position = new Vector2(23f, -41.2f);
+                //GameObject primerPlat2 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
+                //primerPlat2.transform.position = new Vector2(23.4f, -42.3f);
 
 
                 break;
 
-            case 11:    // peldaño para players 
+            case 11:    // peldaño 3rd Switch + Exp
                 GameObject secondPlat1 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                secondPlat1.transform.position = new Vector2(19.3f, 5.3f);
+                secondPlat1.transform.position = new Vector2(24.3f, -40.5f);
                 break;
 
 
