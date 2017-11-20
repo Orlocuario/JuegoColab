@@ -39,12 +39,9 @@ public class PunchController : AttackController
     {
         DestroyableObject destroyable = other.GetComponent<DestroyableObject>();
 
-        if (destroyable.reinforced)
+        if (destroyable.reinforced && !enhanced)
         {
-            if (!caster.isPowerOn)
-            {
-                return;
-            }
+            return;
         }
 
         destroyable.DestroyMe(true);
@@ -56,7 +53,7 @@ public class PunchController : AttackController
         MovableObject movable = other.GetComponent<MovableObject>();
         Vector2 force = attackForce;
 
-        if (caster.isPowerOn)
+        if (enhanced)
         {
             force *= 100;
         }

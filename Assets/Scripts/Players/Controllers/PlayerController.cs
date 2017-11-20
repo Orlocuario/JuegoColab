@@ -196,7 +196,8 @@ public class PlayerController : MonoBehaviour
         isAttacking = true;
 
         AttackController attack = GetAttack();
-        attack.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
+        attack.Initialize(this);
+        attack.SetMovement(directionX, attackSpeed, transform.position);
 
         StartCoroutine(WaitAttacking());
         AnimateAttack();
