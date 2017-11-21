@@ -417,6 +417,19 @@ public class PlayerController : MonoBehaviour
 
     }
 
+    protected void TeletransportData(Vector3 placeToGo)
+    {
+        if (!localPlayer)
+        {
+            return;
+        }
+        if (localPlayer)
+        {
+            respawnPosition = placeToGo;
+        }
+        
+    }
+
     #endregion
 
     #region Utils

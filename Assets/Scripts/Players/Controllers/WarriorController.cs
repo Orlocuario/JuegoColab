@@ -16,10 +16,18 @@ public class WarriorController : PlayerController
     public override void CastLocalAttack()
     {
         isAttacking = true;
-
-        GameObject punch = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Punch"));
-        PunchController punchController = punch.GetComponent<PunchController>();
-        punchController.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
+        if (isPowerOn)
+        {
+            GameObject punch = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/SuperPunch"));
+            PunchController SuperPunchController = punch.GetComponent<PunchController>();
+            SuperPunchController.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
+        }
+        else
+        {
+            GameObject punch = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Punch"));
+            PunchController punchController = punch.GetComponent<PunchController>();
+            punchController.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
+        }
 
         StartCoroutine(WaitAttacking());
 
@@ -34,7 +42,7 @@ public class WarriorController : PlayerController
 
         AnimateAttack();
     }
-    
+
     #endregion
 
 }
