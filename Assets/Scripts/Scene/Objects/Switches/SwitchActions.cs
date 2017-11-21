@@ -32,17 +32,7 @@ public class SwitchActions : MonoBehaviour
         }
         switch (groupId)
         {
-            case 3789:
-                /*GameObject camaraObject = GameObject.FindGameObjectWithTag ("MainCamera");
-                CameraController camaraScript = camaraObject.GetComponent<CameraController> ();
-                camaraScript.ChangeState (CameraState.Zoomed, -100);*/
-
-
-                //Animator animadorRoca = GameObject.FindGameObjectWithTag ("rocaql").GetComponent<Animator> ();
-                //animadorRoca.SetBool ("rocasecae", true);
-                break;
-
-
+           
             //Aquí Comienzan Acciones Switch Etapa 1
 
             case 0:
@@ -234,10 +224,6 @@ public class SwitchActions : MonoBehaviour
                 }
                 break;
 
-                //GameObject tevoyamataroe = GameObject.FindGameObjectWithTag ("plataforma1");
-                //GameObject.Destroy (tevoyamataroe);
-                //GameObject fireball = (GameObject)Instantiate (Resources.Load ("Prefabs/Attacks/BolaM1"));
-                //fireball.GetComponent<Transform> ().position = new Vector2 (3, 4);*/
         }
         meActive = true;
     }
