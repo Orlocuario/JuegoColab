@@ -111,6 +111,18 @@ public class PunchController : AttackController
         return other.GetComponent<MovableObject>();
     }
 
+    protected override int GetDamage()
+    {
+        if (caster.isPowerOn)
+        {
+            return damage + 4;
+        }
+        else
+        {
+            return damage;
+        }
+    }
+
     #endregion
 
 }

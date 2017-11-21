@@ -13,6 +13,8 @@ public class SwitchActions : MonoBehaviour
     public float gridY = 5f;
     public float spacing = 2f;
 
+    private LevelManager levelManager;
+
     public SwitchActions(GroupOfSwitchs group)
     {
         this.groupId = group.groupId;
@@ -192,9 +194,7 @@ public class SwitchActions : MonoBehaviour
 
             /* Aquí Comienzan Acciones Escena Tutorial*/
 
-            /* Start Switches Mage */
-
-            case 9:     // Primeros peldaños para mage
+            case 9:     // Primeros peldaños
                 GameObject particleFeedback = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
                 particleFeedback.transform.position = new Vector2(26.5f, -43.6f);
                 GameObject primerPlat = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
@@ -222,50 +222,16 @@ public class SwitchActions : MonoBehaviour
                 break;
 
 
-            case 12:    // disparo primeros 2 switch. 
-                GameObject lilPlatform = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                lilPlatform.transform.position = new Vector2(44.1f, 3.75f);
+            case 12:    // OpenPaths
+                GameObject tutorialPath = (GameObject)Instantiate(Resources.Load("Prefabs/TutorialPaths"));
+                tutorialPath.transform.position = new Vector2(35.61f, -38.95f);
                 break;
 
             case 13:    // Disparo tercer switch
-                GameObject lilMovPlatform = (GameObject)Instantiate(Resources.Load("Prefabs/MovPlatform"));
-                lilMovPlatform.transform.position = new Vector2(43.1f, 3.7f);
-                MovingObject movPlat1 = lilMovPlatform.GetComponent<MovingObject>();
-                movPlat1.startPoint = new Vector2(43.1f, 3.7f);
-                movPlat1.endPoint = new Vector2(43.1f, 7f);
-                movPlat1.moveSpeed = 1f;
-                break;
-
-            case 14:   // Dispar Switches que se mueven
-                GameObject lilMovPlatform2 = (GameObject)Instantiate(Resources.Load("Prefabs/MovPlatform"));
-                lilMovPlatform2.transform.position = new Vector2(35.5f, 6.72f);
-                MovingObject movPlat2 = lilMovPlatform2.GetComponent<MovingObject>();
-                movPlat2.startPoint = new Vector2(36.5f, 6.72f);
-                movPlat2.endPoint = new Vector2(36.5f, 9.35f);
-                movPlat2.moveSpeed = 1f;
-                break;
-
-            case 15:
-                GameObject lilPlatform2 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                lilPlatform2.transform.position = new Vector2(40.03f, 12.17f);
-                GameObject lilPlatform3 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                lilPlatform3.transform.position = new Vector2(38.6f, 11.58f);
-                //GameObject hojasArbol = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/HojasPlat"));
-                //hojasArbol.transform.position = new Vector2(35.55f, 12.03f);
-                break;
-
-            case 16:
-                GameObject lilMovPlatform3 = (GameObject)Instantiate(Resources.Load("Prefabs/MovPlatform"));
-                lilMovPlatform3.transform.position = new Vector2(50.35f, 14f);
-                MovingObject movPlat3 = lilMovPlatform3.GetComponent<MovingObject>();
-                movPlat3.startPoint = new Vector2(50.35f, 14f);
-                movPlat3.endPoint = new Vector2(50.35f, 21f);
-                movPlat3.moveSpeed = 1.2f;
-                GameObject plataformaFinal = (GameObject)Instantiate(Resources.Load("Prefabs/PlataformaPastVoladora"));
-                plataformaFinal.transform.position = new Vector2(48.37f, 21f);
-                break;
-
-            default:
+                {
+                    levelManager.localPlayer.respawnPosition = new Vector3(136.15f, -26.33f, 1f);
+                    levelManager.Respawn();
+                }
                 break;
 
                 //GameObject tevoyamataroe = GameObject.FindGameObjectWithTag ("plataforma1");
