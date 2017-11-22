@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+
+    #region Attributes
+
     public Vector2[] patrollingPoints;
     public CircleCollider2D alertZone;
 
@@ -32,6 +35,8 @@ public class EnemyController : MonoBehaviour
     protected static float WaitToDie = 1f;
     protected static float maxYSpeed = 0f;
 
+    #endregion
+    
     #region Update & Start
 
     protected virtual void Start()
@@ -65,7 +70,7 @@ public class EnemyController : MonoBehaviour
 
     #endregion
 
-    #region Common methods
+    #region Common
 
     protected void Attack(GameObject player)
     {
