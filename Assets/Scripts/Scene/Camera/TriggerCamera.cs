@@ -2,53 +2,67 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TriggerCamera : MonoBehaviour {
+public class TriggerCamera : MonoBehaviour
+{
 
-	public float ortographic_size;
-	public CameraState state;
-	public float targetX;
-	public float targetY;
+    #region Attributes
+
+    public CameraState state;
     public GameObject target;
-	public bool sinChat;
 
-    // Use this for initialization
-    void Start()
+    public float ortographic_size;
+    public bool hideChat;
+
+    #endregion
+
+    #region Common 
+
+    private void OnEnter()
     {
-        if (target != null)
+
+        GameObject camera = GameObject.FindGameObjectWithTag("MainCamera"); // TODO: Change this to obj name
+        CameraController cameraController = camera.GetComponent<CameraController>();
+
+        cameraController.ChangeState(state, ortographic_size, target.transform.position.x, target.transform.position.y, hideChat);
+        if (state == CameraState.TargetZoom)
         {
-            targetX = target.transform.position.x;
-            targetY = target.transform.position.y;          
+            Destroy(this.gameObject);
         }
     }
 
-	private void OnEnter(){
-		GameObject camaraObject = GameObject.FindGameObjectWithTag ("MainCamera");
-		CameraController camaraScript = camaraObject.GetComponent<CameraController> ();
-		camaraScript.ChangeState (state, ortographic_size,targetX,targetY,sinChat);
-		if (state == CameraState.TargetZoom) {
-			Destroy (this.gameObject);
-		}
-	}
+    private void OnExit()
+    {
 
-	private void OnExit(){
-		GameObject camaraObject = GameObject.FindGameObjectWithTag ("MainCamera");
-		CameraController camaraScript = camaraObject.GetComponent<CameraController> ();
-		camaraScript.ChangeState (CameraState.Normal, 0,0,0, false);
+        GameObject camera = GameObject.FindGameObjectWithTag("MainCamera"); // TODO: Change this to obj name
+        CameraController cameraController = camera.GetComponent<CameraController>();
 
-	}
+        cameraController.ChangeState(CameraState.Normal, 0, 0, 0, false);
 
-	public void OnTriggerEnter2D(Collider2D other)
-	{
-		if (GameObjectIsPlayer(other.gameObject)) {
-			OnEnter ();
-		}
-	}
+    }
+    
+    #endregion
 
-	public void OnTriggerExit2D(Collider2D other){
-		if (GameObjectIsPlayer(other.gameObject)) {
-			OnExit ();
-		}
-	}
+    #region Events
+
+    public void OnTriggerEnter2D(Collider2D other)
+    {
+        if (GameObjectIsPlayer(other.gameObject))
+        {
+            OnEnter();
+        }
+    }
+
+    public void OnTriggerExit2D(Collider2D other)
+    {
+        if (GameObjectIsPlayer(other.gameObject))
+        {
+            OnExit();
+        }
+    }
+
+    #endregion
+
+    #region Utils
 
     protected bool GameObjectIsPlayer(GameObject other)
     {
@@ -56,8 +70,5 @@ public class TriggerCamera : MonoBehaviour {
         return playerController && playerController.localPlayer;
     }
 
-    // Update is called once per frame
-    void Update () {
-		
-	}
+    #endregion
 }
