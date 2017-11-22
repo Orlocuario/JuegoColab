@@ -5,6 +5,8 @@ using UnityEngine;
 public class AttackController : MonoBehaviour
 {
 
+    #region Attributes
+
     protected Collider2D gameObjectCollider;
     protected PlayerController caster;
 
@@ -12,10 +14,16 @@ public class AttackController : MonoBehaviour
 
     protected float currentDistance;
     protected float maxDistance;
+    protected bool initialized;
+    protected bool isMoving;
     protected int direction;
+    protected bool enhanced;
     protected float speed;
     protected int damage;
-    protected bool moves;
+
+    #endregion
+
+    #region Start & Update
 
     protected virtual void Start()
     {
@@ -24,42 +32,47 @@ public class AttackController : MonoBehaviour
 
         gameObjectCollider = gameObject.GetComponent<Collider2D>();
 
-        IgnoreCollisionWithObjects();
         IgnoreCollisionWithPlayers();
     }
 
-    protected void IgnoreCollisionWithObjects()
+
+    protected virtual void Update()
     {
-       
+        if (isMoving)
+        {
+            Move();
+        }
     }
 
-    protected void IgnoreCollisionWithPlayers()
-    {
-        Physics2D.IgnoreCollision(gameObjectCollider, Client.instance.GetMage().GetComponent<Collider2D>());
-        Physics2D.IgnoreCollision(gameObjectCollider, Client.instance.GetWarrior().GetComponent<Collider2D>());
-        Physics2D.IgnoreCollision(gameObjectCollider, Client.instance.GetEngineer().GetComponent<Collider2D>());
-    }
+    #endregion
 
-    public void SetMovement(int _direction, float _speed, float initialX, float initialY, PlayerController _caster)
+    #region Common
+
+    public void Initialize(PlayerController _caster)
     {
-        direction = _direction;
+        enhanced = _caster.isPowerOn;
         caster = _caster;
-        speed = _speed;
-        moves = true;
 
-        transform.position = new Vector2(initialX + (direction * 0.0001f), initialY);
+        initialized = true;
+    }
+
+    public void SetMovement(int _direction, float _speed, Vector2 initialPosition)
+    {
+        if (!initialized)
+        {
+            Debug.Log("Initialize attacks before moving them");
+            return;
+        }
+
+        direction = _direction;
+        speed = _speed;
+        isMoving = true;
+
+        transform.position = new Vector2(initialPosition.x + (direction * 0.0001f), initialPosition.y);
 
         if (direction == -1)
         {
             transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
-        }
-    }
-
-    protected virtual void Update()
-    {
-        if (moves)
-        {
-            Move();
         }
     }
 
@@ -94,6 +107,17 @@ public class AttackController : MonoBehaviour
         return damage;
     }
 
+    #endregion
+
+    #region Utils
+
+    protected void IgnoreCollisionWithPlayers()
+    {
+        Physics2D.IgnoreCollision(gameObjectCollider, Client.instance.GetMage().GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(gameObjectCollider, Client.instance.GetWarrior().GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(gameObjectCollider, Client.instance.GetEngineer().GetComponent<Collider2D>());
+    }
+
     protected bool IsCasterLocal()
     {
         return caster.localPlayer;
@@ -103,6 +127,10 @@ public class AttackController : MonoBehaviour
     {
         return other.GetComponent<EnemyController>();
     }
+
+    #endregion
+
+    #region Events
 
     protected void OnCollisionEnter2D(Collision2D collision)
     {
@@ -115,4 +143,5 @@ public class AttackController : MonoBehaviour
         Destroy(this.gameObject, destroyDelayTime);
     }
 
+    #endregion
 }

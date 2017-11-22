@@ -4,21 +4,26 @@ using UnityEngine;
 
 public class MovingObject : MonoBehaviour
 {
+
+    #region Attributes
+
     public Vector2 startPoint;
     public Vector2 endPoint;
 
+    public bool dontCollideWithPlayers;
     public float moveSpeed;
 
     private Vector3 currentTarget;
 
-    public bool dontCollideWithPlayers; 
+    #endregion
 
-    // Use this for initialization
+    #region Start & Update
+
     protected virtual void Start()
     {
         if (dontCollideWithPlayers)
         {
-            IgnoreCollisionWithPlayers();   
+            IgnoreCollisionWithPlayers();
         }
 
         if (endPoint != null)
@@ -28,7 +33,6 @@ public class MovingObject : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (currentTarget == null || startPoint == null || endPoint == null)
@@ -50,6 +54,10 @@ public class MovingObject : MonoBehaviour
 
     }
 
+    #endregion
+
+    #region Utils
+
     private void IgnoreCollisionWithPlayers()
     {
         Collider2D collider = GetComponent<Collider2D>();
@@ -61,5 +69,32 @@ public class MovingObject : MonoBehaviour
         Physics2D.IgnoreCollision(collider, player2.GetComponent<Collider2D>());
         Physics2D.IgnoreCollision(collider, player3.GetComponent<Collider2D>());
     }
+
+    protected bool GameObjectIsPlayer(GameObject other)
+    {
+        return other.GetComponent<PlayerController>();
+    }
+
+    #endregion
+
+    #region Events
+
+    protected void OnCollisionEnter2D(Collision2D other)
+    {
+        if (GameObjectIsPlayer(other.gameObject))
+        {
+            other.transform.parent = transform;
+        }
+    }
+
+    protected void OnCollisionExit2D(Collision2D other)
+    {
+        if (GameObjectIsPlayer(other.gameObject))
+        {
+            other.transform.parent = null;
+        }
+    }
+
+    #endregion
 
 }

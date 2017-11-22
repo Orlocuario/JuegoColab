@@ -6,11 +6,7 @@ public class PunchController : AttackController
 {
     #region Attributes
 
-    private CircleCollider2D collider2d;
-    private ParticleSystem particles;
-
     private static Vector2 attackForce = new Vector2(2000f, 100f);
-    private static float maxColliderRadius = .25f;
 
     #endregion
 
@@ -18,17 +14,15 @@ public class PunchController : AttackController
 
     protected override void Start()
     {
-        //particles = this.gameObject.GetComponent <ParticleSystem> ();
+
         base.Start();
         maxDistance = 3f;
-        collider2d = GetComponent<CircleCollider2D>();
     }
 
     protected override void Update()
     {
         base.Update();
-        //collider2d.radius = (currentDistance / maxDistance) * maxColliderRadius;
-        //particles.shape.radius = (currentDistance / maxDistance) * maxColliderRadius;
+        
     }
 
     #endregion
@@ -39,12 +33,9 @@ public class PunchController : AttackController
     {
         DestroyableObject destroyable = other.GetComponent<DestroyableObject>();
 
-        if (destroyable.reinforced)
+        if (destroyable.reinforced && !enhanced)
         {
-            if (!caster.isPowerOn)
-            {
-                return;
-            }
+            return;
         }
 
         destroyable.DestroyMe(true);
@@ -56,7 +47,7 @@ public class PunchController : AttackController
         MovableObject movable = other.GetComponent<MovableObject>();
         Vector2 force = attackForce;
 
-        if (caster.isPowerOn)
+        if (enhanced)
         {
             force *= 100;
         }

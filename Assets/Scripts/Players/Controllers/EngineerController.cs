@@ -12,24 +12,18 @@ public class EngineerController : PlayerController
 
     #endregion
 
-    #region Common
-
-    public override void CastLocalAttack()
-    {
-        isAttacking = true;
-        currentAttack = "Attacking";
-
-        GameObject proyectile = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Arrow"));
-        ProyectileController controller = proyectile.GetComponent<ProyectileController>();
-        controller.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
-
-        StartCoroutine(WaitAttacking());
-        AnimateAttack();
-    }
-
-    #endregion
-
     #region Utils
+
+    protected override AttackController GetAttack()
+    {
+        var attackType = new ProyectileController().GetType();
+        string attackName = "Arrow";
+
+        GameObject attackObject = (GameObject)Instantiate(Resources.Load(attackPrefabName + attackName));
+        ProyectileController attackController = (ProyectileController)attackObject.GetComponent(attackType);
+
+        return attackController;
+    }
 
     protected override bool IsJumping(bool isGrounded)
     {

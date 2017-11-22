@@ -25,8 +25,6 @@ public class SpiderController : EnemyController
 
         lastPosition = transform.position;
 
-        Debug.Log("SPIDER INITIAL POSITION " + lastPosition);
-
         base.Start();
     }
 

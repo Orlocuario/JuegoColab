@@ -13,7 +13,7 @@ public class RoomLogger
 
     StreamWriter GetWriter()
     {
-        return new StreamWriter(File.Open("Log_room_" +roomId + ".txt", FileMode.Append));
+        return new StreamWriter(File.Open("Log_room_" + roomId + ".txt", FileMode.Append));
     }
 
     public void WriteAttack(int playerId)
@@ -32,7 +32,7 @@ public class RoomLogger
         }
         else
         {
-            writer.WriteLine("Player " + playerId + "stopped using his power\n");
+            writer.WriteLine("Player " + playerId + " stopped using his power\n");
         }
         writer.Close();
     }

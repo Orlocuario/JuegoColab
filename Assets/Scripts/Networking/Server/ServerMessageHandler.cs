@@ -472,8 +472,8 @@ public class ServerMessageHandler
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
-        room.log.WriteAttack(player.charId);
         room.SendMessageToAllPlayersExceptOne(message, connectionId,false);
+        room.log.WriteAttack(player.charId);
     }
 
     public void SendPowerState(string message, int connectionId, string[] data)
@@ -481,7 +481,7 @@ public class ServerMessageHandler
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         player.power = bool.Parse(data[2]);
-        room.log.WritePower(player.charId, player.power);
         room.SendMessageToAllPlayersExceptOne(message, connectionId,false);
+        room.log.WritePower(player.charId, player.power);
     }
 }

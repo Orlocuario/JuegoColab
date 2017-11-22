@@ -11,36 +11,21 @@ public class WarriorController : PlayerController
 
     #endregion
 
-    #region Common
+    #region Utils
 
-    public override void CastLocalAttack()
+    protected override AttackController GetAttack()
     {
-        isAttacking = true;
-        if (isPowerOn)
-        {
-            GameObject punch = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/SuperPunch"));
-            PunchController SuperPunchController = punch.GetComponent<PunchController>();
-            SuperPunchController.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
-        }
-        else
-        {
-            GameObject punch = (GameObject)Instantiate(Resources.Load("Prefabs/Attacks/Punch"));
-            PunchController punchController = punch.GetComponent<PunchController>();
-            punchController.SetMovement(directionX, attackSpeed, transform.position.x, transform.position.y, this);
-        }
 
-        StartCoroutine(WaitAttacking());
+        attackAnimName = (attacks++ % 2 == 0) ? "Attacking2" : "Attacking";
 
-        if (attacks++ % 2 == 0)
-        {
-            currentAttack = "Attacking2";
-        }
-        else
-        {
-            currentAttack = "Attacking";
-        }
+        string attackName = (isPowerOn) ? "SuperPunch" : "Punch";
+        var attackType = new PunchController().GetType();
 
-        AnimateAttack();
+
+        GameObject attackObject = (GameObject)Instantiate(Resources.Load(attackPrefabName + attackName));
+        PunchController attackController = (PunchController)attackObject.GetComponent(attackType);
+
+        return attackController;
     }
 
     #endregion

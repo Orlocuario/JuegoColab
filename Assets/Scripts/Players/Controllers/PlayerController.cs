@@ -17,14 +17,7 @@ public class PlayerController : MonoBehaviour
     public Transform groundCheck;
     public GameObject parent;
 
-    public static float maxAcceleration = 1; //100% del speed
-    public static float attackRate = .25f;
-    public static float mpSpendRate = -1; // Cuanto mp se gasta cada vez
-    public static float maxXSpeed = 3.5f;
-    public static float maxYSpeed = 8f;
-    public static int mpUpdateRate = 30; // Cada cuantos frames se actualiza el HP y MP display
-
-    // Used to synchronize data from the server
+    // Remote data
     public bool remoteAttacking;
     public bool remoteJumping;
     public bool remoteRight;
@@ -41,7 +34,7 @@ public class PlayerController : MonoBehaviour
 
     public bool controlOverEnemies;
     public float groundCheckRadius;
-    public bool canAccelerate; //Limita la aceleración a la mitad de los frames
+    public bool canAccelerate;
     public float acceleration;
     public float actualSpeed;
     public int mpUpdateFrame;
@@ -59,8 +52,21 @@ public class PlayerController : MonoBehaviour
     protected Vector3 lastPosition;
     protected Rigidbody2D rb2d;
 
+    // Statics
+    protected static float maxAcceleration = 1;
+    protected static float takeDamageRate = 1f;
+    protected static float attackRate = .25f;
+    protected static float maxXSpeed = 3.5f;
+    protected static float maxYSpeed = 8f;
+
+    protected static string attackPrefabName = "Prefabs/Attacks/";
+
+    protected static int mpUpdateFrameRate = 30;
+    protected static int mpSpendRate = -1;
     protected static int attackSpeed = 4;
-    protected string currentAttack;
+
+    protected string attackAnimName;
+    protected bool isTakingDamage;
     protected bool isAttacking;
     protected bool conectado;
     protected bool canMove;
@@ -68,7 +74,6 @@ public class PlayerController : MonoBehaviour
     protected float speedY;
 
     protected int debuger;
-
     #endregion
 
     #region Start & Update
@@ -87,6 +92,8 @@ public class PlayerController : MonoBehaviour
         rb2d = GetComponent<Rigidbody2D>();
 
         respawnPosition = transform.position;
+
+        attackAnimName = "Attacking";
 
         controlOverEnemies = false;
         canAccelerate = false;
@@ -149,25 +156,18 @@ public class PlayerController : MonoBehaviour
         this.characterId = charId;
         sprite = GetComponent<SpriteRenderer>();
 
-        if (this.characterId == 0)
-        {
-            Chat.instance.EnterFunction("Mage: Ha Aparecido!");
-        }
-        if (this.characterId == 1)
-        {
-            Chat.instance.EnterFunction("Warrior: Ha Aparecido!");
-        }
-        else if (this.characterId == 2)
-        {
-            Chat.instance.EnterFunction("Engineer: Ha Aparecido!");
-        }
-
         if (sprite)
         {
             sprite.sortingOrder = sortingOrder + 1;
         }
 
+        if (Chat.instance)
+        {
+            Chat.instance.EnterFunction(name + ": Ha Aparecido!");
+        }
+
     }
+
     protected void Attack()
     {
 
@@ -193,7 +193,14 @@ public class PlayerController : MonoBehaviour
 
     public virtual void CastLocalAttack()
     {
-        throw new NotImplementedException("Every player must implement a public CastLocalAttack method");
+        isAttacking = true;
+
+        AttackController attack = GetAttack();
+        attack.Initialize(this);
+        attack.SetMovement(directionX, attackSpeed, transform.position);
+
+        StartCoroutine(WaitAttacking());
+        AnimateAttack();
     }
 
     public virtual void StopMoving()
@@ -370,7 +377,7 @@ public class PlayerController : MonoBehaviour
                 if (isPowerOn)
                 {
 
-                    if (mpUpdateFrame == mpUpdateRate)
+                    if (mpUpdateFrame == mpUpdateFrameRate)
                     {
                         levelManager.hpAndMp.ChangeMP(mpSpendRate); // Change local
                         SendMPDataToServer(); // Change remote
@@ -389,13 +396,17 @@ public class PlayerController : MonoBehaviour
 
     public void TakeDamage(int damage, Vector2 force)
     {
+        if (isTakingDamage)
+        {
+            return;
+        }
+
+        isTakingDamage = true;
 
         if (force.x != 0 || force.y != 0)
         {
-            rb2d.AddForce(force);
-
-            string message = "PlayerTookDamage/" + characterId + "/" + force.x + "/" + force.y;
-            SendMessageToServer(message);
+            rb2d.AddForce(force); // Take force local
+            SendMessageToServer("PlayerTookDamage/" + characterId + "/" + force.x + "/" + force.y); // Take force remote
         }
 
         if (damage != 0)
@@ -407,13 +418,13 @@ public class PlayerController : MonoBehaviour
                 damage *= -1;
             }
 
-            levelManager.hpAndMp.ChangeHP(damage); // Change local
-            string message = "ChangeHpHUDToRoom/" + damage;
-            SendMessageToServer(message); // Change remote
+            levelManager.hpAndMp.ChangeHP(damage); // Change local HP
+            SendMessageToServer("ChangeHpHUDToRoom/" + damage); // Change remote HP
 
         }
 
-        AnimateDamage();
+        StartCoroutine(WaitTakingDamage());
+        AnimateTakingDamage();
 
     }
 
@@ -434,6 +445,9 @@ public class PlayerController : MonoBehaviour
 
     #region Utils
 
+    // All related with debugging processes
+    #region Debugging
+
     protected void DebugDrawDistance(float distance)
     {
         DebugDrawDistance(distance, Color.blue);
@@ -451,6 +465,29 @@ public class PlayerController : MonoBehaviour
         Debug.DrawLine(transform.position, right, color);
         Debug.DrawLine(transform.position, down, color);
     }
+
+    #endregion
+
+    // Set variables in their default state
+    #region Initializers
+
+    public void IgnoreCollisionBetweenPlayers()
+    {
+        Collider2D collider = GetComponent<Collider2D>();
+
+        GameObject player1 = GameObject.Find("Mage");
+        GameObject player2 = GameObject.Find("Warrior");
+        GameObject player3 = GameObject.Find("Engineer");
+        Physics2D.IgnoreCollision(collider, player1.GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(collider, player2.GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(collider, player3.GetComponent<Collider2D>());
+    }
+
+    #endregion
+
+    // Validate for player conditions
+    #region Validations
+
 
     protected bool IsGoingRight()
     {
@@ -544,22 +581,15 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public void IgnoreCollisionBetweenPlayers()
-    {
-        Collider2D collider = GetComponent<Collider2D>();
-
-        GameObject player1 = GameObject.Find("Mage");
-        GameObject player2 = GameObject.Find("Warrior");
-        GameObject player3 = GameObject.Find("Engineer");
-        Physics2D.IgnoreCollision(collider, player1.GetComponent<Collider2D>());
-        Physics2D.IgnoreCollision(collider, player2.GetComponent<Collider2D>());
-        Physics2D.IgnoreCollision(collider, player3.GetComponent<Collider2D>());
-    }
-
     protected bool GameObjectIsPOI(GameObject other)
     {
         return other.GetComponent<PlannerPoi>();
     }
+
+    #endregion
+
+    // Set player data from other classes
+    #region Remote Setters
 
     public void SetPowerState(bool power)
     {
@@ -598,6 +628,11 @@ public class PlayerController : MonoBehaviour
         CastLocalAttack();
     }
 
+    #endregion
+
+    // Manage particles
+    #region Particles
+
     protected void InitializeParticles()
     {
         ParticleSystem[] _particles = GetComponentsInChildren<ParticleSystem>();
@@ -629,22 +664,38 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    #endregion
+
+    // Manage animations
+    #region Animations
+
     protected void AnimateAttack()
     {
-
-        if (sceneAnimator && currentAttack != null)
+        if (sceneAnimator && attackAnimName != null)
         {
-            StartCoroutine(sceneAnimator.StartAnimation(currentAttack, this.gameObject));
+            StartCoroutine(sceneAnimator.StartAnimation(attackAnimName, this.gameObject));
         }
     }
 
-    protected void AnimateDamage()
+    protected void AnimateTakingDamage()
     {
         if (sceneAnimator)
         {
             StartCoroutine(sceneAnimator.StartAnimation("TakingDamage", this.gameObject));
         }
     }
+
+    #endregion
+
+    // Doh...
+    #region Attacks
+
+    protected virtual AttackController GetAttack()
+    {
+        throw new NotImplementedException("Every player must implement a GetAttack method");
+    }
+
+    #endregion
 
     #endregion
 
@@ -669,23 +720,6 @@ public class PlayerController : MonoBehaviour
                 Planner planner = FindObjectOfType<Planner>();
                 planner.Monitor();
             }
-        }
-    }
-
-    protected void OnCollisionEnter2D(Collision2D other)
-    {
-        if (other.gameObject.tag == "MovingPlatform")
-        {
-            Debug.Log(other.gameObject.name);
-            transform.parent = other.transform;
-        }
-    }
-
-    protected void OnCollisionExit2D(Collision2D other)
-    {
-        if (other.gameObject.tag == "MovingPlatform")
-        {
-            transform.parent = null;
         }
     }
 
@@ -748,6 +782,12 @@ public class PlayerController : MonoBehaviour
     {
         yield return new WaitForSeconds(attackRate);
         isAttacking = false;
+    }
+
+    public IEnumerator WaitTakingDamage()
+    {
+        yield return new WaitForSeconds(takeDamageRate);
+        isTakingDamage = false;
     }
 
     #endregion
