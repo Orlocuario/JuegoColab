@@ -49,16 +49,16 @@ public class SwitchActions : MonoBehaviour
                 //hintPart.living = false;
                 break;
 
-            case 1:
-                GameObject rejaEng = GameObject.FindGameObjectWithTag("RejaRocaEng");
-                rejaEng.SetActive(false);
-                Roca roca = GameObject.FindGameObjectWithTag("rocaCaida").GetComponent<Roca>();
-                roca.isReady = true;
-                GameObject particleRoca = (GameObject)Instantiate(Resources.Load("Prefabs/ParticulasMageRoca"));
-                CajaSwitch caja = GameObject.FindGameObjectWithTag("CajaSwitchFierro").GetComponent<CajaSwitch>();
-                caja.meVoy = true;
-                caja.ahoraMeVoy = true;
-                GameObject spikes = GameObject.FindGameObjectWithTag("KillPlaneSpikes");
+		case 1:
+			GameObject rejaEng = GameObject.FindGameObjectWithTag ("RejaRocaEng");
+			rejaEng.SetActive (false);
+			Roca roca = GameObject.FindGameObjectWithTag ("rocaCaida").GetComponent<Roca> ();
+			roca.isReady = true;
+			GameObject particleRoca = (GameObject)Instantiate (Resources.Load ("Prefabs/ParticulasMageRoca"));
+			CajaSwitch caja = GameObject.FindGameObjectWithTag ("CajaSwitchFierro").GetComponent<CajaSwitch> ();
+			caja.meVoy = true;
+			caja.ahoraMeVoy = true;
+			GameObject spikes = GameObject.Find ("SpikesDead");
                 Destroy(spikes);
                 GameObject lavaPool = GameObject.Find("LavaPool");
                 Destroy(lavaPool, 1f);
