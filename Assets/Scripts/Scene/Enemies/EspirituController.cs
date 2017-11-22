@@ -5,6 +5,8 @@ using UnityEngine;
 public class EspirituController : EnemyController
 {
 
+    #region Start & Update
+
     protected override void Start()
     {
         force = new Vector2(1500f, 200f);
@@ -16,11 +18,14 @@ public class EspirituController : EnemyController
     protected override void Update()
     {
         base.Update();
+
         if (patrolling)
         {
             Patroll();
         }
 
     }
+
+    #endregion
 
 }
