@@ -241,15 +241,21 @@ public class ClientMessageHandler
             if (enemies == null)
             {
                 enemies = GameObject.FindObjectsOfType<EnemyController>();
+				Debug.Log ("Not controller player found " + enemies.Length +  " enemies");
             }
 
             foreach (EnemyController enemy in enemies)
             {
-                if (enemy.gameObject.GetInstanceID() == instanceId)
-                {
-                    enemy.Initialize(enemyId, directionX, posX, posY);
-                    registered = true;
-                }
+				if (enemy) {
+
+					if (enemy.gameObject.GetInstanceID () == instanceId) {
+						enemy.Initialize (enemyId, directionX, posX, posY);
+						registered = true;
+					}
+				} else {
+
+					Debug.Log ("Enemy is null mdfk");
+				}
             }
         }
 
