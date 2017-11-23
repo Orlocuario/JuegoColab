@@ -188,9 +188,9 @@ public class SwitchActions : MonoBehaviour
                 GameObject particleFeedback = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
                 particleFeedback.transform.position = new Vector2(26.5f, -43.6f);
                 GameObject primerPlat = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                primerPlat.transform.position = new Vector2(23f, -43.5f);
+				primerPlat.transform.position = new Vector2(24.78f, -42.31f);
                 GameObject primerPlat2 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                primerPlat2.transform.position = new Vector2(23.4f, -42.3f);
+				primerPlat2.transform.position = new Vector2(24.78f, -43.16f);
                     
                 break;
 
@@ -199,7 +199,7 @@ public class SwitchActions : MonoBehaviour
                 GameObject particleFeedback2 = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));
                 particleFeedback2.transform.position = new Vector2(26.5f, -42.11f);
                 GameObject secondPlat = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                secondPlat.transform.position = new Vector2(23f, -41.2f);
+				secondPlat.transform.position = new Vector2(24.86f, -41.2f);
                 //GameObject primerPlat2 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
                 //primerPlat2.transform.position = new Vector2(23.4f, -42.3f);
 
@@ -208,7 +208,7 @@ public class SwitchActions : MonoBehaviour
 
             case 11:    // peldaño 3rd Switch + Exp
                 GameObject secondPlat1 = (GameObject)Instantiate(Resources.Load("Prefabs/SueloMetalFlotante"));
-                secondPlat1.transform.position = new Vector2(24.3f, -40.5f);
+			secondPlat1.transform.position = new Vector2(26.11f, -40.40f);
                 break;
 
 
