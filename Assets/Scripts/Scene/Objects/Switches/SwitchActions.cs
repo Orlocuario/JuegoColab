@@ -214,13 +214,17 @@ public class SwitchActions : MonoBehaviour
 
             case 12:    // OpenPaths
                 GameObject tutorialPath = (GameObject)Instantiate(Resources.Load("Prefabs/TutorialPaths"));
-                tutorialPath.transform.position = new Vector2(35.61f, -38.95f);
+                tutorialPath.transform.position = new Vector2(36f, -38.95f);
                 break;
 
-            case 13:    // Disparo tercer switch
+            case 13:    // to the end of scene
                 {
+				Debug.Log ("Se activaron los Switch");
+				levelManager = GameObject.FindObjectOfType<LevelManager> ();
                     levelManager.localPlayer.respawnPosition = new Vector3(136.15f, -26.33f, 1f);
+				Debug.Log (levelManager.localPlayer.respawnPosition); 
                     levelManager.Respawn();
+				Debug.Log ("Respawnnnnnnnnnn");
                 }
                 break;
 

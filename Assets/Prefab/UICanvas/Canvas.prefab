@@ -3115,7 +3115,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1881762048333030}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 5.6, z: 0}
+  m_LocalPosition: {x: 0, y: 1.4, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224259330610966868}
@@ -3395,7 +3395,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 224778047549112364}
   m_Direction: 2
   m_Value: 0
-  m_Size: 0.9625553
+  m_Size: 0.95873785
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -6073,8 +6073,8 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 114344928636780258}
   m_HandleRect: {fileID: 224149887091853124}
   m_Direction: 2
-  m_Value: 1
-  m_Size: 0.9999985
+  m_Value: 0
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -8675,7 +8675,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 224491215660928208}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.99999946
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -9402,7 +9402,7 @@ MonoBehaviour:
   m_HandleRect: {fileID: 224786771613704100}
   m_Direction: 2
   m_Value: 1
-  m_Size: 0.9999996
+  m_Size: 1
   m_NumberOfSteps: 0
   m_OnValueChanged:
     m_PersistentCalls:
@@ -11569,7 +11569,7 @@ ParticleSystem:
   simulationSpeed: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   autoRandomSeed: 1
   startDelay:
     scalar: 0
@@ -11789,7 +11789,7 @@ ParticleSystem:
       maxColor: {r: 0.09411765, g: 1, b: 0.44313726, a: 1}
       minMaxState: 0
     startSize:
-      scalar: 0.8
+      scalar: 0.2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -14206,7 +14206,7 @@ ParticleSystem:
   simulationSpeed: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 0
+  playOnAwake: 1
   autoRandomSeed: 1
   startDelay:
     scalar: 0
@@ -14250,7 +14250,7 @@ ParticleSystem:
   moveWithTransform: 0
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 2
-  randomSeed: -115198206
+  randomSeed: 1477954750
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -14426,7 +14426,7 @@ ParticleSystem:
       maxColor: {r: 0.4627451, g: 0.09411765, b: 1, a: 1}
       minMaxState: 0
     startSize:
-      scalar: 0.8
+      scalar: 0.2
       maxCurve:
         serializedVersion: 2
         m_Curve:
@@ -28842,7 +28842,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0.87200004, y: 1}
-  m_AnchoredPosition: {x: 1.6331825, y: -0.0000019073486}
+  m_AnchoredPosition: {x: 1.6332054, y: -0.0000019073486}
   m_SizeDelta: {x: -2.1000004, y: -5.3}
   m_Pivot: {x: 0.081691295, y: -0.00000046952817}
 --- !u!224 &224068228137051098
@@ -30117,7 +30117,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -0.0014862372, y: 0.00000029802322}
+  m_AnchoredPosition: {x: -0.0014862372, y: 0.000036507845}
   m_SizeDelta: {x: -8.600006, y: 0}
   m_Pivot: {x: 0.5, y: 0}
 --- !u!224 &224436273639672216
@@ -30684,7 +30684,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 0.00001866226, y: -0.00005340576}
+  m_AnchoredPosition: {x: -0.00008229619, y: -0.00004196167}
   m_SizeDelta: {x: -2.5, y: 0}
   m_Pivot: {x: 0.5, y: -0.00000020861626}
 --- !u!224 &224579535089914276
@@ -31613,7 +31613,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.006641231, y: 0.027}
   m_AnchorMax: {x: 1, y: 0.96800005}
-  m_AnchoredPosition: {x: -1.1181009, y: -2.6331062}
+  m_AnchoredPosition: {x: -1.3124577, y: -2.622448}
   m_SizeDelta: {x: 0.5, y: 0}
   m_Pivot: {x: 0.5, y: -0.00000020861626}
 --- !u!224 &224905100003533856

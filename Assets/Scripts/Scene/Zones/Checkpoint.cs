@@ -7,7 +7,7 @@ public class Checkpoint : MonoBehaviour
 
     #region Attributes
 
-    public bool activated;
+    private bool activated;
 
     #endregion
 

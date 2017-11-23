@@ -221,7 +221,10 @@ public class ClientMessageHandler
         float posY = float.Parse(msg[5]);
         bool registered = false;
 
-        if (client.GetLocalPlayer() && client.GetLocalPlayer().controlOverEnemies)
+		LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+
+		//Función tablet control over enemies
+		if (levelManager.localPlayer && levelManager.localPlayer.controlOverEnemies)
         {
             registeredEnemies.Add(enemyId);
             registered = true;
@@ -232,7 +235,7 @@ public class ClientMessageHandler
                 EnemiesStartPatrolling();
             }
         }
-
+		//Función tablets sin control over enemies
         else
         {
             if (enemies == null)
