@@ -89,10 +89,9 @@ public class Switch : MonoBehaviour
 	{
 		if (activation == TypeOfActivation.Disparando)
         {
-			LevelManager levelManager = GameObject.FindObjectOfType<LevelManager> ();
-            Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), levelManager.GetMage().gameObject.GetComponent<BoxCollider2D>());
-			Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), levelManager.GetWarrior().gameObject.GetComponent<BoxCollider2D>());
-			Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), levelManager.GetEngineer().gameObject.GetComponent<BoxCollider2D>());
+			Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), GameObject.Find("Mage").GetComponent<BoxCollider2D>());
+			Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), GameObject.Find("Warrior").GetComponent<BoxCollider2D>());
+			Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), GameObject.Find("Engineer").GetComponent<BoxCollider2D>());
         }
 	}
 
