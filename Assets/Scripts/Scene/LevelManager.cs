@@ -174,7 +174,12 @@ public class LevelManager : MonoBehaviour
 
     public void Respawn()
     {
-        StartCoroutine("Respawning");
+        StartCoroutine(Respawning());
+    }
+
+    public void Respawn(PlayerController player)
+    {
+        StartCoroutine(Respawning(player));
     }
 
     public void GoToNextScene()
@@ -364,6 +369,19 @@ public class LevelManager : MonoBehaviour
     #endregion
 
     #region Coroutines
+
+    public IEnumerator Respawning(PlayerController player)
+    {
+        player.StopMoving();
+        player.gameObject.SetActive(false);
+
+        yield return new WaitForSeconds(waitToRespawn * .9f); // Respawn a bit sooner than local
+
+        player.transform.position = player.respawnPosition + Vector3.up * .1f;
+        player.gameObject.SetActive(true);
+        player.IgnoreCollisionBetweenPlayers();
+        player.ResumeMoving();
+    }
 
     public IEnumerator Respawning()
     {

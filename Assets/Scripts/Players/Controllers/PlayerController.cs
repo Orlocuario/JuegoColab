@@ -207,6 +207,7 @@ public class PlayerController : MonoBehaviour
     {
         canMove = false;
         isAttacking = false;
+        isTakingDamage = false;
 
         if (sceneAnimator)
         {

@@ -36,7 +36,7 @@ public class KillingObject : MonoBehaviour
 
     public virtual void SetActive(bool active)
     {
-  
+
         activated = active;
 
         if (!particles)
@@ -55,12 +55,21 @@ public class KillingObject : MonoBehaviour
         }
     }
 
-    protected virtual void Kill(GameObject player)
-    {
+    protected virtual void Kill(GameObject _player)
+    {   
         if (activated)
         {
-            player.GetComponent<PlayerController>().TakeDamage(damage, new Vector2(0, 0));
-            levelManager.Respawn();
+            PlayerController player = _player.GetComponent<PlayerController>();
+
+            if (PlayerIsLocalPlayer(player))
+            {
+                player.TakeDamage(damage, new Vector2(0, 0));
+                levelManager.Respawn();
+            }
+            else
+            {
+                levelManager.Respawn(player);
+            }
         }
     }
 
@@ -83,8 +92,12 @@ public class KillingObject : MonoBehaviour
 
     protected bool GameObjectIsPlayer(GameObject other)
     {
-        PlayerController playerController = other.GetComponent<PlayerController>();
-        return playerController && playerController.localPlayer;
+        return other.GetComponent<PlayerController>();
+    }
+
+    protected bool PlayerIsLocalPlayer(PlayerController player)
+    {
+        return player.localPlayer;
     }
 
     #endregion
