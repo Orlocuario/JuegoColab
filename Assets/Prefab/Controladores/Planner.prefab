@@ -101,7 +101,7 @@ GameObject:
   - component: {fileID: 114603401989433934}
   - component: {fileID: 60993924477744490}
   m_Layer: 0
-  m_Name: poi18
+  m_Name: poi20
   m_TagString: Poi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -123,6 +123,22 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1184015304413734
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4673817051947924}
+  - component: {fileID: 114688905617461192}
+  m_Layer: 0
+  m_Name: Doble1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1225956963966292
 GameObject:
   m_ObjectHideFlags: 1
@@ -134,7 +150,7 @@ GameObject:
   - component: {fileID: 114379722738042936}
   - component: {fileID: 60803167290105030}
   m_Layer: 0
-  m_Name: poi19
+  m_Name: poi21
   m_TagString: Poi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -151,7 +167,7 @@ GameObject:
   - component: {fileID: 114446601884533982}
   - component: {fileID: 60626691385669710}
   m_Layer: 0
-  m_Name: poi8
+  m_Name: poi9
   m_TagString: Poi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -168,6 +184,38 @@ GameObject:
   - component: {fileID: 114095493267500540}
   m_Layer: 0
   m_Name: Rune1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1240778005218646
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4367912382585968}
+  - component: {fileID: 114779907223928698}
+  m_Layer: 0
+  m_Name: Rune3
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1253237097343722
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4175718966421326}
+  - component: {fileID: 114037171716642252}
+  m_Layer: 0
+  m_Name: Door3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -216,7 +264,7 @@ GameObject:
   - component: {fileID: 114971166574145712}
   - component: {fileID: 60942630225930836}
   m_Layer: 0
-  m_Name: poi20
+  m_Name: poi22
   m_TagString: Poi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -233,7 +281,7 @@ GameObject:
   - component: {fileID: 114643426731667950}
   - component: {fileID: 60775438549038060}
   m_Layer: 0
-  m_Name: poi6
+  m_Name: poi7
   m_TagString: Poi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -313,7 +361,7 @@ GameObject:
   - component: {fileID: 114744557833014352}
   - component: {fileID: 60252975199481800}
   m_Layer: 0
-  m_Name: poi14
+  m_Name: poi16
   m_TagString: Poi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -330,8 +378,24 @@ GameObject:
   - component: {fileID: 114779551528022520}
   - component: {fileID: 60303052855483252}
   m_Layer: 0
-  m_Name: poi12
+  m_Name: poi14
   m_TagString: Poi
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1524001414256980
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4544468725466692}
+  - component: {fileID: 114163072546025126}
+  m_Layer: 0
+  m_Name: Obstacle5
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -347,7 +411,7 @@ GameObject:
   - component: {fileID: 114009844825178694}
   - component: {fileID: 60077656067713684}
   m_Layer: 0
-  m_Name: poi5
+  m_Name: poi6
   m_TagString: Poi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -364,7 +428,7 @@ GameObject:
   - component: {fileID: 114522505774348660}
   - component: {fileID: 60654583802425792}
   m_Layer: 0
-  m_Name: poi13
+  m_Name: poi15
   m_TagString: Poi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -397,7 +461,7 @@ GameObject:
   - component: {fileID: 114264597451667784}
   - component: {fileID: 60119725209734850}
   m_Layer: 0
-  m_Name: poi21
+  m_Name: poi23
   m_TagString: Poi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -460,9 +524,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4815815092949704}
   - component: {fileID: 114806187719539802}
-  - component: {fileID: 61314510383339596}
+  - component: {fileID: 60160235265711084}
   m_Layer: 0
-  m_Name: poi9
+  m_Name: poi10
   m_TagString: Poi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -479,6 +543,22 @@ GameObject:
   - component: {fileID: 114307120831410100}
   m_Layer: 0
   m_Name: Step1
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1690522391078838
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4954145945301494}
+  - component: {fileID: 114156787414317798}
+  m_Layer: 0
+  m_Name: Jump4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -527,7 +607,7 @@ GameObject:
   - component: {fileID: 114647847052490356}
   - component: {fileID: 60013766839514370}
   m_Layer: 0
-  m_Name: poi10
+  m_Name: poi12
   m_TagString: Poi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -578,6 +658,23 @@ GameObject:
   m_Layer: 0
   m_Name: pj1
   m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1785063534305018
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4345588380558510}
+  - component: {fileID: 114229655023294656}
+  - component: {fileID: 60146497706572464}
+  m_Layer: 0
+  m_Name: poi5
+  m_TagString: Poi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -642,7 +739,7 @@ GameObject:
   - component: {fileID: 114241592430235798}
   - component: {fileID: 60683071296695040}
   m_Layer: 0
-  m_Name: poi15
+  m_Name: poi17
   m_TagString: Poi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -689,7 +786,7 @@ GameObject:
   - component: {fileID: 114857345128419536}
   - component: {fileID: 60256952004587916}
   m_Layer: 0
-  m_Name: poi11
+  m_Name: poi13
   m_TagString: Poi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -728,6 +825,23 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
+--- !u!1 &1840651261077962
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4273167800788356}
+  - component: {fileID: 114982411114489966}
+  - component: {fileID: 60985776562256888}
+  m_Layer: 0
+  m_Name: poi11
+  m_TagString: Poi
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
 --- !u!1 &1874819785512836
 GameObject:
   m_ObjectHideFlags: 1
@@ -739,7 +853,7 @@ GameObject:
   - component: {fileID: 114979282056907616}
   - component: {fileID: 60500452953925564}
   m_Layer: 0
-  m_Name: poi17
+  m_Name: poi19
   m_TagString: Poi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -772,7 +886,7 @@ GameObject:
   - component: {fileID: 114313641638157780}
   - component: {fileID: 60467127243130118}
   m_Layer: 0
-  m_Name: poi7
+  m_Name: poi8
   m_TagString: Poi
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -805,8 +919,24 @@ GameObject:
   - component: {fileID: 114505108964151748}
   - component: {fileID: 60018620488767272}
   m_Layer: 0
-  m_Name: poi16
+  m_Name: poi18
   m_TagString: Poi
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!1 &1991551716254390
+GameObject:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 4852471635163360}
+  - component: {fileID: 114359473645248176}
+  m_Layer: 0
+  m_Name: Barrier1
+  m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -835,7 +965,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4481325602587676}
-  m_RootOrder: 14
+  m_RootOrder: 16
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4102309895999690
 Transform:
@@ -848,7 +978,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4481325602587676}
-  m_RootOrder: 15
+  m_RootOrder: 17
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4110305632475938
 Transform:
@@ -861,7 +991,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4481325602587676}
-  m_RootOrder: 12
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4134408787335844
 Transform:
@@ -900,7 +1030,20 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4481325602587676}
-  m_RootOrder: 5
+  m_RootOrder: 6
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4175718966421326
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1253237097343722}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4803448300245598}
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4182003045161628
 Transform:
@@ -913,7 +1056,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4803448300245598}
-  m_RootOrder: 3
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4194468967349504
 Transform:
@@ -928,6 +1071,7 @@ Transform:
   - {fileID: 4555041155774076}
   - {fileID: 4446945233298884}
   - {fileID: 4201312430993288}
+  - {fileID: 4367912382585968}
   m_Father: {fileID: 4646481031100090}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -968,7 +1112,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4481325602587676}
-  m_RootOrder: 20
+  m_RootOrder: 22
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4246253948406606
 Transform:
@@ -981,7 +1125,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4803448300245598}
-  m_RootOrder: 9
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4250640165411198
 Transform:
@@ -994,7 +1138,20 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4803448300245598}
-  m_RootOrder: 2
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4273167800788356
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1840651261077962}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 47.61, y: -10.88, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4481325602587676}
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4275448264866312
 Transform:
@@ -1007,7 +1164,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4481325602587676}
-  m_RootOrder: 9
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4282640846682936
 Transform:
@@ -1020,7 +1177,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4803448300245598}
-  m_RootOrder: 8
+  m_RootOrder: 11
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4302857014279336
 Transform:
@@ -1029,7 +1186,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1732398616409594}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 37.32, y: -4.95, z: 0}
+  m_LocalPosition: {x: 26.65, y: 3.08, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4481325602587676}
@@ -1050,6 +1207,7 @@ Transform:
   - {fileID: 4134408787335844}
   - {fileID: 4210420241557716}
   - {fileID: 4579303417249890}
+  - {fileID: 4673817051947924}
   m_Father: {fileID: 4646481031100090}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1066,6 +1224,32 @@ Transform:
   m_Father: {fileID: 4406501837486160}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4345588380558510
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1785063534305018}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 37.32, y: -4.95, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4481325602587676}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4367912382585968
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1240778005218646}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4194468967349504}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4373672794423072
 Transform:
   m_ObjectHideFlags: 1
@@ -1077,7 +1261,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4481325602587676}
-  m_RootOrder: 17
+  m_RootOrder: 19
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4406501837486160
 Transform:
@@ -1106,7 +1290,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4481325602587676}
-  m_RootOrder: 4
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4421988225376508
 Transform:
@@ -1132,7 +1316,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4481325602587676}
-  m_RootOrder: 7
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4446945233298884
 Transform:
@@ -1171,7 +1355,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4803448300245598}
-  m_RootOrder: 7
+  m_RootOrder: 10
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4476065764981888
 Transform:
@@ -1184,7 +1368,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4481325602587676}
-  m_RootOrder: 18
+  m_RootOrder: 20
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4481325602587676
 Transform:
@@ -1200,11 +1384,13 @@ Transform:
   - {fileID: 4021447068572790}
   - {fileID: 4595859168693994}
   - {fileID: 4302857014279336}
+  - {fileID: 4345588380558510}
   - {fileID: 4416485985428844}
   - {fileID: 4160359906855746}
   - {fileID: 4772439256069986}
   - {fileID: 4431093372339090}
   - {fileID: 4815815092949704}
+  - {fileID: 4273167800788356}
   - {fileID: 4275448264866312}
   - {fileID: 4649247112350374}
   - {fileID: 4481868834431890}
@@ -1231,7 +1417,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4481325602587676}
-  m_RootOrder: 11
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4523303186803430
 Transform:
@@ -1244,7 +1430,20 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4481325602587676}
-  m_RootOrder: 19
+  m_RootOrder: 21
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4544468725466692
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1524001414256980}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4803448300245598}
+  m_RootOrder: 14
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4555041155774076
 Transform:
@@ -1270,7 +1469,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4803448300245598}
-  m_RootOrder: 10
+  m_RootOrder: 13
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4579303417249890
 Transform:
@@ -1327,7 +1526,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4481325602587676}
-  m_RootOrder: 10
+  m_RootOrder: 12
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4659345759914030
 Transform:
@@ -1340,7 +1539,20 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4803448300245598}
-  m_RootOrder: 4
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4673817051947924
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1184015304413734}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4302857202620802}
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4695647871154858
 Transform:
@@ -1366,7 +1578,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4481325602587676}
-  m_RootOrder: 16
+  m_RootOrder: 18
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4772439256069986
 Transform:
@@ -1379,7 +1591,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4481325602587676}
-  m_RootOrder: 6
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4789826925894458
 Transform:
@@ -1392,7 +1604,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4803448300245598}
-  m_RootOrder: 5
+  m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4790501738747900
 Transform:
@@ -1419,15 +1631,19 @@ Transform:
   m_Children:
   - {fileID: 4421988225376508}
   - {fileID: 4454145310047530}
+  - {fileID: 4175718966421326}
   - {fileID: 4250640165411198}
   - {fileID: 4182003045161628}
   - {fileID: 4659345759914030}
+  - {fileID: 4954145945301494}
+  - {fileID: 4852471635163360}
   - {fileID: 4789826925894458}
   - {fileID: 4813484431949480}
   - {fileID: 4459232606878470}
   - {fileID: 4282640846682936}
   - {fileID: 4246253948406606}
   - {fileID: 4559119113647690}
+  - {fileID: 4544468725466692}
   m_Father: {fileID: 4646481031100090}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -1442,7 +1658,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4803448300245598}
-  m_RootOrder: 6
+  m_RootOrder: 9
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4815815092949704
 Transform:
@@ -1455,7 +1671,20 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4481325602587676}
-  m_RootOrder: 8
+  m_RootOrder: 9
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4852471635163360
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1991551716254390}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4803448300245598}
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4915580271611826
 Transform:
@@ -1469,6 +1698,19 @@ Transform:
   m_Children: []
   m_Father: {fileID: 4406501837486160}
   m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!4 &4954145945301494
+Transform:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1690522391078838}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 4803448300245598}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!4 &4973181402020902
 Transform:
@@ -1494,7 +1736,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4481325602587676}
-  m_RootOrder: 13
+  m_RootOrder: 15
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!60 &60013766839514370
 PolygonCollider2D:
@@ -1518,9 +1760,9 @@ PolygonCollider2D:
       - {x: 1.1315155, y: -4.288107}
       - {x: -3.7691193, y: -4.2920685}
       - {x: -4.0498505, y: -2.4372644}
-      - {x: -10.331509, y: -0.68830776}
-      - {x: -15.992233, y: -0.6913223}
-      - {x: -15.999832, y: 2.0536346}
+      - {x: -7.496071, y: -0.8908386}
+      - {x: -8.296051, y: -0.4887905}
+      - {x: -6.7509003, y: 1.7835932}
       - {x: -6.0411797, y: 2.1141653}
 --- !u!60 &60018620488767272
 PolygonCollider2D:
@@ -1600,6 +1842,62 @@ PolygonCollider2D:
       - {x: -3.4290771, y: -0.8287859}
       - {x: -3.4371376, y: 0.77712536}
       - {x: -0.12541962, y: 1.1882143}
+--- !u!60 &60146497706572464
+PolygonCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1785063534305018}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  m_Points:
+    m_Paths:
+    - - {x: -15.192528, y: -2.3415928}
+      - {x: -20.345493, y: -2.3957615}
+      - {x: -20.36276, y: -0.9833479}
+      - {x: -16.237957, y: -0.91890144}
+      - {x: -15.912394, y: 0.06102228}
+      - {x: -11.940468, y: -0.04417658}
+      - {x: -12.211433, y: 5.729415}
+      - {x: -3.1626434, y: 5.973033}
+      - {x: -3.2002525, y: 10.406582}
+      - {x: 1.852417, y: 9.073347}
+      - {x: 1.7632141, y: 0.52098274}
+      - {x: 8.321953, y: 0.5520196}
+      - {x: 22.430687, y: 1.0290015}
+      - {x: 22.344788, y: -1.1491828}
+      - {x: 6.3619995, y: -1.2208371}
+      - {x: 6.6643524, y: -2.145471}
+      - {x: 1.1351242, y: -2.1315513}
+      - {x: 1.644455, y: -1.1438046}
+      - {x: -0.9244232, y: -1.1330619}
+      - {x: -4.2316666, y: -5.0486794}
+      - {x: -13.080151, y: -4.9460993}
+      - {x: -13.10273, y: -1.6892576}
+--- !u!60 &60160235265711084
+PolygonCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1658553310675224}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  m_Points:
+    m_Paths:
+    - - {x: 4.185646, y: 1.6751041}
+      - {x: 4.3940887, y: 0.7815895}
+      - {x: 1.4963837, y: -0.2674408}
+      - {x: 1.3979111, y: -1.2815895}
+      - {x: -2.0730057, y: -1.2815895}
+      - {x: -2.233757, y: 1.5242043}
 --- !u!60 &60252975199481800
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -1843,28 +2141,12 @@ PolygonCollider2D:
   m_Offset: {x: 0, y: 0}
   m_Points:
     m_Paths:
-    - - {x: -15.192528, y: -2.3415928}
-      - {x: -20.345493, y: -2.3957615}
-      - {x: -20.36276, y: -0.9833479}
-      - {x: -16.237957, y: -0.91890144}
-      - {x: -15.912394, y: 0.06102228}
-      - {x: -11.940468, y: -0.04417658}
-      - {x: -12.211433, y: 5.729415}
-      - {x: -16.74636, y: 5.525171}
-      - {x: -16.706459, y: 9.042658}
-      - {x: 1.852417, y: 9.073347}
-      - {x: 1.7632141, y: 0.52098274}
-      - {x: 8.321953, y: 0.5520196}
-      - {x: 22.430687, y: 1.0290015}
-      - {x: 22.344788, y: -1.1491828}
-      - {x: 6.3619995, y: -1.2208371}
-      - {x: 6.6643524, y: -2.145471}
-      - {x: 1.1351242, y: -2.1315513}
-      - {x: 1.644455, y: -1.1438046}
-      - {x: -0.9244232, y: -1.1330619}
-      - {x: -4.2316666, y: -5.0486794}
-      - {x: -13.080151, y: -4.9460993}
-      - {x: -13.10273, y: -1.6892576}
+    - - {x: -6.143448, y: 2.215186}
+      - {x: 5.744295, y: 2.199308}
+      - {x: 5.448534, y: -1.5516305}
+      - {x: -1.1278687, y: -1.5516303}
+      - {x: -3.4118423, y: -2.780368}
+      - {x: -5.8118057, y: -2.6614408}
 --- !u!60 &60942630225930836
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -1880,11 +2162,30 @@ PolygonCollider2D:
   m_Points:
     m_Paths:
     - - {x: 4.58136, y: 0.9831791}
-      - {x: 4.6898804, y: -0.20959663}
-      - {x: 1.313385, y: -0.22720146}
-      - {x: 1.0619736, y: 0.17162514}
-      - {x: -4.221939, y: 0.10228729}
-      - {x: -4.280533, y: 1.0926037}
+      - {x: 4.672119, y: -0.70690536}
+      - {x: 1.6863708, y: -0.7245102}
+      - {x: 0.91989136, y: -0.6986656}
+      - {x: 0.4362793, y: -0.30277443}
+      - {x: 0.31017303, y: 0.8225632}
+--- !u!60 &60985776562256888
+PolygonCollider2D:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1840651261077962}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_Offset: {x: 0, y: 0}
+  m_Points:
+    m_Paths:
+    - - {x: 2.2953568, y: 1.6075935}
+      - {x: 2.233757, y: 0.30901718}
+      - {x: 1.0603561, y: -1.2140799}
+      - {x: -2.1405182, y: -1.1465683}
+      - {x: -1.8962021, y: 1.5917139}
 --- !u!60 &60993924477744490
 PolygonCollider2D:
   m_ObjectHideFlags: 1
@@ -1939,20 +2240,6 @@ PolygonCollider2D:
       - {x: -6.903274, y: 3.2206414}
       - {x: -5.1525154, y: 3.4412007}
       - {x: -3.3524952, y: 3.46236}
---- !u!61 &61314510383339596
-BoxCollider2D:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1658553310675224}
-  m_Enabled: 1
-  m_Density: 1
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_UsedByEffector: 0
-  m_Offset: {x: -0.3654709, y: 0.5744705}
-  serializedVersion: 2
-  m_Size: {x: 3.3024564, y: 2.404768}
 --- !u!114 &114004260103696970
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2004,17 +2291,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee410f9e0520b42b67797a3bc639d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: poi5
+  name: poi6
   nameFeedback: el camino sobre la rama caida
   type: 0
   routeTo:
-  - {fileID: 114274021910169922}
+  - {fileID: 114229655023294656}
   - {fileID: 114643426731667950}
   routeBlockPoi: []
   routeBlockObstacle: []
   doorRoutePoi: []
   doorRouteObstacle: []
   "ara\xF1a": {fileID: 0}
+--- !u!114 &114037171716642252
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1253237097343722}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4447ee35fbfd7da419b9de66d94c594a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: door3
+  nameFeedback: la puerta de la casa
+  type: 2
+  enemyAt: []
+  enemyEdgeStart: []
+  enemyEdgeEnd: []
+  blocked: 1
+  open: 0
+  doorRune:
+  - {fileID: 114779907223928698}
+  rollableLocked: 0
+  rollableOpen: 0
 --- !u!114 &114040700517264502
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2052,9 +2362,86 @@ MonoBehaviour:
   name: rune1
   nameFeedback: la runa verde
   type: 2
-  itemAt: {fileID: 114979282056907616}
+  itemAt: {fileID: 114857345128419536}
   itemAssign:
   - {fileID: 114501717156571940}
+--- !u!114 &114156787414317798
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1690522391078838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4447ee35fbfd7da419b9de66d94c594a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: jump4
+  nameFeedback: "el salto sobre la ara\xF1a"
+  type: 3
+  enemyAt: []
+  enemyEdgeStart: []
+  enemyEdgeEnd: []
+  blocked: 1
+  open: 0
+  doorRune: []
+  rollableLocked: 0
+  rollableOpen: 0
+--- !u!114 &114163072546025126
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1524001414256980}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4447ee35fbfd7da419b9de66d94c594a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: obstacle5
+  nameFeedback: la plataforma en los tuneles subterraneos
+  type: 0
+  enemyAt: []
+  enemyEdgeStart: []
+  enemyEdgeEnd: []
+  blocked: 1
+  open: 0
+  doorRune: []
+  rollableLocked: 0
+  rollableOpen: 0
+--- !u!114 &114229655023294656
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1785063534305018}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4ee410f9e0520b42b67797a3bc639d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: poi5
+  nameFeedback: la torre del lago
+  type: 0
+  routeTo:
+  - {fileID: 114315051730995106}
+  - {fileID: 114274021910169922}
+  - {fileID: 114009844825178694}
+  - {fileID: 114313641638157780}
+  - {fileID: 114779551528022520}
+  routeBlockPoi:
+  - {fileID: 114274021910169922}
+  - {fileID: 114009844825178694}
+  - {fileID: 114313641638157780}
+  - {fileID: 114779551528022520}
+  routeBlockObstacle:
+  - {fileID: 114588538076422258}
+  - {fileID: 114809113894498194}
+  - {fileID: 114709745157323616}
+  - {fileID: 114008556712467444}
+  doorRoutePoi: []
+  doorRouteObstacle: []
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114233618674234338
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2088,7 +2475,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee410f9e0520b42b67797a3bc639d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: poi15
+  name: poi17
   nameFeedback: "el tunel superior de la ara\xF1a"
   type: 0
   routeTo:
@@ -2135,7 +2522,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee410f9e0520b42b67797a3bc639d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: poi21
+  name: poi23
   nameFeedback: el camino secreto desde los tuneles
   type: 0
   routeTo:
@@ -2161,19 +2548,11 @@ MonoBehaviour:
   type: 0
   routeTo:
   - {fileID: 114315051730995106}
-  - {fileID: 114009844825178694}
-  - {fileID: 114313641638157780}
-  - {fileID: 114779551528022520}
+  - {fileID: 114229655023294656}
   routeBlockPoi:
-  - {fileID: 114315051730995106}
-  - {fileID: 114009844825178694}
-  - {fileID: 114313641638157780}
-  - {fileID: 114779551528022520}
+  - {fileID: 114229655023294656}
   routeBlockObstacle:
-  - {fileID: 114710845168756034}
-  - {fileID: 114809113894498194}
   - {fileID: 114588538076422258}
-  - {fileID: 114008556712467444}
   doorRoutePoi: []
   doorRouteObstacle: []
   "ara\xF1a": {fileID: 0}
@@ -2210,19 +2589,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee410f9e0520b42b67797a3bc639d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: poi7
+  name: poi8
   nameFeedback: el camino bajo tierra
   type: 0
   routeTo:
-  - {fileID: 114274021910169922}
+  - {fileID: 114229655023294656}
   - {fileID: 114446601884533982}
-  - {fileID: 114647847052490356}
+  - {fileID: 114982411114489966}
   routeBlockPoi:
-  - {fileID: 114274021910169922}
-  - {fileID: 114647847052490356}
+  - {fileID: 114229655023294656}
+  - {fileID: 114982411114489966}
   routeBlockObstacle:
-  - {fileID: 114588538076422258}
   - {fileID: 114709745157323616}
+  - {fileID: 114722708986692618}
   doorRoutePoi: []
   doorRouteObstacle: []
   "ara\xF1a": {fileID: 0}
@@ -2269,7 +2648,7 @@ MonoBehaviour:
   type: 1
   switchAt: {fileID: 114313641638157780}
   linkedSwitch:
-  - {fileID: 114709745157323616}
+  - {fileID: 114722708986692618}
   machineGear: []
   machineLoaded: 0
   switchOn: 0
@@ -2319,11 +2698,36 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: pj3
-  nameFeedback: Ingeniero
+  nameFeedback: Amarillo
   type: 3
   luring: 0
   playerAt: {fileID: 114799918722071410}
+  playerDistinct:
+  - {fileID: 114501717156571940}
+  - {fileID: 114895010132307596}
   playerInventory: []
+--- !u!114 &114359473645248176
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1991551716254390}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4447ee35fbfd7da419b9de66d94c594a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: barrier1
+  nameFeedback: la plataforma en los tuneles subterraneos
+  type: 5
+  enemyAt: []
+  enemyEdgeStart: []
+  enemyEdgeEnd: []
+  blocked: 1
+  open: 0
+  doorRune: []
+  rollableLocked: 0
+  rollableOpen: 0
 --- !u!114 &114371111707826368
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2357,7 +2761,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee410f9e0520b42b67797a3bc639d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: poi19
+  name: poi21
   nameFeedback: la casa al final del camino
   type: 0
   routeTo:
@@ -2383,13 +2787,16 @@ MonoBehaviour:
   name: triple1
   nameFeedback: el switch encerrado sobre el lago
   type: 4
-  switchAt: {fileID: 114274021910169922}
+  switchAt: {fileID: 114229655023294656}
   linkedSwitch:
-  - {fileID: 114588538076422258}
+  - {fileID: 114709745157323616}
   machineGear: []
   machineLoaded: 0
   switchOn: 0
-  switchAssign: []
+  switchAssign:
+  - {fileID: 114501717156571940}
+  - {fileID: 114895010132307596}
+  - {fileID: 114344570309123552}
 --- !u!114 &114446601884533982
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2401,7 +2808,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee410f9e0520b42b67797a3bc639d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: poi8
+  name: poi9
   nameFeedback: las plataformas sobre la lava
   type: 0
   routeTo:
@@ -2463,10 +2870,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: pj1
-  nameFeedback: Mago
+  nameFeedback: Azul
   type: 1
   luring: 0
   playerAt: {fileID: 114799918722071410}
+  playerDistinct:
+  - {fileID: 114895010132307596}
+  - {fileID: 114344570309123552}
   playerInventory: []
 --- !u!114 &114505108964151748
 MonoBehaviour:
@@ -2479,7 +2889,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee410f9e0520b42b67797a3bc639d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: poi16
+  name: poi18
   nameFeedback: "el tunel superior despues de la ara\xF1a"
   type: 0
   routeTo:
@@ -2503,7 +2913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee410f9e0520b42b67797a3bc639d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: poi13
+  name: poi15
   nameFeedback: las plataformas sobre la puerta
   type: 0
   routeTo:
@@ -2511,8 +2921,10 @@ MonoBehaviour:
   - {fileID: 114744557833014352}
   - {fileID: 114241592430235798}
   routeBlockPoi:
+  - {fileID: 114744557833014352}
   - {fileID: 114241592430235798}
   routeBlockObstacle:
+  - {fileID: 114156787414317798}
   - {fileID: 114335070363222160}
   doorRoutePoi: []
   doorRouteObstacle: []
@@ -2550,7 +2962,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee410f9e0520b42b67797a3bc639d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: poi18
+  name: poi20
   nameFeedback: el terreno frente a la casa
   type: 0
   routeTo:
@@ -2580,11 +2992,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee410f9e0520b42b67797a3bc639d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: poi6
+  name: poi7
   nameFeedback: encima de la torre del lago
   type: 0
   routeTo:
-  - {fileID: 114274021910169922}
+  - {fileID: 114229655023294656}
   - {fileID: 114009844825178694}
   routeBlockPoi: []
   routeBlockObstacle: []
@@ -2602,20 +3014,43 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee410f9e0520b42b67797a3bc639d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: poi10
+  name: poi12
   nameFeedback: los tuneles sobre la lava
   type: 0
   routeTo:
-  - {fileID: 114313641638157780}
+  - {fileID: 114982411114489966}
   - {fileID: 114857345128419536}
   - {fileID: 114264597451667784}
   routeBlockPoi:
-  - {fileID: 114313641638157780}
+  - {fileID: 114982411114489966}
   routeBlockObstacle:
-  - {fileID: 114709745157323616}
+  - {fileID: 114359473645248176}
   doorRoutePoi: []
   doorRouteObstacle: []
   "ara\xF1a": {fileID: 0}
+--- !u!114 &114688905617461192
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1184015304413734}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 964f8d2cda0845b40917b03236fbc284, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: doble1
+  nameFeedback: el switch encerrado sobre el lago
+  type: 5
+  switchAt: {fileID: 114274021910169922}
+  linkedSwitch:
+  - {fileID: 114588538076422258}
+  machineGear: []
+  machineLoaded: 0
+  switchOn: 0
+  switchAssign:
+  - {fileID: 114501717156571940}
+  - {fileID: 114344570309123552}
 --- !u!114 &114709745157323616
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2693,7 +3128,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee410f9e0520b42b67797a3bc639d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: poi14
+  name: poi16
   nameFeedback: la plataforma con la maquina
   type: 0
   routeTo:
@@ -2714,28 +3149,44 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee410f9e0520b42b67797a3bc639d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: poi12
+  name: poi14
   nameFeedback: el camino desde la puerta
   type: 0
   routeTo:
-  - {fileID: 114274021910169922}
+  - {fileID: 114229655023294656}
+  - {fileID: 114857345128419536}
   - {fileID: 114522505774348660}
   - {fileID: 114979282056907616}
   routeBlockPoi:
-  - {fileID: 114274021910169922}
-  - {fileID: 114857345128419536}
+  - {fileID: 114229655023294656}
   - {fileID: 114522505774348660}
   - {fileID: 114979282056907616}
   routeBlockObstacle:
   - {fileID: 114008556712467444}
-  - {fileID: 114722708986692618}
   - {fileID: 114233618674234338}
   - {fileID: 114335070363222160}
   doorRoutePoi:
-  - {fileID: 114274021910169922}
+  - {fileID: 114229655023294656}
   doorRouteObstacle:
   - {fileID: 114008556712467444}
   "ara\xF1a": {fileID: 0}
+--- !u!114 &114779907223928698
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1240778005218646}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f1ddd9297506f847b61e2af2881d661, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: rune3
+  nameFeedback: la runa amarilla
+  type: 2
+  itemAt: {fileID: 114446601884533982}
+  itemAssign:
+  - {fileID: 114895010132307596}
 --- !u!114 &114799918722071410
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2768,16 +3219,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee410f9e0520b42b67797a3bc639d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: poi9
+  name: poi10
   nameFeedback: la estatua despues de la lava
   type: 0
   routeTo:
   - {fileID: 114446601884533982}
   - {fileID: 114971166574145712}
-  routeBlockPoi: []
-  routeBlockObstacle: []
-  doorRoutePoi: []
-  doorRouteObstacle: []
+  routeBlockPoi:
+  - {fileID: 114971166574145712}
+  routeBlockObstacle:
+  - {fileID: 114037171716642252}
+  doorRoutePoi:
+  - {fileID: 114971166574145712}
+  doorRouteObstacle:
+  - {fileID: 114037171716642252}
   "ara\xF1a": {fileID: 0}
 --- !u!114 &114809113894498194
 MonoBehaviour:
@@ -2835,7 +3290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee410f9e0520b42b67797a3bc639d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: poi11
+  name: poi13
   nameFeedback: la estatua sobre los tuneles
   type: 0
   routeTo:
@@ -2844,7 +3299,7 @@ MonoBehaviour:
   routeBlockPoi:
   - {fileID: 114779551528022520}
   routeBlockObstacle:
-  - {fileID: 114722708986692618}
+  - {fileID: 114163072546025126}
   doorRoutePoi: []
   doorRouteObstacle: []
   "ara\xF1a": {fileID: 0}
@@ -2856,7 +3311,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1023377868542452}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 42b5583f443938147a51bf5a4f7d236a, type: 3}
+  m_Script: {fileID: 11500000, guid: 701056c5e53834c53a47140b002d6e74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   control: 1
@@ -2870,11 +3325,13 @@ MonoBehaviour:
   - {fileID: 114315051730995106}
   - {fileID: 114255292619767468}
   - {fileID: 114274021910169922}
+  - {fileID: 114229655023294656}
   - {fileID: 114009844825178694}
   - {fileID: 114643426731667950}
   - {fileID: 114313641638157780}
   - {fileID: 114446601884533982}
   - {fileID: 114806187719539802}
+  - {fileID: 114982411114489966}
   - {fileID: 114647847052490356}
   - {fileID: 114857345128419536}
   - {fileID: 114779551528022520}
@@ -2890,30 +3347,32 @@ MonoBehaviour:
   obstacleList:
   - {fileID: 114008556712467444}
   - {fileID: 114040700517264502}
+  - {fileID: 114037171716642252}
   - {fileID: 114371111707826368}
   - {fileID: 114809113894498194}
   - {fileID: 114233618674234338}
+  - {fileID: 114156787414317798}
+  - {fileID: 114359473645248176}
   - {fileID: 114335070363222160}
   - {fileID: 114484311782544056}
   - {fileID: 114710845168756034}
   - {fileID: 114588538076422258}
   - {fileID: 114709745157323616}
   - {fileID: 114722708986692618}
+  - {fileID: 114163072546025126}
   itemList:
   - {fileID: 114004260103696970}
   - {fileID: 114095493267500540}
   - {fileID: 114459936891898022}
+  - {fileID: 114779907223928698}
   switchList:
   - {fileID: 114307120831410100}
   - {fileID: 114316470432769046}
   - {fileID: 114992506836923416}
   - {fileID: 114834996829911208}
   - {fileID: 114435763402312390}
-  goalDef:
-  - (player-at pj1 poi19)
-  - (player-at pj2 poi19)
-  - (player-at pj3 poi19)
-  coeficienteMaximo: 40
+  - {fileID: 114688905617461192}
+  goalDef: []
 --- !u!114 &114895010132307596
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2926,10 +3385,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   name: pj2
-  nameFeedback: Guerrero
+  nameFeedback: Rojo
   type: 2
   luring: 0
   playerAt: {fileID: 114799918722071410}
+  playerDistinct:
+  - {fileID: 114501717156571940}
+  - {fileID: 114344570309123552}
   playerInventory: []
 --- !u!114 &114971166574145712
 MonoBehaviour:
@@ -2942,13 +3404,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee410f9e0520b42b67797a3bc639d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: poi20
+  name: poi22
   nameFeedback: el camino secreto despues de la lava
   type: 0
   routeTo:
   - {fileID: 114806187719539802}
-  routeBlockPoi: []
-  routeBlockObstacle: []
+  routeBlockPoi:
+  - {fileID: 114806187719539802}
+  routeBlockObstacle:
+  - {fileID: 114037171716642252}
   doorRoutePoi: []
   doorRouteObstacle: []
   "ara\xF1a": {fileID: 0}
@@ -2963,7 +3427,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f4ee410f9e0520b42b67797a3bc639d5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: poi17
+  name: poi19
   nameFeedback: "el tunel inferior de la ara\xF1a"
   type: 0
   routeTo:
@@ -2980,6 +3444,30 @@ MonoBehaviour:
   doorRoutePoi: []
   doorRouteObstacle: []
   "ara\xF1a": {fileID: 114335070363222160}
+--- !u!114 &114982411114489966
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1840651261077962}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4ee410f9e0520b42b67797a3bc639d5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  name: poi11
+  nameFeedback: los tuneles sobre la lava
+  type: 0
+  routeTo:
+  - {fileID: 114313641638157780}
+  - {fileID: 114647847052490356}
+  routeBlockPoi:
+  - {fileID: 114647847052490356}
+  routeBlockObstacle:
+  - {fileID: 114359473645248176}
+  doorRoutePoi: []
+  doorRouteObstacle: []
+  "ara\xF1a": {fileID: 0}
 --- !u!114 &114992506836923416
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2996,7 +3484,7 @@ MonoBehaviour:
   type: 2
   switchAt: {fileID: 114806187719539802}
   linkedSwitch:
-  - {fileID: 114722708986692618}
+  - {fileID: 114163072546025126}
   machineGear: []
   machineLoaded: 0
   switchOn: 0
