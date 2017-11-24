@@ -210,9 +210,9 @@ public class ServerMessageHandler
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         int groupId = Int32.Parse(msg[1]);
-        if (!room.activatedGroups.Contains(groupId))
+        if (!room.activatedSwitchGroups.Contains(groupId))
         {
-            room.activatedGroups.Add(groupId);
+            room.activatedSwitchGroups.Add(groupId);
         }
     }
 
