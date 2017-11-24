@@ -5,216 +5,45 @@ using UnityEngine;
 
 public class Switch : MonoBehaviour
 {
+
+    #region Enums
+
     public enum TypeOfActivation { Pisando, Disparando };
     public enum Color { Red, Blue, Yellow, Any };
 
+    #endregion
 
-    public int groupId; //Identificador del grupo de switchs.
-    public int individualId; //Identificador del switch dentro del grupo
-    public bool desactivable; //Si puede apagarse una vez activado
-    public bool on; //Si esta encendido o no
-    public TypeOfActivation activation; //Forma en que se activa (pisando o disparando)
-    public Color switchColor; //Color del switch. Determina quien lo puede apretar.
+    #region Attributes
+
     public GroupOfSwitchs switchGroup;
-    private SwitchManager manager;
-    private bool jobDone = false; //true si es que su grupo de botones ya terminó su función
+    public PlannerSwitch switchObj;
 
-	public PlannerSwitch switchObj = null;
+    public TypeOfActivation activation; // Forma en que se activa (pisando o disparando)
+    public Color switchColor; // Color del switch. Determina quien lo puede apretar.
+
+    public bool desactivable; // Si puede apagarse una vez activado
+    public int individualId; // Identificador del switch dentro del grupo
+    public int groupId; // Identificador del grupo de switchs.
+    public bool on; // Si esta encendido o no
+
+    private SwitchManager manager;
+    private bool jobDone; // true si es que su grupo de botones ya terminó su función
+
+    #endregion
+
+    #region Start
 
     private void Start()
     {
-		IgnoreCollisionWithPlayers ();
-        manager = GameObject.FindGameObjectWithTag("SwitchManager").GetComponent<SwitchManager>();
-        manager.Add(this);
+        IgnoreCollisionWithPlayers();
+        RegisterOnManager();
         SetSprite();
     }
 
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        switch (activation)
-        {
-            case TypeOfActivation.Pisando:
-                CheckPisando(collision);
-                break;
-            case TypeOfActivation.Disparando:
-                CheckDisparando(collision);
-                break;
-        }
-    }
+    #endregion
 
-    private void CheckPisando(Collision2D collision)
-    {
-        if (CheckIfColliderIsLocalPlayer(collision) && CheckIfColliderIsAbove(collision))
-        {
-            Activate();
-        }
-		else if(CheckIfColliderIsLocalPlayer (collision))
-        {
-			Desactivate();
-        }
-    }
+    #region Utils
 
-    private void CheckDisparando(Collision2D collision)
-    {
-        if (CheckIfColliderIsAttack(collision))
-        {
-            Activate();
-        }
-    }
-
-    private bool CheckIfColliderIsLocalPlayer(Collision2D collision)
-    {
-        GameObject colliderGameObject = collision.collider.gameObject;
-        string playerName = colliderGameObject.name;
-
-        if(CheckIfNameMatchWithColor(playerName))
-        {
-            PlayerController player = colliderGameObject.GetComponent<PlayerController>();
-            if (player.localPlayer)
-            {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    private bool CheckIfColliderIsAbove(Collision2D collision)
-    {
-        GameObject colliderGameObject = collision.collider.gameObject;
-        return transform.position.y  < (colliderGameObject.transform.position.y);
-
-    }
-
-	private void IgnoreCollisionWithPlayers()
-	{
-		if (activation == TypeOfActivation.Disparando)
-        {
-			Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), GameObject.Find("Mage").GetComponent<BoxCollider2D>());
-			Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), GameObject.Find("Warrior").GetComponent<BoxCollider2D>());
-			Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), GameObject.Find("Engineer").GetComponent<BoxCollider2D>());
-        }
-	}
-
-    private bool CheckIfObjectMatchWithColor(string name)
-    {
-        if (switchColor == Color.Any)
-        {
-            if(name == "Fireball" || name =="Arrow" || name == "Punch"){
-                return true;
-            }
-        }
-        switch (name)
-        {
-            case "Fireball":
-                return switchColor == Color.Blue;
-            case "Arrow":
-                return switchColor == Color.Yellow;
-            case "Punch":
-                return switchColor == Color.Red;
-            default:
-                return false;
-        }
-    }
-
-    private bool CheckIfNameMatchWithColor(string name)
-    {
-        if(switchColor == Color.Any)
-        {
-            return true;
-        }
-
-        switch (name)
-        {
-            case "Mage":
-                return switchColor == Color.Blue;
-            case "Warrior":
-                return switchColor == Color.Red;
-            case "Engineer":
-                return switchColor == Color.Yellow;
-            default:
-                return false;
-        }
-    }
-
-    private bool CheckIfColliderIsAttack(Collision2D collision)
-    {
-        GameObject colliderGameObject = collision.collider.gameObject;
-
-        string objectName = colliderGameObject.tag;
-
-        if (CheckIfObjectMatchWithColor(objectName))
-        {
-            switch (objectName)
-            {
-                case "Fireball":
-                    Destroy(colliderGameObject);
-                    if (Client.instance.GetLocalPlayer().name == "Mage")
-                    {
-                        return true;
-                    }
-                    break;
-                case "Arrow":
-                    Destroy(colliderGameObject);
-                    if (Client.instance.GetLocalPlayer().name == "Engineer")
-                    {
-                        return true;
-                    }
-                    break;
-                case "Punch":
-                    if(Client.instance.GetLocalPlayer().name == "Warrior")
-                    {
-                        return true;
-                    }
-                    break;
-                 
-            }
-        }
-        return false;
-    }
-
-    private void Activate()
-    {
-        if (jobDone)
-        {
-            return;
-        }
-        bool newOn;
-        if (activation == TypeOfActivation.Disparando) {
-            newOn = (desactivable && !on) || !desactivable;
-        }
-        else
-        {
-            newOn = true;
-        }
-        if (newOn != on)
-        {	          
-            on = newOn;
-            if(!on && !desactivable)
-            {
-                return;
-            }
-            SetSprite();
-            SendOnDataToServer(on);
-
-			switchGroup.CheckIfReady (switchObj, FindObjectOfType<Planner> ());
-        }
-    }
-
-    private void Desactivate()
-    {
-        if (jobDone)
-        {
-            return;
-        }
-        on = false;
-        SetSprite();
-        SendOnDataToServer(on);
-		if (switchObj != null) {
-			switchObj.DeactivateSwitch ();
-			Planner planner = FindObjectOfType<Planner> ();
-			planner.Monitor ();
-		}
-    }
 
     public void SetJobDone()
     {
@@ -237,7 +66,7 @@ public class Switch : MonoBehaviour
                 throw new Exception("Color invalido");
         }
     }
-    
+
     private Color GetColorFromInt(int entero)
     {
         switch (entero)
@@ -259,14 +88,17 @@ public class Switch : MonoBehaviour
     {
         switchColor = GetColorFromInt(entero);
     }
-    private void SendOnDataToServer(bool data)
+
+    public void ReceiveDataFromServer(bool onData)
     {
-        if(data == false && desactivable == false)
+        on = onData;
+        if (desactivable == false)
         {
-            return;
+            on = true;
         }
-        string message = "ChangeSwitchStatus/" + groupId + "/" + individualId + "/" + data;
-        Client.instance.SendMessageToServer(message, true);
+        SetSprite();
+        switchGroup.CheckIfReady(switchObj, FindObjectOfType<Planner>());
+
     }
 
     private void SetSprite()
@@ -274,7 +106,7 @@ public class Switch : MonoBehaviour
         SpriteRenderer rendererx = this.gameObject.GetComponent<SpriteRenderer>();
         if (on)
         {
-           if(activation == TypeOfActivation.Disparando)
+            if (activation == TypeOfActivation.Disparando)
             {
                 switch (switchColor)
                 {
@@ -358,18 +190,194 @@ public class Switch : MonoBehaviour
                 }
             }
         }
-
     }
 
-    public void ReceiveDataFromServer(bool onData)
+    protected void RegisterOnManager()
     {
-        Debug.Log("Recibi la info");
-        on = onData;
-        if (desactivable == false)
-        {
-            on = true;
-        }
-        SetSprite();
-		switchGroup.CheckIfReady (switchObj, FindObjectOfType<Planner> ());
+        manager = GameObject.FindObjectOfType<SwitchManager>();
+        manager.Add(this);
     }
+
+    private void CheckPisando(Collision2D other)
+    {
+        if (ColliderIsCorrectPlayer(other))
+        {
+            if (CheckIfColliderIsAbove(other))
+            {
+                Activate();
+            }
+            else
+            {
+                Desactivate();
+            }
+        }
+    }
+
+    private void CheckDisparando(Collision2D collision)
+    {
+        if (CheckIfColliderIsAttack(collision))
+        {
+            Activate();
+        }
+    }
+
+    private bool ColliderIsCorrectPlayer(Collision2D other)
+    {
+        PlayerController player = other.gameObject.GetComponent<PlayerController>();
+        return player.localPlayer && CheckIfPlayerMatchWithColor(other.gameObject);
+    }
+
+    // CUANDO SE USA ESTO??
+    private bool CheckIfColliderIsAbove(Collision2D collision)
+    {
+        GameObject colliderGameObject = collision.collider.gameObject;
+        return transform.position.y < (colliderGameObject.transform.position.y);
+
+    }
+
+    private void IgnoreCollisionWithPlayers()
+    {
+        if (activation == TypeOfActivation.Disparando)
+        {
+            Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), GameObject.Find("Mage").GetComponent<BoxCollider2D>());
+            Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), GameObject.Find("Warrior").GetComponent<BoxCollider2D>());
+            Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), GameObject.Find("Engineer").GetComponent<BoxCollider2D>());
+        }
+    }
+
+    private bool CheckIfAttackMatchWithColor(GameObject gameObject)
+    {
+        switch (switchColor)
+        {
+            case Color.Blue:
+                return gameObject.GetComponent<FireballController>();
+            case Color.Yellow:
+                return gameObject.GetComponent<ProyectileController>();
+            case Color.Red:
+                return gameObject.GetComponent<PunchController>();
+            case Color.Any:
+                return gameObject.GetComponent<AttackController>(); ;
+            default:
+                return false;
+        }
+    }
+
+    private bool CheckIfPlayerMatchWithColor(GameObject gameObject)
+    {
+
+        switch (switchColor)
+        {
+            case Color.Blue:
+                return gameObject.GetComponent<MageController>();
+            case Color.Yellow:
+                return gameObject.GetComponent<EngineerController>();
+            case Color.Red:
+                return gameObject.GetComponent<WarriorController>();
+            case Color.Any:
+                return gameObject.GetComponent<PlayerController>(); ;
+            default:
+                return false;
+        }
+
+    }
+
+    private bool CheckIfColliderIsAttack(Collision2D other)
+    {
+        AttackController attack = other.gameObject.GetComponent<AttackController>();
+
+        if (attack)
+        {
+            return attack.caster.localPlayer && CheckIfAttackMatchWithColor(other.gameObject);
+        }
+
+        return false;
+    }
+
+    #endregion
+
+    #region Events
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        switch (activation)
+        {
+            case TypeOfActivation.Pisando:
+                CheckPisando(collision);
+                break;
+            case TypeOfActivation.Disparando:
+                CheckDisparando(collision);
+                break;
+        }
+    }
+
+    #endregion
+
+    #region Common
+
+    private void Activate()
+    {
+        if (jobDone)
+        {
+            return;
+        }
+
+        bool newOn;
+        if (activation == TypeOfActivation.Disparando)
+        {
+            newOn = (desactivable && !on) || !desactivable;
+        }
+        else
+        {
+            newOn = true;
+        }
+        if (newOn != on)
+        {
+            on = newOn;
+            if (!on && !desactivable)
+            {
+                return;
+            }
+            SetSprite();
+            SendOnDataToServer(on);
+
+            switchGroup.CheckIfReady(switchObj, FindObjectOfType<Planner>());
+        }
+    }
+
+    private void Desactivate()
+    {
+        if (jobDone)
+        {
+            return;
+        }
+        on = false;
+        SetSprite();
+        SendOnDataToServer(on);
+        if (switchObj != null)
+        {
+            switchObj.DeactivateSwitch();
+            Planner planner = FindObjectOfType<Planner>();
+            planner.Monitor();
+        }
+    }
+
+    #endregion
+
+    #region Messaging
+
+    private void SendOnDataToServer(bool data)
+    {
+        if (data == false && desactivable == false)
+        {
+            return;
+        }
+        string message = "ChangeSwitchStatus/" + groupId + "/" + individualId + "/" + data;
+
+        if (Client.instance)
+        {
+            Client.instance.SendMessageToServer(message, true);
+        }
+    }
+
+    #endregion
 }

@@ -8,7 +8,7 @@ public class AttackController : MonoBehaviour
     #region Attributes
 
     protected Collider2D gameObjectCollider;
-    protected PlayerController caster;
+    public PlayerController caster;
 
     protected static float destroyDelayTime = .04f;
 
