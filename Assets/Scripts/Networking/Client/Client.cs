@@ -85,7 +85,7 @@ public class Client : MonoBehaviour
                     {
                         GetLocalPlayer().Conectar(true);
                         LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
-                        lm.MostrarReconectando(false);
+                        lm.ShowReconnectingMessage(false);
                     }
                 }
                 Debug.Log("Connection succesfull");
@@ -169,11 +169,10 @@ public class Client : MonoBehaviour
     private void Reconnect()
     {
         Scene currentScene = SceneManager.GetActiveScene();
-        if (!(currentScene.name == "ClientScene"))
+        if (currentScene.name != "ClientScene")
         {
-            //Asumo que si no estoy en la ClientScene, existe un LevelManager
-            LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
-            lm.MostrarReconectando(true);
+            LevelManager lm = GameObject.FindObjectOfType<LevelManager>();
+            lm.ShowReconnectingMessage(true);
         }
         Connect();
 

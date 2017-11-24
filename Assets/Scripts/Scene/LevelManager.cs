@@ -189,7 +189,7 @@ public class LevelManager : MonoBehaviour
         client.SendMessageToServer("ChangeScene/" + nextSceneName, true);
     }
 
-    public void MostrarReconectando(bool valor)
+    public void ShowReconnectingMessage(bool valor)
     {
         reconnectText.SetActive(valor);
     }
