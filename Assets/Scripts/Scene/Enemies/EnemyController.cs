@@ -100,13 +100,19 @@ public class EnemyController : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
-
-        if (LocalPlayerHasControl())
-        {
-            SendHpDataToServer(damage);
-        }
-
         StartCoroutine(animControl.StartAnimation("TakingDamage", this.gameObject));
+        hp -= damage;
+
+        if (hp <= 0 )
+        {
+
+            if (LocalPlayerHasControl())
+            {
+                SendEnemyDiedToServer(damage);
+            }
+
+            Die();
+        }
 
     }
 
@@ -167,7 +173,7 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    public virtual void Die()
+    public void Die()
     {
         StartCoroutine(animControl.StartAnimation("Dying", this.gameObject));
         StartCoroutine(WaitDying());
@@ -236,9 +242,9 @@ public class EnemyController : MonoBehaviour
 
     #region Messaging
 
-    protected virtual void SendHpDataToServer(float damage)
+    protected virtual void SendEnemyDiedToServer(float damage)
     {
-        string message = "EnemyHpChange/" + enemyId + "/" + damage;
+        string message = "EnemyDied/" + enemyId + "/" + damage;
         SendMessageToServer(message, false);
     }
 

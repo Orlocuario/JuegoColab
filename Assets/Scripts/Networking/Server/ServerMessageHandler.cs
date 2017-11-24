@@ -59,8 +59,8 @@ public class ServerMessageHandler
             case "EnemyRegisterId":
                 NewEnemy(msg, connectionId);
                 break;
-            case "EnemyHpChange":
-                ReduceEnemyHp(message, msg, connectionId);
+            case "EnemyDied":
+                EnemyDied(message, msg, connectionId);
                 break;
             case "EnemyChangePosition":
                 EnemyChangePosition(message, msg, connectionId);
@@ -263,16 +263,15 @@ public class ServerMessageHandler
         }
     }
 
-    private void ReduceEnemyHp(string message, string[] msg, int connectionId)
+    private void EnemyDied(string message, string[] msg, int connectionId)
     {
         int enemyId = Int32.Parse(msg[1]);
-        float enemyHp = float.Parse(msg[2]);
         NetworkPlayer player = server.GetPlayer(connectionId);
         NetworkEnemy enemy = player.room.GetEnemy(enemyId);
 
         if (enemy != null)
         {
-            enemy.ReduceHp(enemyHp);
+            enemy.Die();
         }
     }
 
