@@ -34,8 +34,6 @@ public class Planner : MonoBehaviour {
 
 	private int tipoPlanificacion = 3;
 
-	public double coeficienteMaximo = 40;
-	private double coeficienteActual;
 	private int distanciaObjetiva = -1;
 	private Dictionary<string, int> distanciaObjetivaParcial = new Dictionary<string, int> ();
 	private double timer;
@@ -110,9 +108,10 @@ public class Planner : MonoBehaviour {
 					distanciaObjetiva += distanciaObjetivaParcial [personaje];
 				}
 			}
-			coeficienteActual = distanciaObjetiva * timer / 60.0;
 
-			if (coeficienteActual > coeficienteMaximo) {
+			int tope = 130 - 2 * distanciaObjetiva;
+			
+			if (timer > tope) {
 				Debug.Log ("Feedback: " + feedbackPlayer);
 				timer = 0;
 				if (tipoPlanificacion == 3) {
@@ -1153,7 +1152,7 @@ public class Planner : MonoBehaviour {
 					feedback = "¿Probaron ir hasta " + feedbackNames [parametros [2]] + "?";
 					break;
 				default:
-					feedback = feedbackNames [parametros [0]] + ", debe ir desde " + feedbackNames [parametros [1]] + " hasta " + feedbackNames [parametros [2]];
+					feedback = feedbackNames [parametros [0]] + " debe ir desde " + feedbackNames [parametros [1]] + " hasta " + feedbackNames [parametros [2]];
 					break;
 				}
 				break;
@@ -1166,13 +1165,13 @@ public class Planner : MonoBehaviour {
 					feedback = "No olviden sus habilidades...";
 					break;
 				case 3:
-					feedback = "¿Probaron ir a " + feedbackNames [parametros [2]] + "?";
+					feedback = "¿Probaron ir hasta " + feedbackNames [parametros [2]] + "?";
 					break;
 				case 4:
 					feedback = "¿Probaron usar la habilidad especial de " + feedbackNames [parametros [0]] + "?";
 					break;
 				default:
-					feedback = feedbackNames [parametros [0]] + " debería usar su habilidad especial para llegar a " + feedbackNames [parametros [2]];
+					feedback = feedbackNames [parametros [0]] + " debe usar su habilidad especial para llegar hasta " + feedbackNames [parametros [2]];
 					break;
 				}
 				break;
@@ -1185,7 +1184,7 @@ public class Planner : MonoBehaviour {
 					feedback = "¿Probaron ir hasta " + feedbackNames [parametros [2]] + "?";
 					break;
 				default:
-					feedback = feedbackNames [parametros [0]] + ", debe ir desde " + feedbackNames [parametros [1]] + " hasta " + feedbackNames [parametros [2]];
+					feedback = feedbackNames [parametros [0]] + " debe ir desde " + feedbackNames [parametros [1]] + " hasta " + feedbackNames [parametros [2]];
 					break;
 				}
 				break;
@@ -1195,7 +1194,7 @@ public class Planner : MonoBehaviour {
 					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 2:
-					feedback = "¿Probaron ir a " + feedbackNames [parametros [2]] + "?";
+					feedback = "¿Probaron ir hasta " + feedbackNames [parametros [2]] + "?";
 					break;
 				case 3:
 					feedback = "No olviden sus habilidades...";
@@ -1204,7 +1203,7 @@ public class Planner : MonoBehaviour {
 					feedback = "¿Probaron usar la habilidad especial de " + feedbackNames [parametros [0]] + "?";
 					break;
 				default:
-					feedback = feedbackNames [parametros [0]] + " debería usar su campo magico para pasar " + feedbackNames [parametros [3]];
+					feedback = feedbackNames [parametros [0]] + " debe usar su habilidad especial para llegar hasta " + feedbackNames [parametros [3]];
 					break;
 				}
 				break;
@@ -1214,19 +1213,19 @@ public class Planner : MonoBehaviour {
 					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 2:
-					feedback = "Creo que falta activar algo";
+					feedback = "Al parecer falta activar algo";
 					break;
 				case 3:
-					feedback = "¿Probaron ir a " + feedbackNames [parametros [2]] + "?";
+					feedback = "¿Probaron ir hasta " + feedbackNames [parametros [2]] + "?";
 					break;
 				case 4:
-					feedback = "¿No han visto el " + feedbackNames [parametros [1]] + "?";
+					feedback = "¿Han visto " + feedbackNames [parametros [1]] + "?";
 					break;
 				case 5:
-					feedback = "Solo " + feedbackNames [parametros [0]] + " puede usar el " + feedbackNames [parametros [1]];
+					feedback = "Solo " + feedbackNames [parametros [0]] + " puede usar " + feedbackNames [parametros [1]];
 					break;
 				default:
-					feedback = feedbackNames [parametros [0]] + " debería activar el " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [2]];
+					feedback = feedbackNames [parametros [0]] + " debe activar " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [2]];
 					break;
 				}
 				break;
@@ -1236,19 +1235,19 @@ public class Planner : MonoBehaviour {
 					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 2:
-					feedback = "Creo que falta desactivar algo";
+					feedback = "Al parecer falta desactivar algo";
 					break;
 				case 3:
-					feedback = "¿Probaron ir a " + feedbackNames [parametros [2]] + "?";
+					feedback = "¿Probaron ir hasta " + feedbackNames [parametros [2]] + "?";
 					break;
 				case 4:
-					feedback = "¿No han visto el " + feedbackNames [parametros [1]] + "?";
+					feedback = "¿Han visto " + feedbackNames [parametros [1]] + "?";
 					break;
 				case 5:
-					feedback = "Solo " + feedbackNames [parametros [0]] + " puede usar el " + feedbackNames [parametros [1]];
+					feedback = "Solo " + feedbackNames [parametros [0]] + " puede usar " + feedbackNames [parametros [1]];
 					break;
 				default:
-					feedback = feedbackNames [parametros [0]] + " debería desactivar el " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [2]];
+					feedback = feedbackNames [parametros [0]] + " debe desactivar " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [2]];
 					break;
 				}
 				break;
@@ -1258,19 +1257,19 @@ public class Planner : MonoBehaviour {
 					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 2:
-					feedback = "Creo que falta activar algo";
+					feedback = "Al parecer falta activar algo";
 					break;
 				case 3:
-					feedback = "¿Probaron ir a " + feedbackNames [parametros [2]] + "?";
+					feedback = "¿Probaron ir hasta " + feedbackNames [parametros [2]] + "?";
 					break;
 				case 4:
-					feedback = "¿No han visto la " + feedbackNames [parametros [1]] + "?";
+					feedback = "¿Han visto " + feedbackNames [parametros [1]] + "?";
 					break;
 				case 5:
-					feedback = "Solo " + feedbackNames [parametros [0]] + " puede usar la " + feedbackNames [parametros [1]];
+					feedback = "Solo " + feedbackNames [parametros [0]] + " puede usar " + feedbackNames [parametros [1]];
 					break;
 				default:
-					feedback = feedbackNames [parametros [0]] + " debería activar la " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [2]];
+					feedback = feedbackNames [parametros [0]] + " debe activar " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [2]];
 					break;
 				}
 				break;
@@ -1289,7 +1288,7 @@ public class Planner : MonoBehaviour {
 					feedback = "Creo que vi algo en " + feedbackNames [parametros [2]];
 					break;
 				default:
-					feedback = feedbackNames [parametros [0]] + " debería tomar " + feedbackNames [parametros [1]] + " que esta en " + feedbackNames [parametros [2]];
+					feedback = feedbackNames [parametros [0]] + " debe tomar " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [2]];
 					break;
 				}
 				break;
@@ -1305,7 +1304,7 @@ public class Planner : MonoBehaviour {
 					feedback = "Quizas otro debería probar " + feedbackNames [parametros [1]];
 					break;
 				default:
-					feedback = feedbackNames [parametros [0]] + " debería botar " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [2]];
+					feedback = feedbackNames [parametros [0]] + " debe dejar " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [2]];
 					break;
 				}
 				break;
@@ -1315,13 +1314,13 @@ public class Planner : MonoBehaviour {
 					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 2:
-					feedback = "¿" + feedbackNames [parametros [4]] + " se ve extraño, no crees?";
+					feedback = "¿Ya revisaron " + feedbackNames [parametros [4]] + "?";
 					break;
 				case 3:
-					feedback = "Necesitan tener " + feedbackNames [parametros [1]] + " para llegar hasta aquí";
+					feedback = "Necesitan tener " + feedbackNames [parametros [1]] + " para avanzar";
 					break;
 				default:
-					feedback = feedbackNames [parametros [0]] + " debería usar " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [4]];
+					feedback = feedbackNames [parametros [0]] + " debe usar " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [4]];
 					break;
 				}
 				break;
@@ -1331,13 +1330,13 @@ public class Planner : MonoBehaviour {
 					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 2:
-					feedback = "¿" + feedbackNames [parametros [4]] + " se ve extraño, no crees?";
+					feedback = "¿Ya revisaron " + feedbackNames [parametros [4]] + "?";
 					break;
 				case 3:
-					feedback = "Necesitan tener " + feedbackNames [parametros [1]] + " para llegar hasta aquí";
+					feedback = "Necesitan tener " + feedbackNames [parametros [1]] + " para avanzar";
 					break;
 				default:
-					feedback = feedbackNames [parametros [0]] + " debería usar " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [4]];
+					feedback = feedbackNames [parametros [0]] + " debe usar " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [4]];
 					break;
 				}
 				break;
@@ -1347,57 +1346,57 @@ public class Planner : MonoBehaviour {
 					feedback = "Esperaba ver a " + feedbackNames [parametros [0]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 2:
-					feedback = "Creo que falta activar algo";
+					feedback = "Al parecer falta activar algo";
 					break;
 				case 3:
-					feedback = "¿Probaron ir a " + feedbackNames [parametros [2]] + "?";
+					feedback = "¿Probaron ir hasta " + feedbackNames [parametros [2]] + "?";
 					break;
 				case 4:
-					feedback = "¿No han visto el " + feedbackNames [parametros [1]] + "?";
+					feedback = "Han visto " + feedbackNames [parametros [1]] + "?";
 					break;
 				case 5:
-					feedback = "Solo " + feedbackNames [parametros [0]] + " puede usar el " + feedbackNames [parametros [1]];
+					feedback = "Solo " + feedbackNames [parametros [0]] + " puede usar " + feedbackNames [parametros [1]];
 					break;
 				default:
-					feedback = feedbackNames [parametros [0]] + " debería activar el " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [2]];
+					feedback = feedbackNames [parametros [0]] + " debe activar " + feedbackNames [parametros [1]] + " en " + feedbackNames [parametros [2]];
 					break;
 				}
 				break;
 			case "triple-switch":
 				switch (feedbackLevel) {
 				case 1:
-					feedback = "Esperaba verlos a todos por aquí, ¿pasa algo?";
+					feedback = "Esperaba verlos a los tres por aquí, ¿pasa algo?";
 					break;
 				case 2:
-					feedback = "Creo que falta activar algo";
+					feedback = "Al parecer falta activar algo";
 					break;
 				case 3:
-					feedback = "¿Probaron ir a " + feedbackNames [parametros [4]] + "?";
+					feedback = "¿Probaron ir hasta " + feedbackNames [parametros [4]] + "?";
 					break;
 				case 4:
-					feedback = "¿No han visto el " + feedbackNames [parametros [3]] + "?";
+					feedback = "Han visto " + feedbackNames [parametros [3]] + "?";
 					break;
 				default:
-					feedback = feedbackNames [parametros [2]] + " debería activar el " + feedbackNames [parametros [3]] + " en " + feedbackNames [parametros [4]];
+					feedback = "Deben activar " + feedbackNames [parametros [3]] + " en " + feedbackNames [parametros [4]];
 					break;
 				}
 				break;
 			case "doble-switch":
 				switch (feedbackLevel) {
 				case 1:
-					feedback = "Esperaba verlos a todos por aquí, ¿pasa algo?";
+					feedback = "Esperaba verl a " + feedbackNames [parametros [0]] + " y " + feedbackNames [parametros [1]] + " por aquí, ¿sabes que le pasa?";
 					break;
 				case 2:
-					feedback = "Creo que falta activar algo";
+					feedback = "Al parecer falta activar algo";
 					break;
 				case 3:
-					feedback = "¿Probaron ir a " + feedbackNames [parametros [3]] + "?";
+					feedback = "¿Probaron ir hast " + feedbackNames [parametros [3]] + "?";
 					break;
 				case 4:
-					feedback = "¿No han visto el " + feedbackNames [parametros [2]] + "?";
+					feedback = "Han visto " + feedbackNames [parametros [2]] + "?";
 					break;
 				default:
-					feedback = feedbackNames [parametros [1]] + " debería activar el " + feedbackNames [parametros [2]] + " en " + feedbackNames [parametros [3]];
+					feedback = feedbackNames [parametros [0]] + " y " + feedbackNames [parametros [1]] + " deben activar " + feedbackNames [parametros [2]] + " en " + feedbackNames [parametros [3]];
 					break;
 				}
 				break;
@@ -1409,13 +1408,13 @@ public class Planner : MonoBehaviour {
 					feedback = "No olviden sus habilidades...";
 					break;
 				case 3:
-					feedback = "¿Probaron ir a " + feedbackNames [parametros [2]] + "?";
+					feedback = "¿Probaron ir hasta " + feedbackNames [parametros [2]] + "?";
 					break;
 				case 4:
 					feedback = "¿Probaron usar la habilidad especial de " + feedbackNames [parametros [0]] + "?";
 					break;
 				default:
-					feedback = feedbackNames [parametros [0]] + " debería usar su golpe en " + feedbackNames [parametros [1]];
+					feedback = feedbackNames [parametros [0]] + " debe usar su habilidad especial en " + feedbackNames [parametros [1]];
 					break;
 				}
 				break;
