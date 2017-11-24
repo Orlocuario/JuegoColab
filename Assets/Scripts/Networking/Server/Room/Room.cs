@@ -52,10 +52,12 @@ public class Room
         sceneToLoad = Server.instance.sceneToLoad;
     }
 
-    public void AddEnemy(int instanceId, int enemyId, float hp)
+    public NetworkEnemy AddEnemy(int instanceId, int enemyId, float hp)
     {
         NetworkEnemy enemy = new NetworkEnemy(instanceId, enemyId, hp, this);
         enemies.Add(enemy);
+
+        return enemy;
     }
 
     public string HoraMinuto()
