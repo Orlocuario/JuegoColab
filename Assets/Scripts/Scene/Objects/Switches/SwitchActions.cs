@@ -81,10 +81,10 @@ public class SwitchActions : MonoBehaviour
 
 			case 3:
 				GameObject platescalera = (GameObject)Instantiate (Resources.Load ("Prefabs/MovPlatform"));
-				platescalera.GetComponent<Transform> ().position = new Vector2 (43f, -16f);
+				platescalera.GetComponent<Transform> ().position = new Vector2 (43f, -16.46f);
 				MovingObject secondPlatform = platescalera.GetComponent<MovingObject> ();
 				secondPlatform.startPoint = new Vector2 (platescalera.transform.position.x, platescalera.transform.position.y);
-				secondPlatform.endPoint = new Vector2 (platescalera.transform.position.x, platescalera.transform.position.y + 3.9f);
+				secondPlatform.endPoint = new Vector2 (platescalera.transform.position.x, platescalera.transform.position.y + 4.2f);
 				secondPlatform.moveSpeed = 1f;
 				GameObject feedbackswitch = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/FBMageButt"));
 				feedbackswitch.GetComponent<Transform> ().position = new Vector2 (41.4f, -16.3f);
