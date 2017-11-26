@@ -76,7 +76,10 @@ public class SwitchActions : MonoBehaviour
                 arbolQl.SetBool("RockBottom", true); //activa camino arbol
                 PathSub abreteSesamo = GameObject.FindGameObjectWithTag("openPathSub").GetComponent<PathSub>();//destruyePasadizo
                 abreteSesamo.killMe = true;
-                Debug.Log("wiiiiiii");
+                GameObject expPrefab = (GameObject)Instantiate(Resources.Load("InstantiateEXP"));
+                expPrefab.transform.position = new Vector2(34.37f, -3.15f);
+                
+
                 break;
 
 			case 3:
@@ -180,8 +183,8 @@ public class SwitchActions : MonoBehaviour
                 break;
 
 			case 8:
-				GameObject expPrefab = (GameObject)Instantiate (Resources.Load ("InstantiateEXP"));
-				expPrefab.transform.position = new Vector2 (80.45f, -18.52f);
+				GameObject expPrefab8 = (GameObject)Instantiate (Resources.Load ("InstantiateEXP"));
+				expPrefab8.transform.position = new Vector2 (80.45f, -18.52f);
 
 
                 break;
