@@ -1,9 +1,9 @@
-﻿using UnityEngine;
+using UnityEngine;
 using System.Collections;
 using System.IO;
 using System;
 
-public class RoomLogger 
+public class RoomLogger
 {
     int roomId;
     public RoomLogger(int id)
@@ -11,6 +11,9 @@ public class RoomLogger
         this.roomId = id;
     }
 
+    private string GetTime(){
+      return DateTime.Now.ToString("HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
+    }
     StreamWriter GetWriter()
     {
         return new StreamWriter(File.Open("Log_room_" + roomId + ".txt", FileMode.Append));
@@ -19,7 +22,7 @@ public class RoomLogger
     public void WriteAttack(int playerId)
     {
         StreamWriter writer = GetWriter();
-        writer.WriteLine("Player " + playerId + " attacked\n");
+        writer.WriteLine(GetTime() + " Player " + playerId + " attacked\n");
         writer.Close();
     }
 
@@ -28,11 +31,11 @@ public class RoomLogger
         StreamWriter writer = GetWriter();
         if (powerState)
         {
-            writer.WriteLine("Player " + playerId + " used his power\n");
+            writer.WriteLine(GetTime() + " Player " + playerId + " used his power\n");
         }
         else
         {
-            writer.WriteLine("Player " + playerId + " stopped using his power\n");
+            writer.WriteLine(GetTime() + " Player " + playerId + " stopped using his power\n");
         }
         writer.Close();
     }
@@ -49,11 +52,11 @@ public class RoomLogger
 
         if (msg[1] == "Add")
         {
-            writer.WriteLine("Player " + charId + " picked stored " + msg[3] + " in the slot " + index +"\n");
+            writer.WriteLine(GetTime() + " Player " + charId + " picked stored " + msg[3] + " in the slot " + index +"\n");
         }
         else
         {
-            writer.WriteLine("Player " + charId + " tossed item in slot " + index + "\n");
+            writer.WriteLine(GetTime() + " Player " + charId + " tossed item in slot " + index + "\n");
         }
         writer.Close();
 
@@ -64,19 +67,19 @@ public class RoomLogger
         string line = "";
         if (pressingJump)
         {
-            line = "Player " + playerId + " jumped from (" + positionX + "," + positionY + ")\n"; 
+            line = GetTime() + " Player " + playerId + " jumped from (" + positionX + "," + positionY + ")\n";
         }
         else if(pressingLeft && !pressingRight)
         {
-            line = "Player " + playerId + " is going left from (" + positionX + "," + positionY + ")\n";
+            line = GetTime() + " Player " + playerId + " is going left from (" + positionX + "," + positionY + ")\n";
         }
         else if (!pressingLeft && pressingRight)
         {
-            line = "Player " + playerId + " is going right from (" + positionX + "," + positionY + ")\n";
+            line = GetTime() + " Player " + playerId + " is going right from (" + positionX + "," + positionY + ")\n";
         }
         else if(pressingRight && pressingLeft)
         {
-            line = "Player " + playerId + " is pressing right AND left while standing in (" + positionX + "," + positionY + ")\n";
+            line = GetTime() + " Player " + playerId + " is pressing right AND left while standing in (" + positionX + "," + positionY + ")\n";
         }
         else
         {
