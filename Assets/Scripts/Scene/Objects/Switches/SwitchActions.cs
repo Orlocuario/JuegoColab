@@ -63,7 +63,6 @@ public class SwitchActions : MonoBehaviour
             case 3:
                 HandlerGroup3();
                 break;
-
             case 4:
                 HandlerGroup4();
                 break;
@@ -236,6 +235,7 @@ public class SwitchActions : MonoBehaviour
     // TODO: Review this
     private void HandlerGroup4()
     {
+
         GameObject platparaMage = InstatiatePrefab("MovPlatform", new Vector2(61f, -9.5f));
 
         Vector2 startPos = platparaMage.transform.position;
@@ -251,6 +251,8 @@ public class SwitchActions : MonoBehaviour
 
         ChangeSprite spriteChanger = GameObject.Find("CartelCambiante").GetComponent<ChangeSprite>();
         spriteChanger.SpriteChanger();
+
+        InstatiatePrefab("Ambientales/InstantateCheckPoints", new Vector2(60.94f, -19.9f));
 
         ShowFeedbackParticles("FBMageButt", new Vector2(72.86f, -19.3f), 4f);
         ShowFeedbackParticles("warriorFeedbackSmall", new Vector2(70.7f, -20f), 4f);
