@@ -10,9 +10,6 @@ public class Roca : MonoBehaviour {
 	private Animator animRoca;
 	private GameObject roca;
 
-
-
-
 	// Use this for initialization
 	void Start () {
 		animRoca = this.gameObject.GetComponent <Animator>();
