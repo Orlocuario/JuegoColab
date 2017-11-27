@@ -1,36 +1,61 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
-public class SwitchManager : MonoBehaviour {
+public class SwitchManager : MonoBehaviour
+{
+
+    #region Attributes
 
     List<GroupOfSwitchs> listOfGroups;
-    public Sprite On11;
-    public Sprite Off11;
-    public Sprite On12;
-    public Sprite Off12;
-    public Sprite On21;
-    public Sprite Off21;
-    public Sprite On22;
-    public Sprite Off22;
-    public Sprite On31;
-    public Sprite Off31;
-    public Sprite On32;
-    public Sprite Off32;
-    public Sprite On01;
-    public Sprite Off01;
-    public Sprite On02;
-    public Sprite Off02;    
 
-    void Awake () {
+    #region Sprites
+
+    #region Shoot switches
+
+    public Sprite ShootBlueOn;
+    public Sprite ShootBlueOff;
+    public Sprite ShootRedOn;
+    public Sprite ShootRedOff;
+    public Sprite ShootYellowOn;
+    public Sprite ShootYellowOff;
+    public Sprite ShootAnyOn;
+    public Sprite ShootAnyOff;
+
+    #endregion
+
+    #region Step switches
+
+    public Sprite StepBlueOn;
+    public Sprite StepBlueOff;
+    public Sprite StepRedOn;
+    public Sprite StepRedOff;
+    public Sprite StepYellowOn;
+    public Sprite StepYellowOff;
+    public Sprite StepAnyOn;
+    public Sprite StepAnyOff;
+
+    #endregion
+
+    #endregion
+
+    #endregion
+
+    #region Awake
+
+    void Awake()
+    {
         listOfGroups = new List<GroupOfSwitchs>();
-	}
-	
+    }
+
+    #endregion
+
+    #region Common
+
     public Switch GetSwitch(int groupId, int individualId)
     {
-        foreach(GroupOfSwitchs group in listOfGroups)
+        foreach (GroupOfSwitchs group in listOfGroups)
         {
-            if(group.groupId == groupId)
+            if (group.groupId == groupId)
             {
                 return group.GetSwitch(individualId);
             }
@@ -46,9 +71,9 @@ public class SwitchManager : MonoBehaviour {
 
     private GroupOfSwitchs GetGroup(int id)
     {
-        foreach(GroupOfSwitchs group in listOfGroups)
+        foreach (GroupOfSwitchs group in listOfGroups)
         {
-            if(group.groupId == id)
+            if (group.groupId == id)
             {
                 return group;
             }
@@ -65,12 +90,15 @@ public class SwitchManager : MonoBehaviour {
 
     public void CallAction(int groupId)
     {
-        foreach(GroupOfSwitchs group in listOfGroups)
+        foreach (GroupOfSwitchs group in listOfGroups)
         {
-            if(group.groupId == groupId)
+            if (group.groupId == groupId)
             {
                 group.CallAction();
             }
         }
     }
+
+    #endregion
+
 }

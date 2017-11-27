@@ -1,66 +1,45 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
-public class GroupOfSwitchs{
+public class GroupOfSwitchs
+{
 
-    public int size;
-    private List<Switch> switchs;
+    #region Attributes 
+
+    private List<Switch> switches;
+
     public int groupId;
     bool activated;
 
-    public GroupOfSwitchs(int groupId)
+    #endregion
+
+    #region Constructor
+
+    public GroupOfSwitchs(int _groupId)
     {
-        switchs = new List<Switch>();
-        size = 0;
-        this.groupId = groupId;
-        activated = false;
+        switches = new List<Switch>();
+        groupId = _groupId;
     }
+
+    #endregion
+
+    #region Common
 
     public void AddSwitch(Switch switchi)
     {
         switchi.switchGroup = this;
-        switchs.Add(switchi);
-        size++;
+        switches.Add(switchi);
     }
 
     public Switch GetSwitch(int id)
     {
-        foreach(Switch switchi in switchs)
+        foreach (Switch switchi in switches)
         {
-            if(switchi.individualId == id)
+            if (switchi.individualId == id)
             {
                 return switchi;
             }
         }
         return null;
-    }
-
-	public void CheckIfReady(PlannerSwitch switchObj, Planner planner)
-	{
-		foreach(Switch switchi in switchs)
-		{
-			if (!switchi.on)
-			{
-				return;
-			}
-		}
-		CallAction();
-		if (switchObj != null) {
-			switchObj.ActivateSwitch ();
-			planner.Monitor ();
-		}
-	}
-
-    public List<Switch> GetSwitchs()
-    {
-        return switchs;
-    }
-
-    private void SendNewEventToServer()
-    {
-        string message = "SwitchGroupReady/" + groupId;
-		Client.instance.SendMessageToServer(message, true);
     }
 
     public void CallAction()
@@ -69,9 +48,55 @@ public class GroupOfSwitchs{
         {
             return;
         }
+
         activated = true;
         SwitchActions handler = new SwitchActions(this);
         handler.DoSomething();
-        SendNewEventToServer();
+        SendSwitchesGroupReadyToServer();
     }
+
+    public void CheckIfReady(PlannerSwitch switchObj, Planner planner)
+    {
+        foreach (Switch switchi in switches)
+        {
+            if (!switchi.isActivated)
+            {
+                return;
+            }
+        }
+
+        CallAction();
+
+        if (switchObj != null)
+        {
+            switchObj.ActivateSwitch();
+            planner.Monitor();
+        }
+    }
+
+    #endregion
+
+    #region Utils
+
+    public List<Switch> GetSwitchs()
+    {
+        return switches;
+    }
+
+    #endregion
+
+    #region Messaging
+
+    private void SendSwitchesGroupReadyToServer()
+    {
+        string message = "SwitchGroupReady/" + groupId;
+
+        if (Client.instance)
+        {
+            Client.instance.SendMessageToServer(message, true);
+        }
+    }
+
+    #endregion
+
 }

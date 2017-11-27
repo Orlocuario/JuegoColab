@@ -8,7 +8,7 @@ public class Switch : MonoBehaviour
 
     #region Enums
 
-    public enum TypeOfActivation { Pisando, Disparando };
+    public enum TypeOfActivation { Stepping, Shooting };
     public enum Color { Red, Blue, Yellow, Any };
 
     #endregion
@@ -23,8 +23,8 @@ public class Switch : MonoBehaviour
 
     public bool desactivable; // Si puede apagarse una vez activado
     public int individualId; // Identificador del switch dentro del grupo
+    public bool isActivated; // Si esta encendido o no
     public int groupId; // Identificador del grupo de switchs.
-    public bool on; // Si esta encendido o no
 
     private SwitchManager manager;
     private bool jobDone; // true si es que su grupo de botones ya terminó su función
@@ -42,85 +42,126 @@ public class Switch : MonoBehaviour
 
     #endregion
 
+    #region Common
+
+    private void Activate()
+    {
+        if (jobDone)
+        {
+            return;
+        }
+
+        isActivated = true;
+        SetSprite();
+        SendOnDataToServer(isActivated);
+        switchGroup.CheckIfReady(switchObj, FindObjectOfType<Planner>());
+    }
+
+    private void Desactivate()
+    {
+        if (jobDone)
+        {
+            return;
+        }
+
+        isActivated = false;
+        SetSprite();
+        SendOnDataToServer(isActivated);
+
+        if (switchObj != null)
+        {
+            switchObj.DeactivateSwitch();
+            Planner planner = FindObjectOfType<Planner>();
+            planner.Monitor();
+        }
+    }
+
+    #endregion
+
+    #region Events
+
+    private void OnCollisionEnter2D(Collision2D collision)
+    {
+        bool correctActivation = false;
+
+        switch (activation)
+        {
+            case TypeOfActivation.Stepping:
+                correctActivation = ColliderIsCorrectPlayer(collision);
+                break;
+            case TypeOfActivation.Shooting:
+                correctActivation = ColliderIsCorrectAttack(collision);
+                break;
+        }
+
+        if (correctActivation)
+        {
+            HandleActivation();
+        }
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        if (ColliderIsCorrectPlayer(collision))
+        {
+            if (desactivable)
+            {
+                Desactivate();
+            }
+        }
+    }
+
+    #endregion
+
     #region Utils
 
+    private void HandleActivation()
+    {
+        if (isActivated)
+        {
+            if (desactivable)
+            {
+                Desactivate();
+            }
+        }
+        else
+        {
+            Activate();
+        }
+    }
 
     public void SetJobDone()
     {
         jobDone = true;
     }
 
-    private int GetIntFromColor(Color color)
+    public void ReceiveDataFromServer(bool _isPressed)
     {
-        switch (color)
-        {
-            case Color.Blue:
-                return 0;
-            case Color.Red:
-                return 1;
-            case Color.Yellow:
-                return 2;
-            case Color.Any:
-                return 3;
-            default:
-                throw new Exception("Color invalido");
-        }
-    }
-
-    private Color GetColorFromInt(int entero)
-    {
-        switch (entero)
-        {
-            case 0:
-                return Color.Blue;
-            case 1:
-                return Color.Red;
-            case 2:
-                return Color.Yellow;
-            case 3:
-                return Color.Any;
-            default:
-                throw new Exception("Entero no corresponde a un color (recibido desde el servidor)");
-        }
-    }
-
-    public void SetColorFromInt(int entero)
-    {
-        switchColor = GetColorFromInt(entero);
-    }
-
-    public void ReceiveDataFromServer(bool onData)
-    {
-        on = onData;
-        if (desactivable == false)
-        {
-            on = true;
-        }
+        isActivated = _isPressed;
         SetSprite();
         switchGroup.CheckIfReady(switchObj, FindObjectOfType<Planner>());
-
     }
 
     private void SetSprite()
     {
-        SpriteRenderer rendererx = this.gameObject.GetComponent<SpriteRenderer>();
-        if (on)
+        SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
+        if (isActivated)
         {
-            if (activation == TypeOfActivation.Disparando)
+            if (activation == TypeOfActivation.Shooting)
             {
                 switch (switchColor)
                 {
                     case Color.Blue:
-                        rendererx.sprite = manager.On11;
+                        spriteRenderer.sprite = manager.ShootBlueOn;
                         break;
                     case Color.Red:
-                        rendererx.sprite = manager.On21;
+                        spriteRenderer.sprite = manager.ShootRedOn;
                         break;
                     case Color.Yellow:
-                        rendererx.sprite = manager.On31;
+                        spriteRenderer.sprite = manager.ShootYellowOn;
                         break;
                     case Color.Any:
-                        rendererx.sprite = manager.On01;
+                        spriteRenderer.sprite = manager.ShootAnyOn;
                         break;
                     default:
                         break;
@@ -131,16 +172,16 @@ public class Switch : MonoBehaviour
                 switch (switchColor)
                 {
                     case Color.Blue:
-                        rendererx.sprite = manager.On12;
+                        spriteRenderer.sprite = manager.StepBlueOn;
                         break;
                     case Color.Red:
-                        rendererx.sprite = manager.On22;
+                        spriteRenderer.sprite = manager.StepRedOn;
                         break;
                     case Color.Yellow:
-                        rendererx.sprite = manager.On32;
+                        spriteRenderer.sprite = manager.StepYellowOn;
                         break;
                     case Color.Any:
-                        rendererx.sprite = manager.On02;
+                        spriteRenderer.sprite = manager.StepAnyOn;
                         break;
                     default:
                         break;
@@ -149,21 +190,21 @@ public class Switch : MonoBehaviour
         }
         else
         {
-            if (activation == TypeOfActivation.Disparando)
+            if (activation == TypeOfActivation.Shooting)
             {
                 switch (switchColor)
                 {
                     case Color.Blue:
-                        rendererx.sprite = manager.Off11;
+                        spriteRenderer.sprite = manager.ShootBlueOff;
                         break;
                     case Color.Red:
-                        rendererx.sprite = manager.Off21;
+                        spriteRenderer.sprite = manager.ShootRedOff;
                         break;
                     case Color.Yellow:
-                        rendererx.sprite = manager.Off31;
+                        spriteRenderer.sprite = manager.ShootYellowOff;
                         break;
                     case Color.Any:
-                        rendererx.sprite = manager.Off01;
+                        spriteRenderer.sprite = manager.ShootAnyOff;
                         break;
                     default:
                         break;
@@ -174,16 +215,16 @@ public class Switch : MonoBehaviour
                 switch (switchColor)
                 {
                     case Color.Blue:
-                        rendererx.sprite = manager.Off12;
+                        spriteRenderer.sprite = manager.StepBlueOff;
                         break;
                     case Color.Red:
-                        rendererx.sprite = manager.Off22;
+                        spriteRenderer.sprite = manager.StepRedOff;
                         break;
                     case Color.Yellow:
-                        rendererx.sprite = manager.Off32;
+                        spriteRenderer.sprite = manager.StepYellowOff;
                         break;
                     case Color.Any:
-                        rendererx.sprite = manager.Off02;
+                        spriteRenderer.sprite = manager.StepAnyOff;
                         break;
                     default:
                         break;
@@ -198,46 +239,21 @@ public class Switch : MonoBehaviour
         manager.Add(this);
     }
 
-    private void CheckPisando(Collision2D other)
-    {
-        if (ColliderIsCorrectPlayer(other))
-        {
-            if (CheckIfColliderIsAbove(other))
-            {
-                Activate();
-            }
-            else
-            {
-                Desactivate();
-            }
-        }
-    }
-
-    private void CheckDisparando(Collision2D collision)
-    {
-        if (CheckIfColliderIsAttack(collision))
-        {
-            Activate();
-        }
-    }
-
     private bool ColliderIsCorrectPlayer(Collision2D other)
     {
         PlayerController player = other.gameObject.GetComponent<PlayerController>();
-        return player.localPlayer && CheckIfPlayerMatchWithColor(other.gameObject);
-    }
 
-    // CUANDO SE USA ESTO??
-    private bool CheckIfColliderIsAbove(Collision2D collision)
-    {
-        GameObject colliderGameObject = collision.collider.gameObject;
-        return transform.position.y < (colliderGameObject.transform.position.y);
+        if (player && player.localPlayer)
+        {
+            return CheckIfPlayerMatchWithColor(other.gameObject);
+        }
 
+        return false;
     }
 
     private void IgnoreCollisionWithPlayers()
     {
-        if (activation == TypeOfActivation.Disparando)
+        if (activation == TypeOfActivation.Shooting)
         {
             Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), GameObject.Find("Mage").GetComponent<BoxCollider2D>());
             Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), GameObject.Find("Warrior").GetComponent<BoxCollider2D>());
@@ -281,7 +297,7 @@ public class Switch : MonoBehaviour
 
     }
 
-    private bool CheckIfColliderIsAttack(Collision2D other)
+    private bool ColliderIsCorrectAttack(Collision2D other)
     {
         AttackController attack = other.gameObject.GetComponent<AttackController>();
 
@@ -291,74 +307,6 @@ public class Switch : MonoBehaviour
         }
 
         return false;
-    }
-
-    #endregion
-
-    #region Events
-
-    private void OnCollisionEnter2D(Collision2D collision)
-    {
-        switch (activation)
-        {
-            case TypeOfActivation.Pisando:
-                CheckPisando(collision);
-                break;
-            case TypeOfActivation.Disparando:
-                CheckDisparando(collision);
-                break;
-        }
-    }
-
-    #endregion
-
-    #region Common
-
-    private void Activate()
-    {
-        if (jobDone)
-        {
-            return;
-        }
-
-        bool newOn;
-        if (activation == TypeOfActivation.Disparando)
-        {
-            newOn = (desactivable && !on) || !desactivable;
-        }
-        else
-        {
-            newOn = true;
-        }
-        if (newOn != on)
-        {
-            on = newOn;
-            if (!on && !desactivable)
-            {
-                return;
-            }
-            SetSprite();
-            SendOnDataToServer(on);
-
-            switchGroup.CheckIfReady(switchObj, FindObjectOfType<Planner>());
-        }
-    }
-
-    private void Desactivate()
-    {
-        if (jobDone)
-        {
-            return;
-        }
-        on = false;
-        SetSprite();
-        SendOnDataToServer(on);
-        if (switchObj != null)
-        {
-            switchObj.DeactivateSwitch();
-            Planner planner = FindObjectOfType<Planner>();
-            planner.Monitor();
-        }
     }
 
     #endregion
