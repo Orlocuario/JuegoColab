@@ -23,7 +23,7 @@ public class MovingObject : MonoBehaviour
     {
         if (dontCollideWithPlayers)
         {
-            IgnoreCollisionWithPlayers();
+            IgnoreCollisionWithPlayers(true);
         }
 
         if (endPoint != null)
@@ -56,18 +56,40 @@ public class MovingObject : MonoBehaviour
 
     #endregion
 
+    #region Common
+
+    public void SetData(Vector2 start, Vector2 end, float speed, bool ignoreCollisionWithPlayers)
+    {
+        SetData(start, end, speed);
+        IgnoreCollisionWithPlayers(ignoreCollisionWithPlayers);
+    }
+
+    public void SetData(Vector2 start, Vector2 end, float speed)
+    {
+        SetData(start, end);
+        moveSpeed = speed;
+    }
+
+    public void SetData(Vector2 start, Vector2 end)
+    {
+        startPoint = start;
+        endPoint = end;
+    }
+
+    #endregion
+
     #region Utils
 
-    private void IgnoreCollisionWithPlayers()
+    private void IgnoreCollisionWithPlayers(bool ignore)
     {
         Collider2D collider = GetComponent<Collider2D>();
 
         GameObject player1 = GameObject.Find("Mage");
         GameObject player2 = GameObject.Find("Warrior");
         GameObject player3 = GameObject.Find("Engineer");
-        Physics2D.IgnoreCollision(collider, player1.GetComponent<Collider2D>());
-        Physics2D.IgnoreCollision(collider, player2.GetComponent<Collider2D>());
-        Physics2D.IgnoreCollision(collider, player3.GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(collider, player1.GetComponent<Collider2D>(), ignore);
+        Physics2D.IgnoreCollision(collider, player2.GetComponent<Collider2D>(), ignore);
+        Physics2D.IgnoreCollision(collider, player3.GetComponent<Collider2D>(), ignore);
     }
 
     protected bool GameObjectIsPlayer(GameObject other)
