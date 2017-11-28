@@ -6,7 +6,12 @@
  */
 public class DestroyableDamagingObject : DamagingObject
 {
+
+    #region Attributes
+
     public float destroyDelayTime = .04f;
+
+    #endregion
 
     #region Events
 

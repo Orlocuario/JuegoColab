@@ -7,6 +7,8 @@
 public class MovingDamagingObject : DestroyableDamagingObject
 {
 
+    #region Attributes
+
     public Vector2 startPoint;
     public Vector2 endPoint;
 
@@ -14,7 +16,10 @@ public class MovingDamagingObject : DestroyableDamagingObject
 
     private Vector3 currentTarget;
 
-    // Use this for initialization
+    #endregion
+
+    #region Start & Update
+
     protected virtual void Start()
     {
 
@@ -25,7 +30,6 @@ public class MovingDamagingObject : DestroyableDamagingObject
 
     }
 
-    // Update is called once per frame
     void Update()
     {
         if (currentTarget == null || startPoint == null || endPoint == null)
@@ -46,5 +50,18 @@ public class MovingDamagingObject : DestroyableDamagingObject
         transform.position = Vector3.MoveTowards(transform.position, currentTarget, moveSpeed * Time.deltaTime);
 
     }
+
+    #endregion
+
+    #region Common
+
+    public void SetData(Vector2 start, Vector2 end, float speed)
+    {
+        startPoint = start;
+        endPoint = end;
+        moveSpeed = speed;
+    }
+
+    #endregion
 
 }

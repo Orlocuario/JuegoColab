@@ -77,7 +77,6 @@ public class KillingObject : MonoBehaviour
 
     #region Events
 
-    // Attack those who enter the alert zone
     protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         if (GameObjectIsPlayer(other.gameObject))

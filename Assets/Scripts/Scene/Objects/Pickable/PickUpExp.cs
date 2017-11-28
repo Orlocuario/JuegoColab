@@ -1,17 +1,11 @@
 ﻿using UnityEngine;
 
-public class PickUpItem : MonoBehaviour
+public class PickUpExp : MonoBehaviour
 {
-
-    #region Attributes
-
-    public PlannerItem itemObj = null;
-
-    #endregion
 
     #region Events
 
-    public void OnCollisionEnter2D(Collision2D other)
+    public void OnTriggerEnter2D(Collider2D other)
     {
         if (GameObjectIsPlayer(other.gameObject))
         {
@@ -25,16 +19,8 @@ public class PickUpItem : MonoBehaviour
 
     public void PickUp()
     {
-        Inventory.instance.AddItemToInventory(this.gameObject);
-        Client.instance.SendMessageToServer("OthersDestroyObject/" + this.gameObject.name, true);
-
-        if (itemObj != null)
-        {
-            itemObj.PickUp(Client.instance.GetLocalPlayer().playerObj);
-            Planner planner = FindObjectOfType<Planner>();
-            planner.Monitor();
-        }
-
+        SendMessageToServer("OthersDestroyObject/" + name, false);
+        SendMessageToServer("GainExp/" + "50", false);
         Destroy(this.gameObject);
     }
 
@@ -59,7 +45,6 @@ public class PickUpItem : MonoBehaviour
             Client.instance.SendMessageToServer(message, secure);
         }
     }
-
 
     #endregion
 

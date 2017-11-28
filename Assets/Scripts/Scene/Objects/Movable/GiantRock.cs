@@ -1,15 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 public class GiantRock : MovableObject
 {
 
-    // Use this for initialization
+    #region Start
+
     protected override void Start()
     {
         base.Start();
         openningTrigger = "TriggerRocaGigante";
         openedPrefab = "Ambientales/SueloRoca";
+
     }
+
+    #endregion
+
 }

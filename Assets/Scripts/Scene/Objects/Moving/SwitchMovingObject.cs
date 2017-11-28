@@ -1,26 +1,31 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SwitchMovingObject : MovingObject
 {
 
-    // Use this for initialization
+    #region Start
+
     protected override void Start()
     {
         base.Start();
         IgnoreSwitchMovingObjects();
     }
 
+    #endregion
+
+    #region Utils
+
     private void IgnoreSwitchMovingObjects()
     {
-        GameObject[] movingSwitchs = GameObject.FindGameObjectsWithTag("SwitchMovingObject");
+        SwitchMovingObject[] movingSwitchs = GameObject.FindObjectsOfType<SwitchMovingObject>();
         Collider2D collider = GetComponent<Collider2D>();
 
-        foreach (GameObject movingSwitch in movingSwitchs)
+        foreach (SwitchMovingObject movingSwitch in movingSwitchs)
         {
             Physics2D.IgnoreCollision(collider, movingSwitch.GetComponent<Collider2D>());
         }
     }
+
+    #endregion
 
 }

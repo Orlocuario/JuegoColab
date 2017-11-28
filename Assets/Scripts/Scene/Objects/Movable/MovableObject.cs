@@ -1,9 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class MovableObject : MonoBehaviour
 {
+
     #region Attributes
 
     public PlannerObstacle obstacleObj = null;
@@ -61,8 +60,8 @@ public class MovableObject : MonoBehaviour
 
         if (openedPrefab != null)
         {
-            Client.instance.SendMessageToServer("InstantiateObject/Prefabs/" + openedPrefab,false);
-            Client.instance.SendMessageToServer("DestroyObject/" + name,false);
+            Client.instance.SendMessageToServer("InstantiateObject/Prefabs/" + openedPrefab, false);
+            Client.instance.SendMessageToServer("DestroyObject/" + name, false);
         }
     }
 
@@ -123,7 +122,8 @@ public class MovableObject : MonoBehaviour
             Client.instance.SendMessageToServer("ObjectMoved/" +
                     name + "/" +
                     force.x + "/" +
-                    force.y,false);
+                    force.y,
+                    false);
         }
 
     }

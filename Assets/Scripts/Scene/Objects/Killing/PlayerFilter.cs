@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 /**
  * When a player touches this objects it loses health and respwans,
@@ -16,7 +14,6 @@ public class PlayerFilter : KillingObject
 
     #region Events
 
-    // Attack those who enter the alert zone
     protected override void OnTriggerEnter2D(Collider2D other)
     {
         if (GameObjectIsPlayer(other.gameObject))

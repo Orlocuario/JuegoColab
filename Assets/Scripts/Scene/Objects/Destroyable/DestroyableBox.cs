@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DestroyableBox : DestroyableObject
 {
+
     #region Attributes
 
     public Sprite brokenBox;
@@ -17,7 +18,6 @@ public class DestroyableBox : DestroyableObject
     {
         Collider2D collider = GetComponent<Collider2D>();
         Destroy(collider);
-
 
         SpriteRenderer spriteRenderer = GetComponent<SpriteRenderer>();
         spriteRenderer.sprite = brokenBox;
