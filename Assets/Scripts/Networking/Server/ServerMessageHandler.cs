@@ -14,8 +14,7 @@ public class ServerMessageHandler
 
     public void HandleMessage(string message, int connectionId)
     {
-        char[] separator = new char[1];
-        separator[0] = '/';
+        char[] separator = new char[1] { '/' } ;
         string[] msg = message.Split(separator);
 
         switch (msg[0])
@@ -121,6 +120,7 @@ public class ServerMessageHandler
     private void HandleChangeScene(string[] msg, int connectionId)
     {
         string scence = msg[1];
+
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
 
@@ -170,8 +170,9 @@ public class ServerMessageHandler
         string message = msg[1];
         int playerId = int.Parse(msg[2]);
         int newConnectionId = 0;
+
         Room room = server.GetPlayer(connectionId).room;
-        room.WriteFeedbackHistorial(message + "/" + playerId);
+
         foreach (NetworkPlayer jugador in room.players)
         {
             if (playerId == jugador.charId)
@@ -180,12 +181,16 @@ public class ServerMessageHandler
                 break;
             }
         }
+
         if (!message.Contains("ActivateNPCLog"))
         {
             message = "ActivateNPCLog/" + message;
         }
+
         server.NPCsLastMessage = message;
         room.SendMessageToPlayer(message, newConnectionId, true); // Message es el texto a mostrar en el NPC Log
+        room.WriteFeedbackHistorial(message + "/" + playerId);
+
     }
 
     private void SendActivationMachine(string message, int connectionId)
@@ -197,19 +202,23 @@ public class ServerMessageHandler
 
     private void SendActivationDoor(string message, int connectionId, string[] msg)
     {
-        NetworkPlayer player = server.GetPlayer(connectionId);
         string doorId = msg[1];
+
+        NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
+
         room.SendMessageToAllPlayers(message, true);
         room.doorManager.AddDoor(doorId);
     }
 
     private void SendSwitchGroupAction(string message, string[] msg, int connectionId)
     {
-        //OBSOLETO
+        // OBSOLETO <- por qué?
+        int groupId = Int32.Parse(msg[1]);
+
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
-        int groupId = Int32.Parse(msg[1]);
+
         if (!room.activatedSwitchGroups.Contains(groupId))
         {
             room.activatedSwitchGroups.Add(groupId);
@@ -221,8 +230,10 @@ public class ServerMessageHandler
         int groupId = Int32.Parse(msg[1]);
         int individualId = Int32.Parse(msg[2]);
         bool on = bool.Parse(msg[3]);
+
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
+
         room.SetSwitchOn(on, groupId, individualId);
         room.SendMessageToAllPlayersExceptOne(message, connectionId, true);
     }
@@ -266,6 +277,7 @@ public class ServerMessageHandler
     private void EnemyDied(string message, string[] msg, int connectionId)
     {
         int enemyId = Int32.Parse(msg[1]);
+
         NetworkPlayer player = server.GetPlayer(connectionId);
         NetworkEnemy enemy = player.room.GetEnemy(enemyId);
 
@@ -285,14 +297,13 @@ public class ServerMessageHandler
         float posX = float.Parse(msg[5]);
         float posY = float.Parse(msg[6]);
 
-        NetworkPlayer player = server.GetPlayer(connectionId);
+        string message = "EnemyRegistered/" + instanceId + "/" + id + "/" + directionX + "/" + posX + "/" + posY;
 
+        NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         NetworkEnemy enemy = room.AddEnemy(instanceId, id, hp); ;
 
         enemy.SetPosition(directionX, posX, posY);
-
-        string message = "EnemyRegistered/" + instanceId + "/" + id + "/" + directionX + "/" + posX + "/" + posY;
 
         if (msg.Length >= 9)
         {
@@ -406,7 +417,6 @@ public class ServerMessageHandler
         Room room = player.room;
 
         int charId = Int32.Parse(data[1]);
-
         float positionX = float.Parse(data[2]);
         float positionY = float.Parse(data[3]);
         int directionX = Int32.Parse(data[4]);
@@ -426,6 +436,7 @@ public class ServerMessageHandler
         player.pressingJump = pressingJump;
         player.pressingLeft = pressingLeft;
         player.pressingRight = pressingRight;
+
         room.SendMessageToAllPlayersExceptOne(message, connectionID, false);
         room.log.WriteNewPosition(player.charId, positionX, positionY, pressingJump, pressingLeft, pressingRight);
     }
@@ -461,17 +472,18 @@ public class ServerMessageHandler
     private void SendCharIdAndControl(int connectionId)
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
-        int charId = player.charId;
-        string message = "SetCharId/" + charId + "/" + player.controlOverEnemies;
+
+        string message = "SetCharId/" + player.charId + "/" + player.controlOverEnemies;
+
         server.SendMessageToClient(connectionId, message, true);
-        SendAllData(connectionId, player.room, false);
+        SendAllData(connectionId, player.room, true);
     }
 
     public void SendChangeScene(string sceneName, Room room)
     {
-        string command = "ChangeScene/" + sceneName;
-        room.SendMessageToAllPlayers(command, true);
+        string message = "ChangeScene/" + sceneName;
         room.sceneToLoad = sceneName;
+        room.SendMessageToAllPlayers(message, true);
         room.doorManager.Reset();
     }
 
