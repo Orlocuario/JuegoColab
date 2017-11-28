@@ -315,10 +315,7 @@ public class Switch : MonoBehaviour
 
     private void SendOnDataToServer(bool data)
     {
-        if (data == false && desactivable == false)
-        {
-            return;
-        }
+
         string message = "ChangeSwitchStatus/" + groupId + "/" + individualId + "/" + data;
 
         if (Client.instance)
