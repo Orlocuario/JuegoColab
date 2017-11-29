@@ -8,6 +8,8 @@ public class Inventory : MonoBehaviour
 {
     public const int numSlots = 8;
 
+    public struct Item { public GameObject item; public bool placed; };
+
     public static Inventory instance;
     public Image[] items = new Image[numSlots];
     public GameObject displayPanel;
@@ -59,12 +61,12 @@ public class Inventory : MonoBehaviour
                     actualItemSlot.SetActive(false);
                     displayPanel.SetActive(false);
 
-                    Client.instance.SendMessageToServer("InventoryUpdate/Remove/" + i.ToString(),true);
+                    Client.instance.SendMessageToServer("InventoryUpdate/Remove/" + i.ToString(), true);
                     UpdateInventory(items[i], i);
                     return;
                 }
             }
-        }   
+        }
     }
 
     public void UpdateInventory(Image spriteImage, int i)
@@ -98,7 +100,7 @@ public class Inventory : MonoBehaviour
         displayPanel.SetActive(false);
         RemoveItemFromInventory(GameObject.Find("SlotSprite" + numSlot).GetComponent<Image>());
         string actualItemSpriteName = Items.instance.itemSprite.name;
-        Client.instance.SendMessageToServer("CreateGameObject/" + actualItemSpriteName,true);
+        Client.instance.SendMessageToServer("CreateGameObject/" + actualItemSpriteName, true);
     }
 
     public void UnselectItem()

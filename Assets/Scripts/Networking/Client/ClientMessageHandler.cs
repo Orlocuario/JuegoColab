@@ -149,7 +149,7 @@ public class ClientMessageHandler
             return;
         }
         LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
-        levelManager.ActivateMachine(msg[1]);
+        levelManager.ActivateGearSystem(msg[1]);
     }
 
     private void HandleActivationDoor(string[] msg)

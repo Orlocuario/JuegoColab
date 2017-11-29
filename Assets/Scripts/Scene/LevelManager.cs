@@ -45,7 +45,7 @@ public class LevelManager : MonoBehaviour
 
         if (!canvas.activeInHierarchy)
         {
-            canvas.SetActive(true); 
+            canvas.SetActive(true);
         }
 
         hpAndMp = canvas.GetComponent<HUDDisplay>();
@@ -198,25 +198,17 @@ public class LevelManager : MonoBehaviour
     {
         reconnectText.SetActive(valor);
     }
-    public void ActivateMachine(string machineName)
+    public void ActivateGearSystem(string gearSystemName)
     {
-        GameObject machine = GameObject.Find(machineName);
-        SpriteRenderer maquinaSpriteRenderer = machine.gameObject.GetComponent<SpriteRenderer>();
-        SpriteRenderer[] maquinaSlotSpriteRenderer = machine.gameObject.GetComponentsInChildren<SpriteRenderer>();
+        GameObject gearSystem = GameObject.Find(gearSystemName);
 
-        for (int i = 0; i < maquinaSlotSpriteRenderer.Length; i++)
+        if (gearSystem)
         {
-            maquinaSlotSpriteRenderer[i].sprite = null;
+            new GearSystemActions().DoSomething(gearSystem);
         }
-
-        maquinaSpriteRenderer.sprite = machine.GetComponent<EngranajeSystem>().maquinaIsOpen;
-
-        if (machineName == "MaquinaEngranajeA")
+        else
         {
-            GameObject viga = GameObject.Find("GiantBlocker");
-            GameObject viga2 = GameObject.Find("GiantBlocker (1)");
-            viga.SetActive(false);
-            viga2.SetActive(false);
+            Debug.LogError("GearSystem " + gearSystemName + " does not exists");
         }
     }
 
