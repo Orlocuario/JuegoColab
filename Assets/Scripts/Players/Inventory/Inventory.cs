@@ -8,8 +8,6 @@ public class Inventory : MonoBehaviour
 {
     public const int numSlots = 8;
 
-    public struct Item { public GameObject item; public bool placed; };
-
     public static Inventory instance;
     public Image[] items = new Image[numSlots];
     public GameObject displayPanel;
@@ -46,27 +44,27 @@ public class Inventory : MonoBehaviour
         }
     }
 
-    public void RemoveItemFromInventory(Image itemToRemove)
+    public void RemoveItemFromInventory(GameObject itemToRemove)
     {
-        if (Client.instance.GetLocalPlayer().isGrounded)
-        {
-            for (int i = 0; i < items.Length; i++)
-            {
-                if (items[i] == itemToRemove)
-                {
-                    Image actualImage = actualItemSlot.GetComponent<Image>();
-                    actualImage.sprite = null;
-                    items[i].sprite = null;
-                    items[i].enabled = false;
-                    actualItemSlot.SetActive(false);
-                    displayPanel.SetActive(false);
 
-                    Client.instance.SendMessageToServer("InventoryUpdate/Remove/" + i.ToString(), true);
-                    UpdateInventory(items[i], i);
-                    return;
-                }
+        for (int i = 0; i < items.Length; i++)
+        {
+            if (items[i].Equals(itemToRemove))
+            {
+                Image actualImage = actualItemSlot.GetComponent<Image>();
+
+                actualImage.sprite = null;
+                items[i].sprite = null;
+                items[i].enabled = false;
+                actualItemSlot.SetActive(false);
+                displayPanel.SetActive(false);
+
+                Client.instance.SendMessageToServer("InventoryUpdate/Remove/" + i, true);
+                UpdateInventory(items[i], i);
+                return;
             }
         }
+
     }
 
     public void UpdateInventory(Image spriteImage, int i)
@@ -98,7 +96,7 @@ public class Inventory : MonoBehaviour
     public void DropItem()
     {
         displayPanel.SetActive(false);
-        RemoveItemFromInventory(GameObject.Find("SlotSprite" + numSlot).GetComponent<Image>());
+        RemoveItemFromInventory(GameObject.Find("SlotSprite" + numSlot));
         string actualItemSpriteName = Items.instance.itemSprite.name;
         Client.instance.SendMessageToServer("CreateGameObject/" + actualItemSpriteName, true);
     }

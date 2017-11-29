@@ -28,7 +28,7 @@ public class ServerDoorsManager {
         List<string> messages = new List<string>();
         foreach(string door in openedDoors)
         {
-            string message = "ActivateRuneDoor/" + door;
+            string message = "ActivateRuneSystem/" + door;
             messages.Add(message);
         }
         return messages;

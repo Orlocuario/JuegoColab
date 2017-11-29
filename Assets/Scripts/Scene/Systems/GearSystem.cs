@@ -1,22 +1,21 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class GearSystem : MonoBehaviour
 {
 
     #region Attributes
 
-    public Inventory.Item[] requiredGears;
+    public struct Gear { public GameObject item; public bool placed; };
+
     public PlannerSwitch switchObj;
-    public Sprite actionedSprite;
+    public Sprite activatedSprite;
+    public Gear[] requiredGears;
 
     public int activationTime;
 
     private float activationDistance = 1f;
-    private bool actioned;
+    private bool activated;
 
     #endregion
 
@@ -32,23 +31,26 @@ public class GearSystem : MonoBehaviour
     #region Common
 
     // Call from outside
-    public void PlaceGear(GameObject player, GameObject gear)
+    public void PlaceGear(GameObject player, GameObject gearGO)
     {
 
-        if (actioned)
+        if (activated)
         {
             return;
         }
 
-        if (PlayerIsNear(player) && IsRequiredGear(gear))
-        {
+        int pos = GearPosition(gearGO);
 
+        if (pos != -1)
+        {
+            Gear gear = requiredGears[pos];
+
+            Inventory.instance.RemoveItemFromInventory(gearGO);
             PlaceGear(gear);
-            Inventory.instance.RemoveItemFromInventory(gear);
 
             if (AllGearsPlaced())
             {
-                actioned = true;
+                activated = true;
                 StartCoroutine(Actioned());
             }
 
@@ -57,28 +59,19 @@ public class GearSystem : MonoBehaviour
     }
 
     // Call only from within
-    protected void PlaceGear(GameObject gear)
+    protected void PlaceGear(Gear gear)
     {
-        Inventory.Item requiredGear = new Inventory.Item();
 
-        // Find the gear first
-        for (int i = 0; i < requiredGears.Length; i++)
+        if (gear.item.GetComponent<SpriteRenderer>())
         {
-            if (requiredGears[i].item.Equals(gear))
-            {
-                requiredGear = requiredGears[i];
-            }
-        }
-
-        if (requiredGear.item.GetComponent<SpriteRenderer>())
-        {
-            requiredGear.placed = true;
-            requiredGear.item.GetComponent<SpriteRenderer>().enabled = true;
+            gear.placed = true;
+            gear.item.GetComponent<SpriteRenderer>().enabled = true;
         }
         else
         {
             Debug.LogError(gear + " does not have a SpriteRenderer");
         }
+
     }
 
     #endregion
@@ -108,18 +101,18 @@ public class GearSystem : MonoBehaviour
         }
     }
 
-    protected bool IsRequiredGear(GameObject gear)
+    protected int GearPosition(GameObject gear)
     {
 
         for (int i = 0; i < requiredGears.Length; i++)
         {
             if (requiredGears[i].item.Equals(gear))
             {
-                return true;
+                return i;
             }
         }
 
-        return false;
+        return -1;
 
     }
 
@@ -137,13 +130,7 @@ public class GearSystem : MonoBehaviour
         return true;
     }
 
-    protected bool PlayerIsNear(GameObject player)
-    {
-        return Vector2.Distance(player.transform.position, transform.position) <= activationDistance;
-    }
-
     #endregion
-
 
     #region Coroutines
 
@@ -154,4 +141,5 @@ public class GearSystem : MonoBehaviour
     }
 
     #endregion
+
 }

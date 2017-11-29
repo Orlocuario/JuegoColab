@@ -42,7 +42,7 @@ public class GearSystemActions : MonoBehaviour
     {
 
         SpriteRenderer systemSpriteRenderer = gearSystem.GetComponent<SpriteRenderer>();
-        systemSpriteRenderer.sprite = gearSystem.actionedSprite;
+        systemSpriteRenderer.sprite = gearSystem.activatedSprite;
 
         StartAnimation("startMovingMAchine", gearSystem);
 
@@ -56,7 +56,7 @@ public class GearSystemActions : MonoBehaviour
             planner.Monitor();
         }
 
-        Client.instance.SendMessageToServer("ActivateMachine/" + this.gameObject.name, true);
+        Client.instance.SendMessageToServer("ActivateGearSystem/" + this.gameObject.name, true);
 
     }
 

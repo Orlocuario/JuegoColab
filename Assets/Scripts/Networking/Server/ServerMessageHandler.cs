@@ -100,11 +100,11 @@ public class ServerMessageHandler
             case "SwitchGroupReady":
                 SendSwitchGroupAction(message, msg, connectionId);
                 break;
-            case "ActivateRuneDoor":
-                SendActivationDoor(message, connectionId, msg);
+            case "ActivateRuneSystem":
+                SendActivationRuneSystem(message, connectionId, msg);
                 break;
-            case "ActivateMachine":
-                SendActivationMachine(message, connectionId);
+            case "ActivateGearSystem":
+                SendActivationGearSystem(message, connectionId);
                 break;
             case "ActivateNPCLog": // No se si es necesario o no, ya que puedes llamar el metodo desde afuera (start o script)
                 SendActivationNPC(msg, connectionId);
@@ -193,14 +193,14 @@ public class ServerMessageHandler
 
     }
 
-    private void SendActivationMachine(string message, int connectionId)
+    private void SendActivationGearSystem(string message, int connectionId)
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         room.SendMessageToAllPlayersExceptOne(message, connectionId, true);
     }
 
-    private void SendActivationDoor(string message, int connectionId, string[] msg)
+    private void SendActivationRuneSystem(string message, int connectionId, string[] msg)
     {
         string doorId = msg[1];
 

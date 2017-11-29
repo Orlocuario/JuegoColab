@@ -107,10 +107,10 @@ public class ClientMessageHandler
             case "SwitchGroupReady":
                 HandleSwitchGroupReady(msg);
                 break;
-            case "ActivateRuneDoor":
-                HandleActivationDoor(msg);
+            case "ActivateRuneSystem":
+                HandleActivationRuneSystem(msg);
                 break;
-            case "ActivateMachine":
+            case "ActivateGearSystem":
                 HandleActivationMachine(msg);
                 break;
             case "ActivateNPCLog":
@@ -152,7 +152,7 @@ public class ClientMessageHandler
         levelManager.ActivateGearSystem(msg[1]);
     }
 
-    private void HandleActivationDoor(string[] msg)
+    private void HandleActivationRuneSystem(string[] msg)
     {
         Scene currentScene = SceneManager.GetActiveScene();
         if (currentScene.name == "ClientScene")
@@ -160,7 +160,7 @@ public class ClientMessageHandler
             return;
         }
         LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
-        levelManager.ActivateRuneDoor(msg[1]);
+        levelManager.ActivateRuneSystem(msg[1]);
     }
 
     private void HandleChangeObjectPosition(string[] msg)

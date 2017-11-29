@@ -95,19 +95,20 @@ public class LevelManager : MonoBehaviour
         return;
     }
 
-    public void ActivateRuneDoor(string doorName)
+    public void ActivateRuneSystem(string runeSystemName)
     {
-        GameObject door = GameObject.Find(doorName);
-        door.GetComponent<BoxCollider2D>().isTrigger = true;
-        SpriteRenderer doorSpriteRenderer = door.GetComponent<SpriteRenderer>();
-        SpriteRenderer[] doorSlotSpriteRenderer = door.GetComponentsInChildren<SpriteRenderer>();
 
-        for (int i = 0; i < doorSlotSpriteRenderer.Length; i++)
+        GameObject runeSystem = GameObject.Find(runeSystemName);
+
+        if (runeSystem)
         {
-            doorSlotSpriteRenderer[i].sprite = null;
+            new RuneSystemActions().DoSomething(runeSystem);
+        }
+        else
+        {
+            Debug.LogError("RuneSystem " + runeSystemName + " does not exists");
         }
 
-        doorSpriteRenderer.sprite = door.GetComponent<RuneSystem>().doorIsOpen;
     }
 
     public void ActivateNPCFeedback(string message)

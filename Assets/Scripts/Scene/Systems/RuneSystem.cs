@@ -1,149 +1,141 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections;
 using UnityEngine;
-using UnityEngine.UI;
 
 public class RuneSystem : MonoBehaviour
 {
-    LevelManager levelManager;
-    Vector2 myPosition;
-    public List<string> runesThatDoorRequires = new List<string>();
-    public GameObject[] runeSlots;
-    public Sprite doorIsOpen;
 
-    private string[] runesThatDoorRequiresArray;
-    private List<string> runesThatTheDoorHas = new List<string>();
-    private string[] runesThatTheDoorHasArray = new string[3];
-    private bool lockValue;
-    private bool doorHasBeenChecked;
-	private bool messageSent;
+    #region Attributes
 
-	public PlannerObstacle obstacleObj = null;
+    public struct Rune { public GameObject item; public bool placed; };
+
+    public PlannerObstacle obstacleObj = null;
+    public Sprite activatedSprite;
+    public Rune[] requiredRunes;
+
+    public int activationTime;
+
+    private float activationDistance = 1f;
+    private bool activated;
+
+    #endregion
+
+    #region Start
 
     private void Start()
     {
-        lockValue = false;
-		messageSent = false;
-        doorHasBeenChecked = false;
-        myPosition = gameObject.transform.position;
-        levelManager = GameObject.Find("LevelManager").GetComponent<LevelManager>();
-        runesThatDoorRequiresArray = runesThatDoorRequires.ToArray();
+        HideInactiveRunes();
     }
 
-    private void Update()
+    #endregion
+
+    #region Common
+
+    // Call from outside
+    public void PlaceGear(GameObject player, GameObject runeGO)
     {
-        if (levelManager.localPlayer == null)
+
+        if (activated)
         {
             return;
         }
 
-        PlayerController player = levelManager.localPlayer;
-        Vector2 playerPosition = player.gameObject.transform.position;
-        float distance = (playerPosition - myPosition).magnitude;
+        int pos = RunePosition(runeGO);
 
-        if (distance <= 0.4f && BagButton.instance.usingRune && !RuneDoorIsFull())
+        if (pos != -1)
         {
-            lockValue = true;
-            string itemName = Items.instance.itemName;
-            for (int i = 0; i < runesThatDoorRequiresArray.Length; i++)
-            {
-                if (runesThatDoorRequiresArray[i] == itemName && !runesThatTheDoorHas.Contains(itemName))
-                {
-                    runesThatTheDoorHas.Add(itemName);
-                    for (int j = 0; j < runesThatTheDoorHasArray.Length; j++)
-                    {
-                        if (runesThatTheDoorHasArray[i] == null)
-                        {
-                            runesThatTheDoorHasArray[i] = itemName;
-                            break;
-                        }
-                    }
-                    runesThatDoorRequires.Remove(itemName);
-                    runesThatDoorRequiresArray = runesThatDoorRequires.ToArray();
+            Rune rune = requiredRunes[pos];
 
-                    BagButton.instance.usingRune = false;
-                    AddRuneSpriteToDoor(GetItemImage(itemName).GetComponent<Image>());
-                    UpdateDoorSprite(GetItemImage(itemName).GetComponent<Image>(), i);
-                    Inventory.instance.RemoveItemFromInventory(GetItemImage(itemName));
-                }
+            Inventory.instance.RemoveItemFromInventory(runeGO);
+            PlaceRune(rune);
+
+            if (AllRunesPlaced())
+            {
+                activated = true;
+                StartCoroutine(Actioned());
             }
+
+        }
+
+    }
+
+    // Call only from within
+    protected void PlaceRune(Rune rune)
+    {
+
+        if (rune.item.GetComponent<SpriteRenderer>())
+        {
+            rune.placed = true;
+            rune.item.GetComponent<SpriteRenderer>().enabled = true;
         }
         else
         {
-            if (lockValue)
-            {
-                lockValue = false;
-            }
-
-            if (RuneDoorIsFull() && doorHasBeenChecked)
-            {
-                doorHasBeenChecked = false;
-                ActionToDo(this.gameObject.name);
-            }
+            Debug.LogError(rune + " does not have a SpriteRenderer");
         }
+
     }
 
-    private void UpdateDoorSprite(Image spriteImage, int i)
-    {
-        SpriteRenderer slotSprite = GameObject.Find("RuneSlot" + i.ToString()).GetComponent<SpriteRenderer>();
-        slotSprite.sprite = spriteImage.sprite;
-    }
+    #endregion
 
-    private void AddRuneSpriteToDoor(Image spriteImage)
+    #region Utils
+
+    // Hide every rune that was not "placed" from the editor
+    protected void HideInactiveRunes()
     {
-        for (int i = 0; i < runeSlots.Length; i++)
+        for (int i = 0; i < requiredRunes.Length; i++)
         {
-            if (runeSlots[i].GetComponent<SpriteRenderer>().sprite == null)
+            if (!requiredRunes[i].placed)
             {
-                SpriteRenderer runeSlotSprite = runeSlots[i].GetComponent<SpriteRenderer>();
-                runeSlotSprite.sprite = spriteImage.sprite;
-            }
-        }
-        return;
-    }
+                SpriteRenderer spriteRenderer = requiredRunes[i].item.GetComponent<SpriteRenderer>();
 
-    private Image GetItemImage(string itemName) //For Removing item from inventory
-    {
-        Image[] items = Inventory.instance.items;
-        for (int i = 0; i < items.Length; i++)
-        {
-            if (items[i].sprite != null && items[i].sprite.name == itemName)
-            {
-                return items[i];
-            }
-        }
-        return null;
-    }
-
-    public bool RuneDoorIsFull()
-    {
-        if (runesThatTheDoorHas != null) // W/O this it crashes the if !RuneDoorFull()
-        {
-            for (int i = 0; i < runesThatDoorRequiresArray.Length; i++)
-            {
-                if (runesThatDoorRequiresArray[i] != null)
+                if (spriteRenderer)
                 {
-                    return false;
+                    spriteRenderer.enabled = false;
                 }
+                else
+                {
+                    Debug.LogError(requiredRunes[i] + " does not have a SpriteRenderer");
+                }
+
             }
-            doorHasBeenChecked = true;
-            return true;
         }
-        return false;
     }
 
-    public void ActionToDo(string doorName)
+    protected int RunePosition(GameObject rune)
     {
-		if (!messageSent) {
-			messageSent = true;
-			Client.instance.SendMessageToServer("ActivateRuneDoor/" + this.gameObject.name,true);
-			if (obstacleObj != null) {
-				obstacleObj.OpenDoor ();
-			}
-			Planner planner = FindObjectOfType<Planner> ();
-			planner.Monitor ();
-		}
+        for (int i = 0; i < requiredRunes.Length; i++)
+        {
+            if (requiredRunes[i].item.Equals(rune))
+            {
+                return i;
+            }
+        }
 
+        return -1;
     }
+
+    protected bool AllRunesPlaced()
+    {
+        for (int i = 0; i < requiredRunes.Length; i++)
+        {
+            if (!requiredRunes[i].placed)
+            {
+                return false;
+            }
+        }
+
+        return true;
+    }
+
+    #endregion
+
+    #region Coroutines
+
+    protected IEnumerator Actioned()
+    {
+        yield return new WaitForSeconds(activationTime);
+        new RuneSystemActions().DoSomething(this);
+    }
+
+    #endregion
+
 }
