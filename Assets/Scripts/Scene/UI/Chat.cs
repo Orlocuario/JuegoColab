@@ -225,11 +225,11 @@ public class Chat : MonoBehaviour
             word = "";
             myName.text = "";
             string texto = SetJugador() + ": " + entered;
-            Client.instance.SendNewChatMessageToServer(texto);
+            SendNewChatMessageToServer(texto);
         }
         else
         {
-            Client.instance.SendNewChatMessageToServer(message);
+            SendNewChatMessageToServer(message);
         }
     }
 
@@ -269,4 +269,17 @@ public class Chat : MonoBehaviour
         displayPanel.SetActive(false);
         inventory.SetActive(false);
     }
+
+    #region Messaging
+
+    private void SendNewChatMessageToServer(string message)
+    {
+        if (Client.instance)
+        {
+            Client.instance.SendNewChatMessageToServer(message);
+        }
+    }
+
+    #endregion
+
 }

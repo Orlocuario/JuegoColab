@@ -22,7 +22,12 @@ public class Inventory : MonoBehaviour
 
     public void Start()
     {
-        items = new PickUpItem[numSlots];
+        instance = this;
+
+        if (items == null)
+        {
+            items = new PickUpItem[numSlots];
+        }
     }
 
     #endregion

@@ -29,12 +29,14 @@ public class PickUpItem : MonoBehaviour
     public void PickUp()
     {
         Inventory.instance.AddItemToInventory(this);
-        Client.instance.SendMessageToServer("OthersDestroyObject/" + this.gameObject.name, true);
+        SendMessageToServer("OthersDestroyObject/" + this.gameObject.name, true);
 
         if (itemObj != null)
         {
-            itemObj.PickUp(Client.instance.GetLocalPlayer().playerObj);
+            LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
             Planner planner = FindObjectOfType<Planner>();
+
+            itemObj.PickUp(levelManager.localPlayer.playerObj);
             planner.Monitor();
         }
 
@@ -62,7 +64,6 @@ public class PickUpItem : MonoBehaviour
             Client.instance.SendMessageToServer(message, secure);
         }
     }
-
 
     #endregion
 

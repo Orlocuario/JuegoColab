@@ -56,7 +56,7 @@ public class GearSystemActions : MonoBehaviour
             planner.Monitor();
         }
 
-        Client.instance.SendMessageToServer("ActivateGearSystem/" + this.gameObject.name, true);
+        SendMessageToServer("ActivateGearSystem/" + this.gameObject.name, true);
 
     }
 
@@ -79,6 +79,18 @@ public class GearSystemActions : MonoBehaviour
             Destroy(gameObject, time);
         }
 
+    }
+
+    #endregion
+
+    #region Messaging
+
+    private void SendMessageToServer(string message, bool secure)
+    {
+        if (Client.instance)
+        {
+            Client.instance.SendMessageToServer(message, secure);
+        }
     }
 
     #endregion

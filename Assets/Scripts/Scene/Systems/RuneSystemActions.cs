@@ -39,10 +39,23 @@ public class RuneSystemActions : MonoBehaviour
         Planner planner = FindObjectOfType<Planner>();
         planner.Monitor();
 
-        Client.instance.SendMessageToServer("ActivateRuneSystem/" + runeSystem.name, true);
+        SendMessageToServer("ActivateRuneSystem/" + runeSystem.name, true);
 
     }
 
     #endregion
+
+    #region Messaging
+
+    private void SendMessageToServer(string message, bool secure)
+    {
+        if (Client.instance)
+        {
+            Client.instance.SendMessageToServer(message, secure);
+        }
+    }
+
+    #endregion
+
 
 }
