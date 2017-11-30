@@ -5,6 +5,9 @@ public class PickUpItem : MonoBehaviour
 
     #region Attributes
 
+    public string info;
+    public int id;
+
     public PlannerItem itemObj = null;
 
     #endregion
@@ -25,7 +28,7 @@ public class PickUpItem : MonoBehaviour
 
     public void PickUp()
     {
-        Inventory.instance.AddItemToInventory(this.gameObject);
+        Inventory.instance.AddItemToInventory(this);
         Client.instance.SendMessageToServer("OthersDestroyObject/" + this.gameObject.name, true);
 
         if (itemObj != null)

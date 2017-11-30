@@ -31,7 +31,7 @@ public class RuneSystem : MonoBehaviour
     #region Common
 
     // Call from outside
-    public void PlaceGear(GameObject player, GameObject runeGO)
+    public void PlaceGear(GameObject runeGO)
     {
 
         if (activated)
@@ -45,7 +45,6 @@ public class RuneSystem : MonoBehaviour
         {
             Rune rune = requiredRunes[pos];
 
-            Inventory.instance.RemoveItemFromInventory(runeGO);
             PlaceRune(rune);
 
             if (AllRunesPlaced())
@@ -81,6 +80,12 @@ public class RuneSystem : MonoBehaviour
     // Hide every rune that was not "placed" from the editor
     protected void HideInactiveRunes()
     {
+        if (requiredRunes == null)
+        {
+            Debug.Log(name + " has no required runes to work ?");
+            return;
+        }
+
         for (int i = 0; i < requiredRunes.Length; i++)
         {
             if (!requiredRunes[i].placed)

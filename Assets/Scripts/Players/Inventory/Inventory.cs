@@ -1,127 +1,139 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class Inventory : MonoBehaviour
 {
-    public const int numSlots = 8;
+
+    #region Attributes
 
     public static Inventory instance;
-    public Image[] items = new Image[numSlots];
-    public GameObject displayPanel;
-    public GameObject actualItemSlot;
-    public Text displayItemInfo;
+    public static int numSlots = 8;
+
+    private GameObject selectedItemPanel;
+    private GameObject selectedItemSlot;
+    private Text selectedItemInfo;
+    private PickUpItem[] items;
+    private PickUpItem selectedItem;
     private int numSlot;
+
+    #endregion
+
+    #region Start
 
     public void Start()
     {
-        new Items();
+        items = new PickUpItem[numSlots];
     }
 
-    public void AddItemToInventory(GameObject itemToAdd)
-    {
-        if (!IsFull())
-        {
-            for (int i = 0; i < items.Length; i++)
-            {
-                Sprite actualItemSprite = items[i].GetComponent<Image>().sprite;
-                if (actualItemSprite == null)
-                {
-                    items[i].sprite = itemToAdd.GetComponent<SpriteRenderer>().sprite;
-                    items[i].enabled = true;
+    #endregion
 
-                    Client.instance.SendMessageToServer("InventoryUpdate/Add/" + i.ToString() + "/" + items[i].sprite.name, true);
-                    UpdateInventory(items[i], i);
-                    return;
-                }
-            }
-        }
-        else
+    #region Common
+
+    public void AddItemToInventory(PickUpItem item)
+    {
+        int freeSlot = GetFreeSlot();
+
+        if (freeSlot != -1)
         {
-            return;
+            items[freeSlot] = item;
+
+            Image slotSprite = GameObject.Find("SlotSprite" + freeSlot).GetComponent<Image>();
+            slotSprite.sprite = item.GetComponent<SpriteRenderer>().sprite;
+
+            SendMessageToServer("InventoryUpdate/Add/" + freeSlot + "/" + item.name, true);
         }
+
     }
 
-    public void RemoveItemFromInventory(GameObject itemToRemove)
+    public void RemoveItemFromInventory(PickUpItem itemToRemove)
     {
 
-        for (int i = 0; i < items.Length; i++)
+        bool found = false;
+        int index;
+
+        for (index = 0; index < items.Length; index++)
         {
-            if (items[i].Equals(itemToRemove))
+            if (items[index].Equals(itemToRemove))
             {
-                Image actualImage = actualItemSlot.GetComponent<Image>();
-
-                actualImage.sprite = null;
-                items[i].sprite = null;
-                items[i].enabled = false;
-                actualItemSlot.SetActive(false);
-                displayPanel.SetActive(false);
-
-                Client.instance.SendMessageToServer("InventoryUpdate/Remove/" + i, true);
-                UpdateInventory(items[i], i);
-                return;
+                found = true;
+                break;
             }
         }
 
-    }
-
-    public void UpdateInventory(Image spriteImage, int i)
-    {
-        Image slotSprite = GameObject.Find("SlotSprite" + i.ToString()).GetComponent<Image>();
-        slotSprite.sprite = spriteImage.sprite;
-    }
-
-    public void GetItemName(string slot)
-    {
-        numSlot = Int32.Parse(slot);
-        Image itemImage = GameObject.Find("SlotSprite" + slot).GetComponent<Image>();
-
-        if (itemImage.sprite != null)
+        if (found)
         {
-            Items.instance.ItemsInGame(itemImage);
+            items[index] = null;
+
+            Image slotSprite = GameObject.Find("SlotSprite" + index).GetComponent<Image>();
+            slotSprite.sprite = null;
+
+            UnselectItem();
+            SendMessageToServer("InventoryUpdate/Remove/" + index, true);
         }
-        else
-        {
-            return;
-        }
+
     }
 
-    public void ToggleDisplayPanelOff()
+    public void SelectItem(PickUpItem item)
     {
-        displayPanel.SetActive(false);
-    }
+        selectedItemInfo.text = "";
+        selectedItemInfo.text = "<color=#e67f84ff><b>" + "Usando '" + item.name + "': </b></color>" + "\r\n";
+        selectedItemInfo.text += "<color=#f9ca45ff>" + item.info + "</color>";
 
-    public void DropItem()
-    {
-        displayPanel.SetActive(false);
-        RemoveItemFromInventory(GameObject.Find("SlotSprite" + numSlot));
-        string actualItemSpriteName = Items.instance.itemSprite.name;
-        Client.instance.SendMessageToServer("CreateGameObject/" + actualItemSpriteName, true);
+        selectedItemSlot.GetComponent<Image>().sprite = item.GetComponent<SpriteRenderer>().sprite;
+
+        ToogleSelectedItem(true);
     }
 
     public void UnselectItem()
     {
-        Items.instance.itemName = null;
-        Items.instance.itemId = 0; //enviar id en vez de name propuesta a futuro
+        selectedItemInfo.text = "";
+        selectedItemSlot.GetComponent<Image>().sprite = null;
 
-        Image actualImage = actualItemSlot.GetComponent<Image>();
-        actualImage.sprite = null;
-
-        actualItemSlot.SetActive(false);
-        displayPanel.SetActive(false);
+        ToogleSelectedItem(false);
     }
 
-    public bool IsFull()
+    public void DropItem()
+    {
+        SendMessageToServer("CreateGameObject/" + selectedItem.name, true);
+        RemoveItemFromInventory(selectedItem);
+        selectedItemPanel.SetActive(false);
+    }
+
+    #endregion
+
+    #region Utils
+
+    public int GetFreeSlot()
     {
         for (int i = 0; i < items.Length; i++)
         {
-            if (items[i].sprite == null)
+            if (!items[i])
             {
-                return false;
+                return i;
             }
         }
-        return true;
+
+        return -1;
     }
+
+    protected void ToogleSelectedItem(bool active)
+    {
+        selectedItemSlot.SetActive(active);
+        selectedItemPanel.SetActive(active);
+    }
+
+    #endregion
+
+    #region Messaging
+
+    private void SendMessageToServer(string message, bool secure)
+    {
+        if (Client.instance)
+        {
+            Client.instance.SendMessageToServer(message, secure);
+        }
+    }
+
+    #endregion
+
 }

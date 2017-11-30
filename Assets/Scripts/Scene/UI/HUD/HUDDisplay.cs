@@ -207,7 +207,6 @@ public class HUDDisplay : MonoBehaviour
             if (particles)
             {
                 HPParticles = particles.gameObject;
-				Debug.Log (particles.gameObject);
                 HPParticles.SetActive(false);
             }
         }
@@ -216,13 +215,11 @@ public class HUDDisplay : MonoBehaviour
 
         if (manaBar)
         {
-			Debug.Log (manaBar);
             ParticleSystem particles = manaBar.GetComponentInChildren<ParticleSystem>();
 
             if (particles)
             {
                 MPParticles = particles.gameObject;
-				Debug.Log (particles.gameObject);
                 MPParticles.SetActive(false);
             }
         }

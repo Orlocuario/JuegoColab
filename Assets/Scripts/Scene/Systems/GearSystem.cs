@@ -31,7 +31,7 @@ public class GearSystem : MonoBehaviour
     #region Common
 
     // Call from outside
-    public void PlaceGear(GameObject player, GameObject gearGO)
+    public void PlaceGear(GameObject gearGO)
     {
 
         if (activated)
@@ -45,7 +45,6 @@ public class GearSystem : MonoBehaviour
         {
             Gear gear = requiredGears[pos];
 
-            Inventory.instance.RemoveItemFromInventory(gearGO);
             PlaceGear(gear);
 
             if (AllGearsPlaced())
@@ -81,6 +80,11 @@ public class GearSystem : MonoBehaviour
     // Hide every gear that was not "placed" from the editor
     protected void HideInactiveGears()
     {
+        if (requiredGears == null)
+        {
+            Debug.Log(name + " has no required gears to work ?");
+            return;
+        }
 
         for (int i = 0; i < requiredGears.Length; i++)
         {
