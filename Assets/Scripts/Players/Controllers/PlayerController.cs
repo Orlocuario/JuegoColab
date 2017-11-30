@@ -74,9 +74,10 @@ public class PlayerController : MonoBehaviour
     protected float speedY;
 
     protected int debuger;
+
     #endregion
 
-    #region Start & Update
+    #region Start
 
     protected virtual void Start()
     {
@@ -124,6 +125,10 @@ public class PlayerController : MonoBehaviour
         IgnoreCollisionBetweenPlayers();
     }
 
+    #endregion
+
+    #region Update
+
     protected virtual void Update()
     {
         if (!conectado || !canMove)
@@ -138,12 +143,15 @@ public class PlayerController : MonoBehaviour
 
         Move();
         Attack();
-        UpdatePowerState();
+        UsePower();
+        UseItem();
     }
 
     #endregion
 
     #region Common
+
+    #region Connection
 
     public void Conectar(bool valor)
     {
@@ -167,6 +175,12 @@ public class PlayerController : MonoBehaviour
         }
 
     }
+
+    #endregion
+
+    #region Loop
+
+    #region Attack
 
     protected void Attack()
     {
@@ -203,58 +217,9 @@ public class PlayerController : MonoBehaviour
         AnimateAttack();
     }
 
-    public virtual void StopMoving()
-    {
-        canMove = false;
-        isAttacking = false;
-        isTakingDamage = false;
+    #endregion
 
-        if (sceneAnimator)
-        {
-            sceneAnimator.SetFloat("Speed", 0, this.gameObject);
-            sceneAnimator.SetBool("IsGrounded", true, this.gameObject);
-            sceneAnimator.SetBool("Attacking", false, this.gameObject);
-        }
-    }
-
-    public virtual void ResumeMoving()
-    {
-        canMove = true;
-    }
-
-    public void SetGravity(bool normal)
-    {
-
-        rb2d.gravityScale = 2.5f;
-
-        if (!normal)
-        {
-            directionY = -1;
-            rb2d.gravityScale = -2.5f;
-        }
-
-    }
-
-    protected void ResetDirectionX(int newDirectionX)
-    {
-        transform.localScale = new Vector3(newDirectionX, directionY, 1f);
-        directionX = newDirectionX;
-        acceleration = .1f;
-    }
-
-    protected void Accelerate()
-    {
-        if (canAccelerate)
-        {
-            acceleration += .1f;
-            canAccelerate = false;
-        }
-
-        else
-        {
-            canAccelerate = true;
-        }
-    }
+    #region Move
 
     protected void Move()
     {
@@ -327,7 +292,11 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    public bool UpdatePowerState()
+    #endregion
+
+    #region Power
+
+    public void UsePower()
     {
 
         if (localPlayer)
@@ -336,7 +305,7 @@ public class PlayerController : MonoBehaviour
             if (!levelManager.hpAndMp)
             {
                 Debug.Log("Levelmanager HpAndMp is not set");
-                return false;
+                return;
             }
 
             bool powerButtonPressed = CnInputManager.GetButtonDown("Power Button");
@@ -392,8 +361,30 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        return isPowerOn;
     }
+
+    #endregion
+
+    #region Item
+
+    public void UseItem()
+    {
+        if (localPlayer)
+        {
+            bool itemButtonPressed = CnInputManager.GetButtonDown("Bag Button");
+
+            if (itemButtonPressed)
+            {
+                Inventory.instance.UseItem(this);
+            }
+        }
+    }
+
+    #endregion
+
+    #endregion
+
+    #region Callable
 
     public void TakeDamage(int damage, Vector2 force)
     {
@@ -429,18 +420,7 @@ public class PlayerController : MonoBehaviour
 
     }
 
-    protected void TeletransportData(Vector3 placeToGo)
-    {
-        if (!localPlayer)
-        {
-            return;
-        }
-        if (localPlayer)
-        {
-            respawnPosition = placeToGo;
-        }
-        
-    }
+    #endregion
 
     #endregion
 
@@ -489,6 +469,166 @@ public class PlayerController : MonoBehaviour
     // Validate for player conditions
     #region Validations
 
+    protected bool GameObjectIsPOI(GameObject other)
+    {
+        return other.GetComponent<PlannerPoi>();
+    }
+
+    #endregion
+
+    // Set player data from other classes
+    #region Remote Setters
+
+    public virtual void StopMoving()
+    {
+        canMove = false;
+        isAttacking = false;
+        isTakingDamage = false;
+
+        if (sceneAnimator)
+        {
+            sceneAnimator.SetFloat("Speed", 0, this.gameObject);
+            sceneAnimator.SetBool("IsGrounded", true, this.gameObject);
+            sceneAnimator.SetBool("Attacking", false, this.gameObject);
+        }
+    }
+
+    public virtual void ResumeMoving()
+    {
+        canMove = true;
+    }
+
+    public void SetGravity(bool normal)
+    {
+
+        rb2d.gravityScale = 2.5f;
+
+        if (!normal)
+        {
+            directionY = -1;
+            rb2d.gravityScale = -2.5f;
+        }
+
+    }
+
+    protected void SetRespawn(Vector3 placeToGo)
+    {
+        if (!localPlayer)
+        {
+            return;
+        }
+
+        respawnPosition = placeToGo;
+
+    }
+
+    public virtual void SetAttack()
+    {
+        CastLocalAttack();
+    }
+
+    public void SetPowerState(bool power)
+    {
+        ActivateParticles(power);
+        isPowerOn = power;
+    }
+
+    public void SetDamageFromServer(Vector2 force)
+    {
+        rb2d.AddForce(force);
+    }
+
+    public void SetPlayerDataFromServer(float positionX, float positionY, int directionX, int directionY, float speedX, bool isGrounded, bool remoteJumping, bool remoteLeft, bool remoteRight)
+    {
+
+        this.remoteJumping = remoteJumping;
+        this.remoteRight = remoteRight;
+        this.remoteLeft = remoteLeft;
+        this.isGrounded = isGrounded;
+        this.directionX = directionX;
+        this.directionY = directionY;
+        this.speedX = speedX;
+
+        if (sceneAnimator)
+        {
+            sceneAnimator.SetFloat("Speed", Mathf.Abs(speedX), this.gameObject);
+            sceneAnimator.SetBool("IsGrounded", isGrounded, this.gameObject);
+        }
+
+        transform.position = new Vector3(positionX, positionY, transform.position.z);
+        transform.localScale = new Vector3(directionX, directionY, 1f);
+    }
+
+    #endregion
+
+    // Manage particles
+    #region Particles
+
+    protected void InitializeParticles()
+    {
+        ParticleSystem[] _particles = GetComponentsInChildren<ParticleSystem>();
+
+        if (_particles == null || _particles.Length == 0)
+        {
+            return;
+        }
+
+        particles = new GameObject[_particles.Length];
+
+        for (int i = 0; i < particles.Length; i++)
+        {
+            particles[i] = _particles[i].gameObject;
+        }
+
+        ActivateParticles(false);
+
+    }
+
+    protected virtual void ActivateParticles(bool active)
+    {
+        if (particles != null && particles.Length > 0)
+        {
+            for (int i = 0; i < particles.Length; i++)
+            {
+                particles[i].SetActive(active);
+            }
+        }
+    }
+
+    #endregion
+
+    // Manage animations
+    #region Animations
+
+    protected void AnimateAttack()
+    {
+        if (sceneAnimator && attackAnimName != null)
+        {
+            StartCoroutine(sceneAnimator.StartAnimation(attackAnimName, this.gameObject));
+        }
+    }
+
+    protected void AnimateTakingDamage()
+    {
+        if (sceneAnimator)
+        {
+            StartCoroutine(sceneAnimator.StartAnimation("TakingDamage", this.gameObject));
+        }
+    }
+
+    #endregion
+
+    // Doh...
+    #region Attacks
+
+    protected virtual AttackController GetAttack()
+    {
+        throw new NotImplementedException("Every player must implement a GetAttack method");
+    }
+
+    #endregion
+
+    #region Movement
 
     protected bool IsGoingRight()
     {
@@ -581,119 +721,26 @@ public class PlayerController : MonoBehaviour
         return remoteJumping;
 
     }
-
-    protected bool GameObjectIsPOI(GameObject other)
+    protected void ResetDirectionX(int newDirectionX)
     {
-        return other.GetComponent<PlannerPoi>();
+        transform.localScale = new Vector3(newDirectionX, directionY, 1f);
+        directionX = newDirectionX;
+        acceleration = .1f;
     }
 
-    #endregion
-
-    // Set player data from other classes
-    #region Remote Setters
-
-    public void SetPowerState(bool power)
+    protected void Accelerate()
     {
-        ActivateParticles(power);
-        isPowerOn = power;
-    }
-
-    public void SetDamageFromServer(Vector2 force)
-    {
-        rb2d.AddForce(force);
-    }
-
-    public void SetPlayerDataFromServer(float positionX, float positionY, int directionX, int directionY, float speedX, bool isGrounded, bool remoteJumping, bool remoteLeft, bool remoteRight)
-    {
-
-        this.remoteJumping = remoteJumping;
-        this.remoteRight = remoteRight;
-        this.remoteLeft = remoteLeft;
-        this.isGrounded = isGrounded;
-        this.directionX = directionX;
-        this.directionY = directionY;
-        this.speedX = speedX;
-
-        if (sceneAnimator)
+        if (canAccelerate)
         {
-            sceneAnimator.SetFloat("Speed", Mathf.Abs(speedX), this.gameObject);
-            sceneAnimator.SetBool("IsGrounded", isGrounded, this.gameObject);
+            acceleration += .1f;
+            canAccelerate = false;
         }
 
-        transform.position = new Vector3(positionX, positionY, transform.position.z);
-        transform.localScale = new Vector3(directionX, directionY, 1f);
-    }
-
-    public virtual void SetAttack()
-    {
-        CastLocalAttack();
-    }
-
-    #endregion
-
-    // Manage particles
-    #region Particles
-
-    protected void InitializeParticles()
-    {
-        ParticleSystem[] _particles = GetComponentsInChildren<ParticleSystem>();
-
-        if (_particles == null || _particles.Length == 0)
+        else
         {
-            return;
+            canAccelerate = true;
         }
 
-        particles = new GameObject[_particles.Length];
-
-        for (int i = 0; i < particles.Length; i++)
-        {
-            particles[i] = _particles[i].gameObject;
-        }
-
-        ActivateParticles(false);
-
-    }
-
-    protected virtual void ActivateParticles(bool active)
-    {
-        if (particles != null && particles.Length > 0)
-        {
-            for (int i = 0; i < particles.Length; i++)
-            {
-                particles[i].SetActive(active);
-            }
-        }
-    }
-
-    #endregion
-
-    // Manage animations
-    #region Animations
-
-    protected void AnimateAttack()
-    {
-        if (sceneAnimator && attackAnimName != null)
-        {
-            StartCoroutine(sceneAnimator.StartAnimation(attackAnimName, this.gameObject));
-        }
-    }
-
-    protected void AnimateTakingDamage()
-    {
-        if (sceneAnimator)
-        {
-            StartCoroutine(sceneAnimator.StartAnimation("TakingDamage", this.gameObject));
-        }
-    }
-
-    #endregion
-
-    // Doh...
-    #region Attacks
-
-    protected virtual AttackController GetAttack()
-    {
-        throw new NotImplementedException("Every player must implement a GetAttack method");
     }
 
     #endregion

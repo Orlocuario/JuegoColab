@@ -28,8 +28,7 @@ public class PickUpItem : MonoBehaviour
 
     public void PickUp()
     {
-        Inventory.instance.AddItemToInventory(this);
-        SendMessageToServer("OthersDestroyObject/" + this.gameObject.name, true);
+        Inventory.instance.AddItem(this);
 
         if (itemObj != null)
         {
@@ -40,7 +39,8 @@ public class PickUpItem : MonoBehaviour
             planner.Monitor();
         }
 
-        Destroy(this.gameObject);
+        SendMessageToServer("OthersDestroyObject/" + this.gameObject.name, true);
+        this.gameObject.SetActive(false);
     }
 
     #endregion

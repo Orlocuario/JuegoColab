@@ -7,14 +7,13 @@ public class Inventory : MonoBehaviour
     #region Attributes
 
     public static Inventory instance;
+    public PickUpItem selectedItem;
     public static int numSlots = 8;
 
     private GameObject selectedItemPanel;
     private GameObject selectedItemSlot;
     private Text selectedItemInfo;
     private PickUpItem[] items;
-    private PickUpItem selectedItem;
-    private int numSlot;
 
     #endregion
 
@@ -34,7 +33,40 @@ public class Inventory : MonoBehaviour
 
     #region Common
 
-    public void AddItemToInventory(PickUpItem item)
+    public void UseItem(PlayerController player)
+    {
+
+        if (!selectedItem)
+        {
+            return;
+        }
+
+        ActivableSystem[] systems = GameObject.FindObjectsOfType<ActivableSystem>();
+        ActivableSystem system = null;
+
+        for (int i = 0; i < systems.Length; i++)
+        {
+            if (!systems[i].activated)
+            {
+                if (Vector2.Distance(systems[i].transform.position, player.transform.position) <= systems[i].activationDistance)
+                {
+                    system = systems[i];
+                    break;
+                }
+            }
+        }
+
+        if (system)
+        {
+            if (system.PlaceItem(selectedItem.gameObject))
+            {
+                RemoveItem();
+            }
+        }
+
+    }
+
+    public void AddItem(PickUpItem item)
     {
         int freeSlot = GetFreeSlot();
 
@@ -50,7 +82,7 @@ public class Inventory : MonoBehaviour
 
     }
 
-    public void RemoveItemFromInventory(PickUpItem itemToRemove)
+    public void RemoveItem()
     {
 
         bool found = false;
@@ -58,7 +90,7 @@ public class Inventory : MonoBehaviour
 
         for (index = 0; index < items.Length; index++)
         {
-            if (items[index].Equals(itemToRemove))
+            if (items[index].Equals(selectedItem))
             {
                 found = true;
                 break;
@@ -80,17 +112,21 @@ public class Inventory : MonoBehaviour
 
     public void SelectItem(PickUpItem item)
     {
-        selectedItemInfo.text = "";
-        selectedItemInfo.text = "<color=#e67f84ff><b>" + "Usando '" + item.name + "': </b></color>" + "\r\n";
-        selectedItemInfo.text += "<color=#f9ca45ff>" + item.info + "</color>";
+        selectedItem = item;
 
-        selectedItemSlot.GetComponent<Image>().sprite = item.GetComponent<SpriteRenderer>().sprite;
+        selectedItemInfo.text = "";
+        selectedItemInfo.text = "<color=#e67f84ff><b>" + "Usando '" + selectedItem.name + "': </b></color>" + "\r\n";
+        selectedItemInfo.text += "<color=#f9ca45ff>" + selectedItem.info + "</color>";
+
+        selectedItemSlot.GetComponent<Image>().sprite = selectedItem.GetComponent<SpriteRenderer>().sprite;
 
         ToogleSelectedItem(true);
     }
 
     public void UnselectItem()
     {
+        selectedItem = null;
+
         selectedItemInfo.text = "";
         selectedItemSlot.GetComponent<Image>().sprite = null;
 
@@ -100,8 +136,8 @@ public class Inventory : MonoBehaviour
     public void DropItem()
     {
         SendMessageToServer("CreateGameObject/" + selectedItem.name, true);
-        RemoveItemFromInventory(selectedItem);
-        selectedItemPanel.SetActive(false);
+        RemoveItem();
+        ToogleSelectedItem(false);
     }
 
     #endregion
@@ -112,7 +148,7 @@ public class Inventory : MonoBehaviour
     {
         for (int i = 0; i < items.Length; i++)
         {
-            if (!items[i])
+            if (items[i] == null)
             {
                 return i;
             }

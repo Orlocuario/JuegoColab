@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class RuneSystem : MonoBehaviour
+public class RuneSystem : ActivableSystem
 {
 
     #region Attributes
@@ -9,19 +9,13 @@ public class RuneSystem : MonoBehaviour
     public struct Rune { public GameObject item; public bool placed; };
 
     public PlannerObstacle obstacleObj = null;
-    public Sprite activatedSprite;
     public Rune[] requiredRunes;
-
-    public int activationTime;
-
-    private float activationDistance = 1f;
-    private bool activated;
 
     #endregion
 
     #region Start
 
-    private void Start()
+    protected void Start()
     {
         HideInactiveRunes();
     }
@@ -30,30 +24,39 @@ public class RuneSystem : MonoBehaviour
 
     #region Common
 
+    public override bool PlaceItem(GameObject item)
+    {
+        return PlaceRune(item);
+    }
+
+
     // Call from outside
-    public void PlaceGear(GameObject runeGO)
+    public bool PlaceRune(GameObject runeGO)
     {
 
-        if (activated)
+        if (!activated)
         {
-            return;
-        }
 
-        int pos = RunePosition(runeGO);
+            int pos = RunePosition(runeGO);
 
-        if (pos != -1)
-        {
-            Rune rune = requiredRunes[pos];
-
-            PlaceRune(rune);
-
-            if (AllRunesPlaced())
+            if (pos != -1)
             {
-                activated = true;
-                StartCoroutine(Actioned());
+                Rune rune = requiredRunes[pos];
+
+                PlaceRune(rune);
+
+                if (AllRunesPlaced())
+                {
+                    activated = true;
+                    StartCoroutine(Actioned());
+                }
+
+                return true;
             }
 
         }
+
+        return false;
 
     }
 

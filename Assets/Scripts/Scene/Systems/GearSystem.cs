@@ -1,7 +1,7 @@
 ﻿using System.Collections;
 using UnityEngine;
 
-public class GearSystem : MonoBehaviour
+public class GearSystem : ActivableSystem
 {
 
     #region Attributes
@@ -9,19 +9,13 @@ public class GearSystem : MonoBehaviour
     public struct Gear { public GameObject item; public bool placed; };
 
     public PlannerSwitch switchObj;
-    public Sprite activatedSprite;
     public Gear[] requiredGears;
-
-    public int activationTime;
-
-    private float activationDistance = 1f;
-    private bool activated;
 
     #endregion
 
     #region Start
 
-    private void Start()
+    protected void Start()
     {
         HideInactiveGears();
     }
@@ -30,31 +24,38 @@ public class GearSystem : MonoBehaviour
 
     #region Common
 
+    public override bool PlaceItem(GameObject item)
+    {
+        return PlaceGear(item);
+    }
+
     // Call from outside
-    public void PlaceGear(GameObject gearGO)
+    public bool PlaceGear(GameObject gearGO)
     {
 
-        if (activated)
+        if (!activated)
         {
-            return;
-        }
 
-        int pos = GearPosition(gearGO);
+            int pos = GearPosition(gearGO);
 
-        if (pos != -1)
-        {
-            Gear gear = requiredGears[pos];
-
-            PlaceGear(gear);
-
-            if (AllGearsPlaced())
+            if (pos != -1)
             {
-                activated = true;
-                StartCoroutine(Actioned());
+                Gear gear = requiredGears[pos];
+
+                PlaceGear(gear);
+
+                if (AllGearsPlaced())
+                {
+                    activated = true;
+                    StartCoroutine(Actioned());
+                }
+
+                return true;
             }
 
         }
 
+        return false;
     }
 
     // Call only from within
