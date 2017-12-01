@@ -27,7 +27,7 @@ public class PickUpItem : MonoBehaviour
             planner.Monitor();
         }
 
-        SendMessageToServer("OthersDestroyObject/" + this.gameObject.name, true);
+        SendMessageToServer("OthersDestroyObject/" + name, true);
         Destroy(this);
     }
 

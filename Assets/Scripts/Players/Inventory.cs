@@ -39,6 +39,10 @@ public class Inventory : MonoBehaviour
     {
         instance = this;
 
+        selectedItemInfo = GameObject.Find("DisplayItemInfo").GetComponent<Text>(); // TODO: Rename this in editor
+        selectedItemPanel = GameObject.Find("DisplayPanel"); // TODO: Rename this in editor
+        selectedItemSlot = GameObject.Find("ActualItem"); // TODO: Rename this in editor
+
         if (items == null)
         {
             items = new Item?[numSlots];
@@ -57,20 +61,7 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-        ActivableSystem[] systems = GameObject.FindObjectsOfType<ActivableSystem>();
-        ActivableSystem system = null;
-
-        for (int i = 0; i < systems.Length; i++)
-        {
-            if (!systems[i].activated)
-            {
-                if (Vector2.Distance(systems[i].transform.position, player.transform.position) <= systems[i].activationDistance)
-                {
-                    system = systems[i];
-                    break;
-                }
-            }
-        }
+        ActivableSystem system = GetActivableSystem(player);
 
         if (system)
         {
@@ -173,7 +164,25 @@ public class Inventory : MonoBehaviour
 
     #region Utils
 
-    public int GetFreeSlot()
+    protected ActivableSystem GetActivableSystem(PlayerController player)
+    {
+        ActivableSystem[] systems = GameObject.FindObjectsOfType<ActivableSystem>();
+
+        for (int i = 0; i < systems.Length; i++)
+        {
+            if (!systems[i].activated)
+            {
+                if (Vector2.Distance(systems[i].transform.position, player.transform.position) <= systems[i].activationDistance)
+                {
+                    return systems[i];
+                }
+            }
+        }
+
+        return null;
+    }
+
+    protected int GetFreeSlot()
     {
         for (int i = 0; i < items.Length; i++)
         {
