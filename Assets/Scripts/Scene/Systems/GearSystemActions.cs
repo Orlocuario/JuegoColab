@@ -2,12 +2,12 @@
 using UnityEngine;
 
 
-public class GearSystemActions : MonoBehaviour
+public class GearSystemActions : ActivableSystemActions
 {
 
     #region Common
 
-    public void DoSomething(GameObject gearSystemGO)
+    public override void DoSomething(GameObject gearSystemGO)
     {
         GearSystem gearSystem = gearSystemGO.GetComponent<GearSystem>();
 
@@ -22,7 +22,7 @@ public class GearSystemActions : MonoBehaviour
         }
     }
 
-    public void DoSomething(GearSystem gearSystem)
+    protected  void DoSomething(GearSystem gearSystem)
     {
 
         switch (gearSystem.name)
@@ -58,39 +58,6 @@ public class GearSystemActions : MonoBehaviour
 
         SendMessageToServer("ActivateGearSystem/" + this.gameObject.name, true);
 
-    }
-
-    #endregion
-
-    #region Utils 
-
-    protected void StartAnimation(string animationName, GearSystem gearSystem)
-    {
-        SceneAnimator sceneAnimator = GameObject.FindObjectOfType<SceneAnimator>();
-        StartCoroutine(sceneAnimator.StartAnimation(animationName, gearSystem.gameObject));
-    }
-
-    private void DestroyObject(string name, float time)
-    {
-        GameObject gameObject = GameObject.Find(name);
-
-        if (gameObject)
-        {
-            Destroy(gameObject, time);
-        }
-
-    }
-
-    #endregion
-
-    #region Messaging
-
-    private void SendMessageToServer(string message, bool secure)
-    {
-        if (Client.instance)
-        {
-            Client.instance.SendMessageToServer(message, secure);
-        }
     }
 
     #endregion

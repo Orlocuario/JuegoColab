@@ -12,18 +12,6 @@ public class PickUpItem : MonoBehaviour
 
     #endregion
 
-    #region Events
-
-    public void OnCollisionEnter2D(Collision2D other)
-    {
-        if (GameObjectIsPlayer(other.gameObject))
-        {
-            PickUp();
-        }
-    }
-
-    #endregion
-
     #region Common
 
     public void PickUp()
@@ -40,11 +28,23 @@ public class PickUpItem : MonoBehaviour
         }
 
         SendMessageToServer("OthersDestroyObject/" + this.gameObject.name, true);
-        this.gameObject.SetActive(false);
+        Destroy(this);
     }
 
     #endregion
 
+    #region Events
+
+    public void OnCollisionEnter2D(Collision2D other)
+    {
+        if (GameObjectIsPlayer(other.gameObject))
+        {
+            PickUp();
+        }
+    }
+
+    #endregion
+    
     #region Utils
 
     protected bool GameObjectIsPlayer(GameObject other)

@@ -2,13 +2,13 @@
 using UnityEngine;
 
 
-public class RuneSystemActions : MonoBehaviour
+public class RuneSystemActions : ActivableSystemActions
 
 {
 
     #region Common
 
-    public void DoSomething(GameObject runeSystemGO)
+    public override void DoSomething(GameObject runeSystemGO)
     {
         RuneSystem runeSystem = runeSystemGO.GetComponent<RuneSystem>();
 
@@ -22,7 +22,7 @@ public class RuneSystemActions : MonoBehaviour
         }
     }
 
-    public void DoSomething(RuneSystem runeSystem)
+    protected void DoSomething(RuneSystem runeSystem)
     {
 
         SpriteRenderer systemSpriteRenderer = runeSystem.GetComponent<SpriteRenderer>();
@@ -44,18 +44,5 @@ public class RuneSystemActions : MonoBehaviour
     }
 
     #endregion
-
-    #region Messaging
-
-    private void SendMessageToServer(string message, bool secure)
-    {
-        if (Client.instance)
-        {
-            Client.instance.SendMessageToServer(message, secure);
-        }
-    }
-
-    #endregion
-
 
 }

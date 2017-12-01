@@ -18,10 +18,8 @@ public class LevelManager : MonoBehaviour
     public GameObject npcLog;
 
     private List<Vector3> itemsOriginalPositions;
-    private GameObject createGameObject;
     private GameObject[] itemsInLevel;
     private GameObject reconnectText;
-    private GameObject player;
     private Client client;
 
     private float waitToKillNPCCountdown;
@@ -215,8 +213,8 @@ public class LevelManager : MonoBehaviour
 
     public void CreateGameObject(string spriteName, int charId)
     {
-        createGameObject = (GameObject)Instantiate(Resources.Load("Prefabs/Items/" + spriteName));
-        player = null;
+        GameObject newObject = (GameObject)Instantiate(Resources.Load("Prefabs/Items/" + spriteName));
+        GameObject player = null;
 
         switch (charId)
         {
@@ -233,11 +231,12 @@ public class LevelManager : MonoBehaviour
                 break;
         }
 
-        Physics2D.IgnoreCollision(createGameObject.GetComponent<Collider2D>(), player.GetComponent<Collider2D>());
-        RectTransform createGameObjectRectTransform = GameObject.Find(spriteName + "(Clone)").GetComponent<RectTransform>();
-        createGameObjectRectTransform.position = new Vector3(player.GetComponent<Transform>().position.x, player.GetComponent<Transform>().position.y, 1);
-        StartCoroutine("WaitForCollision");
-        StartCoroutine("ResetGameObjectPosition");
+
+        Physics2D.IgnoreCollision(newObject.GetComponent<Collider2D>(), player.GetComponent<Collider2D>());
+
+        newObject.transform.position = new Vector3(player.transform.position.x, player.transform.position.y, 1);
+
+        StartCoroutine(WaitForCollision(newObject, player));
     }
 
     public void InsantiateGameObject(string[] msg)
@@ -251,7 +250,8 @@ public class LevelManager : MonoBehaviour
                 objectName += "/";
             }
         }
-        createGameObject = (GameObject)Instantiate(Resources.Load(objectName));
+
+       Instantiate(Resources.Load(objectName));
     }
 
     public void ReloadLevel(string sceneName)
@@ -390,10 +390,10 @@ public class LevelManager : MonoBehaviour
         localPlayer.ResumeMoving();
     }
 
-    private IEnumerator WaitForCollision()
+    private IEnumerator WaitForCollision(GameObject gameObject, GameObject player)
     {
         yield return new WaitForSeconds(waitToGrabItem);
-        Physics2D.IgnoreCollision(createGameObject.GetComponent<Collider2D>(), player.GetComponent<Collider2D>(), false);
+        Physics2D.IgnoreCollision(gameObject.GetComponent<Collider2D>(), player.GetComponent<Collider2D>(), false);
     }
 
     private IEnumerator WaitToKillNPC()
