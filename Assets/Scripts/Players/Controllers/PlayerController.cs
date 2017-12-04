@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
     protected string attackAnimName;
     protected bool isTakingDamage;
     protected bool isAttacking;
-    protected bool conectado;
+    protected bool connected;
     protected bool canMove;
     protected float speedX;
     protected float speedY;
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
         isGrounded = false;
         mpDepleted = false;
         isPowerOn = false;
-        conectado = true;
+        connected = true;
         canMove = true;
         gravity = true;
 
@@ -131,7 +131,7 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (!conectado || !canMove)
+        if (!connected || !canMove)
         {
             return;
         }
@@ -153,9 +153,9 @@ public class PlayerController : MonoBehaviour
 
     #region Connection
 
-    public void Conectar(bool valor)
+    public void Connect(bool value)
     {
-        conectado = valor;
+        connected = value;
     }
 
     public void Activate(int charId)

@@ -53,7 +53,7 @@ public class Client : MonoBehaviour
 
         topology = new HostTopology(config, maxConnections);
 
-        handler = new ClientMessageHandler();
+        handler = new ClientMessageHandler(this);
     }
 
     void LateUpdate()
@@ -83,8 +83,8 @@ public class Client : MonoBehaviour
                 {
                     if (GetLocalPlayer())
                     {
-                        GetLocalPlayer().Conectar(true);
-                        LevelManager lm = GameObject.FindGameObjectWithTag("LevelManager").GetComponent<LevelManager>();
+                        GetLocalPlayer().Connect(true);
+                        LevelManager lm = GameObject.FindObjectOfType<LevelManager>();
                         lm.ShowReconnectingMessage(false);
                     }
                 }
@@ -119,7 +119,7 @@ public class Client : MonoBehaviour
                     currentScene = SceneManager.GetActiveScene();
                     if (!(currentScene.name == "ClientScene"))
                     {
-                        GetLocalPlayer().Conectar(false);
+                        GetLocalPlayer().Connect(false);
                     }
                     Reconnect();
                 }
@@ -303,7 +303,7 @@ public class Client : MonoBehaviour
         GameObject player2 = GameObject.Find("Warrior");
         GameObject player3 = GameObject.Find("Engineer");
 
-        if (player1 != null)
+        if (player1)
         {
             MageController player1Controller = player1.GetComponent<MageController>();
             if (player1Controller.localPlayer)
@@ -312,7 +312,7 @@ public class Client : MonoBehaviour
             }
         }
 
-        if (player2 != null)
+        if (player2)
         {
             WarriorController player2Controller = player2.GetComponent<WarriorController>();
             if (player2Controller.localPlayer)
@@ -321,7 +321,7 @@ public class Client : MonoBehaviour
             }
         }
 
-        if (player3 != null)
+        if (player3)
         {
             EngineerController player3Controller = player3.GetComponent<EngineerController>();
             if (player3Controller.localPlayer)

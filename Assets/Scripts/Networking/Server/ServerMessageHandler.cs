@@ -473,7 +473,7 @@ public class ServerMessageHandler
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
 
-        string message = "SetCharId/" + player.charId + "/" + player.controlOverEnemies;
+        string message = "PlayerSetCharId/" + player.charId + "/" + player.controlOverEnemies;
 
         server.SendMessageToClient(connectionId, message, true);
         SendAllData(connectionId, player.room, true);
