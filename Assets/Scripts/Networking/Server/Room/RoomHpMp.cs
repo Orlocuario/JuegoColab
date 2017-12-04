@@ -1,10 +1,8 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
+﻿
 public class RoomHpMp
 {
+
+    #region Attributes
 
     public float maxHP;
     public float maxMP;
@@ -15,9 +13,13 @@ public class RoomHpMp
     public float percentageHP;
     public float percentageMP;
     public float percentageExp;
-    private bool mpAtLimit = false;
+    private bool mpAtLimit;
 
     Room room;
+
+    #endregion
+
+    #region Constructor
 
     public RoomHpMp(Room room)
     {
@@ -32,6 +34,10 @@ public class RoomHpMp
         percentageMP = 1;
         percentageExp = 0;
     }
+
+    #endregion
+
+    #region Common
 
     public void StopChangeHpAndMpHUD(int player)
     {
@@ -72,8 +78,7 @@ public class RoomHpMp
 
     public void ChangeMaxHP(string NewMaxHP, int player)
     {
-        float valueMaxHP = float.Parse(NewMaxHP);
-        maxHP = valueMaxHP;
+        maxHP = float.Parse(NewMaxHP);
         ChangeHP(NewMaxHP, player);
     }
 
@@ -112,8 +117,7 @@ public class RoomHpMp
 
     public void ChangeMaxMP(string NewMaxMP, int player)
     {
-        float valueMaxMP = float.Parse(NewMaxMP);
-        maxMP = valueMaxMP;
+        maxMP = float.Parse(NewMaxMP);
         ChangeMP(NewMaxMP, player);
     }
 
@@ -134,8 +138,10 @@ public class RoomHpMp
 
     public void ChangeMaxExp(string NewMaxExp)
     {
-        float valueMaxExp = float.Parse(NewMaxExp);
-        maxExp = valueMaxExp;
+        maxExp = float.Parse(NewMaxExp);
         ChangeExp(NewMaxExp);
     }
+    
+    #endregion
+
 }

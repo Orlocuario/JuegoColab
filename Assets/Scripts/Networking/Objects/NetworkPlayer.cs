@@ -1,10 +1,9 @@
-﻿using UnityEngine;
-using System.Collections;
-using System.Collections.Generic;
-using System;
+﻿using System;
 
 public class NetworkPlayer
 {
+
+    #region Attributes
 
     public string[] inventory = new string[8];
     public Room room;
@@ -27,6 +26,9 @@ public class NetworkPlayer
     public bool pressingLeft;
     public bool attacking;
 
+    #endregion
+
+    #region Constructor
 
     public NetworkPlayer(int connectionId, int charId, Room room, string address)
     {
@@ -51,6 +53,10 @@ public class NetworkPlayer
 
     }
 
+    #endregion
+
+    #region Common
+
     public void InventoryUpdate(string message)
     {
         char[] separator = new char[1];
@@ -67,6 +73,25 @@ public class NetworkPlayer
             RemoveItemFromInventory(index);
         }
     }
+
+    public string GetReconnectData()
+    {
+        return "PlayerChangePosition/" +
+           charId + "/" +
+           positionX + "/" +
+           positionY + "/" +
+           directionX + "/" +
+           directionY + "/" +
+           speedX + "/" +
+           isGrounded + "/" +
+           false + "/" +
+           false + "/" +
+           false;
+    }
+
+    #endregion
+
+    #region Utils
 
     private void AddItemToInventory(int index, string spriteName)
     {
@@ -92,19 +117,6 @@ public class NetworkPlayer
         }
     }
 
-    public string GetReconnectData()
-    {
-        return "PlayerChangePosition/" +
-           charId + "/" +
-           positionX + "/" +
-           positionY + "/" +
-           directionX + "/" +
-           directionY + "/" +
-           speedX + "/" +
-           isGrounded + "/" +
-           false + "/" +
-           false + "/" +
-           false;
-    }
+    #endregion
 
 }

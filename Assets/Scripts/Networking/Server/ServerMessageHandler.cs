@@ -189,7 +189,7 @@ public class ServerMessageHandler
 
         server.NPCsLastMessage = message;
         room.SendMessageToPlayer(message, newConnectionId, true); // Message es el texto a mostrar en el NPC Log
-        room.WriteFeedbackHistorial(message + "/" + playerId);
+        room.WriteFeedbackRecord(message + "/" + playerId);
 
     }
 

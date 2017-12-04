@@ -20,27 +20,27 @@ public class Room
 
     public string sceneToLoad;
     public string actualChat;
-    public int numJugadores;
-    public int maxJugadores;
+    public int numPlayers;
+    public int maxPlayers;
     public bool started;
     public int id;
 
-    private string numeroPartidas;
-    private string historial;
+    private string matchNumber;
+    private string record;
 
     #endregion
 
     #region Constructor
 
-    public Room(int _id, Server _server, ServerMessageHandler _sender, int _maxJugadores)
+    public Room(int _id, Server _server, ServerMessageHandler _sender, int _maxPlayers)
     {
 
-        maxJugadores = _maxJugadores;
-        numJugadores = 0;
+        maxPlayers = _maxPlayers;
+        numPlayers = 0;
         sender = _sender;
         server = _server;
         started = false;
-        historial = "";
+        record = "";
         id = _id;
 
         activatedSwitchGroups = new List<int>();
@@ -178,15 +178,15 @@ public class Room
 
     public void CreateTextChat()
     {
-        numeroPartidas = "Por Resolver";
+        matchNumber = "Por Resolver";
         string path = Directory.GetCurrentDirectory() + "/ChatLogFromRoomN°" + id + ".txt";
 
         if (!File.Exists(path))
         {
             using (var tw = new StreamWriter(File.Create(path)))
             {
-                tw.WriteLine("Partida N°: " + numeroPartidas);
-                tw.WriteLine(historial);
+                tw.WriteLine("Partida N°: " + matchNumber);
+                tw.WriteLine(record);
                 tw.Close();
             }
         }
@@ -196,8 +196,8 @@ public class Room
             {
                 tw.WriteLine("\r\n" + "____________________________________");
                 tw.WriteLine("Generando Nuevo Historial...");
-                tw.WriteLine("Partida N°: " + numeroPartidas);
-                tw.WriteLine(historial);
+                tw.WriteLine("Partida N°: " + matchNumber);
+                tw.WriteLine(record);
                 tw.Close();
             }
         }
@@ -279,11 +279,11 @@ public class Room
 
     #endregion
 
-    #region Historial
+    #region Record
 
-    public void WriteFeedbackHistorial(string message)
+    public void WriteFeedbackRecord(string message)
     {
-        historial += "\r\n" + message + HoraMinuto();
+        record += "\r\n" + message + HoraMinuto();
     }
 
     #endregion
@@ -294,7 +294,7 @@ public class Room
 
     private int GetCharId()
     {
-        return numJugadores++;
+        return numPlayers++;
     }
 
     public string HoraMinuto()
@@ -313,7 +313,7 @@ public class Room
 
     public bool IsFull()
     {
-        return numJugadores == maxJugadores;
+        return numPlayers == maxPlayers;
     }
 
     #endregion
@@ -328,7 +328,7 @@ public class Room
         if (msg[0] == "NewChatMessage")
         {
             actualChat += msg[1];
-            historial += "\r\n" + actualChat + HoraMinuto();
+            record += "\r\n" + actualChat + HoraMinuto();
         }
 
         foreach (NetworkPlayer player in players)

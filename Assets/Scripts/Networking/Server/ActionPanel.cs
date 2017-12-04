@@ -1,11 +1,11 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ActionPanel : MonoBehaviour {
 
+    #region Buttons
 
     public void ChatButton()
     {
@@ -30,7 +30,7 @@ public class ActionPanel : MonoBehaviour {
     {
         Text inputText = GameObject.Find("InputPlayerText").GetComponent<Text>();
         int number = Int32.Parse(inputText.text);
-        Server.instance.maxJugadores = number;
+        Server.instance.maxPlayers = number;
     }
 
     public void SceneToLoadButton()
@@ -38,4 +38,7 @@ public class ActionPanel : MonoBehaviour {
         Text inputText = GameObject.Find("InputSceneText").GetComponent<Text>();
         Server.instance.sceneToLoad = "Escena" + inputText.text;
     }
+    
+    #endregion
+
 }

@@ -5,12 +5,13 @@ using UnityEngine;
 using UnityEngine.Networking;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
-using UnityEngine.UI;
 using System;
 using System.Threading;
 
 public class Server : MonoBehaviour
 {
+
+    #region Attributes
 
     public int port;
 
@@ -19,7 +20,7 @@ public class Server : MonoBehaviour
     private int socketId;
     private int channelId;
     private int bigChannelId;
-	private int secureChannel;
+    private int secureChannel;
     private int timesScene1IsLoaded;
     private bool listening;
 
@@ -28,7 +29,7 @@ public class Server : MonoBehaviour
     private ServerNetworkDiscovery serverNetworkDiscovery;
     public ServerMessageHandler messageHandler;
     public static Server instance;
-    public int maxJugadores;
+    public int maxPlayers;
     public string sceneToLoad;
     public string NPCsLastMessage;
     public bool debug;
@@ -54,15 +55,17 @@ public class Server : MonoBehaviour
     //Cache de planes
     private Dictionary<string, string> cacheOutput = new Dictionary<string, string>();
 
+    #endregion
 
-    // Use this for initialization
+    #region Start
+
     void Start()
     {
 
-        NPCsLastMessage = "";
-        maxJugadores = 3;
-        instance = this;
         timesScene1IsLoaded = 0;
+        NPCsLastMessage = "";
+        maxPlayers = 3;
+        instance = this;
 
         NetworkTransport.Init();
 
@@ -72,7 +75,7 @@ public class Server : MonoBehaviour
 
         channelId = config.AddChannel(QosType.Unreliable);
         bigChannelId = config.AddChannel(QosType.ReliableFragmented);
-		secureChannel = config.AddChannel (QosType.Reliable);
+        secureChannel = config.AddChannel(QosType.Reliable);
         HostTopology topology = new HostTopology(config, maxConnections);
 
         int[] connectionData = serverNetworkDiscovery.CreateServer(topology);
@@ -99,17 +102,9 @@ public class Server : MonoBehaviour
         this.sceneToLoad = "Escena1";
     }
 
-    public void InitializeBroadcast()
-    {
-        if (!listening)
-        {
-            UnityEngine.Debug.Log("Server is not listening yet");
-            return;
-        }
+    #endregion
 
-        serverNetworkDiscovery.InitializeBroadcast();
-    }
-
+    #region Reset
 
     public void Reset()
     {
@@ -122,7 +117,10 @@ public class Server : MonoBehaviour
         serverNetworkDiscovery.ResetServer();
     }
 
-    // Update is called once per frame
+    #endregion
+
+    #region Update
+
     void LateUpdate()
     {
         if (connectionIdStack.Count > 0)
@@ -160,7 +158,7 @@ public class Server : MonoBehaviour
                 BinaryFormatter formatter = new BinaryFormatter();
                 string message = formatter.Deserialize(stream) as string;
 
-			if (recChannelId == channelId || recChannelId == secureChannel)
+                if (recChannelId == channelId || recChannelId == secureChannel)
                 {
                     //Mensaje corto normal
                     messageHandler.HandleMessage(message, recConnectionId);
@@ -185,59 +183,19 @@ public class Server : MonoBehaviour
         }
     }
 
-    private string HoraMinuto()
+    #endregion
+
+    #region Common
+
+    public void InitializeBroadcast()
     {
-        DateTime now = DateTime.Now;
-
-        string hora = now.Hour.ToString();
-        string minutos = now.Minute.ToString();
-        string segundos = now.Second.ToString();
-
-
-        if (minutos.Length == 1)
+        if (!listening)
         {
-            minutos = "0" + minutos;
+            UnityEngine.Debug.Log("Server is not listening yet");
+            return;
         }
 
-        if (segundos.Length == 1)
-        {
-            segundos = "0" + segundos;
-        }
-
-        string tiempo = " " + hora + ":" + minutos + ":" + segundos;
-        return tiempo;
-    }
-
-	public void SendMessageToClient(int clientId, string message, bool secure)
-    {
-        byte error;
-        //int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
-        byte[] buffer = new byte[NetworkConsts.bufferSize];
-        Stream stream = new MemoryStream(buffer);
-        BinaryFormatter formatter = new BinaryFormatter();
-        formatter.Serialize(stream, message);
-		int channel = channelId;
-		if (secure) {
-			channel = secureChannel;
-		}
-        NetworkTransport.Send(socketId, clientId, channel, buffer, NetworkConsts.bufferSize, out error);
-    }
-
-
-    public void SendPlannerInfoToClient(int clientId, string message)
-    {
-        byte error;
-        //int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
-        byte[] buffer = new byte[NetworkConsts.bigBufferSize];
-        Stream stream = new MemoryStream(buffer);
-        BinaryFormatter formatter = new BinaryFormatter();
-        formatter.Serialize(stream, message);
-        NetworkTransport.Send(socketId, clientId, bigChannelId, buffer, NetworkConsts.bigBufferSize, out error);
-    }
-
-	public void SendMessageToClient(NetworkPlayer player, string message, bool secure)
-    {
-        SendMessageToClient(player.connectionId, message, secure);
+        serverNetworkDiscovery.InitializeBroadcast();
     }
 
     private void AddConnection(int connectionId)
@@ -266,7 +224,7 @@ public class Server : MonoBehaviour
         Room room = SearchRoom();
         if (room == null)
         {
-            room = new Room(rooms.Count, this, messageHandler, maxJugadores);
+            room = new Room(rooms.Count, this, messageHandler, maxPlayers);
             rooms.Add(room);
         }
 
@@ -300,6 +258,10 @@ public class Server : MonoBehaviour
             }
         }
     }
+
+    #endregion
+
+    #region Utils
 
     public NetworkPlayer GetPlayer(int connectionId)
     {
@@ -335,14 +297,74 @@ public class Server : MonoBehaviour
         {
             if (!room.IsFull())
             {
-                if (selectedMaxPlayers <= room.numJugadores)
+                if (selectedMaxPlayers <= room.numPlayers)
                 {
                     selectedRoom = room;
-                    selectedMaxPlayers = room.numJugadores;
+                    selectedMaxPlayers = room.numPlayers;
                 }
             }
         }
         return selectedRoom;
+    }
+
+    private string HoraMinuto()
+    {
+        DateTime now = DateTime.Now;
+
+        string hora = now.Hour.ToString();
+        string minutos = now.Minute.ToString();
+        string segundos = now.Second.ToString();
+
+
+        if (minutos.Length == 1)
+        {
+            minutos = "0" + minutos;
+        }
+
+        if (segundos.Length == 1)
+        {
+            segundos = "0" + segundos;
+        }
+
+        string tiempo = " " + hora + ":" + minutos + ":" + segundos;
+        return tiempo;
+    }
+
+    #endregion
+
+    #region Messaging
+
+    public void SendMessageToClient(int clientId, string message, bool secure)
+    {
+        byte error;
+        //int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
+        byte[] buffer = new byte[NetworkConsts.bufferSize];
+        Stream stream = new MemoryStream(buffer);
+        BinaryFormatter formatter = new BinaryFormatter();
+        formatter.Serialize(stream, message);
+        int channel = channelId;
+        if (secure)
+        {
+            channel = secureChannel;
+        }
+        NetworkTransport.Send(socketId, clientId, channel, buffer, NetworkConsts.bufferSize, out error);
+    }
+
+
+    public void SendPlannerInfoToClient(int clientId, string message)
+    {
+        byte error;
+        //int bytes = System.Text.ASCIIEncoding.ASCII.GetByteCount(message);
+        byte[] buffer = new byte[NetworkConsts.bigBufferSize];
+        Stream stream = new MemoryStream(buffer);
+        BinaryFormatter formatter = new BinaryFormatter();
+        formatter.Serialize(stream, message);
+        NetworkTransport.Send(socketId, clientId, bigChannelId, buffer, NetworkConsts.bigBufferSize, out error);
+    }
+
+    public void SendMessageToClient(NetworkPlayer player, string message, bool secure)
+    {
+        SendMessageToClient(player.connectionId, message, secure);
     }
 
     private void SendMessagToPlanner(string message, int connectionId)
@@ -350,84 +372,118 @@ public class Server : MonoBehaviour
         messageStack.Add(connectionId + "/" + message);
     }
 
+    #endregion
+
+    #region Planner
+
     private void Plan()
     {
         while (true)
         {
             if (messageStack != null && messageStack.Count > 0)
             {
+
                 UnityEngine.Debug.Log("stack enter count:" + messageStack.Count);
+
                 string message = messageStack[0];
                 messageStack.RemoveAt(0);
+
                 List<string> parameters = new List<string>(message.Split('/'));
                 int connectionId = int.Parse(parameters[0]);
                 parameters.RemoveAt(0);
+
                 int level = int.Parse(parameters[0]);
                 parameters.RemoveAt(0);
+
                 string def = parameters[0];
                 string init = parameters[1];
                 string goal = parameters[2];
-				if (!cacheOutput.ContainsKey (init)) {
-					List<string> data = new List<string> ();
-					data.Add (def);
-					data.Add (")");
-					data.Add ("(:init");
-					data.Add (init);
-					data.Add (")");
-					data.Add ("(:goal (and");
-					data.Add (goal);
-					string tempFileName = templateFileName + level + ".txt";
-					string probFileName = problemFileName + level + ".pddl";
-					string batFileName = batchFileName + level + ".bat";
-					string outFileName = outputFileName + level + ".txt";
-					List<string> lines = new List<string> (System.IO.File.ReadAllLines (tempFileName));
-					lines.InsertRange (startLinePerLevel [level - 1], data);
-					using (StreamWriter writer = new StreamWriter (probFileName, false)) {
-						foreach (string line in lines) {
-							writer.WriteLine (line);
-						}
-					}
-					Process batchProcess = new Process ();
-					batchProcess.StartInfo.UseShellExecute = false;
-					batchProcess.StartInfo.RedirectStandardOutput = true;
-					batchProcess.StartInfo.CreateNoWindow = true;
-					batchProcess.StartInfo.FileName = batFileName;
-					string output = null;
-					try {
-						batchProcess.Start ();
-						UnityEngine.Debug.Log ("batch star");
-						output = batchProcess.StandardOutput.ReadToEnd ();
-						UnityEngine.Debug.Log (output);
-						batchProcess.WaitForExit ();
-						UnityEngine.Debug.Log ("batch ended");
-						batchProcess.Close ();
-						UnityEngine.Debug.Log ("batch close");
-						List<string> linesOutput = new List<string> (System.IO.File.ReadAllLines (outFileName));
-						if (linesOutput.Count > 0) {
-							output = linesOutput [0];
-							linesOutput.RemoveAt (0);
-							linesOutput.RemoveAt (linesOutput.Count - 1);
-							foreach (string line in linesOutput) {
-								output += "/" + line;
-							}
 
-						}
-					} catch (FileNotFoundException e) {
-						output = "ERROR";
-						UnityEngine.Debug.Log (output);
-					} catch (Exception e) {
-						output = e.ToString ();
-						UnityEngine.Debug.Log (output);
-					}
-					//Send output
-					connectionIdStack.Add (connectionId);
-					outputStack.Add (output);
-					cacheOutput.Add (init, output);
-				} else {
-					connectionIdStack.Add (connectionId);
-					outputStack.Add (cacheOutput [init]);
-				}
+                if (!cacheOutput.ContainsKey(init))
+                {
+                    List<string> data = new List<string>();
+                    data.Add(def);
+                    data.Add(")");
+                    data.Add("(:init");
+                    data.Add(init);
+                    data.Add(")");
+                    data.Add("(:goal (and");
+                    data.Add(goal);
+
+                    string tempFileName = templateFileName + level + ".txt";
+                    string probFileName = problemFileName + level + ".pddl";
+                    string batFileName = batchFileName + level + ".bat";
+                    string outFileName = outputFileName + level + ".txt";
+
+                    List<string> lines = new List<string>(System.IO.File.ReadAllLines(tempFileName));
+                    lines.InsertRange(startLinePerLevel[level - 1], data);
+
+                    using (StreamWriter writer = new StreamWriter(probFileName, false))
+                    {
+                        foreach (string line in lines)
+                        {
+                            writer.WriteLine(line);
+                        }
+                    }
+
+                    Process batchProcess = new Process();
+                    batchProcess.StartInfo.UseShellExecute = false;
+                    batchProcess.StartInfo.RedirectStandardOutput = true;
+                    batchProcess.StartInfo.CreateNoWindow = true;
+                    batchProcess.StartInfo.FileName = batFileName;
+
+                    string output = null;
+
+                    try
+                    {
+                        batchProcess.Start();
+                        UnityEngine.Debug.Log("batch star");
+                        output = batchProcess.StandardOutput.ReadToEnd();
+                        UnityEngine.Debug.Log(output);
+                        batchProcess.WaitForExit();
+                        UnityEngine.Debug.Log("batch ended");
+                        batchProcess.Close();
+                        UnityEngine.Debug.Log("batch close");
+                        List<string> linesOutput = new List<string>(System.IO.File.ReadAllLines(outFileName));
+                        if (linesOutput.Count > 0)
+                        {
+                            output = linesOutput[0];
+                            linesOutput.RemoveAt(0);
+                            linesOutput.RemoveAt(linesOutput.Count - 1);
+                            foreach (string line in linesOutput)
+                            {
+                                output += "/" + line;
+                            }
+
+                        }
+                    }
+
+                    catch (FileNotFoundException e)
+                    {
+                        output = "ERROR";
+                        UnityEngine.Debug.Log(output);
+                    }
+
+                    catch (Exception e)
+                    {
+                        output = e.ToString();
+                        UnityEngine.Debug.Log(output);
+                    }
+
+                    //Send output
+                    connectionIdStack.Add(connectionId);
+                    outputStack.Add(output);
+                    cacheOutput.Add(init, output);
+                }
+                else
+                {
+                    connectionIdStack.Add(connectionId);
+                    outputStack.Add(cacheOutput[init]);
+                }
             }
         }
     }
+
+    #endregion
+
 }

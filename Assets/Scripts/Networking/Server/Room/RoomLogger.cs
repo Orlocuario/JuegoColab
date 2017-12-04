@@ -1,23 +1,25 @@
-using UnityEngine;
-using System.Collections;
 using System.IO;
 using System;
 
 public class RoomLogger
 {
+
+    #region Attributes
+
     int roomId;
+
+    #endregion
+
+    #region Constructor
+
     public RoomLogger(int id)
     {
         this.roomId = id;
     }
 
-    private string GetTime(){
-      return DateTime.Now.ToString("HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
-    }
-    StreamWriter GetWriter()
-    {
-        return new StreamWriter(File.Open("Log_room_" + roomId + ".txt", FileMode.Append));
-    }
+    #endregion
+
+    #region Common
 
     public void WriteAttack(int playerId)
     {
@@ -61,6 +63,7 @@ public class RoomLogger
         writer.Close();
 
     }
+
     public void WriteNewPosition(int playerId, float positionX, float positionY, bool pressingJump, bool pressingLeft, bool pressingRight)
     {
         StreamWriter writer = GetWriter();
@@ -89,5 +92,20 @@ public class RoomLogger
         writer.WriteLine(line);
         writer.Close();
     }
+
+    #endregion
+
+    #region Utils
+
+    private string GetTime(){
+      return DateTime.Now.ToString("HH:mm:ss", System.Globalization.DateTimeFormatInfo.InvariantInfo);
+    }
+
+    private StreamWriter GetWriter()
+    {
+        return new StreamWriter(File.Open("Log_room_" + roomId + ".txt", FileMode.Append));
+    }
+
+    #endregion
 
 }
