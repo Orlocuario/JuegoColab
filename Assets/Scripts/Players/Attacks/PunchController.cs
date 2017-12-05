@@ -104,7 +104,7 @@ public class PunchController : AttackController
 
     protected override int GetDamage()
     {
-        if (caster.isPowerOn)
+        if (enhanced)
         {
             return damage + 4;
         }
