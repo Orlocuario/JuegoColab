@@ -57,7 +57,7 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        targetPosition = target.transform.position;
+        targetPosition = new Vector3(target.transform.position.x, target.transform.position.y, transform.position.z);
 
         switch (currentState)
         {
@@ -100,11 +100,11 @@ public class CameraController : MonoBehaviour
     {
         if (target.transform.localScale.x > 0f)
         {
-            targetPosition = new Vector3(targetPosition.x + followAhead, targetPosition.y + followUp, targetPosition.z*-1);
+            targetPosition = new Vector3(targetPosition.x + followAhead, targetPosition.y + followUp, targetPosition.z);
         }
         else
         {
-            targetPosition = new Vector3(targetPosition.x - followAhead, targetPosition.y + followUp, targetPosition.z*-1);
+            targetPosition = new Vector3(targetPosition.x - followAhead, targetPosition.y + followUp, targetPosition.z);
         }
 
         transform.position = Vector3.Lerp(transform.position, targetPosition, smoothCamera * Time.deltaTime);
