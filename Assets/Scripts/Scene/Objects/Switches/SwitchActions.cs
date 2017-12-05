@@ -76,7 +76,10 @@ public class SwitchActions : MonoBehaviour
                 arbolQl.SetBool("RockBottom", true); //activa camino arbol
                 PathSub abreteSesamo = GameObject.FindGameObjectWithTag("openPathSub").GetComponent<PathSub>();//destruyePasadizo
                 abreteSesamo.killMe = true;
-                Debug.Log("wiiiiiii");
+                GameObject expPrefab = (GameObject)Instantiate(Resources.Load("InstantiateEXP"));
+                expPrefab.transform.position = new Vector2(34.37f, -3.15f);
+                
+
                 break;
 
 			case 3:
@@ -93,17 +96,12 @@ public class SwitchActions : MonoBehaviour
 
 	                if (mageFilter)
 	                {
-						Debug.Log ("Tengo un " + mageFilter);
 	                    PlayerFilter playerFilter = mageFilter.GetComponent<PlayerFilter>();
-						Debug.Log ("Ahora tengo un " + playerFilter);
 
-
-	                    if (playerFilter)
-	                    {
-						Debug.Log ("Por último tengo un " + playerFilter);
-
-	                        playerFilter.SetActive(true);
-	                    }
+                        if (playerFilter)
+	                        {
+	                           playerFilter.SetActive(true);
+	                        }
 	                }
 	                break;
 
@@ -127,6 +125,10 @@ public class SwitchActions : MonoBehaviour
 				arrowFeedback.GetComponent<Transform> ().position = new Vector2 (70.7f, -20f);
 				ChangeSprite spriteChanger = GameObject.Find ("CartelCambiante").GetComponent <ChangeSprite> ();
 				spriteChanger.SpriteChanger ();
+                    
+                /*Instantiate new Checkpoints*/
+                GameObject newCheckPoints = (GameObject)Instantiate(Resources.Load("Prefabs/Ambientales/InstantateCheckPoints"));
+                newCheckPoints.transform.position = new Vector2(60.94f, -19.9f);
 
                 break;
 
@@ -180,8 +182,8 @@ public class SwitchActions : MonoBehaviour
                 break;
 
 			case 8:
-				GameObject expPrefab = (GameObject)Instantiate (Resources.Load ("InstantiateEXP"));
-				expPrefab.transform.position = new Vector2 (80.45f, -18.52f);
+				GameObject expPrefab8 = (GameObject)Instantiate (Resources.Load ("InstantiateEXP"));
+				expPrefab8.transform.position = new Vector2 (80.45f, -18.52f);
 
 
                 break;
