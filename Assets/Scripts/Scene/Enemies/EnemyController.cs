@@ -102,6 +102,7 @@ public class EnemyController : MonoBehaviour
     {
         StartCoroutine(animControl.StartAnimation("TakingDamage", this.gameObject));
         hp -= damage;
+        Debug.Log(name + " took " + damage + " damage -> " + hp +  "/" + maxHp);
 
         if (hp <= 0 )
         {
@@ -383,7 +384,6 @@ public class EnemyController : MonoBehaviour
     public IEnumerator WaitDying()
     {
         yield return new WaitForSeconds(WaitToDie);
-        this.gameObject.SetActive(false);
         Destroy(this.gameObject);
     }
 

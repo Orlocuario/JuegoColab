@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Roca : MonoBehaviour {
+public class Roca : KillingObject {
 
     public bool caidaOn;
     public bool isArbol;
@@ -13,17 +11,16 @@ public class Roca : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		animRoca = this.gameObject.GetComponent <Animator>();
-		
+        damage = 50;
         caidaOn = false;
         isReady = false;
-
+        activated = true;
 		roca = gameObject;
 	}
 	
 	// Update is called once per frame
 	void Update ()
 	{
-        
         if (caidaOn == true)
 		{
 			animRoca.SetBool("caidaOn", true);

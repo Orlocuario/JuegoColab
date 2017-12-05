@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -144,8 +143,6 @@ public class ClientMessageHandler
         LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
         levelManager.ActivateNPCFeedback(msg[1]);
     }
-
-
 
     #region Enemies
 
@@ -635,7 +632,11 @@ public class ClientMessageHandler
         bool pressingRight = bool.Parse(data[10]);
 
         PlayerController playerController = client.GetPlayerController(charId);
-        playerController.SetPlayerDataFromServer(positionX, positionY, directionX, directionY, speedX, isGrounded, pressingJump, pressingLeft, pressingRight);
+
+        if (playerController)
+        {
+            playerController.SetPlayerDataFromServer(positionX, positionY, directionX, directionY, speedX, isGrounded, pressingJump, pressingLeft, pressingRight);
+        }
     }
 
     private void HandleNewChatMessage(string[] msg)

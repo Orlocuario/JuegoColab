@@ -16,7 +16,7 @@ public class ChatZone : MonoBehaviour
     private HUDDisplay hpAndMp;
 
     private static float regenerationUnits = 1;
-    private static int regenerationFrameRate = 25;
+    private static int regenerationFrameRate = 20;
 
     private int regenerationFrame;
     private bool activated;

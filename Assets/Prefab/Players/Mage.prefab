@@ -126,7 +126,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1883630760672116}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -21.191, y: -2.406, z: 1}
+  m_LocalPosition: {x: -20.92, y: -2.31, z: 1}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4101700835687490}
@@ -198,17 +198,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerObj: {fileID: 0}
-  collider: {fileID: 0}
-  parent: {fileID: 0}
   respawnPosition: {x: 0, y: 0, z: 0}
   whatIsGround:
     serializedVersion: 2
     m_Bits: 512
+  particles: []
   groundCheck: {fileID: 4101700835687490}
-  acceleration: 0
-  canAccelerate: 0
-  groundCheckRadius: 0.25
-  actualSpeed: 0
+  parent: {fileID: 0}
   remoteAttacking: 0
   remoteJumping: 0
   remoteRight: 0
@@ -221,14 +217,18 @@ MonoBehaviour:
   isGrounded: 0
   upPressed: 0
   controlOverEnemies: 0
+  groundCheckRadius: 0.25
+  canAccelerate: 0
+  acceleration: 0
+  actualSpeed: 0
+  mpUpdateFrame: 0
   sortingOrder: 0
-  gravity: 1
+  characterId: 0
+  mpDepleted: 0
+  isPowerOn: 0
   directionY: 1
   directionX: 1
-  mpUpdateFrame: 0
-  mpDepleted: 0
-  characterId: 0
-  isPowerOn: 0
+  gravity: 1
 --- !u!198 &198612928901611572
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -284,7 +284,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: -243710456
+  randomSeed: 708191508
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -2921,7 +2921,7 @@ ParticleSystem:
   moveWithTransform: 1
   moveWithCustomTransform: {fileID: 0}
   scalingMode: 1
-  randomSeed: 980526683
+  randomSeed: -1556758610
   InitialModule:
     serializedVersion: 3
     enabled: 1
@@ -5534,7 +5534,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1897596871
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0
@@ -5584,7 +5584,7 @@ ParticleSystemRenderer:
   m_AutoUVMaxDistance: 0.5
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
+  m_SortingLayerID: -1897596871
   m_SortingOrder: 0
   m_RenderMode: 0
   m_SortMode: 0

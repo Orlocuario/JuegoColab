@@ -57,7 +57,7 @@ public class CameraController : MonoBehaviour
             return;
         }
 
-        targetPosition = target.transform.position;
+        targetPosition = new Vector3(target.transform.position.x, target.transform.position.y, transform.position.z);
 
         switch (currentState)
         {

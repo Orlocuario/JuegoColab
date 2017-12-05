@@ -92,7 +92,7 @@ public class PlayerController : MonoBehaviour
         levelManager = FindObjectOfType<LevelManager>();
         rb2d = GetComponent<Rigidbody2D>();
 
-        respawnPosition = transform.position;
+        //respawnPosition = transform.position;
 
         attackAnimName = "Attacking";
 
@@ -386,6 +386,12 @@ public class PlayerController : MonoBehaviour
 
     #region Callable
 
+    public void ResetTransform()
+    {
+        transform.parent = null;
+        IgnoreCollisionBetweenPlayers();
+    }
+
     public void TakeDamage(int damage, Vector2 force)
     {
         if (isTakingDamage)
@@ -469,7 +475,7 @@ public class PlayerController : MonoBehaviour
     // Validate for player conditions
     #region Validations
 
-    protected bool GameObjectIsPOI(GameObject other)
+    protected bool GameObjectIsPOI(GameObject other) 
     {
         return other.GetComponent<PlannerPoi>();
     }
@@ -482,8 +488,15 @@ public class PlayerController : MonoBehaviour
     public virtual void StopMoving()
     {
         canMove = false;
-        isAttacking = false;
+
         isTakingDamage = false;
+        isAttacking = false;
+
+        remoteJumping = false;
+        remoteRight = false;
+        remoteLeft = false;
+
+        SendPlayerDataToServer();
 
         if (sceneAnimator)
         {

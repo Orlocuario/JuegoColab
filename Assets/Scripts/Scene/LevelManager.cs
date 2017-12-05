@@ -366,26 +366,28 @@ public class LevelManager : MonoBehaviour
     public IEnumerator Respawning(PlayerController player)
     {
         player.StopMoving();
+        player.ResetTransform();
         player.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(waitToRespawn * .9f); // Respawn a bit sooner than local
 
-        player.transform.position = player.respawnPosition + Vector3.up * .1f;
+		player.transform.position = player.respawnPosition;
         player.gameObject.SetActive(true);
-        player.IgnoreCollisionBetweenPlayers();
+        player.ResetTransform(); 
         player.ResumeMoving();
     }
 
     public IEnumerator Respawning()
     {
         localPlayer.StopMoving();
+        localPlayer.ResetTransform();
         localPlayer.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(waitToRespawn);
 
         localPlayer.transform.position = localPlayer.respawnPosition + Vector3.up * .1f;
         localPlayer.gameObject.SetActive(true);
-        localPlayer.IgnoreCollisionBetweenPlayers();
+        localPlayer.ResetTransform();
         localPlayer.SendPlayerDataToServer();
         localPlayer.ResumeMoving();
     }

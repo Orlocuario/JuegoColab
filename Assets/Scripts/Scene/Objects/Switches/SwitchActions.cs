@@ -83,6 +83,7 @@ public class SwitchActions : MonoBehaviour
                 HandlerGroup8();
                 break;
 
+
             // Aquí comienzan acciones switch etapa 1
 
             case 9:     // Primeros peldaños
@@ -201,22 +202,20 @@ public class SwitchActions : MonoBehaviour
     // REVIEW THIS SHIT
     private void HandlerGroup2()
     {
-        Roca rocaGigante = GameObject.FindGameObjectWithTag("rocaCaida").GetComponent<Roca>();
+        Roca rocaGigante = GameObject.Find("RocaGigante").GetComponent<Roca>();
         rocaGigante.caidaOn = true;
 
         CameraController mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>();
         mainCamera.ChangeState(CameraState.TargetZoom, 5, 34.9f, -3.06f, false);
 
-        GameObject arbolGigante = GameObject.FindGameObjectWithTag("ArbolCaida");
-        caidArbol arbool = arbolGigante.GetComponent<caidArbol>();
-        arbool.colliderOn = true; //arbol
+        caidArbol arbolGigante = GameObject.Find("ArbolGig").GetComponent<caidArbol>();
+        arbolGigante.colliderOn = true;
 
         Animator arbolQl = arbolGigante.GetComponent<Animator>();
         arbolQl.SetBool("RockBottom", true); //activa camino arbol
 
-        PathSub abreteSesamo = GameObject.FindGameObjectWithTag("openPathSub").GetComponent<PathSub>(); // destruyePasadizo
+        PathSub abreteSesamo = GameObject.Find("PasadizoJ1J2").GetComponent<PathSub>();//destruyePasadizo
         abreteSesamo.killMe = true;
-
     }
 
     private void HandlerGroup3()
