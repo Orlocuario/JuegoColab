@@ -206,8 +206,15 @@ public class PlayerController : MonoBehaviour
     public virtual void StopMoving()
     {
         canMove = false;
-        isAttacking = false;
+
         isTakingDamage = false;
+        isAttacking = false;
+
+        remoteJumping = false;
+        remoteRight = false;
+        remoteLeft = false;
+
+        SendPlayerDataToServer();
 
         if (sceneAnimator)
         {
