@@ -184,11 +184,17 @@ public class SwitchActions : MonoBehaviour
 			case 8:
 				GameObject expPrefab8 = (GameObject)Instantiate (Resources.Load ("InstantiateEXP"));
 				expPrefab8.transform.position = new Vector2 (80.45f, -18.52f);
-
-
                 break;
 
+
+
+
+
             /* Aquí Comienzan Acciones Escena Tutorial*/
+
+
+
+
 
             case 9:     // Primeros peldaños
                 GameObject particleFeedback = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/FBMageButt"));

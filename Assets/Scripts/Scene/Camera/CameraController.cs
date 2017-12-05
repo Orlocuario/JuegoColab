@@ -100,11 +100,11 @@ public class CameraController : MonoBehaviour
     {
         if (target.transform.localScale.x > 0f)
         {
-            targetPosition = new Vector3(targetPosition.x + followAhead, targetPosition.y + followUp, targetPosition.z);
+            targetPosition = new Vector3(targetPosition.x + followAhead, targetPosition.y + followUp, targetPosition.z*-1);
         }
         else
         {
-            targetPosition = new Vector3(targetPosition.x - followAhead, targetPosition.y + followUp, targetPosition.z);
+            targetPosition = new Vector3(targetPosition.x - followAhead, targetPosition.y + followUp, targetPosition.z*-1);
         }
 
         transform.position = Vector3.Lerp(transform.position, targetPosition, smoothCamera * Time.deltaTime);

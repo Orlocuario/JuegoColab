@@ -377,7 +377,7 @@ public class LevelManager : MonoBehaviour
 
         yield return new WaitForSeconds(waitToRespawn * .9f); // Respawn a bit sooner than local
 
-        player.transform.position = player.respawnPosition + Vector3.up * .1f;
+		player.transform.position = player.respawnPosition;
         player.gameObject.SetActive(true);
         player.IgnoreCollisionBetweenPlayers();
         player.ResumeMoving();

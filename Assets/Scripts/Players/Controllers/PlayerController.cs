@@ -91,7 +91,7 @@ public class PlayerController : MonoBehaviour
         levelManager = FindObjectOfType<LevelManager>();
         rb2d = GetComponent<Rigidbody2D>();
 
-        respawnPosition = transform.position;
+        //respawnPosition = transform.position;
 
         attackAnimName = "Attacking";
 
