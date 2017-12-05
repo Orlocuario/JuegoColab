@@ -14,10 +14,10 @@ public class ClientMessageHandler
     EnemyController[] enemies;
     Client client;
 
-    public ClientMessageHandler()
+    public ClientMessageHandler(Client _client)
     {
         registeredEnemies = new List<int>();
-        client = Client.instance;
+        client = _client;
     }
 
     public void HandleMessage(string message)
@@ -221,10 +221,10 @@ public class ClientMessageHandler
         float posY = float.Parse(msg[5]);
         bool registered = false;
 
-		LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
 
-		//Función tablet control over enemies
-		if (levelManager.localPlayer && levelManager.localPlayer.controlOverEnemies)
+        //Función tablet control over enemies
+        if (levelManager.localPlayer && levelManager.localPlayer.controlOverEnemies)
         {
             registeredEnemies.Add(enemyId);
             registered = true;
@@ -235,27 +235,31 @@ public class ClientMessageHandler
                 EnemiesStartPatrolling();
             }
         }
-		//Función tablets sin control over enemies
+        //Función tablets sin control over enemies
         else
         {
             if (enemies == null)
             {
                 enemies = GameObject.FindObjectsOfType<EnemyController>();
-				Debug.Log ("Not controller player found " + enemies.Length +  " enemies");
+                Debug.Log("Not controller player found " + enemies.Length + " enemies");
             }
 
             foreach (EnemyController enemy in enemies)
             {
-				if (enemy) {
+                if (enemy)
+                {
 
-					if (enemy.gameObject.GetInstanceID () == instanceId) {
-						enemy.Initialize (enemyId, directionX, posX, posY);
-						registered = true;
-					}
-				} else {
+                    if (enemy.gameObject.GetInstanceID() == instanceId)
+                    {
+                        enemy.Initialize(enemyId, directionX, posX, posY);
+                        registered = true;
+                    }
+                }
+                else
+                {
 
-					Debug.Log ("Enemy is null mdfk");
-				}
+                    Debug.Log("Enemy is null mdfk");
+                }
             }
         }
 
@@ -269,7 +273,7 @@ public class ClientMessageHandler
     public void EnemiesStartPatrolling()
     {
         string message = "EnemiesStartPatrolling/true";
-        Client.instance.SendMessageToServer(message,true);
+        Client.instance.SendMessageToServer(message, true);
     }
 
     public void EnemiesRegisterOnRoom()
@@ -304,7 +308,7 @@ public class ClientMessageHandler
         }
 
         localPlayer.controlOverEnemies = true;
-		client.StartFirstPlan();
+        client.StartFirstPlan();
 
     }
 
@@ -514,7 +518,11 @@ public class ClientMessageHandler
         bool pressingRight = bool.Parse(data[10]);
 
         PlayerController playerController = client.GetPlayerController(charId);
-        playerController.SetPlayerDataFromServer(positionX, positionY, directionX, directionY, speedX, isGrounded, pressingJump, pressingLeft, pressingRight);
+
+        if (playerController)
+        {
+            playerController.SetPlayerDataFromServer(positionX, positionY, directionX, directionY, speedX, isGrounded, pressingJump, pressingLeft, pressingRight);
+        }
     }
 
     private void HandleNewChatMessage(string[] msg)

@@ -53,7 +53,7 @@ public class Client : MonoBehaviour
 
         topology = new HostTopology(config, maxConnections);
 
-        handler = new ClientMessageHandler();
+        handler = new ClientMessageHandler(this);
     }
 
     void LateUpdate()

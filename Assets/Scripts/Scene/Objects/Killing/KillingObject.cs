@@ -86,6 +86,15 @@ public class KillingObject : MonoBehaviour
         }
     }
 
+    // Attack those who enter the alert zone
+    protected virtual void OnCollisionEnter2D(Collision2D other)
+    {
+        if (GameObjectIsPlayer(other.gameObject))
+        {
+            Kill(other.gameObject);
+        }
+    }
+
     #endregion
 
     #region Utils

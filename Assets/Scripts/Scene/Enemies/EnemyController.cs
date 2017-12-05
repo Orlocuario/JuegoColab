@@ -383,7 +383,6 @@ public class EnemyController : MonoBehaviour
     public IEnumerator WaitDying()
     {
         yield return new WaitForSeconds(WaitToDie);
-        this.gameObject.SetActive(false);
         Destroy(this.gameObject);
     }
 

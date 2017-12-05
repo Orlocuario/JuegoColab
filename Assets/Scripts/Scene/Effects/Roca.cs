@@ -1,8 +1,6 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
-public class Roca : MonoBehaviour {
+public class Roca : KillingObject {
 
     public bool caidaOn;
     public bool isArbol;
@@ -10,16 +8,13 @@ public class Roca : MonoBehaviour {
 	private Animator animRoca;
 	private GameObject roca;
 
-
-
-
 	// Use this for initialization
 	void Start () {
 		animRoca = this.gameObject.GetComponent <Animator>();
-		
+        damage = 50;
         caidaOn = false;
         isReady = false;
-
+        activated = true;
 		roca = gameObject;
 	}
 	

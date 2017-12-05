@@ -113,9 +113,10 @@ public class AttackController : MonoBehaviour
 
     protected void IgnoreCollisionWithPlayers()
     {
-        Physics2D.IgnoreCollision(gameObjectCollider, Client.instance.GetMage().GetComponent<Collider2D>());
-        Physics2D.IgnoreCollision(gameObjectCollider, Client.instance.GetWarrior().GetComponent<Collider2D>());
-        Physics2D.IgnoreCollision(gameObjectCollider, Client.instance.GetEngineer().GetComponent<Collider2D>());
+        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+        Physics2D.IgnoreCollision(gameObjectCollider, levelManager.GetMage().GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(gameObjectCollider, levelManager.GetWarrior().GetComponent<Collider2D>());
+        Physics2D.IgnoreCollision(gameObjectCollider, levelManager.GetEngineer().GetComponent<Collider2D>());
     }
 
     protected bool IsCasterLocal()
