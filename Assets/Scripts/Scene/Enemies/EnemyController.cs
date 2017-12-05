@@ -4,19 +4,21 @@ using UnityEngine;
 
 public class EnemyController : MonoBehaviour
 {
+
+    #region Attributes
+
     public Vector2[] patrollingPoints;
     public CircleCollider2D alertZone;
 
     public float patrollingSpeed;
     public bool patrolling;
     public bool fromEditor;
-    public int directionX;  // 1 = derecha, -1 = izquierda
+    public int directionX;  // 1 = right, -1 = left
 
     protected Dictionary<string, bool> ignoresCollisions;
-    protected SceneAnimator animControl;
-    protected PlayerController localPlayer;
     protected Vector2 currentPatrolPoint;
     protected LevelManager levelManager;
+    protected SceneAnimator animControl;
     protected Rigidbody2D rb2d;
     protected Vector2 force;
 
@@ -32,7 +34,9 @@ public class EnemyController : MonoBehaviour
     protected static float WaitToDie = 1f;
     protected static float maxYSpeed = 0f;
 
-    #region Update & Start
+    #endregion
+
+    #region Start & Update  
 
     protected virtual void Start()
     {
@@ -54,7 +58,6 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    // Update is called once per frame
     protected virtual void Update()
     {
         foreach (Vector2 patrollingPoint in patrollingPoints)
@@ -65,7 +68,7 @@ public class EnemyController : MonoBehaviour
 
     #endregion
 
-    #region Common methods
+    #region Common
 
     protected void Attack(GameObject player)
     {
@@ -76,18 +79,13 @@ public class EnemyController : MonoBehaviour
     protected virtual void Patroll()
     {
 
-        if (rb2d == null)
+        if (!rb2d)
         {
             Debug.Log("If your are planning to move an enemy it should have a RigidBody2D");
             return;
         }
 
-        if (levelManager != null)
-        {
-            localPlayer = levelManager.GetLocalPlayerController();
-        }
-
-        if (localPlayer != null && localPlayer.controlOverEnemies)
+        if (LocalPlayerHasControl())
         {
 
             if (Vector2.Distance(transform.position, currentPatrolPoint) < .1f)
@@ -102,22 +100,19 @@ public class EnemyController : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
-
-        if (levelManager != null)
-        {
-            PlayerController localPlayer = levelManager.GetLocalPlayerController();
-
-            if (localPlayer != null)
-            {
-                if (localPlayer.controlOverEnemies)
-                {
-                    Debug.Log(name + " took " + damage);
-                    SendHpDataToServer(damage);
-                }
-            }
-        }
-
         StartCoroutine(animControl.StartAnimation("TakingDamage", this.gameObject));
+        hp -= damage;
+
+        if (hp <= 0 )
+        {
+
+            if (LocalPlayerHasControl())
+            {
+                SendEnemyDiedToServer(damage);
+            }
+
+            Die();
+        }
 
     }
 
@@ -178,7 +173,7 @@ public class EnemyController : MonoBehaviour
 
     }
 
-    public virtual void Die()
+    public void Die()
     {
         StartCoroutine(animControl.StartAnimation("Dying", this.gameObject));
         StartCoroutine(WaitDying());
@@ -205,7 +200,7 @@ public class EnemyController : MonoBehaviour
             message += ("/" + patrollingPoints[0].x + "/" + patrollingPoints[0].y);
         }
 
-        SendMessageToServer(message,true);
+        SendMessageToServer(message, true);
     }
 
     public void Initialize(int enemyId, int directionX, float posX, float posY)
@@ -247,10 +242,10 @@ public class EnemyController : MonoBehaviour
 
     #region Messaging
 
-    protected virtual void SendHpDataToServer(float damage)
+    protected virtual void SendEnemyDiedToServer(float damage)
     {
-        string message = "EnemyHpChange/" + enemyId + "/" + damage;
-        SendMessageToServer(message,false);
+        string message = "EnemyDied/" + enemyId + "/" + damage;
+        SendMessageToServer(message, false);
     }
 
     protected virtual void SendPositionToServer()
@@ -261,7 +256,7 @@ public class EnemyController : MonoBehaviour
             transform.position.x + "/" +
             transform.position.y;
 
-        SendMessageToServer(message,false);
+        SendMessageToServer(message, false);
     }
 
     protected void SendPatrollingPoint()
@@ -274,15 +269,15 @@ public class EnemyController : MonoBehaviour
             currentPatrolPoint.x + "/" +
             currentPatrolPoint.y;
 
-        SendMessageToServer(message,true);
+        SendMessageToServer(message, true);
     }
 
     private void SendIgnoreCollisionDataToServer(GameObject player, bool collision)
     {
-        SendMessageToServer("IgnoreCollisionBetweenObjects/" + collision + "/" + player.name + "/" + gameObject.name,true);
+        SendMessageToServer("IgnoreCollisionBetweenObjects/" + collision + "/" + player.name + "/" + gameObject.name, true);
     }
 
-	protected virtual void SendMessageToServer(string message,bool secure)
+    protected virtual void SendMessageToServer(string message, bool secure)
     {
         if (Client.instance)
         {
@@ -293,6 +288,11 @@ public class EnemyController : MonoBehaviour
     #endregion
 
     #region Utils
+
+    protected bool LocalPlayerHasControl()
+    {
+        return levelManager.localPlayer && levelManager.localPlayer.controlOverEnemies;
+    }
 
     protected void DebugDrawDistance(Vector2 point)
     {

@@ -7,17 +7,20 @@ using System.Collections.Generic;
  */
 public class DamagingObject : MonoBehaviour
 {
+    #region Attributes
+
     protected Dictionary<string, bool> ignoresCollisions;
+
     public Vector2 force;
     public int damage;
 
+    #endregion
+
     #region Start & Update
 
-    // Use this for initialization
     void Start()
     {
         ignoresCollisions = new Dictionary<string, bool> { { "Mage", false }, { "Warrior", false }, { "Engineer", false } };
-        //SetupTriggerCollider();
     }
 
     // Update is called once per frame
@@ -139,35 +142,6 @@ public class DamagingObject : MonoBehaviour
         ignoresCollisions[player.name] = ignores;
         SendIgnoreCollisionDataToServer(player, ignores);
 
-    }
-
-    protected void SetupTriggerCollider()
-    {
-        Collider2D solidColider = null;
-        bool hasTrigger = false;
-
-        foreach (Collider2D collider in GetComponents<Collider2D>())
-        {
-            if (collider.isTrigger)
-            {
-                hasTrigger = true;
-            }
-            else
-            {
-                solidColider = collider;
-            }
-        }
-
-        if (!solidColider)
-        {
-            Debug.LogError("Every damaging object must have a collider");
-        }
-
-        if (!hasTrigger)
-        {
-            Collider2D trigger = gameObject.AddComponent<Collider2D>();
-            trigger.isTrigger = true;
-        }
     }
 
     #endregion

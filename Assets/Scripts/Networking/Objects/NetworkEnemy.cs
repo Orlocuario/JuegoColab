@@ -50,18 +50,9 @@ public class NetworkEnemy
         this.patrollingPointY = patrollingPointY;
     }
 
-    public void ReduceHp(float damage)
+    public void Die()
     {
-        this.hp -= damage;
-        if (IsDead())
-        {
-            Die();
-        }
-    }
-
-    private void Die()
-    {
-        room.SendMessageToAllPlayers("EnemyDie/" + id,true);
+        room.RemoveEnemy(this);
     }
 
     #endregion

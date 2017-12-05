@@ -5,12 +5,18 @@ using UnityEngine;
 public class SpiderController : EnemyController
 {
 
+    #region Attributes
+
     private Vector3 bottomTunnelPosition;
     private Vector3 upperTunnelPosition;
     private Vector3 lastPosition;
 
     private static float alertDistance = 2.1f;
     private static float movingSteps = .6f;
+
+    #endregion
+
+    #region Start & Update
 
     protected override void Start()
     {
@@ -28,26 +34,6 @@ public class SpiderController : EnemyController
         base.Start();
     }
 
-    protected void IgnoreCollisionsWithRock()
-    {
-        GameObject spiderRock = GameObject.Find("RocaGiganteAraña");
-
-        foreach (Collider2D rockCollider in spiderRock.GetComponents<Collider2D>())
-        {
-            if (!rockCollider.isTrigger)
-            {
-                foreach (Collider2D spiderCollider in GetComponents<Collider2D>())
-                {
-                    if (!spiderCollider.isTrigger)
-                    {
-                        Physics2D.IgnoreCollision(rockCollider, spiderCollider);
-                    }
-                }
-            }
-        }
-    }
-
-    // Update is called once per frame
     protected override void Update()
     {
         ProtectTunnel();
@@ -55,6 +41,10 @@ public class SpiderController : EnemyController
 
         lastPosition = transform.position;
     }
+
+    #endregion
+
+    #region Common
 
     protected void UpdatePosition()
     {
@@ -102,22 +92,51 @@ public class SpiderController : EnemyController
         }
     }
 
-	protected override void Patroll()
-	{
-		//Spider can't Patroll
-	}
-		
+    protected override void Patroll()
+    {
+        //Spider can't Patroll
+    }
+
     public override void TakeDamage(float damage)
     {
         // Spider doesn't take any damage boy
     }
 
-	protected override void SendMessageToServer(string message, bool secure)
+    #endregion
+
+    #region Utils
+
+    protected void IgnoreCollisionsWithRock()
+    {
+        GameObject spiderRock = GameObject.Find("RocaGiganteAraña");
+
+        foreach (Collider2D rockCollider in spiderRock.GetComponents<Collider2D>())
+        {
+            if (!rockCollider.isTrigger)
+            {
+                foreach (Collider2D spiderCollider in GetComponents<Collider2D>())
+                {
+                    if (!spiderCollider.isTrigger)
+                    {
+                        Physics2D.IgnoreCollision(rockCollider, spiderCollider);
+                    }
+                }
+            }
+        }
+    }
+
+    #endregion
+
+    #region Messaging
+
+    protected override void SendMessageToServer(string message, bool secure)
     {
         if (Client.instance && Client.instance.GetLocalPlayer() && Client.instance.GetLocalPlayer().controlOverEnemies)
         {
-			Client.instance.SendMessageToServer(message, secure);
+            Client.instance.SendMessageToServer(message, secure);
         }
     }
+
+    #endregion
 
 }

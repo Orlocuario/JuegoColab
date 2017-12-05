@@ -8,22 +8,20 @@ public class NPCtrigger : MonoBehaviour
 
     #region Attributes
 
+    public bool teleport;
+    public Vector3 whereToRespawn;
 
-	public bool freezesPlayer;
-	public float feedbackTime;
+    public bool freezesPlayer;
+    public float feedbackTime;
 
     [System.Serializable]
     public struct NPCFeedback
     {
-		public GameObject particles;
+        public GameObject particles;
         public string message;
     };
 
     public NPCFeedback[] feedbacks;
-
-    public bool teleport;
-    public Vector3 whereToRespawn;
-
 
     private NPCFeedback activeFeedback;
     private LevelManager levelManager;
@@ -37,7 +35,7 @@ public class NPCtrigger : MonoBehaviour
     void Start()
     {
         levelManager = FindObjectOfType<LevelManager>();
-		ToogleParticles(false);
+        ToogleParticles(false);
         feedbackCount = 0;
     }
 
@@ -48,12 +46,11 @@ public class NPCtrigger : MonoBehaviour
     public void ReadNextFeedback()
     {
         // Always shut the last particles
-
-		if (activeFeedback.particles && activeFeedback.particles.activeInHierarchy) 
-			{
-			activeFeedback.particles.GetComponent<ParticleSystem>();
-			activeFeedback.particles.SetActive(false);
-			}
+        if (activeFeedback.particles && activeFeedback.particles.activeInHierarchy)
+        {
+            activeFeedback.particles.GetComponent<ParticleSystem>();
+            activeFeedback.particles.SetActive(false);
+        }
 
 
         // Exit if every feedback was read
@@ -66,21 +63,21 @@ public class NPCtrigger : MonoBehaviour
         activeFeedback = feedbacks[feedbackCount];
 
 
-            // Activate particles
-            if (activeFeedback.particles)
-            {
-			activeFeedback.particles.SetActive(true);
-            }
+        // Activate particles
+        if (activeFeedback.particles)
+        {
+            activeFeedback.particles.SetActive(true);
+        }
 
-            // Set feedback text
-            if (activeFeedback.message != null)
-            {
-                levelManager.SetNPCText(activeFeedback.message);
-            }
-        
+        // Set feedback text
+        if (activeFeedback.message != null)
+        {
+            levelManager.SetNPCText(activeFeedback.message);
+        }
+
 
         feedbackCount += 1;
-		StartCoroutine (WaitToReadNPCMessage());
+        StartCoroutine(WaitToReadNPCMessage());
     }
 
     #endregion
@@ -91,9 +88,10 @@ public class NPCtrigger : MonoBehaviour
     {
         if (GameObjectIsPlayer(other.gameObject))
         {
-			if (freezesPlayer) {
-				levelManager.localPlayer.StopMoving();
-			}
+            if (freezesPlayer)
+            {
+                levelManager.localPlayer.StopMoving();
+            }
             ReadNextFeedback();
         }
     }
@@ -102,22 +100,25 @@ public class NPCtrigger : MonoBehaviour
 
     #region Utils
 
-	protected void ToogleParticles(bool active) 
-	{
-		foreach (NPCFeedback feedback in feedbacks) {
-			if (feedback.particles) {
-				feedback.particles.SetActive(active);
-			}		
-		}
+    protected void ToogleParticles(bool active)
+    {
+        foreach (NPCFeedback feedback in feedbacks)
+        {
+            if (feedback.particles)
+            {
+                feedback.particles.SetActive(active);
+            }
+        }
 
-	}
+    }
 
     protected void EndFeedback()
     {
 
-		if (freezesPlayer) {
-			levelManager.localPlayer.ResumeMoving ();
-		}
+        if (freezesPlayer)
+        {
+            levelManager.localPlayer.ResumeMoving();
+        }
 
         if (teleport)
         {

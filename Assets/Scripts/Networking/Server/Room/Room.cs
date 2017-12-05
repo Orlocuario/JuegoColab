@@ -1,23 +1,23 @@
 ﻿using UnityEngine;
-using System.Collections;
 using System.Collections.Generic;
 using System;
 using System.IO;
-using UnityEngine.Networking;
 
 public class Room
 {
 
+    #region Attributes
+
+    public List<int> activatedSwitchGroups; //guarda los numeros de los grupos de switchs activados
+    public ServerDoorsManager doorManager;
     public ServerMessageHandler sender;
-    public RoomLogger log;
-    public Server server;
-
-    public RoomHpMp hpManaGer;
-
     public List<NetworkPlayer> players;
     public List<NetworkEnemy> enemies;
     public List<ServerSwitch> switchs;
-    public List<int> activatedGroups; //guarda los numeros de los grupos de switchs activados
+    public RoomHpMp hpManaGer;
+    public RoomLogger log;
+    public Server server;
+
     public string sceneToLoad;
     public string actualChat;
     public int numJugadores;
@@ -27,58 +27,39 @@ public class Room
 
     private string numeroPartidas;
     private string historial;
-    public ServerDoorsManager doorManager;
 
-    //Inicialización
-    public Room(int id, Server server, ServerMessageHandler sender, int maxJugadores)
+    #endregion
+
+    #region Constructor
+
+    public Room(int _id, Server _server, ServerMessageHandler _sender, int _maxJugadores)
     {
+
+        maxJugadores = _maxJugadores;
         numJugadores = 0;
-        this.doorManager = new ServerDoorsManager();
-        this.maxJugadores = maxJugadores;
-        this.id = id;
-        hpManaGer = new RoomHpMp(this);
-        log = new RoomLogger(this.id);
-        switchs = new List<ServerSwitch>();
-        players = new List<NetworkPlayer>();
-        enemies = new List<NetworkEnemy>();
-        activatedGroups = new List<int>();
-
-        this.server = server;
-        this.sender = sender;
-
+        sender = _sender;
+        server = _server;
         started = false;
         historial = "";
+        id = _id;
+
+        activatedSwitchGroups = new List<int>();
+        doorManager = new ServerDoorsManager();
+        players = new List<NetworkPlayer>();
+        switchs = new List<ServerSwitch>();
+        enemies = new List<NetworkEnemy>();
+        log = new RoomLogger(this.id);
+        hpManaGer = new RoomHpMp(this);
 
         sceneToLoad = Server.instance.sceneToLoad;
     }
 
-    public void AddEnemy(int instanceId, int enemyId, float hp)
-    {
-        NetworkEnemy enemy = new NetworkEnemy(instanceId, enemyId, hp, this);
-        enemies.Add(enemy);
-    }
+    #endregion
 
-    public string HoraMinuto()
-    {
-        string hora = DateTime.Now.Hour.ToString();
-        string minutos = DateTime.Now.Minute.ToString();
+    #region Common
 
-        if (minutos.Length == 1)
-        {
-            minutos = "0" + minutos;
-        }
+    #region Players
 
-        string tiempo = " (" + hora + ":" + minutos + ")";
-        return tiempo;
-    }
-
-    //Retorna true si no cabe más gente.
-    public bool IsFull()
-    {
-        return numJugadores == maxJugadores;
-    }
-
-    //Agrega a un jugador a la sala. Retorna true si lo consigue, false si está llena.
     public bool AddPlayer(int connectionId, string address)
     {
         if (IsFull())
@@ -86,9 +67,8 @@ public class Room
             return false;
         }
 
-        NetworkPlayer newPlayer = new NetworkPlayer(connectionId, GetCharId(numJugadores), this, address);
+        NetworkPlayer newPlayer = new NetworkPlayer(connectionId, GetCharId(), this, address);
         players.Add(newPlayer);
-        numJugadores++;
         SetControlEnemies(newPlayer);
 
         if (IsFull())
@@ -96,48 +76,12 @@ public class Room
             Debug.Log("Full room");
             sender.SendChangeScene(sceneToLoad, this);
             started = true;
-            SendMessageToAllPlayers("Mago: Conectado",false);
-            SendMessageToAllPlayers("Guerrero: Conectado",false);
-            SendMessageToAllPlayers("Ingeniero: Conectado",false);
+            SendMessageToAllPlayers("Mago: Conectado", false);
+            SendMessageToAllPlayers("Guerrero: Conectado", false);
+            SendMessageToAllPlayers("Ingeniero: Conectado", false);
         }
 
         return true;
-    }
-
-    public void EnemiesStartPatrolling()
-    {
-        foreach (NetworkEnemy enemy in enemies)
-        {
-            if (enemy.patrollingPointX != default(float) & enemy.patrollingPointY != default(float))
-            {
-                string message = "EnemyStartPatrolling/" +
-                    enemy.id + "/" +
-                    enemy.directionX + "/" +
-                    enemy.positionX + "/" +
-                    enemy.positionY + "/" +
-                    enemy.patrollingPointX + "/" +
-                    enemy.patrollingPointY;
-
-                SendMessageToAllPlayers(message,true);
-            }
-        }
-    }
-
-    private int GetCharId(int numJugadores)
-    {
-        return numJugadores;
-    }
-
-    public NetworkEnemy GetEnemy(int id)
-    {
-        foreach (NetworkEnemy enemy in enemies)
-        {
-            if (enemy.id == id)
-            {
-                return enemy;
-            }
-        }
-        return null;
     }
 
     public NetworkPlayer FindPlayerInRoom(int id)
@@ -164,47 +108,73 @@ public class Room
         return null;
     }
 
-	public void SendMessageToAllPlayers(string message, bool secure)
+    #endregion
+
+    #region Enemies
+
+    public void EnemiesStartPatrolling()
     {
-        char[] separator = new char[1] { '/' };
-        string[] msg = message.Split(separator);
-
-        if (msg[0] == "NewChatMessage")
+        foreach (NetworkEnemy enemy in enemies)
         {
-            actualChat += msg[1];
-            historial += "\r\n" + actualChat + HoraMinuto();
-        }
-
-        foreach (NetworkPlayer player in players)
-        {
-            if (player.connected)
+            if (enemy.patrollingPointX != default(float) & enemy.patrollingPointY != default(float))
             {
-                server.SendMessageToClient(player.connectionId, message, secure);
+                string message = "EnemyStartPatrolling/" +
+                    enemy.id + "/" +
+                    enemy.directionX + "/" +
+                    enemy.positionX + "/" +
+                    enemy.positionY + "/" +
+                    enemy.patrollingPointX + "/" +
+                    enemy.patrollingPointY;
+
+                SendMessageToAllPlayers(message, true);
             }
         }
     }
 
-	public void SendMessageToAllPlayersExceptOne(string message, int connectionId, bool secure)
+    public NetworkEnemy GetEnemy(int id)
     {
+        foreach (NetworkEnemy enemy in enemies)
+        {
+            if (enemy.id == id)
+            {
+                return enemy;
+            }
+        }
+        return null;
+    }
+
+    public NetworkEnemy AddEnemy(int instanceId, int enemyId, float hp)
+    {
+        NetworkEnemy enemy = new NetworkEnemy(instanceId, enemyId, hp, this);
+        enemies.Add(enemy);
+
+        return enemy;
+    }
+
+    public bool RemoveEnemy(NetworkEnemy enemy)
+    {
+        return enemies.Remove(enemy);
+    }
+
+    private void SetControlEnemies(NetworkPlayer targetPlayer)
+    {
+        bool check = false;
         foreach (NetworkPlayer player in players)
         {
-            if (player.connected && player.connectionId != connectionId)
+            if (player.controlOverEnemies == true)
             {
-                server.SendMessageToClient(player.connectionId, message, secure);
+                check = true;
             }
+        }
+        if (!check)
+        {
+            targetPlayer.controlOverEnemies = true;
         }
     }
 
-    public void SendMessageToPlayer(string message, int connectionId, bool secure)
-    {
-        foreach (NetworkPlayer player in players)
-        {
-            if (player.connected && player.connectionId == connectionId)
-            {
-                server.SendMessageToClient(player.connectionId, message, secure);
-            }
-        }
-    }
+    #endregion
+
+    #region Chat
 
     public void CreateTextChat()
     {
@@ -233,26 +203,10 @@ public class Room
         }
     }
 
-    private void SetControlEnemies(NetworkPlayer targetPlayer)
-    {
-        bool check = false;
-        foreach (NetworkPlayer player in players)
-        {
-            if (player.controlOverEnemies == true)
-            {
-                check = true;
-            }
-        }
-        if (!check)
-        {
-            targetPlayer.controlOverEnemies = true;
-        }
-    }
-
     //Set current controller to False, and find a new one that is connected
     public void ChangeControlEnemies()
     {
-		
+
         foreach (NetworkPlayer player in players)
         {
             if (player.controlOverEnemies == true)
@@ -265,17 +219,21 @@ public class Room
             if (player.connected == true)
             {
                 player.controlOverEnemies = true;
-                SendControlSignal(player);
-				break;
+                SendControlEnemiesToClient(player);
+                break;
             }
         }
     }
 
-    private void SendControlSignal(NetworkPlayer player)
+    private void SendControlEnemiesToClient(NetworkPlayer player)
     {
         string message = "SetControlOverEnemies";
         Server.instance.SendMessageToClient(player, message, true);
     }
+
+    #endregion
+
+    #region Switches
 
     public ServerSwitch AddSwitch(int groupId, int individualId)
     {
@@ -319,9 +277,91 @@ public class Room
         switchi.on = on;
     }
 
+    #endregion
+
+    #region Historial
+
     public void WriteFeedbackHistorial(string message)
     {
         historial += "\r\n" + message + HoraMinuto();
     }
+
+    #endregion
+
+    #endregion
+
+    #region Utils
+
+    private int GetCharId()
+    {
+        return numJugadores++;
+    }
+
+    public string HoraMinuto()
+    {
+        string hora = DateTime.Now.Hour.ToString();
+        string minutos = DateTime.Now.Minute.ToString();
+
+        if (minutos.Length == 1)
+        {
+            minutos = "0" + minutos;
+        }
+
+        string tiempo = " (" + hora + ":" + minutos + ")";
+        return tiempo;
+    }
+
+    public bool IsFull()
+    {
+        return numJugadores == maxJugadores;
+    }
+
+    #endregion
+
+    #region Messaging
+
+    public void SendMessageToAllPlayers(string message, bool secure)
+    {
+        char[] separator = new char[1] { '/' };
+        string[] msg = message.Split(separator);
+
+        if (msg[0] == "NewChatMessage")
+        {
+            actualChat += msg[1];
+            historial += "\r\n" + actualChat + HoraMinuto();
+        }
+
+        foreach (NetworkPlayer player in players)
+        {
+            if (player.connected)
+            {
+                server.SendMessageToClient(player.connectionId, message, secure);
+            }
+        }
+    }
+
+    public void SendMessageToAllPlayersExceptOne(string message, int connectionId, bool secure)
+    {
+        foreach (NetworkPlayer player in players)
+        {
+            if (player.connected && player.connectionId != connectionId)
+            {
+                server.SendMessageToClient(player.connectionId, message, secure);
+            }
+        }
+    }
+
+    public void SendMessageToPlayer(string message, int connectionId, bool secure)
+    {
+        foreach (NetworkPlayer player in players)
+        {
+            if (player.connected && player.connectionId == connectionId)
+            {
+                server.SendMessageToClient(player.connectionId, message, secure);
+            }
+        }
+    }
+
+    #endregion
 
 }

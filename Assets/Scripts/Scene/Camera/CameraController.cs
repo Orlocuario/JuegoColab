@@ -16,140 +16,162 @@ public enum CameraState
 public class CameraController : MonoBehaviour
 {
 
-    public CameraState currentState;
-    private Vector3 targetPosition;
-    private GameObject target;
-    private Vector3 saltitos;
-    private Camera holiwix;
-    private GameObject panelChat;
-    private GameObject inputChat;
+    #region Attributes
 
-    private float limitForUpperY = 100;
-    public float limitForBottomY = 0;
-    public float limitForleftX = -1;
+    public CameraState currentState;
 
     public float smoothCamera;
     public float followAhead;
+    public float startTime;
     public float followUp;
 
-    private static float stepsToTarget = 100; //Iteraciones hasta llegar al target
+    private LevelManager levelManager;
+    private Vector3 currentStepPos;
+    private Vector3 targetPosition;
+    private GameObject target;
+    private Camera thisCamera;
+
+    private static float stepsToTarget = 100;
     private static float initialSize = 2.8f;
-    private static float freezeTime = 100; //Tiempo en que espera volver
+    private static float freezeTime = 100; 
 
     private float cameraRate;
-    public float startTime;
-    private int zoomIt;
+    private int zoomSteps;
 
-    // Use this for initialization
+    #endregion
+
+    #region Start & Update
+
     void Start()
     {
-        panelChat = GameObject.Find("PanelChat");
-        inputChat = GameObject.Find("PanelInput");
-        holiwix = this.gameObject.GetComponent<Camera>();
+        levelManager = GameObject.FindObjectOfType<LevelManager>();
+        thisCamera = GetComponent<Camera>();
+
         ChangeState(CameraState.Normal, 10, 0, 0, false);
     }
 
-    // Update is called once per frame
     void Update()
     {
-        if (target == null)
+        if (!target)
         {
             return;
         }
 
-        /*float y;
-
-        // Keep camera higher than bottom limit
-        y = (target.transform.position.y >= limitForBottomY) ? target.transform.position.y : limitForBottomY;
-
-        // Keep camera lower than upper limit
-        y = (target.transform.position.y <= limitForUpperY) ? target.transform.position.y : limitForUpperY;
-
-		float x;
-
-		//Mantiene la cámera a la derecha
-
-		x = (target.transform.position.x >= limitForleftX) ? target.transform.position.x : limitForleftX;  */
-
-        targetPosition = new Vector3(target.transform.position.x, target.transform.position.y, transform.position.z);
-
-        // esto es para adelantar la cámara al personaje
+        targetPosition = target.transform.position;
 
         switch (currentState)
         {
 
             case CameraState.Normal:
-                if (target.transform.localScale.x > 0f)
-                {
-                    targetPosition = new Vector3(targetPosition.x + followAhead, targetPosition.y + followUp, targetPosition.z);
-                }
-                else
-                {
-                    targetPosition = new Vector3(targetPosition.x - followAhead, targetPosition.y + followUp, targetPosition.z);
-                }
-                transform.position = Vector3.Lerp(transform.position, targetPosition, smoothCamera * Time.deltaTime);
+                MoveNormal();
                 break;
 
             case CameraState.Zoomed:
                 break;
 
             case CameraState.FixedX:
-                transform.position = new Vector3(transform.position.x, targetPosition.y, targetPosition.z);
+                MoveFixedX();
                 break;
 
             case CameraState.FixedY:
-                transform.position = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
+                MoveFixedY();
                 break;
 
             case CameraState.TargetZoom:
-                if (zoomIt < stepsToTarget)
-                {
-                    transform.position = new Vector3(transform.position.x + saltitos.x, transform.position.y + saltitos.y, transform.position.z);
-                    holiwix.orthographicSize = holiwix.orthographicSize + cameraRate;
-                    zoomIt++;
-                }
-                else if (zoomIt < stepsToTarget + freezeTime)
-                {
-                    zoomIt++;
-                }
-                else if (zoomIt < stepsToTarget + freezeTime + stepsToTarget)
-                {
-                    transform.position = new Vector3(transform.position.x - saltitos.x, transform.position.y - saltitos.y, transform.position.z);
-                    holiwix.orthographicSize = holiwix.orthographicSize - cameraRate;
-                    zoomIt++;
-                }
-                else
-                {
-                    Client.instance.GetLocalPlayer().ResumeMoving();
-                    SetDefaultValues();
-                }
+                MoveToZoom();
                 break;
 
             case CameraState.NoFollowUp:
-                if (target.transform.localScale.x > 0f)
-                {
-                    targetPosition = new Vector3(targetPosition.x + followAhead, targetPosition.y, targetPosition.z);
-                }
-                else
-                {
-                    targetPosition = new Vector3(targetPosition.x - followAhead, targetPosition.y, targetPosition.z);
-                }
-                transform.position = Vector3.Lerp(transform.position, targetPosition, smoothCamera * Time.deltaTime);
+                MoveNoFollowUp();
                 break;
 
             case CameraState.NoFollowAhead:
-                if (target.transform.localScale.x > 0f)
-                {
-                    targetPosition = new Vector3(targetPosition.x, targetPosition.y + followUp, targetPosition.z);
-                }
-                else
-                {
-                    targetPosition = new Vector3(targetPosition.x, targetPosition.y + followUp, targetPosition.z);
-                }
-                transform.position = Vector3.Lerp(transform.position, targetPosition, smoothCamera * Time.deltaTime);
+                MoveNoFollowAhead();
                 break;
 
         }
+    }
+
+    #endregion
+
+    #region Common
+
+    private void MoveNormal()
+    {
+        if (target.transform.localScale.x > 0f)
+        {
+            targetPosition = new Vector3(targetPosition.x + followAhead, targetPosition.y + followUp, targetPosition.z);
+        }
+        else
+        {
+            targetPosition = new Vector3(targetPosition.x - followAhead, targetPosition.y + followUp, targetPosition.z);
+        }
+
+        transform.position = Vector3.Lerp(transform.position, targetPosition, smoothCamera * Time.deltaTime);
+
+    }
+
+    private void MoveFixedX()
+    {
+        transform.position = new Vector3(transform.position.x, targetPosition.y, targetPosition.z);
+    }
+
+    private void MoveFixedY()
+    {
+        transform.position = new Vector3(targetPosition.x, transform.position.y, targetPosition.z);
+    }
+
+    private void MoveToZoom()
+    {
+        if (zoomSteps < stepsToTarget)
+        {
+            transform.position = new Vector3(transform.position.x + currentStepPos.x, transform.position.y + currentStepPos.y, transform.position.z);
+            thisCamera.orthographicSize = thisCamera.orthographicSize + cameraRate;
+            zoomSteps++;
+        }
+        else if (zoomSteps < stepsToTarget + freezeTime)
+        {
+            zoomSteps++;
+        }
+        else if (zoomSteps < stepsToTarget + freezeTime + stepsToTarget)
+        {
+            transform.position = new Vector3(transform.position.x - currentStepPos.x, transform.position.y - currentStepPos.y, transform.position.z);
+            thisCamera.orthographicSize = thisCamera.orthographicSize - cameraRate;
+            zoomSteps++;
+        }
+        else
+        {
+            levelManager.localPlayer.ResumeMoving();
+            SetDefaultValues();
+        }
+    }
+
+    private void MoveNoFollowUp()
+    {
+        if (target.transform.localScale.x > 0f)
+        {
+            targetPosition = new Vector3(targetPosition.x + followAhead, targetPosition.y, targetPosition.z);
+        }
+        else
+        {
+            targetPosition = new Vector3(targetPosition.x - followAhead, targetPosition.y, targetPosition.z);
+        }
+
+        transform.position = Vector3.Lerp(transform.position, targetPosition, smoothCamera * Time.deltaTime);
+    }
+
+    private void MoveNoFollowAhead()
+    {
+        if (target.transform.localScale.y > 0f)
+        {
+            targetPosition = new Vector3(targetPosition.x, targetPosition.y + followUp, targetPosition.z);
+        }
+        else
+        {
+            targetPosition = new Vector3(targetPosition.x, targetPosition.y - followUp, targetPosition.z);
+        }
+
+        transform.position = Vector3.Lerp(transform.position, targetPosition, smoothCamera * Time.deltaTime);
     }
 
     public void SetTarget(GameObject target)
@@ -185,33 +207,31 @@ public class CameraController : MonoBehaviour
         }
     }
 
-    public void SetZoomedValues(float size, float x, float y, bool sinChat)
+    public void SetZoomedValues(float size, float x, float y, bool hideChat)
     {
         currentState = CameraState.Zoomed;
-        holiwix.orthographicSize = size;
+        thisCamera.orthographicSize = size;
         transform.position = new Vector3(x, y, transform.position.z);
-        if (sinChat)
-        {
-            panelChat.SetActive(false);
-            if (inputChat)
-            {
-                inputChat.SetActive(false);
 
-            }
-        }
+        ToogleChat(false);
     }
 
     private void TargetedZoom(float size, float x, float y)
     {
-        Client.instance.GetLocalPlayer().StopMoving();
-        currentState = CameraState.TargetZoom;
-        Vector3 targetPosition = new Vector3(x, y, 0);
-        float distance = (targetPosition - transform.position).magnitude;
-        saltitos = (targetPosition - transform.position) / stepsToTarget;
-        cameraRate = (size - initialSize) / stepsToTarget;
-        zoomIt = 0;
+        levelManager.localPlayer.StopMoving();
 
+        Vector3 targetPosition = new Vector3(x, y, 0);
+        currentState = CameraState.TargetZoom;
+
+        currentStepPos = (targetPosition - transform.position) / stepsToTarget;
+        cameraRate = (size - initialSize) / stepsToTarget;
+        zoomSteps = 0;
     }
+
+    #endregion
+
+    #region Utils
+
     private void SetNofollowUp()
     {
         currentState = CameraState.NoFollowUp;
@@ -235,20 +255,33 @@ public class CameraController : MonoBehaviour
 
     private void SetDefaultValues()
     {
+        thisCamera.orthographicSize = initialSize;
+        currentState = CameraState.Normal;
+
         smoothCamera = 3.9f;
         followAhead = .9f;
         followUp = 1f;
-        holiwix.orthographicSize = initialSize;
-        currentState = CameraState.Normal;
+
+        ToogleChat(true);
+    }
+
+    private void ToogleChat(bool active)
+    {
+
+        GameObject inputChat = GameObject.Find("PanelInput");
+        GameObject panelChat = GameObject.Find("PanelChat");
 
         if (panelChat)
         {
-            panelChat.SetActive(true);
+            panelChat.SetActive(active);
         }
 
         if (inputChat)
         {
-            inputChat.SetActive(true);
+            inputChat.SetActive(active);
         }
     }
+
+    #endregion
+
 }
