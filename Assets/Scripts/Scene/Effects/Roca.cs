@@ -21,7 +21,6 @@ public class Roca : KillingObject {
 	// Update is called once per frame
 	void Update ()
 	{
-        
         if (caidaOn == true)
 		{
 			animRoca.SetBool("caidaOn", true);
