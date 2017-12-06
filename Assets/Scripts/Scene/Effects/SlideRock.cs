@@ -41,12 +41,9 @@ public class SlideRock : KillingObject
 
     protected override void OnCollisionEnter2D(Collision2D collision)
     {
-
-        GameObject pasadizo = GameObject.Find("PasadizoJ1J2");
-
-        if (pasadizo == collision.gameObject)
+        if (collision.gameObject.name == "PasadizoJ1J2")
         {
-            KillAndDestroy(pasadizo);
+            KillAndDestroy(collision.gameObject);
         }
 
     }
