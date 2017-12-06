@@ -205,14 +205,8 @@ public class PlayerController : MonoBehaviour
 
     public void ResetTransform()
     {
-
-        if (transform.parent)
-        {
-            transform.parent = null;
-        }
-
+        transform.parent = null;
         IgnoreCollisionBetweenPlayers();
-
     }
 
     public virtual void StopMoving()
@@ -458,7 +452,7 @@ public class PlayerController : MonoBehaviour
         {
             respawnPosition = placeToGo;
         }
-        
+
     }
 
     #endregion
