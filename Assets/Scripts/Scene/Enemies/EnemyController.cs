@@ -102,6 +102,7 @@ public class EnemyController : MonoBehaviour
     {
         StartCoroutine(animControl.StartAnimation("TakingDamage", this.gameObject));
         hp -= damage;
+        Debug.Log(name + " took " + damage + " damage -> " + hp +  "/" + maxHp);
 
         if (hp <= 0 )
         {
