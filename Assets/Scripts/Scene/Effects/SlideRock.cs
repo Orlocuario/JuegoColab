@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Rock : KillingObject
+public class SlideRock : KillingObject
 {
 
     #region Start

@@ -177,6 +177,14 @@ public class SwitchActions : MonoBehaviour
         return prefab;
     }
 
+    private GameObject InstatiateSprite(string name, Vector2 initialPos)
+    {
+        GameObject sprite = (GameObject)Instantiate(Resources.Load("Sprites/" + name));
+        sprite.GetComponent<Transform>().position = initialPos;
+
+        return sprite;
+    }
+
     #endregion
 
     #region Handlers
@@ -188,36 +196,24 @@ public class SwitchActions : MonoBehaviour
         ShowFeedbackParticles("FBMageButt", new Vector2(13.2f, -1.3f), 3f);
     }
 
-    // REVIEW THIS SHIT
     private void HandlerGroup1()
     {
-        GameObject rejaEng = GameObject.FindGameObjectWithTag("RejaRocaEng");
-        rejaEng.SetActive(false);
-
-        Rock roca = GameObject.FindGameObjectWithTag("rocaCaida").GetComponent<Rock>();
-        roca.isReady = true;
-
-        CajaSwitch caja = GameObject.FindGameObjectWithTag("CajaSwitchFierro").GetComponent<CajaSwitch>();
-        caja.meVoy = true;
-        caja.ahoraMeVoy = true;
-
-        DestroyObject("SpikesDead", 1f);
-        DestroyObject("LavaPool", 1f);
+        ShowFeedbackParticles("FBMageButt", new Vector2(-25.83f, 16.9f), 4f);
+        DestroyObject("CajaSwitchFierro", .1f);
+        DestroyObject("RejaEng", .1f);
+        DestroyObject("SpikesDead", .1f);
+        DestroyObject("LavaPool", .1f);
     }
 
-    // REVIEW THIS SHIT
     private void HandlerGroup2()
     {
-
         CameraController mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>();
         mainCamera.ChangeState(CameraState.TargetZoom, 5, 34.9f, -3.06f, false);
 
-        Rock rocaGigante = GameObject.Find("RocaGigante").GetComponent<Rock>();
+        SlideRock rocaGigante = GameObject.FindObjectOfType<SlideRock>();
         rocaGigante.Slide();
 
-        GameObject arbolGigante = GameObject.Find("ArbolGig");
-
-        BendTree bendTree = arbolGigante.GetComponent<BendTree>();
+        BendTree bendTree = GameObject.FindObjectOfType<BendTree>();
         bendTree.Fall();
     }
 
@@ -237,7 +233,6 @@ public class SwitchActions : MonoBehaviour
     // TODO: Review this
     private void HandlerGroup4()
     {
-
         GameObject platparaMage = InstatiatePrefab("MovPlatform", new Vector2(61f, -9.5f));
 
         Vector2 startPos = platparaMage.transform.position;
@@ -245,20 +240,17 @@ public class SwitchActions : MonoBehaviour
 
         SetMovingObjectData(platparaMage, startPos, endPos, 1f);
 
-        GameObject comebackMessage = InstatiatePrefab("ActivateNPC", new Vector2(70f, -19.2f)); // Donde está la info de este NPC ???
+        GameObject npc = InstatiatePrefab("ActivateNPC", new Vector2(70f, -19.2f)); // Donde está la info de este NPC ???
 
         /* Instantiate Arrow feedback y cambiar arrow de warrior*/
-        GameObject arrowIndicadora = (GameObject)Instantiate(Resources.Load("Sprites/Arrows/warriorArrowLeft"));
-        arrowIndicadora.GetComponent<Transform>().position = new Vector2(70.7f, -20f);
-
         ChangeSprite spriteChanger = GameObject.Find("CartelCambiante").GetComponent<ChangeSprite>();
         spriteChanger.SpriteChanger();
 
         InstatiatePrefab("Ambientales/InstantateCheckPoints", new Vector2(60.94f, -19.9f));
+        InstatiateSprite("/Arrows/warriorArrowLeft", new Vector2(70.7f, -20f));
 
         ShowFeedbackParticles("FBMageButt", new Vector2(72.86f, -19.3f), 4f);
         ShowFeedbackParticles("warriorFeedbackSmall", new Vector2(70.7f, -20f), 4f);
-
     }
 
     private void HandlerGroup5()
