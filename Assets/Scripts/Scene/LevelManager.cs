@@ -379,7 +379,7 @@ public class LevelManager : MonoBehaviour
 
 		player.transform.position = player.respawnPosition;
         player.gameObject.SetActive(true);
-        player.IgnoreCollisionBetweenPlayers();
+        player.ResetTransform(); 
         player.ResumeMoving();
     }
 

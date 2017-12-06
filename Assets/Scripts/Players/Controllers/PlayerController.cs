@@ -203,6 +203,18 @@ public class PlayerController : MonoBehaviour
         AnimateAttack();
     }
 
+    public void ResetTransform()
+    {
+
+        if (transform.parent)
+        {
+            transform.parent = null;
+        }
+
+        IgnoreCollisionBetweenPlayers();
+
+    }
+
     public virtual void StopMoving()
     {
         canMove = false;
@@ -495,7 +507,6 @@ public class PlayerController : MonoBehaviour
 
     // Validate for player conditions
     #region Validations
-
 
     protected bool IsGoingRight()
     {
