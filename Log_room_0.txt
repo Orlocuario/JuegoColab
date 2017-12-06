@@ -11870,3 +11870,155 @@
 
 17:05:35 Player 1 is going left from (60.55465,-19.77743)
 
+17:22:27 Player 0 is going right from (-20.92,-2.413567)
+
+17:22:32 Player 1 used his power
+
+17:22:32 Player 1 is going left from (60.95,-20.06601)
+
+17:22:33 Player 1 attacked
+
+17:22:33 Player 1 jumped from (60.94693,-20.06601)
+
+17:22:34 Player 1 is going left from (60.94693,-18.85606)
+
+17:22:34 Player 1 attacked
+
+17:22:35 Player 1 is going left from (60.87693,-20.068)
+
+17:22:35 Player 1 jumped from (60.63872,-20.068)
+
+17:22:36 Player 1 attacked
+
+17:22:36 Player 1 is going left from (60.63872,-20.068)
+
+17:22:37 Player 1 is going left from (60.40444,-20.068)
+
+17:22:37 Player 1 jumped from (60.38206,-20.068)
+
+17:22:37 Player 1 is going left from (60.36806,-19.91781)
+
+17:22:40 Player 1 is going left from (60.82,-20.068)
+
+17:22:41 Player 1 is going left from (60.77663,-20.068)
+
+17:22:41 Player 1 jumped from (60.29766,-20.068)
+
+17:22:41 Player 1 is going left from (60.18566,-19.77743)
+
+17:22:42 Player 1 is going left from (59.35966,-18.97411)
+
+17:22:44 Player 1 stopped using his power
+
+17:22:45 Player 1 is going left from (60.82,-20.068)
+
+17:22:45 Player 1 jumped from (59.87459,-20.068)
+
+17:22:45 Player 1 is going left from (59.73459,-19.77743)
+
+17:22:49 Player 1 is going left from (60.82,-20.068)
+
+17:22:49 Player 1 is going left from (60.65794,-20.068)
+
+17:22:50 Player 1 jumped from (60.04906,-20.068)
+
+17:22:50 Player 1 is going left from (59.92306,-19.77743)
+
+17:22:50 Player 1 is going left from (58.80307,-19.171)
+
+17:22:53 Player 1 is going left from (60.82,-20.068)
+
+17:22:53 Player 1 jumped from (60.82,-20.068)
+
+17:22:53 Player 1 is going left from (60.813,-19.91781)
+
+17:22:56 Player 1 is going left from (60.82,-20.068)
+
+17:22:57 Player 1 is going left from (60.32227,-20.068)
+
+17:22:58 Player 1 jumped from (60.17421,-20.068)
+
+17:22:58 Player 1 is going left from (60.10421,-19.77743)
+
+17:22:58 Player 1 is going left from (58.99122,-19.82965)
+
+17:23:02 Player 1 is going left from (60.82,-20.068)
+
+17:23:02 Player 1 jumped from (60.10081,-20.068)
+
+17:23:02 Player 1 is going left from (60.03082,-19.91781)
+
+17:23:12 Player 1 is going right from (59.8605,-20.068)
+
+17:23:19 Player 1 is going left from (61.13146,-20.068)
+
+17:23:20 Player 1 is going left from (60.54298,-20.068)
+
+17:23:24 Player 1 is going left from (60.82,-20.068)
+
+17:23:42 Player 1 is going left from (60.78532,-20.068)
+
+17:23:42 Player 1 jumped from (60.2932,-20.068)
+
+17:23:42 Player 1 is going left from (60.1672,-19.77743)
+
+17:23:43 Player 1 is going left from (58.99121,-19.171)
+
+17:23:45 Player 1 is going left from (60.82,-19.56943)
+
+17:23:45 Player 1 jumped from (60.03111,-20.068)
+
+17:23:45 Player 1 is going left from (59.89111,-19.77743)
+
+17:23:47 Player 1 is going right from (59.51554,-20.01241)
+
+17:23:47 Player 1 jumped from (59.55169,-20.01241)
+
+17:23:47 Player 1 is going right from (59.56569,-19.72184)
+
+17:23:54 Player 1 is going left from (60.74168,-20.068)
+
+17:23:55 Player 1 is going left from (60.70923,-20.068)
+
+17:23:55 Player 1 jumped from (60.14935,-20.068)
+
+17:23:55 Player 1 is going left from (60.02335,-19.77743)
+
+17:23:56 Player 1 is going right from (58.53214,-20.01241)
+
+17:23:57 Player 1 jumped from (59.26611,-20.01241)
+
+17:23:57 Player 1 is going right from (59.33165,-19.86222)
+
+17:23:59 Player 1 is going left from (60.73864,-20.068)
+
+17:24:00 Player 1 is going left from (60.70004,-20.068)
+
+17:24:01 Player 1 jumped from (60.38652,-20.068)
+
+17:24:01 Player 1 is going left from (60.33752,-19.91781)
+
+17:24:04 Player 1 is going right from (60.07563,-20.068)
+
+17:24:05 Player 1 is going right from (60.24561,-20.068)
+
+17:24:06 Player 1 is going left from (61.19083,-20.068)
+
+17:24:07 Player 1 is going left from (61.27722,-20.068)
+
+17:24:09 Player 1 is going right from (60.1573,-20.068)
+
+17:24:09 Player 1 is going right from (59.99633,-20.068)
+
+17:24:17 Player 1 is going left from (61.26388,-20.068)
+
+17:24:18 Player 1 is going left from (61.04255,-20.068)
+
+17:24:19 Player 1 is going right from (59.62411,-20.42117)
+
+17:24:25 Player 1 is going right from (59.87709,-20.068)
+
+17:24:28 Player 1 is going left from (60.83654,-19.54981)
+
+17:24:28 Player 1 is going left from (60.77292,-20.068)
+
