@@ -373,6 +373,7 @@ public class LevelManager : MonoBehaviour
     public IEnumerator Respawning(PlayerController player)
     {
         player.StopMoving();
+        player.ResetTransform();
         player.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(waitToRespawn * .9f); // Respawn a bit sooner than local
@@ -386,6 +387,7 @@ public class LevelManager : MonoBehaviour
     public IEnumerator Respawning()
     {
         localPlayer.StopMoving();
+        player.ResetTransform();
         localPlayer.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(waitToRespawn);
