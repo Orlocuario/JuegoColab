@@ -19,7 +19,7 @@ public class KillingObject : MonoBehaviour
 
     #region Start & Update
 
-    protected void Start()
+    protected virtual void Start()
     {
         particles = GetComponent<ParticleSystem>();
         levelManager = FindObjectOfType<LevelManager>();

@@ -113,6 +113,12 @@ public class SwitchActions : MonoBehaviour
 
     #region Utils
 
+    protected void StartAnimatorBool(string animationName, bool value, GameObject gameObject)
+    {
+        SceneAnimator sceneAnimator = GameObject.FindObjectOfType<SceneAnimator>();
+        sceneAnimator.SetBool(animationName, value, gameObject);
+    }
+
     private void ShowFeedbackParticles(string name, Vector2 position, float liveTime)
     {
         GameObject feedbackParticles = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/" + name));
@@ -188,7 +194,7 @@ public class SwitchActions : MonoBehaviour
         GameObject rejaEng = GameObject.FindGameObjectWithTag("RejaRocaEng");
         rejaEng.SetActive(false);
 
-        Roca roca = GameObject.FindGameObjectWithTag("rocaCaida").GetComponent<Roca>();
+        Rock roca = GameObject.FindGameObjectWithTag("rocaCaida").GetComponent<Rock>();
         roca.isReady = true;
 
         CajaSwitch caja = GameObject.FindGameObjectWithTag("CajaSwitchFierro").GetComponent<CajaSwitch>();
@@ -202,20 +208,17 @@ public class SwitchActions : MonoBehaviour
     // REVIEW THIS SHIT
     private void HandlerGroup2()
     {
-        Roca rocaGigante = GameObject.Find("RocaGigante").GetComponent<Roca>();
-        rocaGigante.caidaOn = true;
 
         CameraController mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>();
         mainCamera.ChangeState(CameraState.TargetZoom, 5, 34.9f, -3.06f, false);
 
-        caidArbol arbolGigante = GameObject.Find("ArbolGig").GetComponent<caidArbol>();
-        arbolGigante.colliderOn = true;
+        Rock rocaGigante = GameObject.Find("RocaGigante").GetComponent<Rock>();
+        rocaGigante.Slide();
 
-        Animator arbolQl = arbolGigante.GetComponent<Animator>();
-        arbolQl.SetBool("RockBottom", true); //activa camino arbol
+        GameObject arbolGigante = GameObject.Find("ArbolGig");
 
-        PathSub abreteSesamo = GameObject.Find("PasadizoJ1J2").GetComponent<PathSub>();//destruyePasadizo
-        abreteSesamo.killMe = true;
+        BendTree bendTree = arbolGigante.GetComponent<BendTree>();
+        bendTree.Fall();
     }
 
     private void HandlerGroup3()

@@ -1,41 +1,56 @@
 ﻿using UnityEngine;
 
-public class Roca : KillingObject {
+public class Rock : KillingObject
+{
 
-    public bool caidaOn;
-    public bool isArbol;
-	public bool isReady;
-	private Animator animRoca;
-	private GameObject roca;
+    #region Start
 
-	// Use this for initialization
-	void Start () {
-		animRoca = this.gameObject.GetComponent <Animator>();
-        damage = 50;
-        caidaOn = false;
-        isReady = false;
-        activated = true;
-		roca = gameObject;
-	}
-	
-	// Update is called once per frame
-	void Update ()
-	{
-        if (caidaOn == true)
-		{
-			animRoca.SetBool("caidaOn", true);
-        }
-	}
-
-	public void KilledMySelf(string s)
+    protected override void Start()
     {
-		GameObject humo = (GameObject)Instantiate (Resources.Load ("Prefabs/FeedbackParticles/Humo"));
-		humo.GetComponent <Transform>().position = new Vector2 (34.1f, -7.07f);
-		Destroy (humo,5f);
+        activated = true;
+        damage = 50;
+    }
+
+    #endregion
+
+    #region Common
+
+    public void Slide()
+    {
+        SceneAnimator sceneAnimator = GameObject.FindObjectOfType<SceneAnimator>();
+        sceneAnimator.SetBool("caidaOn", true, this.gameObject);
+    }
+
+    private void KillAndDestroy(GameObject pasadizo)
+    {
+        GameObject humo = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/Humo"));
+        humo.GetComponent<Transform>().position = new Vector2(34.1f, -7.07f);
+
+        Destroy(humo, 5f);
 
         GameObject particulasEffect = GameObject.Find("ParticulasMageRoca");
-        Destroy(particulasEffect, 1f);
-        
-        Destroy(this.gameObject,1f);
+
+        Destroy(particulasEffect, .1f);
+        Destroy(pasadizo, .1f);
+        Destroy(this.gameObject, .1f);
     }
+
+    #endregion
+
+    #region Events
+
+    protected override void OnCollisionEnter2D(Collision2D collision)
+    {
+
+        GameObject pasadizo = GameObject.Find("PasadizoJ1J2");
+
+        if (pasadizo == collision.gameObject)
+        {
+            KillAndDestroy(pasadizo);
+        }
+
+    }
+    
+    #endregion
+    
 }
