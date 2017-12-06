@@ -387,7 +387,7 @@ public class LevelManager : MonoBehaviour
     public IEnumerator Respawning()
     {
         localPlayer.StopMoving();
-        player.ResetTransform();
+        localPlayer.ResetTransform();
         localPlayer.gameObject.SetActive(false);
 
         yield return new WaitForSeconds(waitToRespawn);
