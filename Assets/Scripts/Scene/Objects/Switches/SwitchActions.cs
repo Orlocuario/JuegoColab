@@ -132,7 +132,7 @@ public class SwitchActions : MonoBehaviour
     private void HandlerGroup2()
     {
         CameraController mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>();
-        mainCamera.ChangeState(CameraState.TargetZoom, 5, 34.9f, -3.06f, false);
+        mainCamera.ChangeState(CameraState.TargetZoom, 5, 34.9f, -3.06f, false, false);
 
         SlideRock rocaGigante = GameObject.FindObjectOfType<SlideRock>();
         rocaGigante.Slide();

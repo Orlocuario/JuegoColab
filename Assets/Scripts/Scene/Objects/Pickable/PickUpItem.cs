@@ -39,6 +39,8 @@ public class PickUpItem : MonoBehaviour
     {
         if (GameObjectIsPlayer(other.gameObject))
         {
+            Debug.Log("Es un Player Así que Recogeré");
+
             PickUp();
         }
     }

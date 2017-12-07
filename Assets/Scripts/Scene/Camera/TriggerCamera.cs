@@ -12,6 +12,7 @@ public class TriggerCamera : MonoBehaviour
 
     public float ortographic_size;
     public bool hideChat;
+    public bool playerCantMove;
 
     #endregion
 
@@ -23,7 +24,7 @@ public class TriggerCamera : MonoBehaviour
         GameObject camera = GameObject.FindGameObjectWithTag("MainCamera"); // TODO: Change this to obj name
         CameraController cameraController = camera.GetComponent<CameraController>();
 
-        cameraController.ChangeState(state, ortographic_size, target.transform.position.x, target.transform.position.y, hideChat);
+        cameraController.ChangeState(state, ortographic_size, target.transform.position.x, target.transform.position.y, hideChat, playerCantMove);
         if (state == CameraState.TargetZoom)
         {
             Destroy(this.gameObject);
@@ -36,7 +37,7 @@ public class TriggerCamera : MonoBehaviour
         GameObject camera = GameObject.FindGameObjectWithTag("MainCamera"); // TODO: Change this to obj name
         CameraController cameraController = camera.GetComponent<CameraController>();
 
-        cameraController.ChangeState(CameraState.Normal, 0, 0, 0, false);
+        cameraController.ChangeState(CameraState.Normal, 0, 0, 0, false, false);
 
     }
     
