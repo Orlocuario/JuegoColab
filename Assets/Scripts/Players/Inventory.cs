@@ -75,7 +75,9 @@ public class Inventory : MonoBehaviour
 
     public void AddItem(PickUpItem item)
     {
+        Debug.Log("Estoy Agregando un Item");
         int freeSlot = GetFreeSlot();
+        Debug.Log("Fui a buscar un slot");
 
         if (freeSlot != -1)
         {
@@ -84,6 +86,7 @@ public class Inventory : MonoBehaviour
             Image slotSprite = GameObject.Find("SlotSprite" + freeSlot).GetComponent<Image>();
             slotSprite.sprite = item.GetComponent<SpriteRenderer>().sprite;
 
+            Debug.Log("Tengo UnItem NuevoOOOOO");
             SendMessageToServer("InventoryUpdate/Add/" + freeSlot + "/" + item.name, true);
         }
 

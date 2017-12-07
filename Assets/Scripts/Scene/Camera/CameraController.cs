@@ -47,7 +47,7 @@ public class CameraController : MonoBehaviour
         levelManager = GameObject.FindObjectOfType<LevelManager>();
         thisCamera = GetComponent<Camera>();
 
-        ChangeState(CameraState.Normal, 10, 0, 0, false);
+        ChangeState(CameraState.Normal, 10, 0, 0, false, false);
     }
 
     void Update()
@@ -179,7 +179,7 @@ public class CameraController : MonoBehaviour
         this.target = target;
     }
 
-    public void ChangeState(CameraState state, float ortographicsize, float x, float y, bool sinChat)
+    public void ChangeState(CameraState state, float ortographicsize, float x, float y, bool sinChat, bool playerCantMove)
     {
         switch (state)
         {
@@ -196,7 +196,7 @@ public class CameraController : MonoBehaviour
                 SetFixedY();
                 break;
             case CameraState.TargetZoom:
-                TargetedZoom(ortographicsize, x, y);
+                TargetedZoom(ortographicsize, x, y, playerCantMove);
                 break;
             case CameraState.NoFollowAhead:
                 SetNoFollowAhead();
@@ -216,10 +216,12 @@ public class CameraController : MonoBehaviour
         ToogleChat(false);
     }
 
-    private void TargetedZoom(float size, float x, float y)
+    private void TargetedZoom(float size, float x, float y, bool playerCantMove)
     {
-        levelManager.localPlayer.StopMoving();
-
+        if (playerCantMove == true)
+        {
+            levelManager.localPlayer.StopMoving();
+        }
         Vector3 targetPosition = new Vector3(x, y, 0);
         currentState = CameraState.TargetZoom;
 
@@ -261,6 +263,7 @@ public class CameraController : MonoBehaviour
         smoothCamera = 3.9f;
         followAhead = .9f;
         followUp = 1f;
+
 
         ToogleChat(true);
     }

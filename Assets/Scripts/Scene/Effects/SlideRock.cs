@@ -1,14 +1,15 @@
 ﻿using UnityEngine;
 
-public class SlideRock : KillingObject
+public class SlideRock : DamagingObject
 {
-
+    private GameObject pasadizo;
     #region Start
 
     protected override void Start()
     {
-        activated = true;
+        base.Start();
         damage = 50;
+        pasadizo = GameObject.Find("PasadizoJ1J2");
     }
 
     #endregion
@@ -39,7 +40,7 @@ public class SlideRock : KillingObject
 
     #region Events
 
-    protected override void OnCollisionEnter2D(Collision2D collision)
+    protected override void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.name == "PasadizoJ1J2")
         {

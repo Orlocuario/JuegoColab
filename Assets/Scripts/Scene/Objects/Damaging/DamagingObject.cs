@@ -18,7 +18,7 @@ public class DamagingObject : MonoBehaviour
 
     #region Start & Update
 
-    void Start()
+    protected virtual void Start()
     {
         ignoresCollisions = new Dictionary<string, bool> { { "Mage", false }, { "Warrior", false }, { "Engineer", false } };
     }
@@ -118,7 +118,7 @@ public class DamagingObject : MonoBehaviour
     }
 
     // Attack those who enter the alert zone
-    private void OnTriggerEnter2D(Collider2D other)
+    protected virtual void OnTriggerEnter2D(Collider2D other)
     {
         if (GameObjectIsPlayer(other.gameObject))
         {

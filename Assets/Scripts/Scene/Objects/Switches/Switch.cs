@@ -36,7 +36,7 @@ public class Switch : MonoBehaviour
 
     private void Start()
     {
-        StopMyParticles();
+        TurnParticlesOff();
         IgnoreCollisionWithPlayers();
         RegisterOnManager();
         SetSprite();
@@ -72,6 +72,7 @@ public class Switch : MonoBehaviour
 
         isActivated = false;
         SetSprite();
+        TurnParticlesOff();
         SendOnDataToServer(isActivated);
 
         if (switchObj != null)
@@ -267,10 +268,13 @@ public class Switch : MonoBehaviour
         }
     }
 
-    private void StopMyParticles()
+    private void TurnParticlesOff()
     {
-        particles = gameObject.GetComponent<ParticleSystem>();
-        particles.Stop();
+        if (activation == TypeOfActivation.Shooting)
+        {
+            particles = gameObject.GetComponent<ParticleSystem>();
+            particles.Stop();
+        }
     }
 
     private void TurnParticlesOn()
