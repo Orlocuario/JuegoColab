@@ -56,8 +56,9 @@ public class GearSystemActions : ActivableSystemActions
             planner.Monitor();
         }
 
+        SendMessageToServer("ObstacleDestroyed/GiantBlocker", true);
+        SendMessageToServer("ObstacleDestroyed/GiantBlocker (1)", true);
         SendMessageToServer("ActivateGearSystem/" + this.gameObject.name, true);
-
     }
 
     #endregion

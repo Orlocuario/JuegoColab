@@ -21,7 +21,6 @@ public class Server : MonoBehaviour
     private int channelId;
     private int bigChannelId;
     private int secureChannel;
-    private int timesScene1IsLoaded;
     private bool listening;
 
     public List<Room> rooms;
@@ -62,7 +61,6 @@ public class Server : MonoBehaviour
     void Start()
     {
 
-        timesScene1IsLoaded = 0;
         NPCsLastMessage = "";
         maxPlayers = 3;
         instance = this;
@@ -200,11 +198,12 @@ public class Server : MonoBehaviour
 
     private void AddConnection(int connectionId)
     {
-        string recAddress;
         int port;
-        UnityEngine.Networking.Types.NetworkID recNetId;
-        UnityEngine.Networking.Types.NodeID recNodeId;
         byte recError;
+        string recAddress;
+        UnityEngine.Networking.Types.NodeID recNodeId;
+        UnityEngine.Networking.Types.NetworkID recNetId;
+
         NetworkTransport.GetConnectionInfo(socketId, connectionId, out recAddress, out port, out recNetId, out recNodeId, out recError);
         NetworkPlayer player = GetPlayer(recAddress);
 
@@ -214,7 +213,6 @@ public class Server : MonoBehaviour
             player.connected = true;
             player.connectionId = connectionId;
             SendMessageToClient(connectionId, "ChangeScene/" + player.room.sceneToLoad, true);
-            timesScene1IsLoaded += 1;
             messageHandler.SendAllData(connectionId, player.room, true);
             UnityEngine.Debug.Log("Client " + connectionId + " reconnected");
             return;
@@ -288,7 +286,7 @@ public class Server : MonoBehaviour
             NetworkPlayer player = room.FindPlayerInRoom(address);
             if (player != null)
             {
-                return room.FindPlayerInRoom(address);
+                return player;
             }
         }
         return null;

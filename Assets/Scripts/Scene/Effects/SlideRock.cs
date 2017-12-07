@@ -30,6 +30,8 @@ public class SlideRock : KillingObject
 
         GameObject particulasEffect = GameObject.Find("ParticulasMageRoca");
 
+        SendMessageToServer("ObstacleDestroyed/" + name, true);
+
         Destroy(particulasEffect, .1f);
         Destroy(pasadizo, .1f);
         Destroy(this.gameObject, .1f);
@@ -48,7 +50,19 @@ public class SlideRock : KillingObject
         }
 
     }
-    
+
     #endregion
-    
+
+    #region Messaging
+
+    private void SendMessageToServer(string message, bool secure)
+    {
+        if (Client.instance && Client.instance.GetLocalPlayer() && Client.instance.GetLocalPlayer().controlOverEnemies)
+        {
+            Client.instance.SendMessageToServer(message, secure);
+        }
+    }
+
+    #endregion
+
 }

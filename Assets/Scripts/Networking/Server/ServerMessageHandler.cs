@@ -28,6 +28,9 @@ public class ServerMessageHandler
             case "ObjectDestroyed":
                 SendObjectDestroyed(message, connectionId);
                 break;
+            case "ObstacleDestroyed":
+                HandleObstacleDestroyed(msg, connectionId);
+                break;
             case "ChangeObjectPosition":
                 SendUpdatedObjectPosition(message, connectionId);
                 break;
@@ -147,7 +150,7 @@ public class ServerMessageHandler
             }
         }
 
-        foreach (ServerSwitch switchi in room.switchs)
+        foreach (RoomSwitch switchi in room.switchs)
         {
             room.SendMessageToPlayer(switchi.GetReconnectData(), connectionId, true);
         }
@@ -156,6 +159,12 @@ public class ServerMessageHandler
         {
             room.SendMessageToPlayer(doorMessage, connectionId, true);
         }
+
+        foreach (string obstacleMessage in room.obstacleManager.GetObstaclesMessages())
+        {
+            room.SendMessageToPlayer(obstacleMessage, connectionId, true);
+        }
+
     }
 
     private void SendIgnoreCollisionBetweenObjects(string message, int connectionId)
@@ -190,7 +199,6 @@ public class ServerMessageHandler
         server.NPCsLastMessage = message;
         room.SendMessageToPlayer(message, newConnectionId, true); // Message es el texto a mostrar en el NPC Log
         room.WriteFeedbackRecord(message + "/" + playerId);
-
     }
 
     private void SendActivationGearSystem(string message, int connectionId)
@@ -209,6 +217,16 @@ public class ServerMessageHandler
 
         room.SendMessageToAllPlayers(message, true);
         room.doorManager.AddDoor(doorId);
+    }
+
+    private void HandleObstacleDestroyed(string[] msg, int connectionId)
+    {
+        string obstacleName = msg[1];
+
+        NetworkPlayer player = server.GetPlayer(connectionId);
+        Room room = player.room;
+
+        room.obstacleManager.AddObstacle(obstacleName);
     }
 
     private void SendSwitchGroupAction(string message, string[] msg, int connectionId)
@@ -415,7 +433,7 @@ public class ServerMessageHandler
         NetworkPlayer player = server.GetPlayer(connectionID);
         Room room = player.room;
 
-        int playerId = Int32.Parse(data[1]);
+        int charId = Int32.Parse(data[1]);
         float positionX = float.Parse(data[2]);
         float positionY = float.Parse(data[3]);
         int directionX = Int32.Parse(data[4]);

@@ -1,14 +1,24 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
-public class ServerDoorsManager {
+public class RoomDoors
+{
+
+    #region Attributes
 
     HashSet<string> openedDoors;
 
-    public ServerDoorsManager(){
+    #endregion
+
+    #region Costructor
+
+    public RoomDoors()
+    {
         openedDoors = new HashSet<string>();
-     }
+    }
+
+    #endregion
+
+    #region Common
 
     //Agrega una puerta
     public void AddDoor(string id)
@@ -24,9 +34,10 @@ public class ServerDoorsManager {
 
     //Retorna un string que se enviará a los clientes por cada puerta existente en la base de datos
     public List<string> GetDoorMessages()
+
     {
         List<string> messages = new List<string>();
-        foreach(string door in openedDoors)
+        foreach (string door in openedDoors)
         {
             string message = "ActivateRuneSystem/" + door;
             messages.Add(message);
@@ -34,5 +45,6 @@ public class ServerDoorsManager {
         return messages;
     }
 
+    #endregion
 
 }
