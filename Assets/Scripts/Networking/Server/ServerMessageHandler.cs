@@ -14,16 +14,13 @@ public class ServerMessageHandler
 
     public void HandleMessage(string message, int connectionId)
     {
-        char[] separator = new char[1] { '/' } ;
+        char[] separator = new char[1] { '/' };
         string[] msg = message.Split(separator);
 
         switch (msg[0])
         {
             case "ChangeScene":
                 HandleChangeScene(msg, connectionId);
-                break;
-            case "RequestCharId":
-                SendCharIdAndControl(connectionId);
                 break;
             case "ObjectMoved":
                 SendObjectMoved(message, connectionId);
@@ -69,6 +66,9 @@ public class ServerMessageHandler
                 break;
             case "EnemiesStartPatrolling":
                 EnemiesStartPatrolling(connectionId);
+                break;
+            case "PlayerRequestId":
+                SendPlayerIdAndControl(connectionId);
                 break;
             case "PlayerAttack":
                 SendAttackState(message, connectionId, msg);
@@ -175,7 +175,7 @@ public class ServerMessageHandler
 
         foreach (NetworkPlayer jugador in room.players)
         {
-            if (playerId == jugador.charId)
+            if (playerId == jugador.id)
             {
                 newConnectionId = jugador.connectionId;
                 break;
@@ -321,15 +321,14 @@ public class ServerMessageHandler
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
-        int charId = player.charId;
-        room.SendMessageToAllPlayers(message + "/" + charId.ToString(), true);
+        room.SendMessageToAllPlayers(message + "/" + player.id, true);
     }
 
     private void SendInventoryUpdate(string message, int connectionId)
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
         player.InventoryUpdate(message);
-        player.room.log.WriteInventory(player.charId, message);
+        player.room.log.WriteInventory(player.id, message);
     }
 
     private void SendDestroyObject(string message, int connectionId)
@@ -416,7 +415,7 @@ public class ServerMessageHandler
         NetworkPlayer player = server.GetPlayer(connectionID);
         Room room = player.room;
 
-        int charId = Int32.Parse(data[1]);
+        int playerId = Int32.Parse(data[1]);
         float positionX = float.Parse(data[2]);
         float positionY = float.Parse(data[3]);
         int directionX = Int32.Parse(data[4]);
@@ -438,7 +437,7 @@ public class ServerMessageHandler
         player.pressingRight = pressingRight;
 
         room.SendMessageToAllPlayersExceptOne(message, connectionID, false);
-        room.log.WriteNewPosition(player.charId, positionX, positionY, pressingJump, pressingLeft, pressingRight);
+        room.log.WriteNewPosition(player.id, positionX, positionY, pressingJump, pressingLeft, pressingRight);
     }
 
     private void SendObjectMoved(string message, int connectionId)
@@ -469,11 +468,11 @@ public class ServerMessageHandler
         room.SendMessageToAllPlayers(message, true);
     }
 
-    private void SendCharIdAndControl(int connectionId)
+    private void SendPlayerIdAndControl(int connectionId)
     {
         NetworkPlayer player = server.GetPlayer(connectionId);
 
-        string message = "PlayerSetCharId/" + player.charId + "/" + player.controlOverEnemies;
+        string message = "PlayerSetId/" + player.id + "/" + player.controlOverEnemies;
 
         server.SendMessageToClient(connectionId, message, true);
         SendAllData(connectionId, player.room, true);
@@ -492,7 +491,7 @@ public class ServerMessageHandler
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
         room.SendMessageToAllPlayersExceptOne(message, connectionId, false);
-        room.log.WriteAttack(player.charId);
+        room.log.WriteAttack(player.id);
     }
 
     public void SendPowerState(string message, int connectionId, string[] data)
@@ -501,6 +500,6 @@ public class ServerMessageHandler
         Room room = player.room;
         player.power = bool.Parse(data[2]);
         room.SendMessageToAllPlayersExceptOne(message, connectionId, false);
-        room.log.WritePower(player.charId, player.power);
+        room.log.WritePower(player.id, player.power);
     }
 }

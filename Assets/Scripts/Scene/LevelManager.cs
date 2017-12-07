@@ -64,7 +64,7 @@ public class LevelManager : MonoBehaviour
         if (GameObject.Find("ClientObject"))
         {
             client = GameObject.Find("ClientObject").GetComponent<Client>();
-            client.RequestCharIdToServer();
+            client.RequestPlayerIdToServer();
         }
 
     }
@@ -211,12 +211,12 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void CreateGameObject(string spriteName, int charId)
+    public void CreateGameObject(string spriteName, int playerId)
     {
         GameObject newObject = (GameObject)Instantiate(Resources.Load("Prefabs/Items/" + spriteName));
         GameObject player = null;
 
-        switch (charId)
+        switch (playerId)
         {
             case 0:
                 player = GameObject.Find("Mage");

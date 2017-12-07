@@ -43,7 +43,7 @@ public class RoomLogger
     }
 
     //Modificar si se cambia el sistema de inventario
-    public void WriteInventory(int charId, string message)
+    public void WriteInventory(int playerId, string message)
     {
         char[] separator = new char[1];
         separator[0] = '/';
@@ -54,11 +54,11 @@ public class RoomLogger
 
         if (msg[1] == "Add")
         {
-            writer.WriteLine(GetTime() + " Player " + charId + " picked stored " + msg[3] + " in the slot " + index +"\n");
+            writer.WriteLine(GetTime() + " Player " + playerId + " picked stored " + msg[3] + " in the slot " + index +"\n");
         }
         else
         {
-            writer.WriteLine(GetTime() + " Player " + charId + " tossed item in slot " + index + "\n");
+            writer.WriteLine(GetTime() + " Player " + playerId + " tossed item in slot " + index + "\n");
         }
         writer.Close();
 

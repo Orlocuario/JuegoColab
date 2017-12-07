@@ -67,7 +67,7 @@ public class Room
             return false;
         }
 
-        NetworkPlayer newPlayer = new NetworkPlayer(connectionId, GetCharId(), this, address);
+        NetworkPlayer newPlayer = new NetworkPlayer(connectionId, GetPlayerId(), this, address);
         players.Add(newPlayer);
         SetControlEnemies(newPlayer);
 
@@ -292,7 +292,7 @@ public class Room
 
     #region Utils
 
-    private int GetCharId()
+    private int GetPlayerId()
     {
         return numPlayers++;
     }
