@@ -28,6 +28,7 @@ public class Switch : MonoBehaviour
 
     private SwitchManager manager;
     private bool jobDone; // true si es que su grupo de botones ya terminó su función
+    private ParticleSystem particles; 
 
     #endregion
 
@@ -35,6 +36,7 @@ public class Switch : MonoBehaviour
 
     private void Start()
     {
+        StopMyParticles();
         IgnoreCollisionWithPlayers();
         RegisterOnManager();
         SetSprite();
@@ -53,6 +55,10 @@ public class Switch : MonoBehaviour
 
         isActivated = true;
         SetSprite();
+        if (activation == TypeOfActivation.Shooting)
+        {
+            TurnParticlesOn();
+        }
         SendOnDataToServer(isActivated);
         switchGroup.CheckIfReady(switchObj, FindObjectOfType<Planner>());
     }
@@ -259,6 +265,17 @@ public class Switch : MonoBehaviour
             Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), GameObject.Find("Warrior").GetComponent<BoxCollider2D>());
             Physics2D.IgnoreCollision(GetComponent<BoxCollider2D>(), GameObject.Find("Engineer").GetComponent<BoxCollider2D>());
         }
+    }
+
+    private void StopMyParticles()
+    {
+        particles = gameObject.GetComponent<ParticleSystem>();
+        particles.Stop();
+    }
+
+    private void TurnParticlesOn()
+    {
+        particles.Play();
     }
 
     private bool CheckIfAttackMatchWithColor(GameObject gameObject)

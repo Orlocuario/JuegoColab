@@ -43,6 +43,7 @@ public class SlideRock : KillingObject
     {
         if (collision.gameObject.name == "PasadizoJ1J2")
         {
+            Debug.Log("Entré a pitearme el pasadizo porque soy BrígiDO");
             KillAndDestroy(collision.gameObject);
         }
 
