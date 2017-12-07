@@ -28,7 +28,7 @@ public class Switch : MonoBehaviour
 
     private SwitchManager manager;
     private bool jobDone; // true si es que su grupo de botones ya terminó su función
-    private ParticleSystem particles; 
+    private ParticleSystem particles;
 
     #endregion
 
@@ -270,12 +270,19 @@ public class Switch : MonoBehaviour
     private void StopMyParticles()
     {
         particles = gameObject.GetComponent<ParticleSystem>();
-        particles.Stop();
+
+        if (particles)
+        {
+            particles.gameObject.SetActive(false);
+        }
     }
 
     private void TurnParticlesOn()
     {
-        particles.Play();
+        if (particles)
+        {
+            particles.gameObject.SetActive(true);
+        }
     }
 
     private bool CheckIfAttackMatchWithColor(GameObject gameObject)
