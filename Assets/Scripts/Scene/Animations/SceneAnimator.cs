@@ -34,7 +34,12 @@ public class SceneAnimator : MonoBehaviour
         animator.SetFloat(parameter, value);
     }
 
-    public IEnumerator StartAnimation(string animName, GameObject gameObject)
+    public void StartAnimation(string animName, GameObject gameObject)
+    {
+        StartCoroutine(AnimationCoroutine(animName, gameObject));
+    }
+
+    private IEnumerator AnimationCoroutine(string animName, GameObject gameObject)
     {
         Animator animator = gameObject.GetComponent<Animator>();
 

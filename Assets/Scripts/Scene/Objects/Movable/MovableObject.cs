@@ -10,7 +10,7 @@ public class MovableObject : MonoBehaviour
     public string openningTrigger; // The trigger that makes dissapear the object
     public string openedPrefab; // How it looks when its opened
 
-    protected SceneAnimator animControl;
+    protected SceneAnimator sceneAnimator;
     protected Rigidbody2D rgbd;
 
     #endregion
@@ -40,13 +40,13 @@ public class MovableObject : MonoBehaviour
                 SendMovableDataToServer(force);
             }
 
-            if (!animControl)
+            if (!sceneAnimator)
             {
                 Debug.Log("AnimatorControl not found in " + name);
                 return;
             }
 
-            StartCoroutine(animControl.StartAnimation("Moving", this.gameObject));
+            sceneAnimator.StartAnimation("Moving", this.gameObject);
         }
     }
 

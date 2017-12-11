@@ -18,7 +18,7 @@ public class EnemyController : MonoBehaviour
     protected Dictionary<string, bool> ignoresCollisions;
     protected Vector2 currentPatrolPoint;
     protected LevelManager levelManager;
-    protected SceneAnimator animControl;
+    protected SceneAnimator sceneAnimator;
     protected Rigidbody2D rb2d;
     protected Vector2 force;
 
@@ -40,7 +40,7 @@ public class EnemyController : MonoBehaviour
 
     protected virtual void Start()
     {
-        animControl = GameObject.FindObjectOfType<SceneAnimator>();
+        sceneAnimator = GameObject.FindObjectOfType<SceneAnimator>();
         levelManager = FindObjectOfType<LevelManager>();
         rb2d = GetComponent<Rigidbody2D>();
 
@@ -72,7 +72,7 @@ public class EnemyController : MonoBehaviour
 
     protected void Attack(GameObject player)
     {
-        StartCoroutine(animControl.StartAnimation("Attacking", this.gameObject));
+        sceneAnimator.StartAnimation("Attacking", this.gameObject);
         DealDamage(player);
     }
 
@@ -100,7 +100,7 @@ public class EnemyController : MonoBehaviour
 
     public virtual void TakeDamage(float damage)
     {
-        StartCoroutine(animControl.StartAnimation("TakingDamage", this.gameObject));
+        sceneAnimator.StartAnimation("TakingDamage", this.gameObject);
         hp -= damage;
         Debug.Log(name + " took " + damage + " damage -> " + hp +  "/" + maxHp);
 
@@ -176,7 +176,7 @@ public class EnemyController : MonoBehaviour
 
     public void Die()
     {
-        StartCoroutine(animControl.StartAnimation("Dying", this.gameObject));
+        sceneAnimator.StartAnimation("Dying", this.gameObject);
         StartCoroutine(WaitDying());
     }
 

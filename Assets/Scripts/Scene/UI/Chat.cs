@@ -30,12 +30,12 @@ public class Chat : MonoBehaviour
     public void Start()
     {
         instance = this;
-        originalCanvas = GameObject.FindGameObjectWithTag("OriginalCanvas");
-        chatCanvas = GameObject.FindGameObjectWithTag("ChatCanvas");
+        originalCanvas = GameObject.Find("OriginalCanvas");
+        chatCanvas = GameObject.Find("ChatCanvas");
 
         if (SceneManager.GetActiveScene().name != "ServerScene")
         {
-            textOriginalCanvas = GameObject.FindGameObjectWithTag("OriginalTextCanvas").GetComponent<Text>();
+            textOriginalCanvas = GameObject.Find("OriginalTextChat").GetComponent<Text>();
             ToggleChatOff();
         }
     }
@@ -46,37 +46,20 @@ public class Chat : MonoBehaviour
         PlayerController player2 = GameObject.Find("Warrior").GetComponent<PlayerController>();
         PlayerController player3 = GameObject.Find("Engineer").GetComponent<PlayerController>();
 
-        string role;
-        string charId;
-
         if (player1.localPlayer)
         {
-            charId = player1.characterId.ToString();
+            return player1.name;
         }
         else if (player2.localPlayer)
         {
-            charId = player2.characterId.ToString();
+            return player2.name;
+
         }
         else
         {
-            charId = player3.characterId.ToString();
+            return player3.name;
         }
 
-        switch (charId)
-        {
-            case "0":
-                role = "Mage";
-                break;
-            case "1":
-                role = "Warrior";
-                break;
-            case "2":
-                role = "Engineer";
-                break;
-            default:
-                return null;
-        }
-        return role;
     }
 
     public void AlphabetFunction(string alphabet)

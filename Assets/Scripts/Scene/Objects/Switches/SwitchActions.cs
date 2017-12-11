@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class SwitchActions : MonoBehaviour
 {
@@ -83,7 +81,6 @@ public class SwitchActions : MonoBehaviour
                 HandlerGroup8();
                 break;
 
-
             // Aquí comienzan acciones switch etapa 1
 
             case 9:     // Primeros peldaños
@@ -111,82 +108,6 @@ public class SwitchActions : MonoBehaviour
 
     #endregion
 
-    #region Utils
-
-    protected void StartAnimatorBool(string animationName, bool value, GameObject gameObject)
-    {
-        SceneAnimator sceneAnimator = GameObject.FindObjectOfType<SceneAnimator>();
-        sceneAnimator.SetBool(animationName, value, gameObject);
-    }
-
-    private void ShowFeedbackParticles(string name, Vector2 position, float liveTime)
-    {
-        GameObject feedbackParticles = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/" + name));
-        feedbackParticles.GetComponent<Transform>().position = position;
-
-        Destroy(feedbackParticles, liveTime);
-    }
-
-    private void DestroyObject(string name, float time)
-    {
-        GameObject gameObject = GameObject.Find(name);
-
-        if (gameObject)
-        {
-            Destroy(gameObject, time);
-        }
-
-    }
-
-    private void TooglePlayerFilter(string filterName, bool active)
-    {
-
-        GameObject mageFilter = GameObject.Find(filterName);
-
-        if (mageFilter)
-        {
-            PlayerFilter playerFilter = mageFilter.GetComponent<PlayerFilter>();
-
-            if (playerFilter)
-            {
-                playerFilter.SetActive(true);
-            }
-        }
-    }
-
-    private void SetMovingObjectData(GameObject movingObject, Vector2 startPos, Vector2 endPos, float moveSpeed)
-    {
-
-        MovingObject movingController = movingObject.GetComponent<MovingObject>();
-
-        if (movingController)
-        {
-            movingController.SetData(startPos, endPos, moveSpeed);
-        }
-    }
-
-    private GameObject InstatiatePrefab(string name, Vector2 initialPos)
-    {
-        GameObject prefab = (GameObject)Instantiate(Resources.Load("Prefabs/" + name));
-
-        if (prefab)
-        {
-            prefab.GetComponent<Transform>().position = initialPos;
-        }
-
-        return prefab;
-    }
-
-    private GameObject InstatiateSprite(string name, Vector2 initialPos)
-    {
-        GameObject sprite = (GameObject)Instantiate(Resources.Load("Sprites/" + name));
-        sprite.GetComponent<Transform>().position = initialPos;
-
-        return sprite;
-    }
-
-    #endregion
-
     #region Handlers
 
     private void HandlerGroup0()
@@ -199,6 +120,9 @@ public class SwitchActions : MonoBehaviour
     private void HandlerGroup1()
     {
         ShowFeedbackParticles("FBMageButt", new Vector2(-25.83f, 16.9f), 4f);
+
+        SendMessageToServer("ObstacleDestroyed/LavaPool", true);
+
         DestroyObject("CajaSwitchFierro", .1f);
         DestroyObject("RejaEng", .1f);
         DestroyObject("SpikesDead", .1f);
@@ -322,6 +246,94 @@ public class SwitchActions : MonoBehaviour
         levelManager = GameObject.FindObjectOfType<LevelManager>();
         levelManager.localPlayer.respawnPosition = new Vector3(136.15f, -26.33f, 1f);
         levelManager.Respawn();
+    }
+
+    #endregion
+
+    #region Utils
+
+    protected void StartAnimatorBool(string animationName, bool value, GameObject gameObject)
+    {
+        SceneAnimator sceneAnimator = GameObject.FindObjectOfType<SceneAnimator>();
+        sceneAnimator.SetBool(animationName, value, gameObject);
+    }
+
+    private void ShowFeedbackParticles(string name, Vector2 position, float liveTime)
+    {
+        GameObject feedbackParticles = (GameObject)Instantiate(Resources.Load("Prefabs/FeedbackParticles/" + name));
+        feedbackParticles.GetComponent<Transform>().position = position;
+
+        Destroy(feedbackParticles, liveTime);
+    }
+
+    private void DestroyObject(string name, float time)
+    {
+        GameObject gameObject = GameObject.Find(name);
+
+        if (gameObject)
+        {
+            Destroy(gameObject, time);
+        }
+
+    }
+
+    private void TooglePlayerFilter(string filterName, bool active)
+    {
+
+        GameObject mageFilter = GameObject.Find(filterName);
+
+        if (mageFilter)
+        {
+            PlayerFilter playerFilter = mageFilter.GetComponent<PlayerFilter>();
+
+            if (playerFilter)
+            {
+                playerFilter.SetActive(true);
+            }
+        }
+    }
+
+    private void SetMovingObjectData(GameObject movingObject, Vector2 startPos, Vector2 endPos, float moveSpeed)
+    {
+
+        MovingObject movingController = movingObject.GetComponent<MovingObject>();
+
+        if (movingController)
+        {
+            movingController.SetData(startPos, endPos, moveSpeed);
+        }
+    }
+
+    private GameObject InstatiatePrefab(string name, Vector2 initialPos)
+    {
+        GameObject prefab = (GameObject)Instantiate(Resources.Load("Prefabs/" + name));
+
+        if (prefab)
+        {
+            prefab.GetComponent<Transform>().position = initialPos;
+        }
+
+        return prefab;
+    }
+
+    private GameObject InstatiateSprite(string name, Vector2 initialPos)
+    {
+        GameObject sprite = (GameObject)Instantiate(Resources.Load("Sprites/" + name));
+        sprite.GetComponent<Transform>().position = initialPos;
+
+        return sprite;
+    }
+
+    #endregion
+
+    #region Messaging
+
+    private void SendMessageToServer(string message, bool secure)
+    {
+        if (Client.instance && Client.instance.GetLocalPlayer() && Client.instance.GetLocalPlayer().controlOverEnemies)
+        {
+            Client.instance.SendMessageToServer(message, secure);
+        }
     }
 
     #endregion

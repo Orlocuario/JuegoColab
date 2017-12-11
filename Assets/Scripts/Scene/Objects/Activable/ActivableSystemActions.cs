@@ -1,15 +1,20 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
-
-public class ActivableSystemActions : MonoBehaviour
+public class ActivableSystemActions
 {
-
     #region Common
 
-    public virtual void DoSomething(GameObject activableSystem)
+    public virtual void DoSomething(GameObject activableSystem, bool notifyOthers)
     {
-        throw new NotImplementedException("Every ActivableSystem must have a DoSomething method");  
+        if (activableSystem.GetComponent<GearSystem>())
+        {
+            new GearSystemActions().DoSomething(activableSystem.GetComponent<GearSystem>(), notifyOthers);
+        }
+
+        else if (activableSystem.GetComponentInChildren<RuneSystem>())
+        {
+            new RuneSystemActions().DoSomething(activableSystem.GetComponentInChildren<RuneSystem>(), notifyOthers);
+        }
     }
 
     #endregion
@@ -19,18 +24,19 @@ public class ActivableSystemActions : MonoBehaviour
     protected void StartAnimation(string animationName, ActivableSystem activableSystem)
     {
         SceneAnimator sceneAnimator = GameObject.FindObjectOfType<SceneAnimator>();
-        StartCoroutine(sceneAnimator.StartAnimation(animationName, activableSystem.gameObject));
+        sceneAnimator.StartAnimation(animationName, activableSystem.gameObject);
+    }
+
+    protected void SetAnimatorBool(string parameter, bool value, ActivableSystem activableSystem)
+    {
+        SceneAnimator sceneAnimator = GameObject.FindObjectOfType<SceneAnimator>();
+        sceneAnimator.SetBool(parameter, value, activableSystem.gameObject);
     }
 
     protected void DestroyObject(string name, float time)
     {
-        GameObject gameObject = GameObject.Find(name);
-
-        if (gameObject)
-        {
-            Destroy(gameObject, time);
-        }
-
+        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+        levelManager.DestroyObject(name, time);
     }
 
     #endregion

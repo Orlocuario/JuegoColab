@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using UnityEngine;
 
 public class ActivableSystem : MonoBehaviour
@@ -10,7 +9,7 @@ public class ActivableSystem : MonoBehaviour
     public Sprite activatedSprite;
 
     public float activationDistance = 1f;
-    public int activationTime;
+    public float activationTime = 5f;
     public bool activated;
 
     [System.Serializable]
@@ -31,9 +30,7 @@ public class ActivableSystem : MonoBehaviour
 
             if (pos != -1)
             {
-                Component piece = components[pos];
-
-                piece.placed = true;
+                PlaceComponent(pos);
 
                 if (AllComponentsPlaced())
                 {
@@ -47,6 +44,22 @@ public class ActivableSystem : MonoBehaviour
         }
 
         return false;
+    }
+
+    protected void PlaceComponent(int pos)
+    {
+        components[pos].placed = true;
+
+        SpriteRenderer[] componentSlots = GetComponentsInChildren<SpriteRenderer>();
+
+        for (int i = 0; i < componentSlots.Length; i++)
+        {
+            if(componentSlots[i].sprite == null)
+            {
+                componentSlots[i].sprite = components[pos].sprite;
+            }
+        }
+
     }
 
     #endregion
@@ -88,7 +101,7 @@ public class ActivableSystem : MonoBehaviour
 
     protected virtual IEnumerator Actioned()
     {
-        if (!systemActions)
+        if (systemActions == null)
         {
             Debug.LogError("SystemActions not defined");
         }
@@ -96,7 +109,7 @@ public class ActivableSystem : MonoBehaviour
         else
         {
             yield return new WaitForSeconds(activationTime);
-            systemActions.DoSomething(this.gameObject);
+            systemActions.DoSomething(this.gameObject, true);
         }
     }
 

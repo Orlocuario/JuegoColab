@@ -18,7 +18,7 @@ public class NetworkPlayer
     public int directionY;
     public bool connected;
     public float speedX;
-    public int charId;
+    public int id;
     public bool power;
 
     public bool pressingJump;
@@ -30,12 +30,12 @@ public class NetworkPlayer
 
     #region Constructor
 
-    public NetworkPlayer(int connectionId, int charId, Room room, string address)
+    public NetworkPlayer(int connectionId, int playerId, Room room, string address)
     {
-        this.ipAddress = address;
         this.connectionId = connectionId;
+        this.ipAddress = address;
+        this.id = playerId;
         this.room = room;
-        this.charId = charId;
 
         controlOverEnemies = false;
         isGrounded = false;
@@ -77,7 +77,7 @@ public class NetworkPlayer
     public string GetReconnectData()
     {
         return "PlayerChangePosition/" +
-           charId + "/" +
+           id + "/" +
            positionX + "/" +
            positionY + "/" +
            directionX + "/" +

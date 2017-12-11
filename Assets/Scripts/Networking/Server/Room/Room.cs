@@ -9,11 +9,12 @@ public class Room
     #region Attributes
 
     public List<int> activatedSwitchGroups; //guarda los numeros de los grupos de switchs activados
-    public ServerDoorsManager doorManager;
+    public RoomSystems doorManager;
+    public RoomObstacles obstacleManager;
     public ServerMessageHandler sender;
     public List<NetworkPlayer> players;
     public List<NetworkEnemy> enemies;
-    public List<ServerSwitch> switchs;
+    public List<RoomSwitch> switchs;
     public RoomHpMp hpManaGer;
     public RoomLogger log;
     public Server server;
@@ -44,9 +45,10 @@ public class Room
         id = _id;
 
         activatedSwitchGroups = new List<int>();
-        doorManager = new ServerDoorsManager();
+        doorManager = new RoomSystems();
+        obstacleManager = new RoomObstacles();
         players = new List<NetworkPlayer>();
-        switchs = new List<ServerSwitch>();
+        switchs = new List<RoomSwitch>();
         enemies = new List<NetworkEnemy>();
         log = new RoomLogger(this.id);
         hpManaGer = new RoomHpMp(this);
@@ -67,7 +69,7 @@ public class Room
             return false;
         }
 
-        NetworkPlayer newPlayer = new NetworkPlayer(connectionId, GetCharId(), this, address);
+        NetworkPlayer newPlayer = new NetworkPlayer(connectionId, GetPlayerId(), this, address);
         players.Add(newPlayer);
         SetControlEnemies(newPlayer);
 
@@ -235,45 +237,37 @@ public class Room
 
     #region Switches
 
-    public ServerSwitch AddSwitch(int groupId, int individualId)
+    public RoomSwitch AddSwitch(int groupId, int individualId)
     {
-        foreach (ServerSwitch switchu in switchs)
+        foreach (RoomSwitch switchu in switchs)
         {
             if (switchu.groupId == groupId && switchu.individualId == individualId)
             {
                 return switchu;
             }
         }
-        ServerSwitch switchi = new ServerSwitch(groupId, individualId, this);
+        RoomSwitch switchi = new RoomSwitch(groupId, individualId, this);
         switchs.Add(switchi);
         return switchi;
     }
 
-    public ServerSwitch GetSwitch(int groupId, int individualId)
+    public RoomSwitch GetSwitch(int groupId, int individualId)
     {
-        foreach (ServerSwitch switchi in switchs)
+        foreach (RoomSwitch switchi in switchs)
         {
             if (switchi.groupId == groupId && switchi.individualId == individualId)
             {
                 return switchi;
             }
         }
-        ServerSwitch switchis = AddSwitch(groupId, individualId);
-        return switchis;
-    }
 
-    private bool CheckIfSwitchExist(int groupId, int individualId)
-    {
-        if (GetSwitch(groupId, individualId) == null)
-        {
-            return false;
-        }
-        return true;
+        RoomSwitch switchis = AddSwitch(groupId, individualId);
+        return switchis;
     }
 
     public void SetSwitchOn(bool on, int groupId, int individualId)
     {
-        ServerSwitch switchi = GetSwitch(groupId, individualId);
+        RoomSwitch switchi = GetSwitch(groupId, individualId);
         switchi.on = on;
     }
 
@@ -292,7 +286,7 @@ public class Room
 
     #region Utils
 
-    private int GetCharId()
+    private int GetPlayerId()
     {
         return numPlayers++;
     }

@@ -19,10 +19,11 @@ public class Inventory : MonoBehaviour
         public Item(PickUpItem pickUpItem)
         {
             sprite = pickUpItem.GetComponent<SpriteRenderer>().sprite;
+            name = instance.CleanItemName(pickUpItem.name);
             info = pickUpItem.info;
-            name = pickUpItem.name;
             id = pickUpItem.id;
         }
+
     }
 
     private GameObject selectedItemPanel;
@@ -41,12 +42,14 @@ public class Inventory : MonoBehaviour
 
         selectedItemInfo = GameObject.Find("DisplayItemInfo").GetComponent<Text>(); // TODO: Rename this in editor
         selectedItemPanel = GameObject.Find("DisplayPanel"); // TODO: Rename this in editor
-        selectedItemSlot = GameObject.Find("ActualItem"); // TODO: Rename this in editor
+        selectedItemSlot = GameObject.Find("BackgroundActualItem"); // TODO: Rename this in editor
 
         if (items == null)
         {
             items = new Item?[numSlots];
         }
+
+        ToogleSelectedItemPanel(false);
     }
 
     #endregion
@@ -55,7 +58,6 @@ public class Inventory : MonoBehaviour
 
     public void UseItem(PlayerController player)
     {
-
         if (selectedItem == null)
         {
             return;
@@ -70,14 +72,11 @@ public class Inventory : MonoBehaviour
                 RemoveItem();
             }
         }
-
     }
 
     public void AddItem(PickUpItem item)
     {
-        Debug.Log("Estoy Agregando un Item");
         int freeSlot = GetFreeSlot();
-        Debug.Log("Fui a buscar un slot");
 
         if (freeSlot != -1)
         {
@@ -85,9 +84,9 @@ public class Inventory : MonoBehaviour
 
             Image slotSprite = GameObject.Find("SlotSprite" + freeSlot).GetComponent<Image>();
             slotSprite.sprite = item.GetComponent<SpriteRenderer>().sprite;
+            slotSprite.enabled = true;
 
-            Debug.Log("Tengo UnItem NuevoOOOOO");
-            SendMessageToServer("InventoryUpdate/Add/" + freeSlot + "/" + item.name, true);
+            SendMessageToServer("InventoryUpdate/Add/" + freeSlot + "/" + items[freeSlot].Value.name, true);
         }
 
     }
@@ -112,6 +111,7 @@ public class Inventory : MonoBehaviour
             items[index] = null;
 
             Image slotSprite = GameObject.Find("SlotSprite" + index).GetComponent<Image>();
+            slotSprite.enabled = false;
             slotSprite.sprite = null;
 
             UnselectItem();
@@ -120,8 +120,22 @@ public class Inventory : MonoBehaviour
 
     }
 
-    public void SelectItem(Item item)
+    public void SelectItem(int slot)
     {
+
+        if (slot >= items.Length)
+        {
+            Debug.LogError("Invalid slot number");
+            return;
+        }
+
+        Item? item = items[slot];
+
+        if (item == null)
+        {
+            return;
+        }
+
         selectedItem = item;
 
         selectedItemInfo.text = "";
@@ -130,23 +144,16 @@ public class Inventory : MonoBehaviour
 
         selectedItemSlot.GetComponent<Image>().sprite = selectedItem.Value.sprite;
 
-        ToogleSelectedItem(true);
+        ToogleSelectedItemPanel(true);
     }
 
     public void UnselectItem()
     {
-        if (selectedItem == null)
-        {
-            Debug.LogError("No item to drop");
-            return;
-        }
-
         selectedItem = null;
-
         selectedItemInfo.text = "";
         selectedItemSlot.GetComponent<Image>().sprite = null;
 
-        ToogleSelectedItem(false);
+        ToogleSelectedItemPanel(false);
     }
 
     public void DropItem()
@@ -157,10 +164,9 @@ public class Inventory : MonoBehaviour
             return;
         }
 
-
         SendMessageToServer("CreateGameObject/" + selectedItem.Value.name, true);
         RemoveItem();
-        ToogleSelectedItem(false);
+        ToogleSelectedItemPanel(false);
     }
 
     #endregion
@@ -169,7 +175,7 @@ public class Inventory : MonoBehaviour
 
     protected ActivableSystem GetActivableSystem(PlayerController player)
     {
-        ActivableSystem[] systems = GameObject.FindObjectsOfType<ActivableSystem>();
+        ActivableSystem[] systems = FindObjectsOfType<ActivableSystem>();
 
         for (int i = 0; i < systems.Length; i++)
         {
@@ -198,10 +204,20 @@ public class Inventory : MonoBehaviour
         return -1;
     }
 
-    protected void ToogleSelectedItem(bool active)
+    protected void ToogleSelectedItemPanel(bool active)
     {
         selectedItemSlot.SetActive(active);
         selectedItemPanel.SetActive(active);
+    }
+
+    public string CleanItemName(string name)
+    {
+        if (name.Contains("(Clone)"))
+        {
+            name = name.Replace("(Clone)", "");
+        }
+
+        return name;
     }
 
     #endregion

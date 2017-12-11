@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 public class GearSystemActions : ActivableSystemActions
@@ -7,28 +6,13 @@ public class GearSystemActions : ActivableSystemActions
 
     #region Common
 
-    public override void DoSomething(GameObject gearSystemGO)
-    {
-        GearSystem gearSystem = gearSystemGO.GetComponent<GearSystem>();
-
-        if (gearSystem)
-        {
-            DoSomething(gearSystem);
-        }
-        else
-        {
-            Debug.LogError(gearSystemGO + " does not have a GearSystem");
-
-        }
-    }
-
-    protected  void DoSomething(GearSystem gearSystem)
+    public void DoSomething(GearSystem gearSystem, bool notifyOthers)
     {
 
         switch (gearSystem.name)
         {
             case "MaquinaEngranajeA":
-                HandleGearSystemA(gearSystem);
+                HandleGearSystemA(gearSystem, notifyOthers);
                 break;
         }
 
@@ -38,13 +22,34 @@ public class GearSystemActions : ActivableSystemActions
 
     #region Handlers
 
-    private void HandleGearSystemA(GearSystem gearSystem)
+    private void HandleGearSystemA(GearSystem gearSystem, bool notifyOthers)
     {
 
+        // Dispose every used gear in case of reconnection
+        for (int i = 0; i < gearSystem.components.Length; i++)
+        {
+            string usedGearName = gearSystem.components[i].sprite.name;
+            GameObject usedGear = GameObject.Find(usedGearName);
+
+            if (usedGear)
+            {
+                DestroyObject(usedGearName, .1f);
+            }
+
+        }
+
+        // Hide every placed gear
+        SpriteRenderer[] componentSlots = gearSystem.GetComponentsInChildren<SpriteRenderer>();
+        for (int i = 0; i < componentSlots.Length; i++)
+        {
+            componentSlots[i].sprite = null;
+        }
+
+        // Change the gearsystem sprite
         SpriteRenderer systemSpriteRenderer = gearSystem.GetComponent<SpriteRenderer>();
         systemSpriteRenderer.sprite = gearSystem.activatedSprite;
 
-        StartAnimation("startMovingMAchine", gearSystem);
+        SetAnimatorBool("startMovingMachine", true, gearSystem);
 
         DestroyObject("GiantBlocker", .1f);
         DestroyObject("GiantBlocker (1)", .1f);
@@ -52,12 +57,17 @@ public class GearSystemActions : ActivableSystemActions
         if (gearSystem.switchObj)
         {
             gearSystem.switchObj.ActivateSwitch();
-            Planner planner = FindObjectOfType<Planner>();
+
+            Planner planner = GameObject.FindObjectOfType<Planner>();
             planner.Monitor();
         }
 
-        SendMessageToServer("ActivateGearSystem/" + this.gameObject.name, true);
-
+        if (notifyOthers)
+        {
+            SendMessageToServer("ObstacleDestroyed/GiantBlocker", true);
+            SendMessageToServer("ObstacleDestroyed/GiantBlocker (1)", true);
+            SendMessageToServer("ActivateSystem/" + gearSystem.name, true);
+        }
     }
 
     #endregion

@@ -28,7 +28,7 @@ public class PickUpItem : MonoBehaviour
         }
 
         SendMessageToServer("OthersDestroyObject/" + name, true);
-        Destroy(this);
+        Destroy(this.gameObject);
     }
 
     #endregion
@@ -39,8 +39,6 @@ public class PickUpItem : MonoBehaviour
     {
         if (GameObjectIsPlayer(other.gameObject))
         {
-            Debug.Log("Es un Player Así que Recogeré");
-
             PickUp();
         }
     }

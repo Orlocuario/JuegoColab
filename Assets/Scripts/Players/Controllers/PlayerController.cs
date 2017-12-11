@@ -39,7 +39,7 @@ public class PlayerController : MonoBehaviour
     public float actualSpeed;
     public int mpUpdateFrame;
     public int sortingOrder;
-    public int characterId;
+    public int playerId;
     public bool mpDepleted;
     public bool isPowerOn;
     public int directionY; // 1 = de pie, -1 = de cabeza
@@ -153,15 +153,22 @@ public class PlayerController : MonoBehaviour
 
     #region Connection
 
-    public void Connect(bool value)
+    public void Connect(bool _connected)
     {
-        connected = value;
+
+        connected = _connected;
+
+        remoteJumping = false;
+        remoteRight = false;
+        remoteLeft = false;
+
+        SendPlayerDataToServer();
     }
 
-    public void Activate(int charId)
+    public void Activate(int _playerId)
     {
         localPlayer = true;
-        this.characterId = charId;
+        playerId = _playerId;
         sprite = GetComponent<SpriteRenderer>();
 
         if (sprite)
@@ -404,7 +411,7 @@ public class PlayerController : MonoBehaviour
         if (force.x != 0 || force.y != 0)
         {
             rb2d.AddForce(force); // Take force local
-            SendMessageToServer("PlayerTookDamage/" + characterId + "/" + force.x + "/" + force.y); // Take force remote
+            SendMessageToServer("PlayerTookDamage/" + playerId + "/" + force.x + "/" + force.y); // Take force remote
         }
 
         if (damage != 0)
@@ -617,7 +624,7 @@ public class PlayerController : MonoBehaviour
     {
         if (sceneAnimator && attackAnimName != null)
         {
-            StartCoroutine(sceneAnimator.StartAnimation(attackAnimName, this.gameObject));
+            sceneAnimator.StartAnimation(attackAnimName, this.gameObject);
         }
     }
 
@@ -625,7 +632,7 @@ public class PlayerController : MonoBehaviour
     {
         if (sceneAnimator)
         {
-            StartCoroutine(sceneAnimator.StartAnimation("TakingDamage", this.gameObject));
+            sceneAnimator.StartAnimation("TakingDamage", this.gameObject);
         }
     }
 
@@ -772,7 +779,7 @@ public class PlayerController : MonoBehaviour
                 Debug.Log("Change OK: " + newPoi.name);
                 playerObj.playerAt = newPoi;
                 playerObj.luring = false;
-                if (newPoi.araña != null && this.characterId == 0)
+                if (newPoi.araña != null && this.playerId == 0)
                 {
                     playerObj.luring = true;
                     newPoi.araña.blocked = false;
@@ -796,7 +803,7 @@ public class PlayerController : MonoBehaviour
         }
 
         string message = "PlayerChangePosition/" +
-            characterId + "/" +
+            playerId + "/" +
             transform.position.x + "/" +
             transform.position.y + "/" +
             directionX + "/" +
@@ -812,13 +819,13 @@ public class PlayerController : MonoBehaviour
 
     protected virtual void SendAttackDataToServer()
     {
-        string message = "PlayerAttack/" + characterId;
+        string message = "PlayerAttack/" + playerId;
         SendMessageToServer(message);
     }
 
     protected void SendPowerDataToServer()
     {
-        string message = "PlayerPower/" + characterId + "/" + isPowerOn;
+        string message = "PlayerPower/" + playerId + "/" + isPowerOn;
         SendMessageToServer(message);
     }
 

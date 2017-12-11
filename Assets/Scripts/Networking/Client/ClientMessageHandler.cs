@@ -79,8 +79,11 @@ public class ClientMessageHandler
             case "SetControlOverEnemies":
                 SetControlOverEnemies();
                 break;
-            case "PlayerSetCharId":
-                HandlePlayerSetCharId(msg);
+            case "PlayerSetId":
+                HandlePlayerSetId(msg);
+                break;
+            case "PlayerDisconnected":
+                HandlePlayerDisconnected(msg);
                 break;
             case "PlayersAreDead":
                 HandlePlayersAreDead(msg);
@@ -112,11 +115,8 @@ public class ClientMessageHandler
             case "SwitchGroupReady":
                 HandleSwitchGroupReady(msg);
                 break;
-            case "ActivateRuneSystem":
-                HandleActivateRuneSystem(msg);
-                break;
-            case "ActivateGearSystem":
-                HandleActivateGearSystem(msg);
+            case "ActivateSystem":
+                HandleActivateSystem(msg);
                 break;
             case "ActivateNPCLog":
                 HandleActivationNpcLog(msg);
@@ -133,16 +133,18 @@ public class ClientMessageHandler
 
     #region Handlers
 
+    #region NPC
+
     private void HandleActivationNpcLog(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
+            LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+            levelManager.ActivateNPCFeedback(msg[1]);
         }
-        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
-        levelManager.ActivateNPCFeedback(msg[1]);
     }
+
+    #endregion
 
     #region Enemies
 
@@ -221,23 +223,20 @@ public class ClientMessageHandler
 
     private void SetControlOverEnemies()
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
+            PlayerController localPlayer = client.GetLocalPlayer();
+
+            if (!localPlayer)
+            {
+                Debug.Log("No local player at this point");
+                return;
+            }
+
+            localPlayer.controlOverEnemies = true;
+            client.StartFirstPlan();
+
         }
-
-        PlayerController localPlayer = client.GetLocalPlayer();
-
-        if (!localPlayer)
-        {
-            Debug.Log("No local player at this point");
-            return;
-        }
-
-        localPlayer.controlOverEnemies = true;
-        client.StartFirstPlan();
-
     }
 
     private void EnemyStartPatrolling(string[] msg)
@@ -260,62 +259,54 @@ public class ClientMessageHandler
 
     private void ChangeEnemyPosition(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
-        }
+            int enemyId = Int32.Parse(msg[1]);
+            int directionX = Int32.Parse(msg[2]);
+            float posX = float.Parse(msg[3]);
+            float posY = float.Parse(msg[4]);
 
-        int enemyId = Int32.Parse(msg[1]);
-        int directionX = Int32.Parse(msg[2]);
-        float posX = float.Parse(msg[3]);
-        float posY = float.Parse(msg[4]);
+            EnemyController enemy = client.GetEnemy(enemyId);
 
-        EnemyController enemy = client.GetEnemy(enemyId);
-
-        if (enemy)
-        {
-            enemy.SetPosition(directionX, posX, posY);
+            if (enemy)
+            {
+                enemy.SetPosition(directionX, posX, posY);
+            }
         }
     }
 
     private void ChangeEnemyPatrollingPoint(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
-        }
+            int enemyId = Int32.Parse(msg[1]);
+            int directionX = Int32.Parse(msg[2]);
+            float posX = float.Parse(msg[3]);
+            float posY = float.Parse(msg[4]);
+            float patrolX = float.Parse(msg[5]);
+            float patrolY = float.Parse(msg[6]);
 
-        int enemyId = Int32.Parse(msg[1]);
-        int directionX = Int32.Parse(msg[2]);
-        float posX = float.Parse(msg[3]);
-        float posY = float.Parse(msg[4]);
-        float patrolX = float.Parse(msg[5]);
-        float patrolY = float.Parse(msg[6]);
+            EnemyController enemy = client.GetEnemy(enemyId);
 
-        EnemyController enemy = client.GetEnemy(enemyId);
-
-        if (enemy)
-        {
-            enemy.SetPatrollingPoint(directionX, posX, posY, patrolX, patrolY);
+            if (enemy)
+            {
+                enemy.SetPatrollingPoint(directionX, posX, posY, patrolX, patrolY);
+            }
         }
     }
 
     private void EnemyDie(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
-        }
-        int enemyId = Int32.Parse(msg[1]);
+            int enemyId = Int32.Parse(msg[1]);
 
-        EnemyController enemy = client.GetEnemy(enemyId);
+            EnemyController enemy = client.GetEnemy(enemyId);
 
-        if (enemy)
-        {
-            enemy.Die();
+            if (enemy)
+            {
+                enemy.Die();
+            }
         }
     }
 
@@ -325,46 +316,38 @@ public class ClientMessageHandler
 
     private void HandleChangeHpHUDToClient(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
+            HUDDisplay hpAndMp = GameObject.FindObjectOfType<LevelManager>().hpAndMp;
+            hpAndMp.CurrentHPPercentage(float.Parse(msg[1]));
         }
-        HUDDisplay hpAndMp = GameObject.FindObjectOfType<LevelManager>().hpAndMp;
-        hpAndMp.CurrentHPPercentage(float.Parse(msg[1]));
     }
 
     private void HandleChangeMpHUDToClient(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
+            HUDDisplay hpAndMp = GameObject.FindObjectOfType<LevelManager>().hpAndMp;
+            hpAndMp.CurrentMPPercentage(float.Parse(msg[1]));
         }
-        HUDDisplay hpAndMp = GameObject.FindObjectOfType<LevelManager>().hpAndMp;
-        hpAndMp.CurrentMPPercentage(float.Parse(msg[1]));
     }
 
     private void StopChangeHPMPToClient(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
+            HUDDisplay hpAndMp = GameObject.FindObjectOfType<LevelManager>().hpAndMp;
+            hpAndMp.StopLocalParticles(); // Only stop local particles
         }
-        HUDDisplay hpAndMp = GameObject.FindObjectOfType<LevelManager>().hpAndMp;
-        hpAndMp.StopLocalParticles(); // Only stop local particles
     }
 
     private void HandleChangeExpHUDToClient(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
+            HUDDisplay hpAndMp = GameObject.FindObjectOfType<LevelManager>().hpAndMp;
+            hpAndMp.CurrentExpPercentage(msg[1]);
         }
-        HUDDisplay hpAndMp = GameObject.FindObjectOfType<LevelManager>().hpAndMp;
-        hpAndMp.CurrentExpPercentage(msg[1]);
     }
 
     #endregion
@@ -373,26 +356,13 @@ public class ClientMessageHandler
 
     #region Activables
 
-    private void HandleActivateGearSystem(string[] msg)
+    private void HandleActivateSystem(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
+            LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+            levelManager.ActivateSystem(msg[1]);
         }
-        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
-        levelManager.ActivateGearSystem(msg[1]);
-    }
-
-    private void HandleActivateRuneSystem(string[] msg)
-    {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
-        {
-            return;
-        }
-        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
-        levelManager.ActivateRuneSystem(msg[1]);
     }
 
     #endregion
@@ -401,33 +371,27 @@ public class ClientMessageHandler
 
     private void HandleSwitchGroupReady(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
+            int groupId = Int32.Parse(msg[1]);
+
+            SwitchManager manager = GameObject.FindObjectOfType<SwitchManager>();
+            manager.CallAction(groupId);
         }
-
-        int groupId = Int32.Parse(msg[1]);
-
-        SwitchManager manager = GameObject.FindObjectOfType<SwitchManager>();
-        manager.CallAction(groupId);
     }
 
     private void HandleChangeSwitchStatus(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
+            int groupId = Int32.Parse(msg[1]);
+            int individualId = Int32.Parse(msg[2]);
+            bool on = bool.Parse(msg[3]);
+
+            SwitchManager manager = GameObject.FindObjectOfType<SwitchManager>();
+            Switch switchi = manager.GetSwitch(groupId, individualId);
+            switchi.ReceiveDataFromServer(on);
         }
-
-        int groupId = Int32.Parse(msg[1]);
-        int individualId = Int32.Parse(msg[2]);
-        bool on = bool.Parse(msg[3]);
-
-        SwitchManager manager = GameObject.FindObjectOfType<SwitchManager>();
-        Switch switchi = manager.GetSwitch(groupId, individualId);
-        switchi.ReceiveDataFromServer(on);
     }
 
     #endregion
@@ -436,55 +400,45 @@ public class ClientMessageHandler
 
     private void HandleChangeObjectPosition(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
+            LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+            levelManager.MoveItemInGame(msg[1], msg[2], msg[3], msg[4]);
         }
-        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
-        levelManager.MoveItemInGame(msg[1], msg[2], msg[3], msg[4]);
     }
 
     private void HandleInstantiateObject(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
+            LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+            levelManager.InsantiateGameObject(msg);
         }
-        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
-        levelManager.InsantiateGameObject(msg);
     }
 
     private void HandleCreateGameObject(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
+            string spriteName = msg[1];
+            int playerId = Int32.Parse(msg[2]);
+
+            LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+            levelManager.CreateGameObject(spriteName, playerId);
         }
-
-        string spriteName = msg[1];
-        int charId = Int32.Parse(msg[2]);
-
-        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
-        levelManager.CreateGameObject(spriteName, charId);
     }
 
     private void HandleDestroyObject(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
-        }
+            LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+            GameObject objectToDestroy = GameObject.Find(msg[1]);
 
-        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
-        GameObject objectToDestroy = GameObject.Find(msg[1]);
-
-        if (objectToDestroy)
-        {
-            levelManager.DestroyObjectInGame(objectToDestroy);
+            if (objectToDestroy)
+            {
+                levelManager.DestroyObjectInGame(objectToDestroy);
+            }
         }
     }
 
@@ -500,36 +454,32 @@ public class ClientMessageHandler
 
     private void HandleObjectMoved(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
+            string name = msg[1];
+            float forceX = float.Parse(msg[2]);
+            float forceY = float.Parse(msg[3]);
+
+            Vector2 force = new Vector2(forceX, forceY);
+
+            GameObject movableObject = GameObject.Find(name);
+
+            if (!movableObject)
+            {
+                Debug.Log("Movable " + name + " does not exists");
+                return;
+            }
+
+            MovableObject movableController = movableObject.GetComponent<MovableObject>();
+
+            if (!movableController)
+            {
+                Debug.Log(name + " is not movable");
+                return;
+            }
+
+            movableController.MoveMe(force, false);
         }
-
-        string name = msg[1];
-        float forceX = float.Parse(msg[2]);
-        float forceY = float.Parse(msg[3]);
-
-        Vector2 force = new Vector2(forceX, forceY);
-
-        GameObject movableObject = GameObject.Find(name);
-
-        if (!movableObject)
-        {
-            Debug.Log("Movable " + name + " does not exists");
-            return;
-        }
-
-        MovableObject movableController = movableObject.GetComponent<MovableObject>();
-
-        if (!movableController)
-        {
-            Debug.Log(name + " is not movable");
-            return;
-        }
-
-        movableController.MoveMe(force, false);
-
     }
 
     #endregion
@@ -538,31 +488,28 @@ public class ClientMessageHandler
 
     private void HandleObjectDestroyed(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
+            string name = msg[1];
+
+            GameObject destroyableObject = GameObject.Find(name);
+
+            if (!destroyableObject)
+            {
+                Debug.Log("Destroyable " + name + " does not exists");
+                return;
+            }
+
+            DestroyableObject destroyableController = destroyableObject.GetComponent<DestroyableObject>();
+
+            if (!destroyableController)
+            {
+                Debug.Log(name + " is not destroyable");
+                return;
+            }
+
+            destroyableController.DestroyMe(false);
         }
-
-        string name = msg[1];
-
-        GameObject destroyableObject = GameObject.Find(name);
-
-        if (!destroyableObject)
-        {
-            Debug.Log("Destroyable " + name + " does not exists");
-            return;
-        }
-
-        DestroyableObject destroyableController = destroyableObject.GetComponent<DestroyableObject>();
-
-        if (!destroyableController)
-        {
-            Debug.Log(name + " is not destroyable");
-            return;
-        }
-
-        destroyableController.DestroyMe(false);
     }
 
     #endregion
@@ -587,125 +534,125 @@ public class ClientMessageHandler
 
     #region Players
 
-    private void HandlePlayerSetCharId(string[] msg)
+    private void HandlePlayerSetId(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene") // ??
+        if (NotInClientScene())
         {
-            return;
+            int playerId = Int32.Parse(msg[1]);
+            bool controlOverEnemies = bool.Parse(msg[2]);
+
+            LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+            levelManager.SetLocalPlayer(playerId);
+
+            PlayerController playerController = client.GetLocalPlayer();
+            playerController.controlOverEnemies = controlOverEnemies;
+
+            if (controlOverEnemies)
+            {
+                client.StartFirstPlan();
+                EnemiesRegisterOnRoom();
+            }
         }
+    }
 
-        int charId = Int32.Parse(msg[1]);
-        bool controlOverEnemies = bool.Parse(msg[2]);
-
-        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
-        levelManager.SetLocalPlayer(charId);
-
-        PlayerController playerController = client.GetLocalPlayer();
-        playerController.controlOverEnemies = controlOverEnemies;
-
-        if (controlOverEnemies)
+    // Stop the remote player
+    private void HandlePlayerDisconnected(string[] msg)
+    {
+        if (NotInClientScene())
         {
-            client.StartFirstPlan();
-            EnemiesRegisterOnRoom();
+            int playerId = Int32.Parse(msg[1]);
+            PlayerController player = client.GetPlayerController(playerId);
+
+            if (player)
+            {
+                if (!player.localPlayer)
+                {
+                    player.remoteRight = false;
+                    player.remoteLeft = false;
+                }
+            }
+
         }
     }
 
     private void HandleChangePlayerPosition(string[] data)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
-        }
+            int playerId = Int32.Parse(data[1]);
+            float positionX = float.Parse(data[2]);
+            float positionY = float.Parse(data[3]);
+            int directionX = Int32.Parse(data[4]);
+            int directionY = Int32.Parse(data[5]);
+            float speedX = float.Parse(data[6]);
+            bool isGrounded = bool.Parse(data[7]);
+            bool pressingJump = bool.Parse(data[8]);
+            bool pressingLeft = bool.Parse(data[9]);
+            bool pressingRight = bool.Parse(data[10]);
 
-        int charId = Int32.Parse(data[1]);
-        float positionX = float.Parse(data[2]);
-        float positionY = float.Parse(data[3]);
-        int directionX = Int32.Parse(data[4]);
-        int directionY = Int32.Parse(data[5]);
-        float speedX = float.Parse(data[6]);
-        bool isGrounded = bool.Parse(data[7]);
-        bool pressingJump = bool.Parse(data[8]);
-        bool pressingLeft = bool.Parse(data[9]);
-        bool pressingRight = bool.Parse(data[10]);
+            PlayerController playerController = client.GetPlayerController(playerId);
 
-        PlayerController playerController = client.GetPlayerController(charId);
-
-        if (playerController)
-        {
-            playerController.SetPlayerDataFromServer(positionX, positionY, directionX, directionY, speedX, isGrounded, pressingJump, pressingLeft, pressingRight);
+            if (playerController)
+            {
+                playerController.SetPlayerDataFromServer(positionX, positionY, directionX, directionY, speedX, isGrounded, pressingJump, pressingLeft, pressingRight);
+            }
         }
     }
 
     private void HandleNewChatMessage(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
+            string chatMessage = msg[1];
+            Chat.instance.UpdateChat(chatMessage);
         }
-        string chatMessage = msg[1];
-        Chat.instance.UpdateChat(chatMessage);
     }
 
     private void HandleUpdatedPowerState(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
+            int playerId = Int32.Parse(msg[1]);
+            bool powerState = bool.Parse(msg[2]);
+
+            PlayerController playerController = client.GetById(playerId);
+            playerController.SetPowerState(powerState);
         }
-
-        int playerId = Int32.Parse(msg[1]);
-        bool powerState = bool.Parse(msg[2]);
-
-        PlayerController playerController = client.GetById(playerId);
-        playerController.SetPowerState(powerState);
     }
 
     private void HandleUpdatedAttackState(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
+            int playerId = Int32.Parse(msg[1]);
+
+            PlayerController playerController = client.GetPlayerController(playerId);
+            playerController.SetAttack();
         }
-
-        int charId = Int32.Parse(msg[1]);
-
-        PlayerController playerController = client.GetPlayerController(charId);
-        playerController.SetAttack();
     }
 
     private void HandlePlayerTookDamage(string[] msg)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
+            int playerId = Int32.Parse(msg[1]);
+            float forceX = float.Parse(msg[2]);
+            float forceY = float.Parse(msg[3]);
+
+            Vector2 force = new Vector2(forceX, forceY);
+
+            PlayerController playerController = client.GetPlayerController(playerId);
+            playerController.SetDamageFromServer(force);
         }
-
-        int charId = Int32.Parse(msg[1]);
-        float forceX = float.Parse(msg[2]);
-        float forceY = float.Parse(msg[3]);
-
-        Vector2 force = new Vector2(forceX, forceY);
-
-        PlayerController playerController = client.GetPlayerController(charId);
-        playerController.SetDamageFromServer(force);
     }
 
     private void HandlePlayersAreDead(string[] array)
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name == "ClientScene")
+        if (NotInClientScene())
         {
-            return;
+            LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+            levelManager.ReloadLevel(array[1]);
         }
-        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
-        levelManager.ReloadLevel(array[1]);
     }
 
     #endregion
@@ -713,6 +660,12 @@ public class ClientMessageHandler
     #endregion
 
     #region Utils
+
+    public bool NotInClientScene()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        return currentScene.name != "ClientScene";
+    }
 
     private bool LocalPlayerHasControlOverEnemies()
     {

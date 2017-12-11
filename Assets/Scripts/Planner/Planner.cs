@@ -1405,6 +1405,7 @@ public class Planner : MonoBehaviour {
 				case 1:
 					feedback = "Esperaba ver a" + feedbackNames [parametros [0]] + " por aquí, ¿pasa algo?";
 					break;
+                case 2:
 					feedback = "No olviden sus habilidades...";
 					break;
 				case 3:

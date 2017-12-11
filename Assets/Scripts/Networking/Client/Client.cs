@@ -25,7 +25,7 @@ public class Client : MonoBehaviour
 
     private int unreliableChannelId;
     private int reliableBigChannelId;
-	private int reliableLittleChannelId;
+    private int reliableLittleChannelId;
     private int connectionId;
     private string serverIp;
     private int socketId; // Host ID
@@ -49,7 +49,7 @@ public class Client : MonoBehaviour
 
         unreliableChannelId = config.AddChannel(QosType.Unreliable);
         reliableBigChannelId = config.AddChannel(QosType.ReliableFragmented);
-		reliableLittleChannelId = config.AddChannel (QosType.Reliable);
+        reliableLittleChannelId = config.AddChannel(QosType.Reliable);
 
         topology = new HostTopology(config, maxConnections);
 
@@ -78,14 +78,13 @@ public class Client : MonoBehaviour
                 break;
 
             case NetworkEventType.ConnectEvent:
-                Scene currentScene = SceneManager.GetActiveScene();
-                if (!(currentScene.name == "ClientScene"))
+                if (NotInClientScene())
                 {
                     if (GetLocalPlayer())
                     {
-                        GetLocalPlayer().Connect(true);
                         LevelManager lm = GameObject.FindObjectOfType<LevelManager>();
                         lm.ShowReconnectingMessage(false);
+                        GetLocalPlayer().Connect(true);
                     }
                 }
                 Debug.Log("Connection succesfull");
@@ -96,7 +95,7 @@ public class Client : MonoBehaviour
                 BinaryFormatter formatter = new BinaryFormatter();
                 string message = formatter.Deserialize(stream) as string;
 
-			if (recChannelId == unreliableChannelId || recChannelId==reliableLittleChannelId)
+                if (recChannelId == unreliableChannelId || recChannelId == reliableLittleChannelId)
                 {
                     handler.HandleMessage(message);
                 }
@@ -114,15 +113,11 @@ public class Client : MonoBehaviour
                 break;
 
             case NetworkEventType.DisconnectEvent:
-                if (connectionId == recConnectionId) //Detectamos que fuimos nosotros los que nos desconectamos
+                if (connectionId == recConnectionId) // Detectamos que fuimos nosotros los que nos desconectamos
                 {
-                    currentScene = SceneManager.GetActiveScene();
-                    if (!(currentScene.name == "ClientScene"))
-                    {
-                        GetLocalPlayer().Connect(false);
-                    }
                     Reconnect();
                 }
+
                 Debug.Log("Disconnected from server");
                 break;
         }
@@ -149,7 +144,6 @@ public class Client : MonoBehaviour
     {
         try
         {
-
             this.port = port;
             socketId = NetworkTransport.AddHost(topology, port);
 
@@ -168,42 +162,44 @@ public class Client : MonoBehaviour
 
     private void Reconnect()
     {
-        Scene currentScene = SceneManager.GetActiveScene();
-        if (currentScene.name != "ClientScene")
+        if (NotInClientScene())
         {
             LevelManager lm = GameObject.FindObjectOfType<LevelManager>();
             lm.ShowReconnectingMessage(true);
+            GetLocalPlayer().Connect(false);
         }
-        Connect();
 
+        Connect();
     }
 
     public void StartFirstPlan()
     {
         Planner planner = FindObjectOfType<Planner>();
-		if (planner) {
-			planner.FirstPlan ();
-		}
-	}
+        if (planner)
+        {
+            planner.FirstPlan();
+        }
+    }
 
     #endregion
 
     #region Messaging
 
-	public void SendMessageToServer(string message, bool secure)
+    public void SendMessageToServer(string message, bool secure)
     {
         byte error;
         byte[] buffer = new byte[NetworkConsts.bufferSize];
         Stream stream = new MemoryStream(buffer);
         BinaryFormatter formatter = new BinaryFormatter();
         formatter.Serialize(stream, message);
-		int channel = unreliableChannelId;
-		if (secure) {
-			channel = reliableLittleChannelId;
-		}
+        int channel = unreliableChannelId;
+        if (secure)
+        {
+            channel = reliableLittleChannelId;
+        }
         NetworkTransport.Send(socketId, connectionId, channel, buffer, NetworkConsts.bufferSize, out error);
     }
-		
+
     public void SendMessageToPlanner(string message)
     {
         byte error;
@@ -222,12 +218,12 @@ public class Client : MonoBehaviour
 
     public void SendNewChatMessageToServer(string newChatMessage)
     {
-        SendMessageToServer("NewChatMessage/" + newChatMessage,false);
+        SendMessageToServer("NewChatMessage/" + newChatMessage, false);
     }
 
-    public void RequestCharIdToServer()
+    public void RequestPlayerIdToServer()
     {
-        SendMessageToServer("RequestCharId",true);
+        SendMessageToServer("PlayerRequestId", true);
     }
 
 
@@ -235,13 +231,19 @@ public class Client : MonoBehaviour
 
     #region Utils
 
-    public PlayerController GetPlayerController(int charId)
+    public bool NotInClientScene()
+    {
+        Scene currentScene = SceneManager.GetActiveScene();
+        return currentScene.name != "ClientScene";
+    }
+
+    public PlayerController GetPlayerController(int playerId)
     {
 
         PlayerController script;
         GameObject player;
 
-        switch (charId)
+        switch (playerId)
         {
             case 0:
                 player = GameObject.Find("Mage");
