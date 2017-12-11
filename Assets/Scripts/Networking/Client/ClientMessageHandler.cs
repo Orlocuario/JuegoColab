@@ -115,11 +115,8 @@ public class ClientMessageHandler
             case "SwitchGroupReady":
                 HandleSwitchGroupReady(msg);
                 break;
-            case "ActivateRuneSystem":
-                HandleActivateRuneSystem(msg);
-                break;
-            case "ActivateGearSystem":
-                HandleActivateGearSystem(msg);
+            case "ActivateSystem":
+                HandleActivateSystem(msg);
                 break;
             case "ActivateNPCLog":
                 HandleActivationNpcLog(msg);
@@ -359,21 +356,12 @@ public class ClientMessageHandler
 
     #region Activables
 
-    private void HandleActivateGearSystem(string[] msg)
+    private void HandleActivateSystem(string[] msg)
     {
         if (NotInClientScene())
         {
             LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
-            levelManager.ActivateGearSystem(msg[1]);
-        }
-    }
-
-    private void HandleActivateRuneSystem(string[] msg)
-    {
-        if (NotInClientScene())
-        {
-            LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
-            levelManager.ActivateRuneSystem(msg[1]);
+            levelManager.ActivateSystem(msg[1]);
         }
     }
 

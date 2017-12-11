@@ -9,7 +9,7 @@ public class Room
     #region Attributes
 
     public List<int> activatedSwitchGroups; //guarda los numeros de los grupos de switchs activados
-    public RoomDoors doorManager;
+    public RoomSystems doorManager;
     public RoomObstacles obstacleManager;
     public ServerMessageHandler sender;
     public List<NetworkPlayer> players;
@@ -45,7 +45,7 @@ public class Room
         id = _id;
 
         activatedSwitchGroups = new List<int>();
-        doorManager = new RoomDoors();
+        doorManager = new RoomSystems();
         obstacleManager = new RoomObstacles();
         players = new List<NetworkPlayer>();
         switchs = new List<RoomSwitch>();

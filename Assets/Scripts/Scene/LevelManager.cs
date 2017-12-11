@@ -91,18 +91,18 @@ public class LevelManager : MonoBehaviour
         return;
     }
 
-    public void ActivateRuneSystem(string runeSystemName)
+    public void ActivateSystem(string systemName)
     {
 
-        GameObject runeSystem = GameObject.Find(runeSystemName);
+        GameObject activableSystem = GameObject.Find(systemName);
 
-        if (runeSystem)
+        if (activableSystem)
         {
-            new RuneSystemActions().DoSomething(runeSystem);
+            new ActivableSystemActions().DoSomething(activableSystem);
         }
         else
         {
-            Debug.LogError("RuneSystem " + runeSystemName + " does not exists");
+            Debug.LogError("ActivableSystem " + systemName + " does not exists");
         }
 
     }
@@ -194,19 +194,6 @@ public class LevelManager : MonoBehaviour
     public void ShowReconnectingMessage(bool valor)
     {
         reconnectText.SetActive(valor);
-    }
-    public void ActivateGearSystem(string gearSystemName)
-    {
-        GameObject gearSystem = GameObject.Find(gearSystemName);
-
-        if (gearSystem)
-        {
-            new GearSystemActions().DoSomething(gearSystem);
-        }
-        else
-        {
-            Debug.LogError("GearSystem " + gearSystemName + " does not exists");
-        }
     }
 
     public void CreateGameObject(string spriteName, int playerId)

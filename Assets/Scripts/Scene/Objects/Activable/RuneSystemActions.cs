@@ -62,7 +62,7 @@ public class RuneSystemActions : ActivableSystemActions
 
         }
 
-        SendMessageToServer("ActivateRuneSystem/" + runeSystem.name, true);
+        SendMessageToServer("ActivateSystem/" + runeSystem.name, true);
 
     }
 

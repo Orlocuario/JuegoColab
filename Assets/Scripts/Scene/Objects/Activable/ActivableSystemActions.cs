@@ -1,13 +1,20 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class ActivableSystemActions
-{ 
+{
     #region Common
 
     public virtual void DoSomething(GameObject activableSystem)
     {
-        throw new NotImplementedException("Every ActivableSystem must have a DoSomething method");  
+        if (activableSystem.GetComponent<GearSystem>())
+        {
+            new GearSystemActions().DoSomething(activableSystem);
+        }
+
+        else if (activableSystem.GetComponentInChildren<RuneSystem>())
+        {
+            new RuneSystemActions().DoSomething(activableSystem);
+        }
     }
 
     #endregion

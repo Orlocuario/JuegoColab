@@ -79,7 +79,7 @@ public class GearSystemActions : ActivableSystemActions
 
         SendMessageToServer("ObstacleDestroyed/GiantBlocker", true);
         SendMessageToServer("ObstacleDestroyed/GiantBlocker (1)", true);
-        SendMessageToServer("ActivateGearSystem/" + gearSystem.name, true);
+        SendMessageToServer("ActivateSystem/" + gearSystem.name, true);
     }
 
     #endregion

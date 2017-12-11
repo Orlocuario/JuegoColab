@@ -103,11 +103,8 @@ public class ServerMessageHandler
             case "SwitchGroupReady":
                 SendSwitchGroupAction(message, msg, connectionId);
                 break;
-            case "ActivateRuneSystem":
-                SendActivationRuneSystem(message, connectionId, msg);
-                break;
-            case "ActivateGearSystem":
-                SendActivationGearSystem(message, connectionId);
+            case "ActivateSystem":
+                SendActivateSystem(message, connectionId, msg);
                 break;
             case "ActivateNPCLog": // No se si es necesario o no, ya que puedes llamar el metodo desde afuera (start o script)
                 SendActivationNPC(msg, connectionId);
@@ -155,7 +152,7 @@ public class ServerMessageHandler
             room.SendMessageToPlayer(switchi.GetReconnectData(), connectionId, true);
         }
 
-        foreach (string doorMessage in room.doorManager.GetDoorMessages())
+        foreach (string doorMessage in room.doorManager.GetSystemsMessages())
         {
             room.SendMessageToPlayer(doorMessage, connectionId, true);
         }
@@ -201,22 +198,15 @@ public class ServerMessageHandler
         room.WriteFeedbackRecord(message + "/" + playerId);
     }
 
-    private void SendActivationGearSystem(string message, int connectionId)
+    private void SendActivateSystem(string message, int connectionId, string[] msg)
     {
-        NetworkPlayer player = server.GetPlayer(connectionId);
-        Room room = player.room;
-        room.SendMessageToAllPlayersExceptOne(message, connectionId, true);
-    }
-
-    private void SendActivationRuneSystem(string message, int connectionId, string[] msg)
-    {
-        string doorId = msg[1];
+        string systemName = msg[1];
 
         NetworkPlayer player = server.GetPlayer(connectionId);
         Room room = player.room;
 
         room.SendMessageToAllPlayers(message, true);
-        room.doorManager.AddDoor(doorId);
+        room.doorManager.AddSystem(systemName);
     }
 
     private void HandleObstacleDestroyed(string[] msg, int connectionId)
