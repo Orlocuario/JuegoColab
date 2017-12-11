@@ -41,12 +41,14 @@ public class Inventory : MonoBehaviour
 
         selectedItemInfo = GameObject.Find("DisplayItemInfo").GetComponent<Text>(); // TODO: Rename this in editor
         selectedItemPanel = GameObject.Find("DisplayPanel"); // TODO: Rename this in editor
-        selectedItemSlot = GameObject.Find("ActualItem"); // TODO: Rename this in editor
+        selectedItemSlot = GameObject.Find("BackgroundActualItem"); // TODO: Rename this in editor
 
         if (items == null)
         {
             items = new Item?[numSlots];
         }
+
+        ToogleSelectedItemPanel(false);
     }
 
     #endregion
@@ -130,23 +132,18 @@ public class Inventory : MonoBehaviour
 
         selectedItemSlot.GetComponent<Image>().sprite = selectedItem.Value.sprite;
 
-        ToogleSelectedItem(true);
+        ToogleSelectedItemPanel(true);
     }
 
     public void UnselectItem()
     {
-        if (selectedItem == null)
-        {
-            Debug.LogError("No item to drop");
-            return;
-        }
+
 
         selectedItem = null;
-
         selectedItemInfo.text = "";
         selectedItemSlot.GetComponent<Image>().sprite = null;
 
-        ToogleSelectedItem(false);
+        ToogleSelectedItemPanel(false);
     }
 
     public void DropItem()
@@ -160,7 +157,7 @@ public class Inventory : MonoBehaviour
 
         SendMessageToServer("CreateGameObject/" + selectedItem.Value.name, true);
         RemoveItem();
-        ToogleSelectedItem(false);
+        ToogleSelectedItemPanel(false);
     }
 
     #endregion
@@ -198,7 +195,7 @@ public class Inventory : MonoBehaviour
         return -1;
     }
 
-    protected void ToogleSelectedItem(bool active)
+    protected void ToogleSelectedItemPanel(bool active)
     {
         selectedItemSlot.SetActive(active);
         selectedItemPanel.SetActive(active);
