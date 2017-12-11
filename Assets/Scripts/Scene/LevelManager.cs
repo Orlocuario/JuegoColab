@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections;
+﻿using System.Collections;
 using System.Collections.Generic;
 using System.Text.RegularExpressions;
 using UnityEngine;
@@ -23,7 +22,6 @@ public class LevelManager : MonoBehaviour
     private Client client;
 
     private float waitToKillNPCCountdown;
-    private float waitToResetItemPos;
     private float waitToGrabItem;
 
     public float waitToRespawn;
@@ -53,7 +51,7 @@ public class LevelManager : MonoBehaviour
         itemsOriginalPositions = new List<Vector3>();
 
         waitToKillNPCCountdown = 5f;
-        waitToGrabItem = 5f;
+        waitToGrabItem = 2f;
 
         npcLog = GameObject.Find("NPCLog");
         npcLog.SetActive(false);
@@ -355,6 +353,17 @@ public class LevelManager : MonoBehaviour
                     }
                 }
             }
+        }
+
+    }
+
+    public void DestroyObject(string name, float time)
+    {
+        GameObject gameObject = GameObject.Find(name);
+
+        if (gameObject)
+        {
+            Destroy(gameObject, time);
         }
 
     }

@@ -1,10 +1,8 @@
 ﻿using System;
 using UnityEngine;
 
-
-public class ActivableSystemActions : MonoBehaviour
-{
-
+public class ActivableSystemActions
+{ 
     #region Common
 
     public virtual void DoSomething(GameObject activableSystem)
@@ -19,18 +17,19 @@ public class ActivableSystemActions : MonoBehaviour
     protected void StartAnimation(string animationName, ActivableSystem activableSystem)
     {
         SceneAnimator sceneAnimator = GameObject.FindObjectOfType<SceneAnimator>();
-        StartCoroutine(sceneAnimator.StartAnimation(animationName, activableSystem.gameObject));
+        sceneAnimator.StartAnimation(animationName, activableSystem.gameObject);
+    }
+
+    protected void SetAnimatorBool(string parameter, bool value, ActivableSystem activableSystem)
+    {
+        SceneAnimator sceneAnimator = GameObject.FindObjectOfType<SceneAnimator>();
+        sceneAnimator.SetBool(parameter, value, activableSystem.gameObject);
     }
 
     protected void DestroyObject(string name, float time)
     {
-        GameObject gameObject = GameObject.Find(name);
-
-        if (gameObject)
-        {
-            Destroy(gameObject, time);
-        }
-
+        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+        levelManager.DestroyObject(name, time);
     }
 
     #endregion

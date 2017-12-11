@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 public class GearSystemActions : ActivableSystemActions
@@ -41,10 +40,31 @@ public class GearSystemActions : ActivableSystemActions
     private void HandleGearSystemA(GearSystem gearSystem)
     {
 
+        // Dispose every used gear in case of reconnection
+        for (int i = 0; i < gearSystem.components.Length; i++)
+        {
+            string usedGearName = gearSystem.components[i].sprite.name;
+            GameObject usedGear = GameObject.Find(usedGearName);
+
+            if (usedGear)
+            {
+                DestroyObject(usedGearName, .1f);
+            }
+
+        }
+        
+        // Hide every placed gear
+        SpriteRenderer[] componentSlots = gearSystem.GetComponentsInChildren<SpriteRenderer>();
+        for (int i = 0; i < componentSlots.Length; i++)
+        {
+            componentSlots[i].sprite = null;
+        }
+
+        // Change the gearsystem sprite
         SpriteRenderer systemSpriteRenderer = gearSystem.GetComponent<SpriteRenderer>();
         systemSpriteRenderer.sprite = gearSystem.activatedSprite;
-
-        StartAnimation("startMovingMAchine", gearSystem);
+       
+        SetAnimatorBool("startMovingMachine", true, gearSystem);
 
         DestroyObject("GiantBlocker", .1f);
         DestroyObject("GiantBlocker (1)", .1f);
@@ -52,13 +72,14 @@ public class GearSystemActions : ActivableSystemActions
         if (gearSystem.switchObj)
         {
             gearSystem.switchObj.ActivateSwitch();
-            Planner planner = FindObjectOfType<Planner>();
+
+            Planner planner = GameObject.FindObjectOfType<Planner>();
             planner.Monitor();
         }
 
         SendMessageToServer("ObstacleDestroyed/GiantBlocker", true);
         SendMessageToServer("ObstacleDestroyed/GiantBlocker (1)", true);
-        SendMessageToServer("ActivateGearSystem/" + this.gameObject.name, true);
+        SendMessageToServer("ActivateGearSystem/" + gearSystem.name, true);
     }
 
     #endregion

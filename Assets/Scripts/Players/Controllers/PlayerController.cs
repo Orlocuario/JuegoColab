@@ -624,7 +624,7 @@ public class PlayerController : MonoBehaviour
     {
         if (sceneAnimator && attackAnimName != null)
         {
-            StartCoroutine(sceneAnimator.StartAnimation(attackAnimName, this.gameObject));
+            sceneAnimator.StartAnimation(attackAnimName, this.gameObject);
         }
     }
 
@@ -632,7 +632,7 @@ public class PlayerController : MonoBehaviour
     {
         if (sceneAnimator)
         {
-            StartCoroutine(sceneAnimator.StartAnimation("TakingDamage", this.gameObject));
+            sceneAnimator.StartAnimation("TakingDamage", this.gameObject);
         }
     }
 
