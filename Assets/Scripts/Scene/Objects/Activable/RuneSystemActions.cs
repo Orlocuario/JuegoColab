@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 
 public class RuneSystemActions : ActivableSystemActions
@@ -7,21 +6,7 @@ public class RuneSystemActions : ActivableSystemActions
 
     #region Common
 
-    public override void DoSomething(GameObject runeSystemGO)
-    {
-        RuneSystem runeSystem = runeSystemGO.GetComponent<RuneSystem>();
-
-        if (runeSystem)
-        {
-            DoSomething(runeSystem);
-        }
-        else
-        {
-            Debug.LogError(runeSystemGO + " does not have a RuneSystem");
-        }
-    }
-
-    public void DoSomething(RuneSystem runeSystem)
+    public void DoSomething(RuneSystem runeSystem, bool notifyOthers)
     {
 
         // Hide every placed rune
@@ -62,7 +47,10 @@ public class RuneSystemActions : ActivableSystemActions
 
         }
 
-        SendMessageToServer("ActivateSystem/" + runeSystem.name, true);
+        if (notifyOthers)
+        {
+            SendMessageToServer("ActivateSystem/" + runeSystem.name, true);
+        }
 
     }
 

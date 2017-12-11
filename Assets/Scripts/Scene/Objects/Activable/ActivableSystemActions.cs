@@ -4,16 +4,16 @@ public class ActivableSystemActions
 {
     #region Common
 
-    public virtual void DoSomething(GameObject activableSystem)
+    public virtual void DoSomething(GameObject activableSystem, bool notifyOthers)
     {
         if (activableSystem.GetComponent<GearSystem>())
         {
-            new GearSystemActions().DoSomething(activableSystem);
+            new GearSystemActions().DoSomething(activableSystem.GetComponent<GearSystem>(), notifyOthers);
         }
 
         else if (activableSystem.GetComponentInChildren<RuneSystem>())
         {
-            new RuneSystemActions().DoSomething(activableSystem);
+            new RuneSystemActions().DoSomething(activableSystem.GetComponentInChildren<RuneSystem>(), notifyOthers);
         }
     }
 

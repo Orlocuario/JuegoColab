@@ -9,7 +9,7 @@ public class ActivableSystem : MonoBehaviour
     public Sprite activatedSprite;
 
     public float activationDistance = 1f;
-    public int activationTime = 3;
+    public float activationTime = 5f;
     public bool activated;
 
     [System.Serializable]
@@ -109,7 +109,7 @@ public class ActivableSystem : MonoBehaviour
         else
         {
             yield return new WaitForSeconds(activationTime);
-            systemActions.DoSomething(this.gameObject);
+            systemActions.DoSomething(this.gameObject, true);
         }
     }
 

@@ -6,28 +6,13 @@ public class GearSystemActions : ActivableSystemActions
 
     #region Common
 
-    public override void DoSomething(GameObject gearSystemGO)
-    {
-        GearSystem gearSystem = gearSystemGO.GetComponent<GearSystem>();
-
-        if (gearSystem)
-        {
-            DoSomething(gearSystem);
-        }
-        else
-        {
-            Debug.LogError(gearSystemGO + " does not have a GearSystem");
-
-        }
-    }
-
-    protected  void DoSomething(GearSystem gearSystem)
+    public void DoSomething(GearSystem gearSystem, bool notifyOthers)
     {
 
         switch (gearSystem.name)
         {
             case "MaquinaEngranajeA":
-                HandleGearSystemA(gearSystem);
+                HandleGearSystemA(gearSystem, notifyOthers);
                 break;
         }
 
@@ -37,7 +22,7 @@ public class GearSystemActions : ActivableSystemActions
 
     #region Handlers
 
-    private void HandleGearSystemA(GearSystem gearSystem)
+    private void HandleGearSystemA(GearSystem gearSystem, bool notifyOthers)
     {
 
         // Dispose every used gear in case of reconnection
@@ -52,7 +37,7 @@ public class GearSystemActions : ActivableSystemActions
             }
 
         }
-        
+
         // Hide every placed gear
         SpriteRenderer[] componentSlots = gearSystem.GetComponentsInChildren<SpriteRenderer>();
         for (int i = 0; i < componentSlots.Length; i++)
@@ -63,7 +48,7 @@ public class GearSystemActions : ActivableSystemActions
         // Change the gearsystem sprite
         SpriteRenderer systemSpriteRenderer = gearSystem.GetComponent<SpriteRenderer>();
         systemSpriteRenderer.sprite = gearSystem.activatedSprite;
-       
+
         SetAnimatorBool("startMovingMachine", true, gearSystem);
 
         DestroyObject("GiantBlocker", .1f);
@@ -77,9 +62,12 @@ public class GearSystemActions : ActivableSystemActions
             planner.Monitor();
         }
 
-        SendMessageToServer("ObstacleDestroyed/GiantBlocker", true);
-        SendMessageToServer("ObstacleDestroyed/GiantBlocker (1)", true);
-        SendMessageToServer("ActivateSystem/" + gearSystem.name, true);
+        if (notifyOthers)
+        {
+            SendMessageToServer("ObstacleDestroyed/GiantBlocker", true);
+            SendMessageToServer("ObstacleDestroyed/GiantBlocker (1)", true);
+            SendMessageToServer("ActivateSystem/" + gearSystem.name, true);
+        }
     }
 
     #endregion

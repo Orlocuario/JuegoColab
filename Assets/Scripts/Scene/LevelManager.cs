@@ -98,7 +98,7 @@ public class LevelManager : MonoBehaviour
 
         if (activableSystem)
         {
-            new ActivableSystemActions().DoSomething(activableSystem);
+            new ActivableSystemActions().DoSomething(activableSystem, false);
         }
         else
         {
