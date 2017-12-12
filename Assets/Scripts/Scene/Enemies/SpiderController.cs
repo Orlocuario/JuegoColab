@@ -14,6 +14,11 @@ public class SpiderController : EnemyController
     private static float alertDistance = 2.1f;
     private static float movingSteps = .6f;
 
+    private int timesHit;
+
+    public string firstMessage;
+    public string secondMessage; 
+    public string thirdMessage; 
     #endregion
 
     #region Start & Update
@@ -23,6 +28,7 @@ public class SpiderController : EnemyController
         force = new Vector2(3500f, 150f);
         maxHp = 2000f;
         damage = 5;
+        timesHit = 0;
 
         upperTunnelPosition = new Vector3(73.38f, 0.73f, transform.position.z);
         bottomTunnelPosition = new Vector3(upperTunnelPosition.x, -3.14f, transform.position.z);
@@ -100,6 +106,28 @@ public class SpiderController : EnemyController
     public override void TakeDamage(float damage)
     {
         // Spider doesn't take any damage boy
+    }
+
+    private void CheckTimesHit()
+    {
+        timesHit++;
+        if (timesHit == 1)
+        {
+           levelManager.ActivateSpiderFeedback(firstMessage);
+        }
+        if (timesHit == 15)
+        {
+            levelManager.ActivateSpiderFeedback(secondMessage);
+        }
+        if (timesHit == 30)
+        {
+            levelManager.ActivateSpiderFeedback(thirdMessage);
+            timesHit = -15;
+        }
+    }
+    protected void EndFeedback()
+    {
+        levelManager.ShutSpiderFeedBack(true);
     }
 
     #endregion

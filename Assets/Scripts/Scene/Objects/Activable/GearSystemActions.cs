@@ -57,6 +57,7 @@ public class GearSystemActions : ActivableSystemActions
         }
 
         // Change the gearsystem sprite
+
         SpriteRenderer systemSpriteRenderer = gearSystem.GetComponent<SpriteRenderer>();
         systemSpriteRenderer.sprite = gearSystem.activatedSprite;
 
@@ -65,11 +66,11 @@ public class GearSystemActions : ActivableSystemActions
         LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
         EngineerController enginController = levelManager.GetEngineer();
 
-        if (!enginController)
+        if (enginController == null)
         {
             Debug.Log("Se cayó un enginController");
-            return; 
-        }
+        } 
+
         if (enginController.localPlayer)
         {
             CameraMovementForEngin();

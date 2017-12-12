@@ -15,6 +15,7 @@ public class LevelManager : MonoBehaviour
     public HUDDisplay hpAndMp;
     public GameObject canvas;
     public GameObject npcLog;
+    public GameObject spiderLog;
 
     private List<Vector3> itemsOriginalPositions;
     private GameObject[] itemsInLevel;
@@ -22,11 +23,13 @@ public class LevelManager : MonoBehaviour
     private Client client;
 
     private float waitToKillNPCCountdown;
+    private float waitToKillSpiderCountdown;
     private float waitToGrabItem;
 
     public float waitToRespawn;
 
     private Text NPCFeedbackText;
+    private Text SpiderFeedbackText;
 
     #endregion
 
@@ -51,10 +54,14 @@ public class LevelManager : MonoBehaviour
         itemsOriginalPositions = new List<Vector3>();
 
         waitToKillNPCCountdown = 5f;
+        waitToKillSpiderCountdown = 5f;
         waitToGrabItem = 2f;
 
         npcLog = GameObject.Find("NPCLog");
         npcLog.SetActive(false);
+
+        spiderLog = GameObject.Find("SpiderLog");
+        spiderLog.SetActive(false);
 
         reconnectText = GameObject.Find("ReconnectingText");
         reconnectText.SetActive(false);
@@ -107,6 +114,8 @@ public class LevelManager : MonoBehaviour
 
     }
 
+
+    // NPC FeedBack System
     public void ActivateNPCFeedback(string message)
     {
         SetNPCText(message);
@@ -145,6 +154,46 @@ public class LevelManager : MonoBehaviour
             NPCFeedbackText.text = message;
         }
     }
+
+    public void ActivateSpiderFeedback(string message)
+    {
+        SetSpiderText(message);
+        ShutSpiderFeedBack(false);
+    }
+
+    public void ShutSpiderFeedBack(bool now)
+    {
+        if (now)
+        {
+            KillSpider();
+        }
+        else
+        {
+            StartCoroutine(WaitToKillSpider());
+        }
+    }
+
+    public void SetSpiderText(string message)
+    {
+        if (!spiderLog.activeInHierarchy)
+        {
+            spiderLog.SetActive(true);
+        }
+
+        if (!SpiderFeedbackText)
+        {
+            if (GameObject.Find("SpiderLogText"))
+            {
+                SpiderFeedbackText = GameObject.Find("SpiderLogText").GetComponent<Text>();
+            }
+        }
+
+        if (SpiderFeedbackText)
+        {
+            SpiderFeedbackText.text = message;
+        }
+    }
+
 
     public void SetLocalPlayer(int id)
     {
@@ -399,6 +448,11 @@ public class LevelManager : MonoBehaviour
         yield return new WaitForSeconds(waitToKillNPCCountdown);
         KillNPC();
     }
+    private IEnumerator WaitToKillSpider()
+    {
+        yield return new WaitForSeconds(waitToKillSpiderCountdown);
+        KillSpider();
+    }
 
     private void KillNPC()
     {
@@ -409,6 +463,17 @@ public class LevelManager : MonoBehaviour
         }
 
         npcLog.SetActive(false);
+    }
+
+    private void KillSpider()
+    {
+
+        if (SpiderFeedbackText)
+        {
+            SpiderFeedbackText.text = "";
+        }
+
+        spiderLog.SetActive(false);
     }
 
     #endregion

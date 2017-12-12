@@ -373,12 +373,13 @@ public class EnemyController : MonoBehaviour
     }
 
     // Attack those who collide with me
-    private void OnCollisionEnter2D(Collision2D other)
+    protected void OnCollisionEnter2D(Collision2D other)
     {
         if (GameObjectIsPlayer(other.gameObject))
         {
             Attack(other.gameObject);
         }
+
     }
 
     public IEnumerator WaitDying()
