@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class ActivableSystemActions
+public class ActivableSystemActions : MonoBehaviour
 {
     #region Common
 
@@ -37,6 +37,12 @@ public class ActivableSystemActions
     {
         LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
         levelManager.DestroyObject(name, time);
+    }
+
+    protected void MoveObjectTowards (string name, float speed)
+    {
+        GameObject movingObject = GameObject.Find(name);
+
     }
 
     #endregion

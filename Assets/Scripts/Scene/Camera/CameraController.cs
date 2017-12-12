@@ -33,7 +33,7 @@ public class CameraController : MonoBehaviour
 
     private static float stepsToTarget = 100;
     private static float initialSize = 2.8f;
-    private static float freezeTime = 100; 
+    public  static float freezeTime = 100; 
 
     private float cameraRate;
     private int zoomSteps;

@@ -1,10 +1,21 @@
 ﻿using UnityEngine;
-
+using System.Collections;
 
 public class GearSystemActions : ActivableSystemActions
 {
+    public float blockerSpeed;
+    private GameObject particles;
 
     #region Common
+
+    private void Start()
+    {
+        particles = GameObject.Find("MaquinaParticleSystem");
+        if (particles != null)
+        {
+            particles.SetActive(false);
+        }
+    }
 
     public void DoSomething(GearSystem gearSystem, bool notifyOthers)
     {
@@ -49,10 +60,30 @@ public class GearSystemActions : ActivableSystemActions
         SpriteRenderer systemSpriteRenderer = gearSystem.GetComponent<SpriteRenderer>();
         systemSpriteRenderer.sprite = gearSystem.activatedSprite;
 
-        SetAnimatorBool("startMovingMachine", true, gearSystem);
+        // If is Engineer: Start Coroutine
 
-        DestroyObject("GiantBlocker", .1f);
-        DestroyObject("GiantBlocker (1)", .1f);
+        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+        EngineerController enginController = levelManager.GetEngineer();
+
+        if (!enginController)
+        {
+            Debug.Log("Se cayó un enginController");
+            return; 
+        }
+        if (enginController.localPlayer)
+        {
+            CameraMovementForEngin();
+        }
+
+        particles.SetActive(true);
+        SetAnimatorBool("startMovingMachine", true, gearSystem);
+        StartMovingBlockers();
+        //  Mago y Engin waiting for Engin.
+        StartCoroutine(WaitForCameraEngin());
+
+        //  Eventos tras esperar CameraEngin
+      
+        SetAnimatorBool("startMovingMachine", false, gearSystem);
 
         if (gearSystem.switchObj)
         {
@@ -64,12 +95,42 @@ public class GearSystemActions : ActivableSystemActions
 
         if (notifyOthers)
         {
-            SendMessageToServer("ObstacleDestroyed/GiantBlocker", true);
-            SendMessageToServer("ObstacleDestroyed/GiantBlocker (1)", true);
+            SendMessageToServer("ObstacleDestroyed/GiantBlockers", true);
             SendMessageToServer("ActivateSystem/" + gearSystem.name, true);
         }
     }
 
     #endregion
+    private void CameraMovementForEngin()
+    {
+        CameraController mainCamera = GameObject.FindGameObjectWithTag("MainCamera").GetComponent<CameraController>();
+
+        if (mainCamera == null)
+        {
+            Debug.Log("Se cayó la Cámara en el GearSystem");
+        }
+
+        mainCamera.ChangeState(CameraState.TargetZoom, 4.2f, 80.1f, -1.33f, false, true);
+    }
+
+    private IEnumerator WaitForCameraEngin()
+    {
+        yield return new WaitForSeconds(2f);
+    }
+
+    private void StartMovingBlockers()
+    {
+        Transform blockers = GameObject.Find("GiantBlockers").GetComponent<Transform>();
+        Vector3 blockersTarget = new Vector3(blockers.position.x, blockers.position.y + 4f, blockers.position.z);
+
+        blockers.position = Vector3.MoveTowards(blockers.position, blockersTarget, blockerSpeed);
+
+        if(blockers.position == blockersTarget)
+        {
+            DestroyObject("GiantBlockers", .1f);
+            Destroy(particles, .1f);    
+        }
+    
+    }
 
 }
