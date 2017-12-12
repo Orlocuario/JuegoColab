@@ -25,10 +25,10 @@ public class Switch : MonoBehaviour
     public int individualId; // Identificador del switch dentro del grupo
     public bool isActivated; // Si esta encendido o no
     public int groupId; // Identificador del grupo de switchs.
+    public GameObject particles;
 
     private SwitchManager manager;
     private bool jobDone; // true si es que su grupo de botones ya terminó su función
-    private ParticleSystem particles;
 
     #endregion
 
@@ -270,12 +270,15 @@ public class Switch : MonoBehaviour
 
     private void TurnParticlesOff()
     {
-        if (activation == TypeOfActivation.Shooting) // por qué??
+        if (activation == TypeOfActivation.Shooting) // porque los otros no tienen
         {
-            if (particles)
+            if (particles != null)
             {
-                particles = gameObject.GetComponent<ParticleSystem>();
-                particles.gameObject.SetActive(false);
+                particles.SetActive(false);
+            }
+            else if (particles == null)
+            {
+                Debug.Log("te falta poner las partículas");
             }
         }
     }
@@ -284,7 +287,7 @@ public class Switch : MonoBehaviour
     {
         if (particles)
         {
-            particles.gameObject.SetActive(true);
+            particles.SetActive(true);
         }
     }
 
