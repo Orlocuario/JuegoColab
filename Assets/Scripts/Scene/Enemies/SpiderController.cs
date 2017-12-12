@@ -111,15 +111,15 @@ public class SpiderController : EnemyController
     private void CheckTimesHit()
     {
         timesHit++;
-        if (timesHit == 1)
+        if (timesHit >= 1 && timesHit <=1)
         {
            levelManager.ActivateSpiderFeedback(firstMessage);
         }
-        if (timesHit == 15)
+        if (timesHit >= 15 && timesHit <=15)
         {
             levelManager.ActivateSpiderFeedback(secondMessage);
         }
-        if (timesHit == 30)
+        if (timesHit >= 30 && timesHit <= 30)
         {
             levelManager.ActivateSpiderFeedback(thirdMessage);
             timesHit = -15;
@@ -180,8 +180,7 @@ public class SpiderController : EnemyController
 
     private bool GameObjectIsAttack(GameObject other)
     {
-        if (other.gameObject.name == "Arrow" || other.gameObject.name == "Fireball" || 
-            other.gameObject.name == "Punch" || other.gameObject.name == "SuperPunch")
+        if (other.gameObject.GetComponent<AttackController>() != null)
         {
             return true; 
         }
