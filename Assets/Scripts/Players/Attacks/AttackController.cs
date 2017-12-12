@@ -107,6 +107,11 @@ public class AttackController : MonoBehaviour
         return damage;
     }
 
+    public bool isPowered()
+    {
+        return enhanced;
+    }
+
     #endregion
 
     #region Utils
