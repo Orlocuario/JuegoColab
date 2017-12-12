@@ -112,7 +112,7 @@ public class SwitchActions : MonoBehaviour
 
     private void HandlerGroup0()
     {
-        GameObject platEngineer = InstatiatePrefab("MovPlatform", new Vector2(13.3f, -1f));
+        GameObject platEngineer = InstantiatePrefab("MovPlatform", new Vector2(13.3f, -1f));
         SetMovingObjectData(platEngineer, new Vector2(13.5f, -1.77f), new Vector2(13.5f, 0.36f), 1f);
         ShowFeedbackParticles("FBMageButt", new Vector2(13.2f, -1.3f), 3f);
     }
@@ -143,7 +143,7 @@ public class SwitchActions : MonoBehaviour
 
     private void HandlerGroup3()
     {
-        GameObject platLadder = InstatiatePrefab("MovPlatform", new Vector2(43f, -16.46f));
+        GameObject platLadder = InstantiatePrefab("MovPlatform", new Vector2(43f, -16.46f));
 
         Vector2 startPos = platLadder.transform.position;
         Vector2 endPos = new Vector2(startPos.x, startPos.y + 4.2f);
@@ -157,21 +157,20 @@ public class SwitchActions : MonoBehaviour
     // TODO: Review this
     private void HandlerGroup4()
     {
-        GameObject platparaMage = InstatiatePrefab("MovPlatform", new Vector2(61f, -9.5f));
+        GameObject platparaMage = InstantiatePrefab("MovPlatform", new Vector2(61f, -9.5f));
 
         Vector2 startPos = platparaMage.transform.position;
         Vector2 endPos = new Vector2(startPos.x, startPos.y + 1.3f);
 
         SetMovingObjectData(platparaMage, startPos, endPos, 1f);
 
-        GameObject npc = InstatiatePrefab("ActivateNPC", new Vector2(70f, -19.2f)); // Donde está la info de este NPC ???
-
         /* Instantiate Arrow feedback y cambiar arrow de warrior*/
         ChangeSprite spriteChanger = GameObject.Find("CartelCambiante").GetComponent<ChangeSprite>();
         spriteChanger.SpriteChanger();
 
-        InstatiatePrefab("Ambientales/InstantateCheckPoints", new Vector2(60.94f, -19.9f));
-        InstatiateSprite("/Arrows/warriorArrowLeft", new Vector2(70.7f, -20f));
+        InstantiatePrefab("NPCForWarriorCave", new Vector2(71f, -19.4f));
+        InstantiatePrefab("Ambientales/InstantiateCheckPoints", new Vector2(60.94f, -19.9f));
+        InstatiateSprite("Arrows/warriorArrowLeft", new Vector2(70.7f, -20f));
 
         ShowFeedbackParticles("FBMageButt", new Vector2(72.86f, -19.3f), 4f);
         ShowFeedbackParticles("warriorFeedbackSmall", new Vector2(70.7f, -20f), 4f);
@@ -179,65 +178,66 @@ public class SwitchActions : MonoBehaviour
 
     private void HandlerGroup5()
     {
-        InstatiatePrefab("PlataformaPastVoladora", new Vector2(39f, 7.5f));
-        InstatiatePrefab("PlataformaPastVoladora", new Vector2(39f, 7.5f));
+        InstantiatePrefab("PlataformaPastVoladora", new Vector2(39f, 7.5f));
+        InstantiatePrefab("PlataformaPastVoladora", new Vector2(35.5f, 7.5f));
+        InstantiatePrefab("")
     }
 
     private void HandlerGroup6()
     {
-        InstatiatePrefab("Ambientales/Exp", new Vector2(14.1f, -6.3f));
-        InstatiatePrefab("Ambientales/Exp", new Vector2(14.3f, -6.3f));
-        InstatiatePrefab("Ambientales/Exp", new Vector2(13.6f, -6.3f));
-        InstatiatePrefab("Ambientales/Exp", new Vector2(13.1f, -6.3f));
-        InstatiatePrefab("Ambientales/Exp", new Vector2(15f, -6.3f));
-        InstatiatePrefab("Ambientales/Exp", new Vector2(15f, -6.3f));
+        InstantiatePrefab("Ambientales/Exp", new Vector2(14.1f, -6.3f));
+        InstantiatePrefab("Ambientales/Exp", new Vector2(14.3f, -6.3f));
+        InstantiatePrefab("Ambientales/Exp", new Vector2(13.6f, -6.3f));
+        InstantiatePrefab("Ambientales/Exp", new Vector2(13.1f, -6.3f));
+        InstantiatePrefab("Ambientales/Exp", new Vector2(15f, -6.3f));
+        InstantiatePrefab("Ambientales/Exp", new Vector2(15f, -6.3f));
     }
 
     private void HandlerGroup7()
     {
-        InstatiatePrefab("Ambientales/Exp", new Vector2(62f, -14.23f));
+        InstantiatePrefab("Ambientales/Exp", new Vector2(62f, -14.23f));
 
-        InstatiatePrefab("Ambientales/Exp", new Vector2(62.5f, -14.23f));
-        InstatiatePrefab("Ambientales/Exp", new Vector2(64f, -14.23f));
-        InstatiatePrefab("Ambientales/Exp", new Vector2(61.5f, -14.23f));
-        InstatiatePrefab("Ambientales/Exp", new Vector2(63f, -14.23f));
-        InstatiatePrefab("Ambientales/Exp", new Vector2(63.5f, -14.23f));
-        InstatiatePrefab("Ambientales/Exp", new Vector2(62f, -14.23f));
-        InstatiatePrefab("Ambientales/Exp", new Vector2(62.5f, -14.23f));
-        InstatiatePrefab("Ambientales/Exp", new Vector2(64f, -14.23f));
-        InstatiatePrefab("Ambientales/Exp", new Vector2(61.5f, -14.23f));
-        InstatiatePrefab("Ambientales/Exp", new Vector2(63f, -14.23f));
-        InstatiatePrefab("Ambientales/Exp", new Vector2(63.5f, -14.23f));
+        InstantiatePrefab("Ambientales/Exp", new Vector2(62.5f, -14.23f));
+        InstantiatePrefab("Ambientales/Exp", new Vector2(64f, -14.23f));
+        InstantiatePrefab("Ambientales/Exp", new Vector2(61.5f, -14.23f));
+        InstantiatePrefab("Ambientales/Exp", new Vector2(63f, -14.23f));
+        InstantiatePrefab("Ambientales/Exp", new Vector2(63.5f, -14.23f));
+        InstantiatePrefab("Ambientales/Exp", new Vector2(62f, -14.23f));
+        InstantiatePrefab("Ambientales/Exp", new Vector2(62.5f, -14.23f));
+        InstantiatePrefab("Ambientales/Exp", new Vector2(64f, -14.23f));
+        InstantiatePrefab("Ambientales/Exp", new Vector2(61.5f, -14.23f));
+        InstantiatePrefab("Ambientales/Exp", new Vector2(63f, -14.23f));
+        InstantiatePrefab("Ambientales/Exp", new Vector2(63.5f, -14.23f));
     }
 
     private void HandlerGroup8()
     {
-        InstatiatePrefab("Ambientales/Exp", new Vector2(80.45f, -18.52f));
+        InstantiatePrefab("Ambientales/Exp", new Vector2(80.45f, -18.52f));
     }
 
     private void HandlerGroup9()
     {
         ShowFeedbackParticles("FBMageButt", new Vector2(26.5f, -43.6f), 4f);
 
-        InstatiatePrefab("SueloMetalFlotante", new Vector2(24.78f, -42.31f));
-        InstatiatePrefab("SueloMetalFlotante", new Vector2(24.78f, -43.16f));
+        InstantiatePrefab("SueloMetalFlotante", new Vector2(24.78f, -42.31f));
+        InstantiatePrefab("SueloMetalFlotante", new Vector2(24.78f, -43.16f));
     }
 
     private void HandlerGroup10()
     {
         ShowFeedbackParticles("FBMageButt", new Vector2(26.5f, -42.11f), 4f);
-        InstatiatePrefab("SueloMetalFlotante", new Vector2(24.86f, -41.2f));
+        InstantiatePrefab("SueloMetalFlotante", new Vector2(24.86f, -41.2f));
     }
 
     private void HandlerGroup11()
     {
-        InstatiatePrefab("SueloMetalFlotante", new Vector2(26.11f, -40.40f));
+        InstantiatePrefab("SueloMetalFlotante", new Vector2(26.11f, -40.40f));
     }
 
     private void HandlerGroup12()
     {
         ShowFeedbackParticles("FBMageButt", new Vector2(32.11f, -39.31f), 4f);
-        InstatiatePrefab("TutorialPaths", new Vector2(35.6f, -38.95f));
+        InstantiatePrefab("TutorialPaths", new Vector2(35.6f, -38.95f));
         DestroyObject("PathBlocker", .1f);
     }
 
@@ -304,7 +304,7 @@ public class SwitchActions : MonoBehaviour
         }
     }
 
-    private GameObject InstatiatePrefab(string name, Vector2 initialPos)
+    private GameObject InstantiatePrefab(string name, Vector2 initialPos)
     {
         GameObject prefab = (GameObject)Instantiate(Resources.Load("Prefabs/" + name));
 

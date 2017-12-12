@@ -45,8 +45,7 @@ public class MovableObject : MonoBehaviour
                 Debug.Log("AnimatorControl not found in " + name);
                 return;
             }
-
-            sceneAnimator.StartAnimation("Moving", this.gameObject);
+            sceneAnimator.SetBool("Moving", true, this.gameObject);
         }
     }
 

@@ -66,4 +66,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c5fb81130ce142f4d843a50d243a2e69, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  killPlaneDamage: 2
+  particles: {fileID: 0}
+  activated: 1
+  damage: 3
