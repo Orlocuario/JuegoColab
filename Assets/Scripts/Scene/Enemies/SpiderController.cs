@@ -165,6 +165,33 @@ public class SpiderController : EnemyController
         }
     }
 
+    protected override void OnCollisionEnter2D(Collision2D other)
+    {
+        if (GameObjectIsPlayer(other.gameObject))
+        {
+            Attack(other.gameObject);
+        }
+
+        if (GameObjectIsAttack(other.gameObject))
+        {
+            CheckTimesHit();
+        }
+    }
+
+    private bool GameObjectIsAttack(GameObject other)
+    {
+        if (other.gameObject.name == "Arrow" || other.gameObject.name == "Fireball" || 
+            other.gameObject.name == "Punch" || other.gameObject.name == "SuperPunch")
+        {
+            return true; 
+        }
+
+        else
+        {
+            return false;
+        }
+    }
+
     #endregion
 
 }
