@@ -180,7 +180,7 @@ public class SwitchActions : MonoBehaviour
     {
         InstantiatePrefab("PlataformaPastVoladora", new Vector2(39f, 7.5f));
         InstantiatePrefab("PlataformaPastVoladora", new Vector2(35.5f, 7.5f));
-        InstantiatePrefab("")
+        InstantiatePrefab("KillZones/KillZoneEnginAir", new Vector2(34.6f, 6.15f));
     }
 
     private void HandlerGroup6()
