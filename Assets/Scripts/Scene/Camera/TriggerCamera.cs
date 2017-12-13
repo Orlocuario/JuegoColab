@@ -21,7 +21,7 @@ public class TriggerCamera : MonoBehaviour
     private void OnEnter()
     {
 
-        GameObject camera = GameObject.FindGameObjectWithTag("MainCamera"); // TODO: Change this to obj name
+        GameObject camera = GameObject.Find("MainCamera"); 
         CameraController cameraController = camera.GetComponent<CameraController>();
 
         cameraController.ChangeState(state, ortographic_size, target.transform.position.x, target.transform.position.y, hideChat, playerCantMove);

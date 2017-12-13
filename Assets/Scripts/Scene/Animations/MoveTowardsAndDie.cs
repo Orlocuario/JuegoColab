@@ -5,6 +5,7 @@ public class MoveTowardsAndDie : MonoBehaviour {
 
     public Vector3 target;
     public float speed;
+    public GameObject ignoredObject;
 
     private bool moving;
     private GameObject[] particles;
@@ -32,8 +33,13 @@ public class MoveTowardsAndDie : MonoBehaviour {
 
     public void StartMoving(GameObject[] _particles)
     {
+        if (ignoredObject)
+        {
+            IgnoreCollisionWithObject(ignoredObject);
+        }
         moving = true;
         particles = _particles;
+        
     }
 
     protected void ToogleParticles(bool activate)
@@ -45,6 +51,11 @@ public class MoveTowardsAndDie : MonoBehaviour {
                 particles[i].SetActive(activate);
             }
         }
+    }
+
+    private void IgnoreCollisionWithObject(GameObject ignoredObject)
+    {
+        Physics2D.IgnoreCollision(ignoredObject.GetComponent<Collider2D>(), this.gameObject.GetComponent<Collider2D>(), true);
     }
 
 }
