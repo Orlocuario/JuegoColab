@@ -65,7 +65,15 @@ public class GearSystemActions : ActivableSystemActions
         }
 
         gearSystem.ToogleParticles(true);
-        SetAnimatorBool("startMovingMachine", true, gearSystem);
+        SetAnimatorBool("startMoving", true, gearSystem);
+
+        GameObject secondMachine = GameObject.Find("MaqEngranaje2");
+        if (secondMachine)
+        {
+            ActivableSystem secondGear = secondMachine.GetComponent<ActivableSystem>();
+            SetAnimatorBool("startMoving", true, secondGear);
+        }
+        
         MoveTowardsAndDie blocksMover = GameObject.Find("GiantBlockers").GetComponent<MoveTowardsAndDie>();
         blocksMover.StartMoving(gearSystem.GetParticles());
 

@@ -211,6 +211,7 @@ public class LevelManager : MonoBehaviour
 
     public void GoToNextScene()
     {
+        Debug.Log("Entré al final de Escena");
         string currentSceneName = SceneManager.GetActiveScene().name;
         string currentSceneNumber = Regex.Match(currentSceneName, @"\d+").Value;
         int nextSceneNumber = int.Parse(currentSceneNumber) + 1;

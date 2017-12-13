@@ -6,7 +6,7 @@ public class PunchController : AttackController
 {
     #region Attributes
 
-    private static Vector2 attackForce = new Vector2(2000f, 100f);
+    private static Vector2 attackForce = new Vector2(2500f, 100f);
 
     #endregion
 
@@ -49,7 +49,7 @@ public class PunchController : AttackController
 
         if (enhanced)
         {
-            force *= 100;
+            force *= 150;
         }
 
         if (other.transform.position.x < transform.position.x)

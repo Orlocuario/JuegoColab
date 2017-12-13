@@ -183,6 +183,7 @@ public class SwitchActions : MonoBehaviour
         GameObject killzone = InstantiatePrefab("KillZones/KillZoneEnginAir", new Vector2(34.6f, 6.15f));
 
         GameObject destroyer = GameObject.Find("EngKillzoneDestroyer");
+
         if (destroyer)
         {
             KillZoneDestroyer killZoneDestroyer = destroyer.GetComponent<KillZoneDestroyer>();

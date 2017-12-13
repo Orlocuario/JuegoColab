@@ -483,7 +483,7 @@ public class ServerMessageHandler
         string message = "PlayerSetId/" + player.id + "/" + player.controlOverEnemies;
 
         server.SendMessageToClient(connectionId, message, true);
-    }
+    }   
 
     public void SendChangeScene(string sceneName, Room room)
     {
