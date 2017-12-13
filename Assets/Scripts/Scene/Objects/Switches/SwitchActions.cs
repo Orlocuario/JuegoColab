@@ -179,10 +179,19 @@ public class SwitchActions : MonoBehaviour
     {
         InstantiatePrefab("PlataformaPastVoladora", new Vector2(39f, 7.5f));
         InstantiatePrefab("PlataformaPastVoladora", new Vector2(35.5f, 7.5f));
+
         GameObject killzone = InstantiatePrefab("KillZones/KillZoneEnginAir", new Vector2(34.6f, 6.15f));
 
-        KillZoneDestroyer destroyer = GameObject.Find("EngKillzoneDestroyer").GetComponent<KillZoneDestroyer>();
-        destroyer.SetKillzone(GameObject.Find("Engineer"), killzone);
+        GameObject destroyer = GameObject.Find("EngKillzoneDestroyer");
+        if (destroyer)
+        {
+            KillZoneDestroyer killZoneDestroyer = destroyer.GetComponent<KillZoneDestroyer>();
+
+            if (killZoneDestroyer)
+            {
+                killZoneDestroyer.SetKillzone(GameObject.Find("Engineer"), killzone);
+            }
+        }
     }
 
     private void HandlerGroup6()
