@@ -154,7 +154,6 @@ public class SwitchActions : MonoBehaviour
         TooglePlayerFilter("FilterMage", true);
     }
 
-    // TODO: Review this
     private void HandlerGroup4()
     {
         GameObject platparaMage = InstantiatePrefab("MovPlatform", new Vector2(61f, -9.5f));
@@ -180,7 +179,10 @@ public class SwitchActions : MonoBehaviour
     {
         InstantiatePrefab("PlataformaPastVoladora", new Vector2(39f, 7.5f));
         InstantiatePrefab("PlataformaPastVoladora", new Vector2(35.5f, 7.5f));
-        InstantiatePrefab("KillZones/KillZoneEnginAir", new Vector2(34.6f, 6.15f));
+        GameObject killzone = InstantiatePrefab("KillZones/KillZoneEnginAir", new Vector2(34.6f, 6.15f));
+
+        KillZoneDestroyer destroyer = GameObject.Find("EngKillzoneDestroyer").GetComponent<KillZoneDestroyer>();
+        destroyer.SetKillzone(GameObject.Find("Engineer"), killzone);
     }
 
     private void HandlerGroup6()

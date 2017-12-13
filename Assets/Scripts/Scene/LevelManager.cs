@@ -37,41 +37,22 @@ public class LevelManager : MonoBehaviour
 
     void Start()
     {
-        if (!canvas)
-        {
-            canvas = GameObject.Find("Canvas");
-        }
-
-        if (!canvas.activeInHierarchy)
-        {
-            canvas.SetActive(true);
-        }
-
-        hpAndMp = canvas.GetComponent<HUDDisplay>();
-
+        SetCanvas();
+        SetLoggers();
         StorePlayers();
 
+        hpAndMp = canvas.GetComponent<HUDDisplay>();
         itemsOriginalPositions = new List<Vector3>();
 
-        waitToKillNPCCountdown = 5f;
         waitToKillSpiderCountdown = 5f;
+        waitToKillNPCCountdown = 5f;
         waitToGrabItem = 2f;
-
-        npcLog = GameObject.Find("NPCLog");
-        npcLog.SetActive(false);
-
-        spiderLog = GameObject.Find("SpiderLog");
-        spiderLog.SetActive(false);
-
-        reconnectText = GameObject.Find("ReconnectingText");
-        reconnectText.SetActive(false);
 
         if (GameObject.Find("ClientObject"))
         {
             client = GameObject.Find("ClientObject").GetComponent<Client>();
             client.RequestPlayerIdToServer();
         }
-
     }
 
     #endregion
@@ -296,6 +277,31 @@ public class LevelManager : MonoBehaviour
     #endregion
 
     #region Utils
+
+    protected void SetLoggers()
+    {
+        npcLog = GameObject.Find("NPCLog");
+        npcLog.SetActive(false);
+
+        spiderLog = GameObject.Find("SpiderLog");
+        spiderLog.SetActive(false);
+
+        reconnectText = GameObject.Find("ReconnectingText");
+        reconnectText.SetActive(false);
+    }
+
+    protected void SetCanvas()
+    {
+        if (!canvas)
+        {
+            canvas = GameObject.Find("Canvas");
+        }
+
+        if (!canvas.activeInHierarchy)
+        {
+            canvas.SetActive(true);
+        }
+    }
 
     protected void StorePlayers()
     {

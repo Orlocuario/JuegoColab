@@ -32,10 +32,11 @@ public class SlideRock : DamagingObject
         GameObject particulasEffect = GameObject.Find("ParticulasMageRoca");
 
         SendMessageToServer("ObstacleDestroyed/" + name, true);
+        SendMessageToServer("ObstacleDestroyed/" + pasadizo.name, true);
 
         Destroy(particulasEffect, .1f);
         Destroy(pasadizo, .1f);
-        Destroy(this.gameObject, .1f);
+        Destroy(gameObject, .1f);
     }
 
     #endregion

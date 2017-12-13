@@ -1,16 +1,25 @@
-﻿
-using UnityEngine;
+﻿using UnityEngine;
 
 public class KillZoneDestroyer : MonoBehaviour {
 
-    public string killZoneName;
+    protected GameObject killzoneKiller;
+    protected GameObject killzone;
+
+    public void SetKillzone(GameObject _killzoneKiller, GameObject _killzone)
+    {
+        killzoneKiller = _killzoneKiller;
+        killzone = _killzone;
+    }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if (collision.gameObject.name == "Engineer")
+        if (killzone && killzoneKiller)
         {
-            GameObject killZone = GameObject.Find(killZoneName);
-            Destroy(killZone);
+          if (collision.gameObject.name == killzoneKiller.name)
+          {
+              Destroy(killzone);
+              Destroy(gameObject);
+            }
         }
     }
 

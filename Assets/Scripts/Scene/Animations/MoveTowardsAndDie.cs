@@ -1,5 +1,4 @@
 ﻿using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MoveTowardsAndDie : MonoBehaviour {
@@ -25,8 +24,8 @@ public class MoveTowardsAndDie : MonoBehaviour {
             transform.position = Vector3.MoveTowards(transform.position, target, speed);
             if (transform.position == target)
             {
-                Destroy(gameObject, .1f);
                 ToogleParticles(false);
+                Destroy(gameObject, .1f);
             }
         }
     }
@@ -47,4 +46,5 @@ public class MoveTowardsAndDie : MonoBehaviour {
             }
         }
     }
+
 }

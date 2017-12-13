@@ -82,7 +82,7 @@ public class PlayerController : MonoBehaviour
     protected virtual void Start()
     {
 
-        sceneAnimator = GameObject.FindObjectOfType<SceneAnimator>();
+        sceneAnimator = FindObjectOfType<SceneAnimator>();
 
         if (!sceneAnimator)
         {
@@ -155,7 +155,6 @@ public class PlayerController : MonoBehaviour
 
     public void Connect(bool _connected)
     {
-
         connected = _connected;
 
         remoteJumping = false;
