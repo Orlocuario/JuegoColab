@@ -17,8 +17,14 @@ public class ActivableSystem : MonoBehaviour
     public Component[] components;
 
     protected ActivableSystemActions systemActions;
+    protected GameObject[] particles;
 
     #endregion
+
+    protected virtual void Start()
+    {
+        InitializeParticles();
+    }
 
     #region Common
 
@@ -54,7 +60,7 @@ public class ActivableSystem : MonoBehaviour
 
         for (int i = 0; i < componentSlots.Length; i++)
         {
-            if(componentSlots[i].sprite == null)
+            if (componentSlots[i].sprite == null)
             {
                 componentSlots[i].sprite = components[pos].sprite;
             }
@@ -65,6 +71,37 @@ public class ActivableSystem : MonoBehaviour
     #endregion
 
     #region Utils
+
+    protected void InitializeParticles()
+    {
+        ParticleSystem[] _particles = gameObject.GetComponentsInChildren<ParticleSystem>();
+
+        if (_particles.Length <= 0)
+        {
+            return;
+        }
+
+        particles = new GameObject[_particles.Length];
+
+        for (int i = 0; i < particles.Length; i++)
+        {
+            particles[i] = _particles[i].gameObject;
+        }
+
+        ToogleParticles(false);
+
+    } 
+
+    public void ToogleParticles(bool activate)
+    {
+        if (particles != null && particles.Length > 0)
+        {
+            for (int i = 0; i < particles.Length; i++)
+            {
+                particles[i].SetActive(activate);
+            }
+        }
+    }
 
     protected int ComponentPosition(Sprite item)
     {

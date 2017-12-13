@@ -8,6 +8,19 @@ public class SceneAnimator : MonoBehaviour
 
     #region Common
 
+    public void SetBool(string parameter, bool value, GameObject gameObject, float time)
+    {
+        Animator animator = gameObject.GetComponent<Animator>();
+
+        if (!animator)
+        {
+            Debug.Log(gameObject.name + " has no animator ");
+            return;
+        }
+
+        StartCoroutine(SetBoolAfter(animator, parameter, value, time));
+    }
+
     public void SetBool(string parameter, bool value, GameObject gameObject)
     {
         Animator animator = gameObject.GetComponent<Animator>();
@@ -63,6 +76,12 @@ public class SceneAnimator : MonoBehaviour
             Debug.Log(gameObject.name + " has no animator ");
 
         }
+    }
+
+    private IEnumerator SetBoolAfter(Animator animator, string parameter, bool value, float time)
+    {
+        yield return new WaitForSeconds(time);
+        animator.SetBool(parameter, value);
     }
 
     #endregion

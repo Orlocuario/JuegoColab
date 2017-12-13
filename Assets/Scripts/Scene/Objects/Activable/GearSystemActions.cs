@@ -4,18 +4,8 @@ using System.Collections;
 public class GearSystemActions : ActivableSystemActions
 {
     public float blockerSpeed;
-    private GameObject particles;
 
     #region Common
-
-    private void Start()
-    {
-        particles = GameObject.Find("MaquinaParticleSystem");
-        if (particles != null)
-        {
-            particles.SetActive(false);
-        }
-    }
 
     public void DoSomething(GearSystem gearSystem, bool notifyOthers)
     {
@@ -62,29 +52,26 @@ public class GearSystemActions : ActivableSystemActions
         systemSpriteRenderer.sprite = gearSystem.activatedSprite;
 
         // If is Engineer: Start Coroutine
-
-        LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
-        EngineerController enginController = levelManager.GetEngineer();
-
-        if (enginController == null)
+        if (notifyOthers)
         {
-            Debug.Log("Se cayó un enginController");
-        } 
+            LevelManager levelManager = GameObject.FindObjectOfType<LevelManager>();
+            EngineerController enginController = levelManager.GetEngineer();
 
-        if (enginController.localPlayer)
-        {
-            CameraMovementForEngin();
+            if (enginController && enginController.localPlayer)
+            {
+                CameraMovementForEngin();
+            }
+
         }
 
-        particles.SetActive(true);
+        gearSystem.ToogleParticles(true);
         SetAnimatorBool("startMovingMachine", true, gearSystem);
-        StartMovingBlockers();
-        //  Mago y Engin waiting for Engin.
-        StartCoroutine(WaitForCameraEngin());
+        StartMovingBlockers(gearSystem);
 
-        //  Eventos tras esperar CameraEngin
-      
-        SetAnimatorBool("startMovingMachine", false, gearSystem);
+        if (notifyOthers)
+        {
+            SetAnimatorBool("startMovingMachine", false, gearSystem, 2f);
+        }
 
         if (gearSystem.switchObj)
         {
@@ -114,12 +101,7 @@ public class GearSystemActions : ActivableSystemActions
         mainCamera.ChangeState(CameraState.TargetZoom, 4.2f, 80.1f, -1.33f, false, true);
     }
 
-    private IEnumerator WaitForCameraEngin()
-    {
-        yield return new WaitForSeconds(2f);
-    }
-
-    private void StartMovingBlockers()
+    private void StartMovingBlockers(GearSystem gearSystem)
     {
         Transform blockers = GameObject.Find("GiantBlockers").GetComponent<Transform>();
         Vector3 blockersTarget = new Vector3(blockers.position.x, blockers.position.y + 4f, blockers.position.z);
@@ -129,7 +111,7 @@ public class GearSystemActions : ActivableSystemActions
         if(blockers.position == blockersTarget)
         {
             DestroyObject("GiantBlockers", .1f);
-            Destroy(particles, .1f);    
+            gearSystem.ToogleParticles(false);
         }
     
     }

@@ -12,8 +12,9 @@ public class RuneSystem : ActivableSystem
 
     #region Start
 
-    protected void Start()
+    protected override void Start()
     {
+        base.Start();
         systemActions = new RuneSystemActions();
     }
 
