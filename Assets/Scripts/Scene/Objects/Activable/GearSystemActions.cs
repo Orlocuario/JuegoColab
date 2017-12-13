@@ -66,7 +66,8 @@ public class GearSystemActions : ActivableSystemActions
 
         gearSystem.ToogleParticles(true);
         SetAnimatorBool("startMovingMachine", true, gearSystem);
-        StartMovingBlockers(gearSystem);
+        MoveTowardsAndDie blocksMover = GameObject.Find("GiantBlockers").GetComponent<MoveTowardsAndDie>();
+        blocksMover.StartMoving(gearSystem.GetParticles());
 
         if (notifyOthers)
         {
@@ -99,21 +100,6 @@ public class GearSystemActions : ActivableSystemActions
         }
 
         mainCamera.ChangeState(CameraState.TargetZoom, 4.2f, 80.1f, -1.33f, false, true);
-    }
-
-    private void StartMovingBlockers(GearSystem gearSystem)
-    {
-        Transform blockers = GameObject.Find("GiantBlockers").GetComponent<Transform>();
-        Vector3 blockersTarget = new Vector3(blockers.position.x, blockers.position.y + 4f, blockers.position.z);
-
-        blockers.position = Vector3.MoveTowards(blockers.position, blockersTarget, blockerSpeed);
-
-        if(blockers.position == blockersTarget)
-        {
-            DestroyObject("GiantBlockers", .1f);
-            gearSystem.ToogleParticles(false);
-        }
-    
     }
 
 }

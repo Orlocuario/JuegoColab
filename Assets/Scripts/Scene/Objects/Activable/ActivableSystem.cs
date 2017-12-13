@@ -28,6 +28,11 @@ public class ActivableSystem : MonoBehaviour
 
     #region Common
 
+    public GameObject[] GetParticles()
+    {
+        return particles;
+    }
+
     public virtual bool PlaceItem(Sprite item)
     {
         if (!activated)
