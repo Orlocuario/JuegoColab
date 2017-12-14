@@ -67,6 +67,7 @@ public class GearSystemActions : ActivableSystemActions
         gearSystem.ToogleParticles(true);
         SetAnimatorBool("startMoving", true, gearSystem);
 
+
         GameObject secondMachine = GameObject.Find("MaqEngranaje2");
         if (secondMachine)
         {

@@ -13,7 +13,7 @@ public class MoveTowardsAndDie : MonoBehaviour {
     void Start () {
 
         if (target.Equals(default(Vector3))) {
-            Debug.LogWarning("No target for movetowardanddie");
+            Debug.Log("No target for movetowardanddie");
         }
 
     }
@@ -49,6 +49,7 @@ public class MoveTowardsAndDie : MonoBehaviour {
             for (int i = 0; i < particles.Length; i++)
             {
                 particles[i].SetActive(activate);
+                Debug.Log("Apagué unas partículas, creo");
             }
         }
     }

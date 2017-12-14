@@ -173,6 +173,11 @@ public class SwitchActions : MonoBehaviour
 
         ShowFeedbackParticles("FBMageButt", new Vector2(72.86f, -19.3f), 4f);
         ShowFeedbackParticles("warriorFeedbackSmall", new Vector2(70.7f, -20f), 4f);
+
+        GameObject teleporter = InstantiatePrefab("PlayerTeleporter", new Vector2(82.64f, -18.55f));
+        PlayerTeleport teleporterController = teleporter.GetComponent<PlayerTeleport>();
+        teleporterController.playerTeleported = levelManager.GetWarrior().gameObject;
+        teleporterController.teleportPosition = new Vector2(32.89f, -6.18f);
     }
 
     private void HandlerGroup5()
